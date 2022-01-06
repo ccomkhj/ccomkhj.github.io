@@ -19,7 +19,7 @@ locale                   : "en-US"
 title                    : "Site Title"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "Your Name"
+name                     : "Huijo Kim"
 description              : "Personal website to share my thoughts."
 url                      : "https://ccomkhj.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
