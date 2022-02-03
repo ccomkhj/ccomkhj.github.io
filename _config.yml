@@ -104,13 +104,13 @@ analytics:
 author:
   name             : "Huijo Kim"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I love to help people using technology."
+  bio              : "I love to help world using technology."
   location         : "Germany"
   email            : "ccomkhj@gmail.com"
   links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-#       url: "mailto:ccomkhj@gmail.com"
+    - label: "Linkedin"
+      icon: "fas fa-fw fa-linkedin"
+      url: "mailto:ccomkhj@gmail.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
