@@ -104,8 +104,8 @@ analytics:
 author:
   name             : "Huijo Kim"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I love to help world using technology."
-  location         : "Germany"
+  bio              : "love to improve the world using tech"
+  location         : "Somewhere on the earth"
   email            : "ccomkhj@gmail.com"
   links:
     - label: "Email"
@@ -288,3 +288,11 @@ defaults:
       comments:  true
       share: true
       related: true
+
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
