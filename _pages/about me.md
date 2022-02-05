@@ -1,10 +1,10 @@
 ---
-title: "About me"
-layout: categories
+layout: single
 permalink: /me/
 author_profile: true
 ---
 
-# Artist in technology
+### Artist in technology
 
-## Want to be a polimath, rather than a specialist.
+### Want to be a polimath, rather than a specialist.
+

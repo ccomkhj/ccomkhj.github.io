@@ -1,8 +1,8 @@
 ---
 layout: single
 permalink: /tech/
-author_profile: true
+author_profile: false
 ---
 
 
-# Use AI for everything.
+## Use AI for everything.
