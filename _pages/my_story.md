@@ -4,6 +4,8 @@ permalink: /story/
 author_profile: true
 ---
 
+Who I am?
+
 ### (want to be) Artist in technology
 There are still so many things to do for the better world. \
 I always have many works as an artist.
