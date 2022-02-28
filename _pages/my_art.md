@@ -33,4 +33,4 @@ Use it to help others again.
 6. [Plant nutrient deficiency](https://zesty-diagnostic-d99.notion.site/Plant-Nutrition-Deficiency-6210108fcc1447ff88972e0cb198ebd9)
 7. [Digital twin](https://zesty-diagnostic-d99.notion.site/Digital-Twin-99886d207a354a56b30f18255cc7fa97)
 8. [Leaf dataset](https://zesty-diagnostic-d99.notion.site/Leaf-Dataset-ae1be0ffaae0405aae4c72002b198f00)
-9. [PLant biology](https://zesty-diagnostic-d99.notion.site/Plant-Biology-9e152090427b49aa873526572010da81)
+9. [Plant biology](https://zesty-diagnostic-d99.notion.site/Plant-Biology-9e152090427b49aa873526572010da81)
