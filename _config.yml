@@ -12,15 +12,15 @@
 
 # theme                  : "minimal-mistakes-jekyll"
 # remote_theme           : "mmistakes/minimal-mistakes"
-minimal_mistakes_skin    : "dirt" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+minimal_mistakes_skin    : "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
 locale                   : "en-US"
-title                    : "History of me"
+title                    : "my history"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Huijo Kim"
-description              : "Website to list my thoughts."
+description              : "my website."
 url                      : "https://ccomkhj.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -68,8 +68,8 @@ algolia:
   search_only_api_key    : # YOUR_SEARCH_ONLY_API_KEY
   powered_by             : # true (default), false
 google:
-  search_engine_id       : # YOUR_SEARCH_ENGINE_ID
-  instant_search         : # false (default), true
+  search_engine_id       : ccomkhj
+  instant_search         : true
 # SEO Related
 google_site_verification :
 bing_site_verification   :
@@ -104,7 +104,7 @@ analytics:
 author:
   name             : "Huijo Kim"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "love to improve the world using tech"
+  bio              : "change the world in better direction"
   location         : "Somewhere"
   email            : "ccomkhj@gmail.com"
   links:
