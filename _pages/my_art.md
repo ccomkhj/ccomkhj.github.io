@@ -7,7 +7,7 @@ author_profile: false
 ## Develop technology to make life better
 Here is the my tech repo. \
 Anyone can use my work. \
-Use it to help others again. \
+Use it to help others again. 
 
 ## Source Codes
 
