@@ -12,5 +12,6 @@ Intuitively, we aim for something to be happy. But It is often wrong.
 3.	Our minds are built to get used to stuff
 wonderful things are especially wonderful the first time they happen, but their wonderfulness wanes with repetition.
 4.	We don’t realize that our minds are built to get used to stuff
-We expect that something negative will destroy our life and emotion. However, it won’t be.
+We expect that something negative will destroy our life and emotion. However, it won’t be. \
+
 These lessons will protect me to consume my emotion, and lead to spend my energy to right direction.
