@@ -22,6 +22,8 @@ Use it to help others again.
 8. [Drone control in ROS2](https://github.com/ccomkhj/tello_ros_drone)
 9. [Plant dieses classification](https://github.com/HexaFarms/MMClassification)
 10. [Image Segmentation using Graph-cut](https://github.com/HexaFarms/GraphCut)
+11. [YOLO in farming](https://github.com/HexaFarms/yolov5)
+12. [Drone-Visual SLAM in farming](https://github.com/ccomkhj/ORB_SLAM3)
 
 ## Knowledge
 
