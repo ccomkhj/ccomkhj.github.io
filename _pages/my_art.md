@@ -12,18 +12,19 @@ Use it to help others again.
 
 ## Source Codes
 
-1. [Image Segmentation using deep-learning](https://github.com/HexaFarms/MMsegmentation)
+1. [Plants Image Segmentation](https://github.com/HexaFarms/MMsegmentation)
 2. [Annotation Convertor for COCO dataset](https://github.com/ccomkhj/COCO2MASK-Converter)
 3. [Wildfire prediction using timeseires data](https://github.com/ccomkhj/Spot-Challenge-Wildfires)
 4. [3D Segmentation](https://github.com/ccomkhj/3D_Generation)
 5. [Image toolkit for masking process](https://github.com/ccomkhj/palette)
-6. [Image cropping for efficiently generating training samples](https://github.com/ccomkhj/crop_generator)
+6. [Image cropping for generating training samples](https://github.com/ccomkhj/crop_generator)
 7. [Image classification & mass estimation based on segmentation mask](https://github.com/ccomkhj/classify_seg_mask)
-8. [Drone control in ROS2](https://github.com/ccomkhj/tello_ros_drone)
+8. [Drone control using ROS2](https://github.com/ccomkhj/tello_ros_drone)
 9. [Plant dieses classification](https://github.com/HexaFarms/MMClassification)
 10. [Image Segmentation using Graph-cut](https://github.com/HexaFarms/GraphCut)
 11. [YOLO in farming](https://github.com/HexaFarms/yolov5)
 12. [Drone-Visual SLAM in farming](https://github.com/ccomkhj/ORB_SLAM3)
+13. [Compute pixel's actual dimension](https://github.com/ccomkhj/Pixel_Area)
 
 ## Knowledge
 
