@@ -1,6 +1,10 @@
 ---
 layout: post
 title:  "What matters in life?"
+categories:
+  - Blog
+tags:
+  - Ups and Downs
 ---
 
 # What matters in life?
