@@ -6,9 +6,17 @@ author_profile: false
 What I do?
 
 ## Develop technology to make life better
-Here is the my tech repo. \
+Here is my technology repo. \
 Anyone can use my work. \
-Use it to help others again. 
+Use it to help others again.
+
+## Demo Video
+[![Computer Vision DEMO](img\demo_video.PNG)](https://www.linkedin.com/feed/update/urn:li:activity:6916075366126116864/ "CV Demo")
+Short video clip of multiple technologies. </br>
+- ROS for trajectory planning
+- Customized YOLOv5 for object detection
+- SLAM for localization
+- SfM for 3D reconstruction
 
 ## Source Codes
 
@@ -29,11 +37,12 @@ Use it to help others again.
 ## Knowledge
 
 1. [Camera parameter](https://zesty-diagnostic-d99.notion.site/Camera-parameters-3d92a1adcfed4db5ac78ce2c3920dbbc)
-2. [3D model preprocessing](https://zesty-diagnostic-d99.notion.site/3D-Model-Pre-Processing-67790834abaf4eabaf968a4ecfa62d7e)
+2. [Point Cloud Library](https://zesty-diagnostic-d99.notion.site/Point-Cloud-Library-82907376be92423da826b1efb5fd979d)
 3. [3D reconstructin](https://zesty-diagnostic-d99.notion.site/Method-of-3D-surface-reconstruction-SfM-33f7b026881b4492886607881cf4ebff)
 4. [Color and Illumination](https://zesty-diagnostic-d99.notion.site/Colour-and-illumination-19881d5dc00a435aa7309b6387239685)
 5. [Feature extraction](https://zesty-diagnostic-d99.notion.site/Feature-Extraction-in-Image-12a0518e242d43048087237ad4e3b564)
 6. [Plant nutrient deficiency](https://zesty-diagnostic-d99.notion.site/Plant-Nutrition-Deficiency-6210108fcc1447ff88972e0cb198ebd9)
-7. [Digital twin](https://zesty-diagnostic-d99.notion.site/Digital-Twin-99886d207a354a56b30f18255cc7fa97)
-8. [Leaf dataset](https://zesty-diagnostic-d99.notion.site/Leaf-Dataset-ae1be0ffaae0405aae4c72002b198f00)
-9. [Plant biology](https://zesty-diagnostic-d99.notion.site/Plant-Biology-9e152090427b49aa873526572010da81)
+7. [Public Leaf dataset](https://zesty-diagnostic-d99.notion.site/Leaf-Dataset-ae1be0ffaae0405aae4c72002b198f00)
+8. [Plant biology](https://zesty-diagnostic-d99.notion.site/Plant-Biology-9e152090427b49aa873526572010da81) 
+9. [ROS2, Udemy](https://zesty-diagnostic-d99.notion.site/ROS2-Udemy-845ca132939748ea89f6faef66462ef7)
+10. [Advanced C++, Coursera](https://zesty-diagnostic-d99.notion.site/Advanced-C-Coursera-9e41832c0cad4c549970ce9231b1155f)
