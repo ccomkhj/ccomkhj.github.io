@@ -10,14 +10,6 @@ Here is my technology repo. \
 Anyone can use my work. \
 Use it to help others again.
 
-## Demo Video
-[![Computer Vision DEMO](img\demo_video.PNG)](https://www.linkedin.com/feed/update/urn:li:activity:6916075366126116864/ "CV Demo")
-Short video clip of multiple technologies. </br>
-- ROS for trajectory planning
-- Customized YOLOv5 for object detection
-- SLAM for localization
-- SfM for 3D reconstruction
-
 ## Source Codes
 
 1. [Plants Image Segmentation](https://github.com/HexaFarms/MMsegmentation)
@@ -33,6 +25,14 @@ Short video clip of multiple technologies. </br>
 11. [YOLO in farming](https://github.com/HexaFarms/yolov5)
 12. [Drone-Visual SLAM in farming](https://github.com/ccomkhj/ORB_SLAM3)
 13. [Compute pixel's actual dimension](https://github.com/ccomkhj/Pixel_Area)
+
+## Demo Video
+[![Computer Vision DEMO](..\img\demo_video.PNG)](https://www.linkedin.com/feed/update/urn:li:activity:6916075366126116864/ "CV Demo") </br>
+Short video clip of my project. </br>
+- ROS for trajectory planning
+- Customized YOLOv5 for object detection
+- SLAM for localization
+- SfM for 3D reconstruction
 
 ## Knowledge
 
