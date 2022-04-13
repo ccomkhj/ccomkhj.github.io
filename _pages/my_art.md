@@ -27,8 +27,8 @@ Use it to help others again.
 13. [Compute pixel's actual dimension](https://github.com/ccomkhj/Pixel_Area)
 
 ## Demo Video
-[![Computer Vision DEMO](..\img\demo_video.PNG)](https://www.linkedin.com/feed/update/urn:li:activity:6916075366126116864/ "CV Demo") </br>
-Short video clip of my project. </br>
+[![Computer Vision DEMO](..\img\demo_video.PNG)](https://www.linkedin.com/feed/update/urn:li:activity:6916075366126116864/ "CV Demo") \
+Short video clip of my project. 
 - ROS for trajectory planning
 - Customized YOLOv5 for object detection
 - SLAM for localization
