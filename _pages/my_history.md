@@ -4,7 +4,7 @@ permalink: /history/
 author_profile: true
 ---
 
-Who I am?
+Who am I?
 
 ### (want to be) Artist in technology
 There are still so many things to do for the better world. \
@@ -13,6 +13,8 @@ I always have many works as an artist.
 ### Want to be a polymath, rather than a specialist.
 Interdisciplinary research is a key to accomplish it, but there is limit to achieve it by communicating with experts in another domain. \
 There are gray areas which could be properly analyzed and solved, only if one has profound understanding in multiple domains. 
+
+### Learning is the joy in living. Growing is the reason for my life. Looking for the opportunity to grow together.
 
 ### My journey
 * Born in South Korea
