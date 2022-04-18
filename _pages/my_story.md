@@ -1,6 +1,6 @@
 ---
 layout: single
-permalink: /history/
+permalink: /story/
 author_profile: true
 ---
 
