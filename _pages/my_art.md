@@ -34,6 +34,10 @@ Short video clip of my project.
 - SLAM for localization
 - SfM for 3D reconstruction
 
+## Research
+1. [Deep Learning-Based Semiautomatic Generation of HD maps from Aerial Imagery, Master thesis ](https://drive.google.com/file/d/1q3pC5JXqJ754aHP2aQnkhm1GepznGFO5/view?usp=sharing) \
+Sharing the source code requires approval of the institute, ika. Contact me if you are interested in the algorithm in detail.
+
 ## Knowledge
 
 1. [Camera parameter](https://zesty-diagnostic-d99.notion.site/Camera-parameters-3d92a1adcfed4db5ac78ce2c3920dbbc)
