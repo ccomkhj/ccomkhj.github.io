@@ -2,25 +2,7 @@
 layout: archive
 ---
 
-<!DOCTYPE html>
-<html>
-  {% include head.html %}
-  <body>
-    <div>
-      {% include header.html %}
-    </div>
-    <div class="page-content" style="margin-bottom: 15%; margin-top: 7%;">
-      <div class="wrapper">
-        {{ content }}
-      </div>
-    </div>
-    <div>
-    {% include footer.html %}
-    </div>
-    <script src="/static/js/jquery-1.11.2.min.js" type="text/javascript"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-  </body>
-</html>
+{{ content }}
 
 <ul class="taxonomy__index">
   {% assign postsInYear = site.posts | where_exp: "item", "item.hidden != true" | group_by_exp: 'post', 'post.date | date: "%Y"' %}
