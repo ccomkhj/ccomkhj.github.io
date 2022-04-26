@@ -49,10 +49,10 @@ body {
 
   .page__inner-wrap {
     float: left;
-    margin-top: 1em;
-    margin-left: 0;
-    margin-right: 0;
-    width: 100%;
+    margin-top: 2em;
+    margin-left: 3em;
+    margin-right: 3em;
+    width: 90%;
     clear: both;
 
     .page__content,
@@ -60,9 +60,9 @@ body {
     .page__share {
       position: relative;
       float: left;
-      margin-left: 0;
-      margin-right: 0;
-      width: 100%;
+      margin-left: 3em;
+      margin-right: 3em;
+      width: 90%;
       clear: both;
     }
   }
