@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: wide
 title:  "Learning Language"
 ---
 
