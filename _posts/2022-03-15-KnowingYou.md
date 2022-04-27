@@ -1,5 +1,6 @@
 ---
-layout: post
+layout: single
+classes: wide
 title:  "Keep your friends close and your enemies closer."
 ---
 

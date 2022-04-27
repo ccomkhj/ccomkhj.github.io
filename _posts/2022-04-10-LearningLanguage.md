@@ -1,5 +1,6 @@
 ---
-layout: wide
+layout: single
+classes: wide
 title:  "Learning Language"
 ---
 

@@ -1,5 +1,6 @@
 ---
-layout: post
+layout: single
+classes: wide
 title:  "Study in Germany"
 ---
 

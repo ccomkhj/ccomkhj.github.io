@@ -1,5 +1,6 @@
 ---
-layout: post
+layout: single
+classes: wide
 title:  "Science of Wellbeing"
 ---
 

@@ -1,5 +1,7 @@
 ---
-layout: post
+layout: single
+classes: wide
+
 title:  "거꾸로읽는 세계사"
 ---
 

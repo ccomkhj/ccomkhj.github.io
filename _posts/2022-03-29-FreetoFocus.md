@@ -1,5 +1,6 @@
 ---
-layout: post
+
+
 title:  "Free to Focus"
 ---
 

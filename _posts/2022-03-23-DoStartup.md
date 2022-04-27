@@ -1,5 +1,6 @@
 ---
-layout: post
+layout: single
+classes: wide
 title:  "Lesson from Startup in the last half year"
 ---
 
