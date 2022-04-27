@@ -1,5 +1,6 @@
 ---
 layout: single
+class: wide
 permalink: /art/
 author_profile: false
 ---
