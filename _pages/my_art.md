@@ -13,27 +13,37 @@ Use it to help others again.
 
 ## Source Codes
 
-1. [Plants Image Segmentation](https://github.com/HexaFarms/MMsegmentation)
-2. [Annotation Convertor for COCO dataset](https://github.com/ccomkhj/COCO2MASK-Converter)
-3. [Wildfire prediction using timeseires data](https://github.com/ccomkhj/Spot-Challenge-Wildfires)
-4. [3D Segmentation](https://github.com/ccomkhj/3D_Generation)
-5. [Image toolkit for masking process](https://github.com/ccomkhj/palette)
-6. [Image cropping for generating training samples](https://github.com/ccomkhj/crop_generator)
-7. [Image classification & mass estimation based on segmentation mask](https://github.com/ccomkhj/classify_seg_mask)
-8. [Drone control using ROS2](https://github.com/ccomkhj/tello_ros_drone)
-9. [Plant dieses classification](https://github.com/HexaFarms/MMClassification)
-10. [Image Segmentation using Graph-cut](https://github.com/HexaFarms/GraphCut)
-11. [YOLO in farming](https://github.com/HexaFarms/yolov5)
-12. [Drone-Visual SLAM in farming](https://github.com/ccomkhj/ORB_SLAM3)
-13. [Compute pixel's actual dimension](https://github.com/ccomkhj/Pixel_Area)
+1. [Customized Image Object](https://github.com/HexaFarms/Hexa_image)
+2. [Plants Image Segmentation](https://github.com/HexaFarms/MMsegmentation)
+3. [Compute pixel's actual dimension](https://github.com/ccomkhj/Pixel_Area)
+4. [Image toolkit for masking process](https://github.com/ccomkhj/palette)
+5. [Image cropping for generating training samples](https://github.com/ccomkhj/crop_generator)
+6. [Image classification & mass estimation based on segmentation mask](https://github.com/ccomkhj/classify_seg_mask)
+7. [Annotation Convertor for COCO dataset](https://github.com/ccomkhj/COCO2MASK-Converter)
+8. [Image Segmentation using Graph-cut](https://github.com/HexaFarms/GraphCut)
+9. [Wildfire prediction using timeseires data](https://github.com/ccomkhj/Spot-Challenge-Wildfires)
+10. [3D Segmentation](https://github.com/ccomkhj/3D_Generation)
+11. [Drone control using ROS2](https://github.com/ccomkhj/tello_ros_drone)
+12. [Plant dieses classification](https://github.com/HexaFarms/MMClassification)
+13. [YOLO in farming](https://github.com/HexaFarms/yolov5)
+14. [Drone-Visual SLAM in farming](https://github.com/ccomkhj/ORB_SLAM3)
 
-## Demo Video
+
+## Demo 
+1. Computer Vision \
 [![Computer Vision DEMO](..\img\demo_video.PNG)](https://www.linkedin.com/feed/update/urn:li:activity:6916075366126116864/ "CV Demo") \
-Short video clip of my project. 
-- ROS for trajectory planning
-- Customized YOLOv5 for object detection
-- SLAM for localization
-- SfM for 3D reconstruction
+Click the image to watch video clip. 
+- Trajectory planning (ROS2)
+- Object detection (Customized YOLOv5)
+- Localization (ORB3 SLAM)
+- 3D reconstruction (Structure from Motion)
+2. Data Science \
+[![Data Science DEMO](..\img\DataScience.png)](https://www.youtube.com/watch?v=0BWNJPVAx4I/ "DataScience Demo") \
+Click the image to watch video clip. 
+- Image Segmentation (Pytorch)
+- Image Processing (OpenCV)
+- Data Processing (Pandas)
+- Visualization (Matplotlib, Seaborn)
 
 ## Research
 1. [Deep Learning-Based Semiautomatic Generation of HD maps from Aerial Imagery, Master thesis ](https://drive.google.com/file/d/1q3pC5JXqJ754aHP2aQnkhm1GepznGFO5/view?usp=sharing) \
@@ -51,3 +61,4 @@ Sharing the source code requires approval of the institute, ika. Contact me if y
 8. [Plant biology](https://zesty-diagnostic-d99.notion.site/Plant-Biology-9e152090427b49aa873526572010da81) 
 9. [ROS2, Udemy](https://zesty-diagnostic-d99.notion.site/ROS2-Udemy-845ca132939748ea89f6faef66462ef7)
 10. [Advanced C++, Coursera](https://zesty-diagnostic-d99.notion.site/Advanced-C-Coursera-9e41832c0cad4c549970ce9231b1155f)
+11. [Data Structure](https://zesty-diagnostic-d99.notion.site/Data-Structure-d83e758cf5af4d88a251c56bf725987c)

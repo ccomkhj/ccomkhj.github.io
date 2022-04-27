@@ -1,5 +1,6 @@
 ---
-layout: posts
+layout: single
+classes: wide
 title:  "What matters in life?"
 ---
 

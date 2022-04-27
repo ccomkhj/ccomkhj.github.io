@@ -1,8 +1,6 @@
 ---
-layout: splash
-classes:
-  - landing
-  - dark-theme
+layout: single
+class: wide
 permalink: /story/
 author_profile: true
 ---
