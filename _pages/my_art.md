@@ -36,7 +36,7 @@ Use it to help others again.
 
 ## Demo 
 1. Computer Vision \
-[![Computer Vision DEMO](..\img\demo_video.PNG)](https://www.linkedin.com/feed/update/urn:li:activity:6916075366126116864/ "CV Demo") \
+[![Computer Vision DEMO](..\img\demo_video.PNG)](https://youtu.be/AqAXgcsjH5k "CV Demo") \
 Click the image to watch video clip. 
 - Trajectory planning (ROS2)
 - Object detection (Customized YOLOv5)
@@ -45,7 +45,7 @@ Click the image to watch video clip.
 2. Data Science \
 [![Data Science DEMO](..\img\DataScience.png)](https://www.youtube.com/watch?v=0BWNJPVAx4I/ "DataScience Demo") \
 Click the image to watch video clip. 
-- Image Segmentation (Pytorch)
+- Image Segmentation (Torch)
 - Image Processing (OpenCV)
 - Data Processing (Pandas)
 - Visualization (Matplotlib, Seaborn)
@@ -68,3 +68,4 @@ Sharing the source code requires approval of the institute, ika. Contact me if y
 10. [Advanced C++, Coursera](https://zesty-diagnostic-d99.notion.site/Advanced-C-Coursera-9e41832c0cad4c549970ce9231b1155f)
 11. [Data Structure](https://zesty-diagnostic-d99.notion.site/Data-Structure-d83e758cf5af4d88a251c56bf725987c)
 12. [Airflow, Udemy](https://zesty-diagnostic-d99.notion.site/Apache-Airflow-204dce0a034c43559ed4f73863128de2)
+13. [Open3d](https://zesty-diagnostic-d99.notion.site/Open3D-9f366a54e9354893a1a3955107960b9d)
