@@ -35,13 +35,13 @@ Use it to help others again.
 
 
 ## Demo 
-1. Computer Vision \
-[![Computer Vision DEMO](..\img\demo_video.PNG)](https://youtu.be/AqAXgcsjH5k "CV Demo") \
+1. Drone Vision \
+[![Drone Vision DEMO](..\img\demo_video.PNG)](https://youtu.be/AqAXgcsjH5k "CV Demo") \
 Click the image to watch video clip. 
 - Trajectory planning (ROS2)
 - Object detection (Customized YOLOv5)
 - Localization (ORB3 SLAM)
-- 3D reconstruction (Structure from Motion)
+- Point Cloud (Structure from Motion)
 2. Data Science \
 [![Data Science DEMO](..\img\DataScience.png)](https://www.youtube.com/watch?v=0BWNJPVAx4I/ "DataScience Demo") \
 Click the image to watch video clip. 
@@ -49,6 +49,10 @@ Click the image to watch video clip.
 - Image Processing (OpenCV)
 - Data Processing (Pandas)
 - Visualization (Matplotlib, Seaborn)
+3. 3D reconstruction \
+[![3D reconstruction DEMO](..\img\reconstruction.PNG)](https://youtu.be/kMhPr6hNsj8/ "3D Reconstruction Demo") \
+Click the image to watch video clip. 
+
 
 ## Research
 1. [Deep Learning-Based Semiautomatic Generation of HD maps from Aerial Imagery, Master thesis ](https://drive.google.com/file/d/1q3pC5JXqJ754aHP2aQnkhm1GepznGFO5/view?usp=sharing) \
