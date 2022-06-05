@@ -1,6 +1,6 @@
 ---
-
-
+layout: single
+classes: wide
 title:  "Free to Focus"
 ---
 
