@@ -32,7 +32,7 @@ Current inflation results from the Russian war.
 The assassination of Archduke Franz Ferdinand in Sarajevo caused world war1.
 The ambition of Adolf Hitler led to world war2.
 These are the prevalently believed examples of simplification. 
-All event, accidents happened and will happen not because of one causality.
+All event, and accidents happened and will happen not because of one causality.
 It will be essential to realize that every causality is highly complex/
 Thus, it is often important to grasp the whole context and make a resolution based on a partial understanding.
 
