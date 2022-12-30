@@ -26,9 +26,15 @@ Click the image to watch video clip.
 3. Data Science \
 [![Data Science DEMO](..\img\DataScience.png)](https://www.youtube.com/watch?v=0BWNJPVAx4I/ "DataScience Demo") \
 Click the image to watch video clip. 
-- Image Segmentation ([Holystic Image Class](https://github.com/HexaFarms/Hexa_image), [Plants Image Segmentation](https://github.com/HexaFarms/MMsegmentation))
+- Image Segmentation ([Holystic Image Class](https://github.com/HexaFarms/openHexa))
 - Data Processing (Pandas)
 - Visualization (Matplotlib, Seaborn)
+
+4. Complex image processing
+[![Analsis DEMO](..\img\plant_analysis.gif)] 
+- Instant Segmentation ([Custom-made Holystic Image Class](https://github.com/HexaFarms/openHexa))
+- Image-tabular data combined Classification 
+- Time-series analysis for growth
 
 
 ## II. More Source Codes
