@@ -31,7 +31,7 @@ Click the image to watch video clip.
 - Visualization (Matplotlib, Seaborn)
 
 4. Complex image processing
-[![Analsis DEMO](..\img\plant_analysis.gif)] 
+![Analsis DEMO](..\img\plant_analysis.gif)]
 - Instant Segmentation ([Custom-made Holystic Image Class](https://github.com/HexaFarms/openHexa))
 - Image-tabular data combined Classification 
 - Time-series analysis for growth
