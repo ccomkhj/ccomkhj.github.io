@@ -17,41 +17,44 @@ Click the image to watch video clip.
 - Trajectory planning ([Drone control using ROS2](https://github.com/ccomkhj/tello_ros_drone))
 - Object detection ([Customized YOLOv5](https://github.com/HexaFarms/yolov5))
 - Localization ([Drone-Visual SLAM in farming](https://github.com/ccomkhj/ORB_SLAM3))
-- Structure from Motion ([Point Cloud Processing](https://github.com/ccomkhj/PCL_Plants))
+- Structure from Motion ([Point Cloud Processing](https://github.com/ccomkhj/PCL_Plants)) \
+<i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 2. 3D reconstruction \
 [![3D reconstruction DEMO](..\img\reconstruction.PNG)](https://youtu.be/Ypbvzz4kERU "3D Reconstruction Demo") \
-Click the image to watch video clip. 
+Click the image to watch video clip. \
+<i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 3. Data Science \
 [![Data Science DEMO](..\img\DataScience.png)](https://www.youtube.com/watch?v=0BWNJPVAx4I/ "DataScience Demo") \
 Click the image to watch video clip. 
 - Image Segmentation ([Holystic Image Class](https://github.com/HexaFarms/openHexa))
 - Data Processing (Pandas)
-- Visualization (Matplotlib, Seaborn)
+- Visualization (Matplotlib, Seaborn) \
+<i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 4. Complex image processing
 ![Analsis DEMO](..\img\plant_analysis.gif)]
 - Instant Segmentation ([Custom-made Holystic Image Class](https://github.com/HexaFarms/openHexa))
 - Image-tabular data combined Classification 
-- Time-series analysis for growth
-
+- Time-series analysis for growth \
+<i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 ## II. More Source Codes
 
-1. [Compute pixel's actual dimension](https://github.com/ccomkhj/Pixel_Area)
-2. [YOLO data generator](https://github.com/ccomkhj/YOLO_data_generator)
-3. [Image classification & mass estimation based on segmentation mask](https://github.com/ccomkhj/classify_seg_mask)
-4. [Image cropping for generating training samples](https://github.com/ccomkhj/crop_generator)
-5. [Annotation Convertor for COCO dataset](https://github.com/ccomkhj/COCO2MASK-Converter)
-6. [Image Segmentation using Graph-cut](https://github.com/HexaFarms/GraphCut)
-7. [Image toolkit for masking process](https://github.com/ccomkhj/palette)
+1. [openHexa](https://github.com/HexaFarms/openHexa)
+2. [cvOps](https://github.com/ccomkhj/cvOps)
+3. [Compute pixel's actual dimension](https://github.com/ccomkhj/Pixel_Area)
+4. [YOLO data generator](https://github.com/ccomkhj/YOLO_data_generator)
+5. [Image classification & mass estimation based on segmentation mask](https://github.com/ccomkhj/classify_seg_mask)
+6. [Image cropping for generating training samples](https://github.com/ccomkhj/crop_generator)
+7. [Image Segmentation using Graph-cut](https://github.com/HexaFarms/GraphCut)
 8. [Wildfire prediction using timeseires data](https://github.com/ccomkhj/Spot-Challenge-Wildfires)
-9. [Plant dieses classification](https://github.com/HexaFarms/MMClassification)
 
 ## III. Research
 1. [Deep Learning-Based Semiautomatic Generation of HD maps from Aerial Imagery, Master thesis ](https://drive.google.com/file/d/1q3pC5JXqJ754aHP2aQnkhm1GepznGFO5/view?usp=sharing) \
 Sharing the source code requires approval of the institute, ika. Contact me if you are interested in the algorithm in detail.
+2. Deep Aerial Mapper: TBD
 
 ## IV. Learning
 
