@@ -4,7 +4,8 @@ classes: wide
 title:  "Journey to Flow state"
 ---
 
-In positive psychology, a flow state, also known colloquially as being in the zone, is the mental state in which a person performing some activity is fully immersed in a feeling of energized focus, full involvement, and enjoyment in the process of the activity. -Wikipedia </br>
+In positive psychology, a flow state, also known colloquially as being in the zone, is the mental state in which a person performing some activity is fully immersed in a feeling of energized focus, full involvement, and enjoyment in the process of the activity. -Wikipedia 
+
 Flow is an amazing state because one can not only complete immense work-loads, but also fulfill the creative works, too.
 I could and can jump into the flow state in certain work domains depends on when and what.
 When I explore the derivation of mathematics, then I used to lose the track of time.
