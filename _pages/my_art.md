@@ -34,18 +34,18 @@ Click the image to watch video clip.
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 4. Complex image processing
-![Analsis DEMO](..\img\plant_analysis.gif)]
+![Analsis DEMO](..\img\plant_analysis.gif)
 - Instant Segmentation ([Custom-made Holystic Image Class](https://github.com/HexaFarms/openHexa))
 - Image-tabular data combined Classification 
 - Time-series analysis for growth \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
-5. Web application 
-![UMS](..\img\ums.png)
-- Database setup
-- LiveView
-- Authentification
-- Interaction with other services (Apache Airflow, MLservices, Docker Swarm) 
+5. Web application \
+[![UMS](..\img\ums.png)](https://ums.hexafarms.com "User Management System") 
+- Database/Ecto setup
+- LiveView & Controller
+- User Authentification
+- Interaction with other services (Apache Airflow, MLservices, Docker Swarm) \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 ## II. More Source Codes
