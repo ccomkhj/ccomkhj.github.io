@@ -18,16 +18,17 @@ There are gray areas that could be properly analyzed and solved, only if one has
 
 ### My journey
 * Born in South Korea
-* Studied Mechanical engineering
+* Studied Mechanical engineering at one of the top Universities (SKKU)
 * Served in special force
 * Became a hotelier in Australia after military service
 * Taught math at Anyang middle school
-* Led the development of electric vehicles in Hyundai motor
+* Led the data science in the manufacturing of electric vehicles in Hyundai motors
 * Realized the power of AI 
-* Studied Robotics in Germany 
-* Accomplished master program fastest, best
+* Studied Robotics at one of the top Universities in Germany (RWTH) 
+* Accomplished master's program as No.1 (fastest graduate with the best grade)
 * Researched computer vision
-* Published open source-focused research paper: Deep Aerial Mapper
 * Founded a [startup](https://www.hexafarms.com)
-* Understanding customers, market
-* Creating a product which customers want
+* Got into [Techstars](https://www.techstars.com/) (one of top startup out of 6000 startups all over the world) 
+* Published open source-focused research paper: Deep Aerial Mapper
+* Developed software customers love (4k MRR in 7 months) 
+* Polishing a product what customers want + Scaling a business

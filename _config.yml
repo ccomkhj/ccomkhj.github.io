@@ -16,11 +16,11 @@ minimal_mistakes_skin    : "dark" # "air", "aqua", "contrast", "dark", "dirt", "
 
 # Site Settings
 locale                   : "en-US"
-title                    : "being a programmer-writer"
+title                    : "pile of thoughts"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Huijo Kim"
-description              : "my website."
+description              : "personal website"
 url                      : "https://ccomkhj.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"

@@ -2,6 +2,8 @@
 layout: single
 classes: wide
 title:  "How brain changes"
+tags:
+  - comments
 ---
 
 Brain's depth has become shallow.
