@@ -9,8 +9,8 @@ Let's start with the most common example: I.
 
 In some countries, testing one's characteristics is very famous. 
 You or your friends can follow the survey sheet about how you would behave or think in certain circumstances.
-After 5 - 20 minutes of surveys, one's characteristics is evaluated into 16 categories.
-Since there are lots of great sources, here I simply share this [blog](https://TBD.com).
+After 5 - 20 minutes of surveys, one's characteristics are evaluated into 16 categories.
+Since there are lots of great sources, here I simply share this [blog](https://www.16personalities.com/free-personality-test).
 
 What triggers me to write this essay is I have had multiple characteristics over time.
 It could be the one I feel, and the talks I heard from friends.
@@ -20,7 +20,7 @@ But when the threshold time value is reached, I liked the guest and treated her/
 I found it not good so I did my best to change my character since I entered college.
 I moved to a new city. I left my hometown, my family, and my friends.
 The new environment is literally completely "new".
-The amount of energy in converting me is much cheaper in this case because I don't have to consider others' view.
+The amount of energy in converting me is much cheaper in this case because I don't have to consider others' views.
 Everybody will see me as the one who behaves today.
 
 In my early 20's, my fake extroverted-, insider campus life began.
