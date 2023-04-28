@@ -14,6 +14,13 @@ There are still big rooms for a better world.
 Interdisciplinary research is a key to accomplishing it, but there is a limit to achieving it by communicating with experts in another domain. \
 There are gray areas that could be properly analyzed and solved, only if one has a profound understanding of multiple domains. 
 
+
+<figure>
+    <img src="..\img\penguins_time_square.png"  alt="different penguin" width="300" height="300">
+    <figcaption>1% difference makes everything.</figcaption>
+</figure>
+
+
 ### Learning is the joy of living. Growing up is the reason for my life. Looking for the opportunity to grow together.
 
 ### My journey
@@ -31,4 +38,10 @@ There are gray areas that could be properly analyzed and solved, only if one has
 * Got into [Techstars](https://www.techstars.com/) (one of top startup out of 6000 startups all over the world) 
 * Published open source-focused research paper: Deep Aerial Mapper
 * Developed software customers love (4k MRR in 7 months) 
-* Polishing a product what customers want + Scaling a business
+* Discovering & fast-building product customers want
+* Scaling a business
+
+<figure>
+    <img src="..\img\bird_aquarium.png"  alt="bird in aquarium" width="500" height="500">
+    <figcaption>A bird lives within an aquarium. But the computer gives super power to learn and help others.</figcaption>
+</figure>

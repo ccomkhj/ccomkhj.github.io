@@ -43,9 +43,15 @@ Click the image to watch video clip.
 5. Web application \
 [![UMS](..\img\ums.png)](https://ums.hexafarms.com "User Management System") 
 - Database/Ecto setup
-- LiveView & Controller
-- User Authentification
-- Interaction with other services (Apache Airflow, MLservices, Docker Swarm) \
+- Fullstack Development
+- Interaction with external services (Apache Airflow, MLservices, Docker Swarm) \
+<i>developed at [hexafarms](https://www.hexafarms.com)</i>
+
+6. LLM powered web chatbot \
+[![UMS](..\img\hexaGPT.png)](https://www.youtube.com/watch?v=DuGfEOmKQTc "plant-specialized GPT") 
+- Natural Language Processing, Word Embedding
+- Fullstack Development
+- Query Optimization \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 ## II. More Source Codes
@@ -80,3 +86,9 @@ Sharing the source code requires approval of the institute, ika. Contact me if y
 12. [Airflow, Udemy](https://zesty-diagnostic-d99.notion.site/Apache-Airflow-204dce0a034c43559ed4f73863128de2)
 13. [Open3d](https://zesty-diagnostic-d99.notion.site/Open3D-9f366a54e9354893a1a3955107960b9d)
 14. [Elixir, Phoenix](https://zesty-diagnostic-d99.notion.site/Elixir-1a41eb484826417ab1975339abc1d3a1)
+
+
+<figure>
+    <img src="..\img\drinking_wine.png"  alt="wine at cafe" width="500" height="500">
+    <figcaption>I learn hard and apply the knowledge assiduously. But I still relish chill, too.</figcaption>
+</figure>
