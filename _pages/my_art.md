@@ -42,15 +42,15 @@ Click the image to watch video clip.
 
 5. Web application \
 [![UMS](..\img\ums.png)](https://ums.hexafarms.com "User Management System") 
-- Database/Ecto setup
-- Fullstack Development
+- Database setup
+- Authentification
 - Interaction with external services (Apache Airflow, MLservices, Docker Swarm) \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 6. LLM powered web chatbot \
-[![UMS](..\img\hexaGPT.png)](https://www.youtube.com/watch?v=DuGfEOmKQTc "plant-specialized GPT") 
+[![GPT](..\img\hexaGPT.png)](https://www.youtube.com/watch?v=DuGfEOmKQTc "plant-specialized GPT") 
 - Natural Language Processing, Word Embedding
-- Fullstack Development
+- Design Concurrency Functionality
 - Query Optimization \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
