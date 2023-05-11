@@ -40,7 +40,7 @@ Click the image to watch video clip.
 - Time-series analysis for growth \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
-5. Web application \
+5. Web application: Sensor and User accounts management \
 [![UMS](..\img\ums.png)](https://ums.hexafarms.com "User Management System") 
 - Database setup
 - Authentification
