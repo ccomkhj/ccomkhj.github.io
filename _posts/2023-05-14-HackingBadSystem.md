@@ -42,5 +42,5 @@ Just run it in a cloud machine or your workstation in the work space.
 If you are not a programmer, feel free to contact me, I'm more than happy to help you.
 
 Curretnly, there's no IP blocking system, so you can send the form to the system every ~3 seconds.
-I don't think they can block IP because users have to send the form all the time.
-If IP blocking starts, I will make another hack-VPN trick, too.
+
+P.S. I cracked the system and book the appointment in 72 hours.

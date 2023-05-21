@@ -54,6 +54,10 @@ Click the image to watch video clip.
 - Query Optimization \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
+7. MLOPs&HyperParameter Tuning \
+![MLOPs](..\img\mlflow.png)
+- Only Opensource-based full MLOps-HyperParameter tuning pipeline
+
 ## II. More Source Codes
 
 1. [openHexa](https://github.com/HexaFarms/openHexa)
@@ -64,6 +68,8 @@ Click the image to watch video clip.
 6. [Image cropping for generating training samples](https://github.com/ccomkhj/crop_generator)
 7. [Image Segmentation using Graph-cut](https://github.com/HexaFarms/GraphCut)
 8. [Wildfire prediction using timeseires data](https://github.com/ccomkhj/Spot-Challenge-Wildfires)
+9. [MLflow+HyperOpt+MMOpenLab wraper](https://github.com/ccomkhj/hyperoptmm/)
+10. [Berlin Reservation Bot](https://github.com/ccomkhj/berlin-auslaenderbehorde-termin-bot)
 
 ## III. Research
 1. [Deep Learning-Based Semiautomatic Generation of HD maps from Aerial Imagery, Master thesis ](https://drive.google.com/file/d/1q3pC5JXqJ754aHP2aQnkhm1GepznGFO5/view?usp=sharing) \
