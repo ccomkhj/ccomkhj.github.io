@@ -14,6 +14,17 @@
 # remote_theme           : "mmistakes/minimal-mistakes"
 minimal_mistakes_skin    : "sunrise" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
+collections:
+  category:
+    output: true
+    permalink: /category/:name/
+
+  blog:
+    output: true
+    permalink: /blog/:path/
+
+
+
 # Site Settings
 locale                   : "en-US"
 title                    : "pile of thoughts"
