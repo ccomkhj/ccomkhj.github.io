@@ -63,6 +63,7 @@ Click the image to watch video clip.
 - Feature based Imputation (Transformer/ML-based, statistic) 
 - Future forecasting
 - XAI (Explainable AI) to understand why model performs better and worse
+<i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 ## II. More Source Codes
 
