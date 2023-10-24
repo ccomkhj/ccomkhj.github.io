@@ -59,7 +59,7 @@ Click the image to watch video clip.
 - Only Opensource-based full MLOps-HyperParameter tuning pipeline
 
 8. Time-series Forecast \
-![Timeseries][..\img\tsforecast.gif]
+![Timeseries](..\img\tsforecast.gif)
 - Feature based Imputation (Transformer/ML-based, statistic) 
 - Future forecasting
 - XAI (Explainable AI) to understand why model performs better and worse

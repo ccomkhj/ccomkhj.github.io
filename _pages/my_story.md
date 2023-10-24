@@ -11,7 +11,7 @@ Who am I?
 There are still big rooms for a better world. 
 
 ### Want to be a polymath, rather than a specialist.
-Interdisciplinary research is a key to accomplishing it, but there is a limit to achieving it by communicating with experts in another domain. \
+Interdisciplinary research is a key, but there is a limit to achieving it by only communicating with experts in another domain. \
 There are gray areas that could be properly analyzed and solved, only if one has a profound understanding of multiple domains. 
 
 
@@ -37,9 +37,8 @@ There are gray areas that could be properly analyzed and solved, only if one has
 * Founded a [startup](https://www.hexafarms.com)
 * Got into [Techstars](https://www.techstars.com/) (one of top startup out of 6000 startups all over the world) 
 * Published open source-focused research paper: Deep Aerial Mapper
-* Developed software customers love (4k MRR in 7 months) 
-* Discovering & fast-building product customers want
-* Scaling a business
+* Developing software customers love (4k MRR in 7 months) 
+* Building business that matters in the world
 
 <figure>
     <img src="..\img\bird_aquarium.png"  alt="bird in aquarium" width="500" height="500">
