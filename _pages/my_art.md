@@ -60,6 +60,7 @@ Click the image to watch video clip.
 
 8. Time-series Forecast \
 ![Timeseries](..\img\tsforecast.gif)
+- Develop domain knowledge-supported custom ML [MultiConstrainedLinearRegression](https://github.com/ccomkhj/constrained-linear-regression) 
 - Feature based Imputation (Transformer/ML-based, statistic) 
 - Future forecasting
 - XAI (Explainable AI) to understand why model performs better and worse
@@ -68,15 +69,16 @@ Click the image to watch video clip.
 ## II. More Source Codes
 
 1. [openHexa](https://github.com/HexaFarms/openHexa)
-2. [cvOps](https://github.com/ccomkhj/cvOps)
-3. [Compute pixel's actual dimension](https://github.com/ccomkhj/Pixel_Area)
-4. [YOLO data generator](https://github.com/ccomkhj/YOLO_data_generator)
-5. [Image classification & mass estimation based on segmentation mask](https://github.com/ccomkhj/classify_seg_mask)
-6. [Image cropping for generating training samples](https://github.com/ccomkhj/crop_generator)
-7. [Image Segmentation using Graph-cut](https://github.com/HexaFarms/GraphCut)
-8. [Wildfire prediction using timeseires data](https://github.com/ccomkhj/Spot-Challenge-Wildfires)
-9. [MLflow+HyperOpt+MMOpenLab wraper](https://github.com/ccomkhj/hyperoptmm/)
-10. [Berlin Reservation Bot](https://github.com/ccomkhj/berlin-auslaenderbehorde-termin-bot)
+2. [MultiConstrainedLinearRegression](https://github.com/ccomkhj/constrained-linear-regression) 
+3. [cvOps](https://github.com/ccomkhj/cvOps)
+4. [Compute pixel's actual dimension](https://github.com/ccomkhj/Pixel_Area)
+5. [YOLO data generator](https://github.com/ccomkhj/YOLO_data_generator)
+6. [Image classification & mass estimation based on segmentation mask](https://github.com/ccomkhj/classify_seg_mask)
+7. [Image cropping for generating training samples](https://github.com/ccomkhj/crop_generator)
+8. [Image Segmentation using Graph-cut](https://github.com/HexaFarms/GraphCut)
+9. [Wildfire prediction using timeseires data](https://github.com/ccomkhj/Spot-Challenge-Wildfires)
+10. [MLflow+HyperOpt+MMOpenLab wraper](https://github.com/ccomkhj/hyperoptmm/)
+11. [Berlin Reservation Bot](https://github.com/ccomkhj/berlin-auslaenderbehorde-termin-bot)
 
 ## III. Research
 1. [Deep Learning-Based Semiautomatic Generation of HD maps from Aerial Imagery, Master thesis ](https://drive.google.com/file/d/1q3pC5JXqJ754aHP2aQnkhm1GepznGFO5/view?usp=sharing) \
