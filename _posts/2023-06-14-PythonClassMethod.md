@@ -1,7 +1,10 @@
 ---
 layout: single
 permalink: /blog
-taxonomy: programming
+author: Huijo
+date: 2023-06-14
+tags:
+   - Technology
 classes: wide
 title:  Python Class Method
 ---

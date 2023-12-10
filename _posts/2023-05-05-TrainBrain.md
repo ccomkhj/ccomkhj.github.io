@@ -1,6 +1,10 @@
 ---
 layout: single
 classes: wide
+author: Huijo
+date: 2023-05-05
+tags:
+   - Life
 title:  "Train Brain first"
 ---
 

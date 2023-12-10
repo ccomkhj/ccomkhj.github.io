@@ -1,6 +1,10 @@
 ---
 layout: single
 classes: wide
+author: Huijo
+date: 2023-05-11
+tags:
+   - Technology
 title:  "Relation between Writing and Thinking"
 ---
 

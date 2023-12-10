@@ -3,7 +3,8 @@ layout: single
 author: Huijo
 date: 2023-09-17
 permalink: /blog
-taxonomy: [Philosophy, Work Life]
+tags:
+   - Philosophy
 classes: wide
 title:  Second Thought On Productivity
 ---

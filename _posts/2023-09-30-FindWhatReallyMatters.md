@@ -3,7 +3,8 @@ layout: single
 author: Huijo
 date: 2023-09-17
 permalink: /blog
-taxonomy: [AI, Work Life]
+tags:
+   - Technology
 classes: wide
 title:  Find out What really matters
 ---

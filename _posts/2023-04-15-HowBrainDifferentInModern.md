@@ -1,6 +1,10 @@
 ---
 layout: single
 classes: wide
+author: Huijo
+date: 2023-04-15
+tags:
+   - Philosophy
 title:  "How brain changes"
 
 ---

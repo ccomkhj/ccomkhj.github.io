@@ -1,6 +1,10 @@
 ---
 layout: single
 classes: wide
+author: Huijo
+date: 2023-05-21
+tags:
+   - Business
 title:  "Second Thought: Gig Economy"
 ---
 

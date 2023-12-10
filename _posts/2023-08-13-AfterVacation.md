@@ -3,7 +3,8 @@ layout: single
 author: Huijo
 date: 2023-08-13
 permalink: /blog
-taxonomy: [Philosophy, Work Life]
+tags:
+   - Life
 classes: wide
 title:  How to control your mindset after vacation
 ---
@@ -15,7 +16,7 @@ It is very likely to happen because my bio-rhythm has changed to another version
 So, it's time to reset the rhythm into the efficient version of handling your work life.
 One of my work philosophies is that one could feel the satisfaction of life through fulfilling your standard.
 
-The moment you pass your examination is exciting because this is the result of your fulfilliation.
+The moment you pass your examination is exciting because this is the result of your fullfiliation.
 The moment of hearing "yes" from your life-partner after proposing is exciting for the same reason.
 
 In the usual-days, when you lie on the bed after crossing all TODOs is magnificent since you have made it.

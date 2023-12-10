@@ -1,7 +1,10 @@
 ---
 layout: single
 permalink: /blog
-taxonomy: philosophy
+author: Huijo
+date: 2023-06-22
+tags:
+   - Philosophy
 classes: wide
 title:  What makes difference in Business tip and travel
 ---

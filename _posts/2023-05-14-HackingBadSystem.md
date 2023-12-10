@@ -1,5 +1,9 @@
 ---
 layout: single
+author: Huijo
+date: 2023-05-14
+tags:
+   - Business
 classes: wide
 title:  "Is Hacking Bad System Fine? "
 ---
