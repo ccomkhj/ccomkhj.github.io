@@ -31,8 +31,9 @@ Born in South Korea, my journey led me from mechanical engineering at SKKU to se
 
 This experience fueled my pursuit of AI, leading me to Germany's RWTH for a master's in Robotics. Emerging as the NO.1 graduate, I specialized in computer vision. Harnessing this expertise, I co-founded a [startup](https://www.hexafarms.com), which not only thrived in the [Techstars](https://www.techstars.com/) program but also raised an impressive 1.2 Million Euros.
 
-Contributing to academia, I published "Deep Aerial Mapper." Simultaneously, my startup achieved a $4k Monthly Recurring Revenue in seven months. Today, my focus is on building a business that matters, leveraging AI for meaningful impact, and exploring collaborative growth opportunities.
+Contributing to academia, I published "Deep Aerial Mapper." Simultaneously, my startup achieved a $4k Monthly Recurring Revenue in seven months. Today, my focus is on building a business that matters to the world, leveraging AI for meaningful impact, and exploring collaborative growth opportunities.
 
+[My narrative](https://www.worldjob.or.kr/info/bbs/ovseaAdvnStry/view.do?menuId=1000006395&bbscttNo=192537) has been honored as the top story by the Human Resources Development Service of Korea (HRDK) and is currently featured on their official website. (Please be aware that it is written in Korean).
 
 <figure>
     <img src="..\img\bird_aquarium.png"  alt="bird in aquarium" width="500" height="500">
