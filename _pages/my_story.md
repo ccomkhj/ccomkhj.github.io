@@ -31,9 +31,9 @@ Learning is the joy of living. Growing up is the reason for my life. Looking for
 - **Research Engineer Hyundai Motors**, embracing the transformative potential of data science in car manufacturing.
 - **Graduate MSc (Robotics) at RWTH (Germany)**, integrating professional and academics.
 - **Deep Aerial Mapper**, Co-authored with the thesis supervisor contributing to both the academic community and practical applications.
-- **The entrepreneurial journey** began with the co-foundation of a [startup](https://www.hexafarms.com), selected in [Techstars](https://www.techstars.com/) program and then succeeded in raising an impressive 1.2 Million Euros.
 - **Zero to One**, My startup swiftly achieved a **$4k MRR** in seven months, testament to our innovative solutions and market fit.
 - Laser-focus on **building a business that matters**, exploring collaborative growth opportunities.
+- **The entrepreneurial journey** began with the co-foundation of a [startup](https://www.hexafarms.com), selected in [Techstars](https://www.techstars.com/) program and then succeeded in raising 1.3 Million Euros in [pre-seed](https://www.eu-startups.com/2024/05/berlin-based-agtech-hexafarms-secures-e1-3-million-pre-seed-to-empower-commercial-indoor-farmers/).
 
 [My narrative](https://www.worldjob.or.kr/info/bbs/ovseaAdvnStry/view.do?menuId=1000006395&bbscttNo=192537) has been listed as the top story by the Human Resources Development Service of Korea (HRDK). (Published in Korean.)
 
