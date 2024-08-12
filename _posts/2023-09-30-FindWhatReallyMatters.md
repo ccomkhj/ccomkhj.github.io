@@ -1,8 +1,7 @@
 ---
 layout: single
 author: Huijo
-date: 2023-09-17
-permalink: /blog
+date: 2023-09-30
 tags:
    - Technology
 classes: wide

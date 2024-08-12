@@ -2,7 +2,6 @@
 layout: single
 author: Huijo
 date: 2023-08-13
-permalink: /blog
 tags:
    - Life
 classes: wide

@@ -2,7 +2,6 @@
 layout: single
 author: Huijo
 date: 2024-02-19
-permalink: /blog
 tags:
    - Work
 classes: wide

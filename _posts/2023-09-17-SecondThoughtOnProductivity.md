@@ -2,7 +2,6 @@
 layout: single
 author: Huijo
 date: 2023-09-17
-permalink: /blog
 tags:
    - Philosophy
 classes: wide
