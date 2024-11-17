@@ -101,7 +101,7 @@ Click the image to watch video clip.
 ## III. Research
 1. [Deep Learning-Based Semiautomatic Generation of HD maps from Aerial Imagery, Master thesis ](https://drive.google.com/file/d/1q3pC5JXqJ754aHP2aQnkhm1GepznGFO5/view?usp=sharing) \
 Sharing the source code requires approval of the institute, ika. Contact me if you are interested in the algorithm in detail.
-2. Deep Aerial Mapper: TBD
+2. [Deep Aerial Mapper](https://www.arxiv.org/abs/2410.00769)
 
 ---
 
