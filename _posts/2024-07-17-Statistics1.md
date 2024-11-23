@@ -59,7 +59,7 @@ Typically, a sample is drawn to measure something (using a sample statistic) or 
 
 ## Standard Error
 
-The standard error succinctly summarizes the variability within the sampling distribution of a statistic. It can be estimated using the sample's standard deviation \(s\) and the sample size \(n\). As the sample size increases, the standard error decreases, following the square-root of \(n\) rule: reducing the standard error by a factor of 2 requires increasing the sample size by a factor of 4.
+The standard error succinctly summarizes the variability within the sampling distribution of a statistic. It can be estimated using the sample's standard deviation $$s$$ and the sample size $$n$$. As the sample size increases, the standard error decreases, following the square-root of $$n$$ rule: reducing the standard error by a factor of 2 requires increasing the sample size by a factor of 4.
 
 > **Note:** Do not confuse standard deviation (which measures the variability of individual data points) with standard error (which measures the variability of a sample metric).
 
@@ -75,12 +75,12 @@ Frequency tables, histograms, boxplots, and standard errors are tools to underst
 
 Confidence intervals come with a coverage level, expressed as a high percentage, such as 90% or 95%. A 90% confidence interval, for instance, encloses the central 90% of the bootstrap sampling distribution of a sample statistic.
 
-Given a sample of size \(n\) and a sample statistic of interest, the algorithm for a bootstrap confidence interval is as follows:
-1. Draw a random sample of size \(n\) with replacement from the data (a resample).
+Given a sample of size $$n$$ and a sample statistic of interest, the algorithm for a bootstrap confidence interval is as follows:
+1. Draw a random sample of size $$n$$ with replacement from the data (a resample).
 2. Record the statistic of interest for the resample.
 3. Repeat steps 1–2 multiple (R) times.
-4. For an \(x\%\) confidence interval, trim \(\left[\left(1 - \frac{x}{100}\right) / 2\right]\%\) of the \(R\) resample results from both ends of the distribution.
-5. The trim points are the endpoints of an \(x\%\) bootstrap confidence interval.
+4. For an $$x\%$$ confidence interval, trim $$\left[\left(1 - \frac{x}{100}\right) / 2\right]\%$$ of the $$R$$ resample results from both ends of the distribution.
+5. The trim points are the endpoints of an $$x\%$$ bootstrap confidence interval.
 
 > **Note:** While the desired question when obtaining a sample result is often “What is the probability that the true value lies within a certain interval?”, a confidence interval does not directly answer this. Instead, it answers a related probability question framed in terms of the sampling procedure and population.
 
@@ -92,7 +92,7 @@ The t-distribution is a normal-like distribution with thicker and longer tails. 
 
 Many processes randomly produce events at a given overall rate—such as visitors arriving at a website or typos per 100 lines of code. From past data, we can estimate the average number of events per unit time or space, but we might also want to understand the variability from one unit to another. The Poisson distribution provides the distribution of events per unit time/space when sampling many such units, useful in queuing problems like determining capacity needs to confidently handle internet traffic over a specific period.
 
-The key parameter in a Poisson distribution is (λ) (lambda), representing the mean number of events per specified interval. The variance of a Poisson distribution is also (λ).
+The key parameter in a Poisson distribution is $$λ$$ (lambda), representing the mean number of events per specified interval. The variance of a Poisson distribution is also $$λ$$.
 
 - **Lambda (λ):** The rate (per unit of time or space) at which events occur.
 - **Poisson distribution:** The frequency distribution of the number of events in sampled units of time or space.
@@ -101,4 +101,4 @@ The key parameter in a Poisson distribution is (λ) (lambda), representing the m
 
 ## Estimating the Failure Rate
 
-In many applications, the event rate \(λ\) is either known or can be estimated from prior data. However, for rare events like aircraft engine failure, there might be insufficient data for precise estimates. Without data, estimating an event rate is challenging, but assumptions can be made: for instance, if no failures are observed over 20 hours, the failure rate is unlikely to be 1 per hour. Through simulation or probability calculations, hypothetical event rates can be assessed to estimate threshold values. When some data exists but isn't enough for a reliable rate estimate, a goodness-of-fit test (e.g., Chi-Square Test) can be used to evaluate how well various rates fit the observed data.
+In many applications, the event rate $$λ$$ is either known or can be estimated from prior data. However, for rare events like aircraft engine failure, there might be insufficient data for precise estimates. Without data, estimating an event rate is challenging, but assumptions can be made: for instance, if no failures are observed over 20 hours, the failure rate is unlikely to be 1 per hour. Through simulation or probability calculations, hypothetical event rates can be assessed to estimate threshold values. When some data exists but isn't enough for a reliable rate estimate, a goodness-of-fit test (e.g., Chi-Square Test) can be used to evaluate how well various rates fit the observed data.
