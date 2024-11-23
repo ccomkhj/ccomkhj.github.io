@@ -27,6 +27,7 @@ The Poisson distribution is utilized to model the number of events that occur wi
 In agricultural yield prediction, the **Gaussian distribution** (or normal distribution) serves as a crucial tool. A **multimodal Gaussian distribution** is indicative of data exhibiting multiple peaks, signaling the presence of distinct sub-groups or cycles in yield patterns.
 
 #### Why Use Multimodal Gaussian Distribution?
+
 - **Complex Patterns:** Captures the complexity of strawberry yield waves, with multiple peaks reflecting different growth phases throughout the season.
 - **Wave Modeling:** Effectively models yield variations, essential for understanding seasonal production dynamics.
 
