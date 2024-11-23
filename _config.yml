@@ -301,7 +301,7 @@ defaults:
       comments: true
       share: true
       related: true
-      mathjax: true
+      mathjax: false # keep it true only when math equation is used.
       show_date: ture
   # _pages
   - scope:
@@ -310,3 +310,4 @@ defaults:
     values:
       layout: single
       author_profile: true
+      mathjax: false # keep it true only when math equation is used.

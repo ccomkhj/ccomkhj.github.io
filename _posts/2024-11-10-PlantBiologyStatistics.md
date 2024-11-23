@@ -5,6 +5,7 @@ date: 2024-11-10
 tags:
    - Study
 classes: wide
+mathjax: true
 title: Understanding Strawberry Yields with Statistical Distributions
 ---
 ### Introducing Statistical Distributions in Agriculture

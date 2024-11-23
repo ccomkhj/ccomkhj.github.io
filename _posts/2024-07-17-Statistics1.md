@@ -6,6 +6,7 @@ tags:
    - Study
 classes: wide
 title:  Statistics 1
+mathjax: true
 ---
 
 ### State Population and Murder Rates
