@@ -91,13 +91,13 @@ The t-distribution is a normal-like distribution with thicker and longer tails. 
 
 Many processes randomly produce events at a given overall rate—such as visitors arriving at a website or typos per 100 lines of code. From past data, we can estimate the average number of events per unit time or space, but we might also want to understand the variability from one unit to another. The Poisson distribution provides the distribution of events per unit time/space when sampling many such units, useful in queuing problems like determining capacity needs to confidently handle internet traffic over a specific period.
 
-The key parameter in a Poisson distribution is \(\lambda\) (lambda), representing the mean number of events per specified interval. The variance of a Poisson distribution is also \(\lambda\).
+The key parameter in a Poisson distribution is (λ) (lambda), representing the mean number of events per specified interval. The variance of a Poisson distribution is also (λ).
 
-- **Lambda (\(\lambda\)):** The rate (per unit of time or space) at which events occur.
+- **Lambda (λ):** The rate (per unit of time or space) at which events occur.
 - **Poisson distribution:** The frequency distribution of the number of events in sampled units of time or space.
 - **Exponential distribution:** The frequency distribution of the time or distance from one event to the next event.
 - **Weibull distribution:** A generalized version of the exponential, where the event rate may shift over time.
 
 ## Estimating the Failure Rate
 
-In many applications, the event rate \(\lambda\) is either known or can be estimated from prior data. However, for rare events like aircraft engine failure, there might be insufficient data for precise estimates. Without data, estimating an event rate is challenging, but assumptions can be made: for instance, if no failures are observed over 20 hours, the failure rate is unlikely to be 1 per hour. Through simulation or probability calculations, hypothetical event rates can be assessed to estimate threshold values. When some data exists but isn't enough for a reliable rate estimate, a goodness-of-fit test (e.g., Chi-Square Test) can be used to evaluate how well various rates fit the observed data.
+In many applications, the event rate \(λ\) is either known or can be estimated from prior data. However, for rare events like aircraft engine failure, there might be insufficient data for precise estimates. Without data, estimating an event rate is challenging, but assumptions can be made: for instance, if no failures are observed over 20 hours, the failure rate is unlikely to be 1 per hour. Through simulation or probability calculations, hypothetical event rates can be assessed to estimate threshold values. When some data exists but isn't enough for a reliable rate estimate, a goodness-of-fit test (e.g., Chi-Square Test) can be used to evaluate how well various rates fit the observed data.

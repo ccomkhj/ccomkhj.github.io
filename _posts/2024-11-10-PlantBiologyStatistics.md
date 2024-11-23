@@ -15,9 +15,11 @@ In data analysis, understanding the patterns of crop yields is essential for eff
 
 The Poisson distribution is utilized to model the number of events that occur within a fixed interval of time or space, especially suitable for rare or sporadic events. In the context of strawberry cultivation, this distribution effectively models the frequency of bee visits to flowers, an essential component of the pollination process.
 
-#### Application in Bee Pollination:
+#### Application in Bee Pollination
+
 - **Event Modeling:** Bee visitation to strawberry flowers is a rare, time-bound event well-modeled by the Poisson distribution, making it useful for predicting pollination success and subsequent fruit development.
-- **Example:** When the number of bees matches the number of strawberry plants in a greenhouse, the average visitation frequency, \( \lambda \), is approximately 4.5 times per day, modeled as Poisson \(X_n \sim P(\lambda)\), capturing the independent and seemingly random nature of these visits.
+
+- **Example:** When the number of bees matches the number of strawberry plants in a greenhouse, the average visitation frequency, λ, is approximately 4.5 times per day, modeled as Poisson \(X_n \sim P(λ)\), capturing the independent and seemingly random nature of these visits.
 
 ### Multimodal Gaussian Distribution
 
@@ -43,7 +45,7 @@ Researchers have utilized multimodal Gaussian distributions to model strawberry 
 
 ### Modeling Yield with Bimodal Gaussian Distribution
 
-In this study, researchers applied a bimodal Gaussian model to understand and describe the yield waves, each representing a distinct growth phase in the strawberry production cycle. Transforming this complex bimodal model into individual unimodal models offered detailed insights into specific wave characteristics such as timing \(\mu\) and production intensity (amplitude).
+In this study, researchers applied a bimodal Gaussian model to understand and describe the yield waves, each representing a distinct growth phase in the strawberry production cycle. Transforming this complex bimodal model into individual unimodal models offered detailed insights into specific wave characteristics such as timing (µ) and production intensity (amplitude).
 ### Challenges and Outlook
 
 While the Gaussian model effectively captures initial yield waves, extending this approach to later waves is challenging due to data limitations. At hexafarms, computer vision (fruit counts, stages, health and so on) and environmental values (temperature, DLI, CO2 and so on) are reflected on top of statistical approach in (time-) sequential analysis.
