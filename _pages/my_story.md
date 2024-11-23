@@ -5,32 +5,32 @@ permalink: /story/
 author_profile: true
 ---
 
-#### Embracing Polymathy: A Personal Odyssey into Interdisciplinary Mastery
+### Embracing Polymathy: A Journey of Self-Discovery
 
-Choosing the path of polymathy is a profound exploration of self. While collaboration with experts from diverse domains is undeniably crucial, the essence lies in a more personal revelation.
+Choosing to become a polymath isn’t just about learning different things; it’s about deeply understanding myself. While working with experts from different fields is important, the real journey begins within.
 
-Within the intricate tapestry of knowledge, understanding oneself becomes the anchor. Navigating through the nuanced gray areas and unraveling complexities requires not only a grasp of various domains but also a deep awareness of personal strengths and limitations.
+As I explore the vast world of knowledge, I’ve realized that knowing my own strengths and weaknesses is key. Tackling complex ideas and finding connections between different fields requires not just knowledge, but also self-awareness and honesty about my capabilities.
 
-In this unique journey, the synergy of interdisciplinary expertise and self-discovery is the compass, guiding the polymath through the uncharted territories of comprehensive knowledge. It's not just about mastering diverse fields; it's about an intimate dance between external exploration and internal understanding, creating a truly individualized approach to the pursuit of wisdom.
+For me, this journey is about more than just collecting skills from various disciplines. It’s a balance between learning from the outside world and understanding who I am on the inside. This blend of discovery—both outward and inward—is what guides me forward. It’s not just about becoming knowledgeable, but about creating a personal, meaningful path to wisdom.
 
 <figure>
     <img src="../img/penguins_time_square.png" alt="different penguin" width="300" height="300">
     <figcaption>1% Change makes great difference.</figcaption>
 </figure>
 
-Learning is the joy of living. Growing up is the reason for my life. Looking for the opportunity to grow together.
+The joy of my life is seeing people happy when they use my product.
 
 ---
 
 ### My Journey
 
 - **Serve Military Duty in the Special Forces**, instilling in me discipline, resilience, and a profound sense of duty.
-- **Adventures in Sydney, Australian**, serviving in Austraila without knowing the language, without money. learning the language and fiding jobs.
+- **Adventurous Chapter in Sydney, Australia**, arriving with neither language skills nor money, driven by the goal of securing tuition fees for college and learning the language.  
 - **Volunteer Math Teacher** for students from less fortunate families, a commitment to community.
 - **Graduate BSc (Mechanical Engineering) at SKKU (South Korea)**
-- **Research Engineer Hyundai Motors**, embracing the transformative potential of data science in car manufacturing.
-- **Graduate MSc (Robotics) at RWTH (Germany)**, integrating professional and academics.
-- **Deep Aerial Mapper**, Co-authored with the thesis supervisor contributing to both the academic community and practical applications.
+- **Worked as a Research Engineer at Hyundai Motors**, exploring the transformative role of data science in electric vehicle manufacturing.
+- **Completed an MSc in Robotics** at RWTH Aachen University (Germany), blending academic pursuits with professional experience.  
+- **Co-authored "Deep Aerial Mapper"** alongside my thesis supervisor, contributing to advancements in both academic research and real-world applications.  
 - **Zero to One**, My startup swiftly achieved a **$4k MRR** in seven months, testament to our innovative solutions and market fit.
 - Laser-focus on **building a business that matters**, exploring collaborative growth opportunities.
 - **The entrepreneurial journey** began with the co-foundation of a [startup](https://www.hexafarms.com), selected in [Techstars](https://www.linkedin.com/posts/techstars-berlin_indoorfarms-verticalindoorfarms-foodproduction-activity-6991309954343145472-c1hj?utm_source=share&utm_medium=member_desktop) program and then succeeded in raising 1.3 Million Euros in [pre-seed](https://www.eu-startups.com/2024/05/berlin-based-agtech-hexafarms-secures-e1-3-million-pre-seed-to-empower-commercial-indoor-farmers/).
