@@ -34,16 +34,16 @@ Click the image to watch video clip. \
 - Data Science \
 [![Data Science DEMO](..\img\DataScience.png)](https://www.youtube.com/watch?v=0BWNJPVAx4I/ "DataScience Demo") \
 Click the image to watch video clip. 
-  - Image Segmentation ([Holystic Image Class](https://github.com/HexaFarms/openHexa))
-  - Data Processing (Pandas)
-  - Visualization (Matplotlib, Seaborn) \
+  - [Image Segmentation](https://github.com/HexaFarms/openHexa)
+  - Data Processing 
+  - Visualization \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 ---
 
 - Image processing
 ![Analsis DEMO](..\img\plant_analysis.gif)
-  - Instant Segmentation ([Custom-made Holystic Image Class](https://github.com/HexaFarms/openHexa))
+  - [Instant Segmentation](https://github.com/HexaFarms/openHexa)
   - Image-tabular data combined Classification 
   - Time-series analysis for growth \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
@@ -68,7 +68,8 @@ Click the image to watch video clip.
 
 - MLOPs&HyperParameter Tuning \
 ![MLOPs](..\img\mlflow.png)
-  - Fully Open source-based full MLOps-HyperParameter tuning pipeline
+  - Fully Open source-based full MLOps (Version, feature control)
+  - Hyper parameter tuning with experiment tracking
 
 ---
 
@@ -76,7 +77,7 @@ Click the image to watch video clip.
 ![Timeseries](..\img\tsforecast.gif)
   - Develop domain knowledge-supported custom ML [MultiConstrainedLinearRegression](https://github.com/ccomkhj/constrained-linear-regression) 
   - Feature Engineering/Imputation (Transformer/GBT-based, statistic, plant science) 
-  - XAI (Explainable AI) to understand why model performs better or worse
+  - XAI (Explainable AI) to understand why model performs better or worse \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 ---
