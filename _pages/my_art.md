@@ -13,71 +13,70 @@ Feel free to use it to help others.
 ---
 
 ## I. Demo 
-1. Drone Vision \
+- Drone Vision \
 [![Drone Vision DEMO](..\img\demo_video.PNG)](https://youtu.be/AqAXgcsjH5k "CV Demo") \
 Click the image to watch video clip. 
-- Trajectory planning ([Drone control using ROS2](https://github.com/ccomkhj/tello_ros_drone))
-- Object detection ([Customized YOLOv5](https://github.com/HexaFarms/yolov5))
-- Localization ([Drone-Visual SLAM in farming](https://github.com/ccomkhj/ORB_SLAM3))
-- Structure from Motion ([Point Cloud Processing](https://github.com/ccomkhj/PCL_Plants)) \
+  - Trajectory planning ([Drone control using ROS2](https://github.com/ccomkhj/tello_ros_drone))
+  - Object detection ([Customized YOLOv5](https://github.com/HexaFarms/yolov5))
+  - Localization ([Drone-Visual SLAM in farming](https://github.com/ccomkhj/ORB_SLAM3))
+  - Structure from Motion ([Point Cloud Processing](https://github.com/ccomkhj/PCL_Plants)) \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 ---
 
-2. 3D reconstruction \
+- 3D reconstruction \
 [![3D reconstruction DEMO](..\img\reconstruction.PNG)](https://youtu.be/Ypbvzz4kERU "3D Reconstruction Demo") \
 Click the image to watch video clip. \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 ---
 
-3. Data Science \
+- Data Science \
 [![Data Science DEMO](..\img\DataScience.png)](https://www.youtube.com/watch?v=0BWNJPVAx4I/ "DataScience Demo") \
 Click the image to watch video clip. 
-- Image Segmentation ([Holystic Image Class](https://github.com/HexaFarms/openHexa))
-- Data Processing (Pandas)
-- Visualization (Matplotlib, Seaborn) \
+  - Image Segmentation ([Holystic Image Class](https://github.com/HexaFarms/openHexa))
+  - Data Processing (Pandas)
+  - Visualization (Matplotlib, Seaborn) \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 ---
 
-4. Image processing
+- Image processing
 ![Analsis DEMO](..\img\plant_analysis.gif)
-- Instant Segmentation ([Custom-made Holystic Image Class](https://github.com/HexaFarms/openHexa))
-- Image-tabular data combined Classification 
-- Time-series analysis for growth \
+  - Instant Segmentation ([Custom-made Holystic Image Class](https://github.com/HexaFarms/openHexa))
+  - Image-tabular data combined Classification 
+  - Time-series analysis for growth \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 ---
 
-5. Web application: Sensor and User accounts management \
+- Web application: Sensor and User accounts management \
 [![UMS](..\img\ums.png)](https://ums.hexafarms.com "User Management System") 
-- Full-stack dev \
+  - Full-stack dev \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 ---
 
-6. LLM powered web chatbot \
+- LLM powered web chatbot \
 [![GPT](..\img\hexaGPT.png)](https://www.youtube.com/watch?v=DuGfEOmKQTc "plant-specialized GPT") 
-- Natural Language Processing, Word Embedding
-- Design Concurrency Functionality
-- Prompt Engineering \
+  - Natural Language Processing, Word Embedding
+  - Design Concurrency Functionality
+  - Prompt Engineering \
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 ---
 
-7. MLOPs&HyperParameter Tuning \
+- MLOPs&HyperParameter Tuning \
 ![MLOPs](..\img\mlflow.png)
-- Fully Open source-based full MLOps-HyperParameter tuning pipeline
+  - Fully Open source-based full MLOps-HyperParameter tuning pipeline
 
 ---
 
-8. Time-series Forecast \
+- Time-series Forecast \
 ![Timeseries](..\img\tsforecast.gif)
-- Develop domain knowledge-supported custom ML [MultiConstrainedLinearRegression](https://github.com/ccomkhj/constrained-linear-regression) 
-- Feature based Imputation (Transformer/ML-based, statistic) 
-- Feature Engineering
-- XAI (Explainable AI) to understand why model performs better or worse
+  - Develop domain knowledge-supported custom ML [MultiConstrainedLinearRegression](https://github.com/ccomkhj/constrained-linear-regression) 
+  - Feature Engineering/Imputation (Transformer/GBT-based, statistic, plant science) 
+  - XAI (Explainable AI) to understand why model performs better or worse
 <i>developed at [hexafarms](https://www.hexafarms.com)</i>
 
 ---
@@ -87,14 +86,15 @@ Click the image to watch video clip.
 1. [openHexa](https://github.com/HexaFarms/openHexa)
 2. [MultiConstrainedLinearRegression](https://github.com/ccomkhj/constrained-linear-regression) 
 3. [cvOps](https://github.com/ccomkhj/cvOps)
-4. [Compute pixel's actual dimension](https://github.com/ccomkhj/Pixel_Area)
-5. [YOLO data generator](https://github.com/ccomkhj/YOLO_data_generator)
-6. [Image classification & mass estimation based on segmentation mask](https://github.com/ccomkhj/classify_seg_mask)
-7. [Image cropping for generating training samples](https://github.com/ccomkhj/crop_generator)
-8. [Image Segmentation using Graph-cut](https://github.com/HexaFarms/GraphCut)
-9. [Wildfire prediction using timeseires data](https://github.com/ccomkhj/Spot-Challenge-Wildfires)
-10. [MLflow+HyperOpt+MMOpenLab wraper](https://github.com/ccomkhj/hyperoptmm/)
-11. [Berlin Reservation Bot](https://github.com/ccomkhj/berlin-auslaenderbehorde-termin-bot)
+4. [CharucoStereoCalibrator](https://github.com/ccomkhj/Charuco_Stereo_Calibrator)
+5. [Berlin Reservation Bot](https://github.com/ccomkhj/berlin-auslaenderbehorde-termin-bot)
+6. [Compute pixel's actual dimension](https://github.com/ccomkhj/Pixel_Area)
+7. [YOLO data generator](https://github.com/ccomkhj/YOLO_data_generator)
+8. [Image classification & mass estimation based on segmentation mask](https://github.com/ccomkhj/classify_seg_mask)
+9. [Image cropping for generating training samples](https://github.com/ccomkhj/crop_generator)
+10. [Image Segmentation using Graph-cut](https://github.com/HexaFarms/GraphCut)
+11. [Wildfire prediction using timeseires data](https://github.com/ccomkhj/Spot-Challenge-Wildfires)
+12. [MLflow+HyperOpt+MMOpenLab wraper](https://github.com/ccomkhj/hyperoptmm/)
 
 ---
 

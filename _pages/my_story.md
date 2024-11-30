@@ -15,7 +15,7 @@ For me, this journey is about more than just collecting skills from various disc
 
 <figure>
     <img src="../img/penguins_time_square.png" alt="different penguin" width="300" height="300">
-    <figcaption>1% Change makes great difference.</figcaption>
+    <figcaption>1% change means more.</figcaption>
 </figure>
 
 The joy of my life is seeing people happy when they use my product.
@@ -29,13 +29,13 @@ The joy of my life is seeing people happy when they use my product.
 - **Volunteer Math Teacher** for students from less fortunate families, a commitment to community.
 - **Graduate BSc (Mechanical Engineering) at SKKU (South Korea)**
 - **Worked as a Research Engineer at Hyundai Motors**, exploring the transformative role of data science in electric vehicle manufacturing.
-- **Completed an MSc in Robotics** at RWTH Aachen University (Germany), blending academic pursuits with professional experience.  
+- **Completed an MSc in Robotics as Top** at RWTH Aachen University (Germany), blending academic pursuits with professional experience.  
 - **Co-authored "Deep Aerial Mapper"** alongside my thesis supervisor, contributing to advancements in both academic research and real-world applications.  
-- **Zero to One**, My startup swiftly achieved a **$4k MRR** in seven months, testament to our innovative solutions and market fit.
-- Laser-focus on **building a business that matters**, exploring collaborative growth opportunities.
-- **The entrepreneurial journey** began with the co-foundation of a [startup](https://www.hexafarms.com), selected in [Techstars](https://www.linkedin.com/posts/techstars-berlin_indoorfarms-verticalindoorfarms-foodproduction-activity-6991309954343145472-c1hj?utm_source=share&utm_medium=member_desktop) program and then succeeded in raising 1.3 Million Euros in [pre-seed](https://www.eu-startups.com/2024/05/berlin-based-agtech-hexafarms-secures-e1-3-million-pre-seed-to-empower-commercial-indoor-farmers/).
+- **The entrepreneurial journey** began with the co-foundation of a [startup](https://www.hexafarms.com), selected by [Techstars](https://www.linkedin.com/posts/techstars-berlin_indoorfarms-verticalindoorfarms-foodproduction-activity-6991309954343145472-c1hj?utm_source=share&utm_medium=member_desktop) program and then succeeded in raising 1.3 Million Euros in [pre-seed](https://www.eu-startups.com/2024/05/berlin-based-agtech-hexafarms-secures-e1-3-million-pre-seed-to-empower-commercial-indoor-farmers/).
+  - **Zero to One**, My startup swiftly achieved a **$4k MRR** in seven months,
+  - [My narrative](https://www.worldjob.or.kr/info/bbs/ovseaAdvnStry/view.do?menuId=1000006395&bbscttNo=192537) has been listed as the top story by HRDK (<i>Human Resources Development Service of Korea</i>). (Published in Korean.)
+  - Laser-focus on **building a business that matters**, exploring collaborative growth opportunities.
 
-[My narrative](https://www.worldjob.or.kr/info/bbs/ovseaAdvnStry/view.do?menuId=1000006395&bbscttNo=192537) has been listed as the top story by the Human Resources Development Service of Korea (HRDK). (Published in Korean.)
 
 <figure>
     <img src="../img/bird_aquarium.png" alt="bird in aquarium" width="300" height="300">
