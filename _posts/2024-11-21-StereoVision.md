@@ -2,7 +2,7 @@
 
 layout: single  
 author: Huijo  
-date: 2024-11-21  
+date: 2024-11-21
 tags:  
    - Study  
 classes: wide  

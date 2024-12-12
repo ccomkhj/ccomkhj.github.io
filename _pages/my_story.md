@@ -27,14 +27,14 @@ The joy of my life is seeing people happy when they use my product.
 - **Serve Military Duty in the Special Forces**, instilling in me discipline, resilience, and a profound sense of duty.
 - **Adventurous Chapter in Sydney, Australia**, arriving with neither language skills nor money, driven by the goal of securing tuition fees for college and learning the language.  
 - **Volunteer Math Teacher** for students from less fortunate families, a commitment to community.
-- **Graduate BSc (Mechanical Engineering) at SKKU (South Korea)**
+- **Graduate BSc (Mechanical Engineering) at SKKU (South Korea)**, dean's list.
 - **Worked as a Research Engineer at Hyundai Motors**, exploring the transformative role of data science in electric vehicle manufacturing.
 - **Completed an MSc in Robotics as Top** at RWTH Aachen University (Germany), blending academic pursuits with professional experience.  
-- **Co-authored "Deep Aerial Mapper"** alongside my thesis supervisor, contributing to advancements in both academic research and real-world applications.  
-- **The entrepreneurial journey** began with the co-foundation of a [startup](https://www.hexafarms.com), selected by [Techstars](https://www.linkedin.com/posts/techstars-berlin_indoorfarms-verticalindoorfarms-foodproduction-activity-6991309954343145472-c1hj?utm_source=share&utm_medium=member_desktop) program and then succeeded in raising 1.3 Million Euros in [pre-seed](https://www.eu-startups.com/2024/05/berlin-based-agtech-hexafarms-secures-e1-3-million-pre-seed-to-empower-commercial-indoor-farmers/).
+- **Publish research paper "[Deep Aerial Mapper](https://www.arxiv.org/abs/2410.00769)"** alongside my thesis supervisor, contributing to advancements in both academic research and real-world applications.  
+- **The entrepreneurial journey** began with the foundation of a [startup](https://www.hexafarms.com), selected by [Techstars](https://www.linkedin.com/posts/techstars-berlin_indoorfarms-verticalindoorfarms-foodproduction-activity-6991309954343145472-c1hj?utm_source=share&utm_medium=member_desktop) program and then succeeded in raising 1.3 Million Euros in [pre-seed](https://www.eu-startups.com/2024/05/berlin-based-agtech-hexafarms-secures-e1-3-million-pre-seed-to-empower-commercial-indoor-farmers/).
   - **Zero to One**, My startup swiftly achieved a **$4k MRR** in seven months,
   - [My narrative](https://www.worldjob.or.kr/info/bbs/ovseaAdvnStry/view.do?menuId=1000006395&bbscttNo=192537) has been listed as the top story by HRDK (<i>Human Resources Development Service of Korea</i>). (Published in Korean.)
-  - Laser-focus on **building a business that matters**, exploring collaborative growth opportunities.
+  - Laser-focus on **building a business that matters**, beyond Product Market Fit and scaling.
 
 
 <figure>
