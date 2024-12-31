@@ -11,6 +11,8 @@ title: Data Science in Elixir
 ## Transitioning from Python to Elixir in Data Science
 Data processing is often dominated by Python and libraries like pandas and spark. However, Elixir is emerging as a strong contender. By using Elixir throughout your application stack including the data processing, you enhance code reusability and maintainability. This blog post explores how to leverage Elixir's capabilities for data frame manipulations traditionally performed in Python, showcasing its benefits in data-intensive production scenarios.
 
+Implementation code available [here](https://github.com/ccomkhj/elixir_python)
+
 ### Setup
 
 ```elixir
