@@ -20,13 +20,13 @@ title: Conformal Prediction
 
 Quantile Regression is a method used to estimate the conditional quantiles of a response variable, such as the median or other percentiles, given a set of predictor variables. It provides a more comprehensive view of the potential outcomes compared to mean regression.
 
-The pinball loss function is central to quantile regression. For a given quantile level $\gamma$ (where $0 < \gamma < 1$), the pinball loss function is defined as:
+The pinball loss function is central to quantile regression. For a given quantile level $$\gamma$$ (where $$0 < \gamma < 1$$), the pinball loss function is defined as:
 
 $$
 L_{\gamma}(\hat{t}_{\gamma}, y) = (\gamma - \mathbf{1}_{\{y < \hat{t}_{\gamma}\}})(y - \hat{t}_{\gamma})
 $$
 
-This loss function is instrumental in estimating the quantile $t_{\gamma}(x)$.
+This loss function is instrumental in estimating the quantile $$ t_{\gamma}(x) $$.
 
 ### Conformalized Quantile Regression
 
@@ -45,7 +45,7 @@ $$
 C(x) = [\hat{t}_{\alpha/2}(x) - \hat{q}, \hat{t}_{1-\alpha/2}(x) + \hat{q}]
 $$
 
-Here, $\hat{q}$ is a conformal quantile derived from a calibration dataset, ensuring that the intervals maintain the specified coverage probability.
+Here, $$\hat{q}$$ is a conformal quantile derived from a calibration dataset, ensuring that the intervals maintain the specified coverage probability.
 
 ### Time-Series Data and Conformal Prediction
 
@@ -61,15 +61,15 @@ Conformal prediction addresses this challenge by adjusting prediction intervals 
 
 Let's introduce the temperature prediction of various locations on Earth using covariates like latitude, longitude, altitude, and atmospheric pressure. These predictions are made sequentially over time. The dependencies between nearby data points, caused by local and global weather changes, violate the standard exchangeability assumption.
 
-Consider a time-series dataset denoted as $\{(X_t, Y_t)\}_{t=1}^{T}$, where $X_t$ are tabular covariates and $Y_t \in \mathbb{R}$ are temperatures in degrees Celsius. It is critical to note that these data points are neither exchangeable nor i.i.d.; they exhibit correlation among adjacent data points.
+Consider a time-series dataset denoted as $$\{(X_t, Y_t)\}_{t=1}^{T}$$, where $$X_t$$ are tabular covariates and $$Y_t \in \mathbb{R}$$ are temperatures in degrees Celsius. It is critical to note that these data points are neither exchangeable nor i.i.d.; they exhibit correlation among adjacent data points.
 
-We begin with a pretrained model $\hat{f}$ that takes features and predicts temperature, and an uncertainty model $\hat{u}$ that also takes features and outputs a scalar measure of uncertainty. Following the conformal scores:
+We begin with a pretrained model $$\hat{f}$$ that takes features and predicts temperature, and an uncertainty model $$\hat{u}$$ that also takes features and outputs a scalar measure of uncertainty. Following the conformal scores:
 
 $$
 s_t = \frac{|Y_t - \hat{f}(X_t)|}{\hat{u}(X_t)}.
 $$
 
-As we observe data points sequentially, we observe the scores sequentially as well. Thus, a different conformal quantile must be selected for each incoming data point. Mathematically, to predict the temperature at time $t \leq T$, we employ the weighted conformal technique with a fixed window size $K$, where $w_{t'} = 1\{t' \geq t-K\}$ for all $t' < t$. This yields the quantiles:
+As we observe data points sequentially, we observe the scores sequentially as well. Thus, a different conformal quantile must be selected for each incoming data point. Mathematically, to predict the temperature at time $t \leq T$, we employ the weighted conformal technique with a fixed window size $$K$$, where $$w_{t'} = 1\{t' \geq t-K\}$$ for all $$t' < t$$. This yields the quantiles:
 
 $$
 \hat{q}_t = \inf \left\{ q : \frac{1}{\min(K, t' - 1) + 1} \sum_{t'=1}^{t-1} s_{t'} 1\{t' \geq t-K\} \geq 1 - \alpha \right\}.
