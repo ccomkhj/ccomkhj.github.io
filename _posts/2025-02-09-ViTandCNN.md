@@ -50,7 +50,7 @@ TLDR;
   - Use **HRNet** or **DeepLabV3+** to preserve resolution.  
   - Freeze early layers; fine-tune only Blocks 3+ to avoid overfitting.  
 - **ViT Workaround**  
-  Pretrain on synthetic data (e.g., StyleGAN-generated images) with **CutMix** augmentation ($\alpha=0.7$).  
+  Pretrain on synthetic data (e.g., StyleGAN-generated images) with **CutMix** augmentation ($$\alpha=0.7$$).  
 
 #### **Scenario 2: Pretrained Models Available**
 - **ViTs Dominate**  
