@@ -140,7 +140,7 @@ When I work with sensor geo-location data, **small errors in time measurement** 
 ### **3. Visualizing Relativity with Code**  
 
 To truly understand relativity, I wrote a Python visualization script:  
-🔗 [GitHub: PhysicsNote - Relativity](https://github.com/ccomkhj/PhysicsNote/blob/main/relative_theory.ipynb)  
+🔗 [GitHub: PhysicsNote - Relativity](https://github.com/ccomkhj/ScienceNote/blob/main/physics_relative_theory.ipynb)  
 
 ---
 

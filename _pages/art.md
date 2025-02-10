@@ -85,8 +85,8 @@ Click the image to watch video clip.
 ## II. More Source Codes
 
 1. [openHexa](https://github.com/HexaFarms/openHexa)
-2. [MultiConstrainedLinearRegression](https://github.com/ccomkhj/constrained-linear-regression) 
-3. [cvOps](https://github.com/ccomkhj/cvOps)
+2. [MultiConstrained LinearRegression](https://github.com/ccomkhj/constrained-linear-regression) 
+3. [Computer Vision Ops](https://github.com/ccomkhj/cvOps)
 4. [CharucoStereoCalibrator](https://github.com/ccomkhj/Charuco_Stereo_Calibrator)
 5. [Berlin Reservation Bot](https://github.com/ccomkhj/berlin-auslaenderbehorde-termin-bot)
 6. [Compute pixel's actual dimension](https://github.com/ccomkhj/Pixel_Area)
@@ -94,14 +94,14 @@ Click the image to watch video clip.
 8. [Image classification & mass estimation based on segmentation mask](https://github.com/ccomkhj/classify_seg_mask)
 9. [Image cropping for generating training samples](https://github.com/ccomkhj/crop_generator)
 10. [Image Segmentation using Graph-cut](https://github.com/HexaFarms/GraphCut)
-11. [Wildfire prediction using timeseires data](https://github.com/ccomkhj/Spot-Challenge-Wildfires)
-12. [MLflow+HyperOpt+MMOpenLab wraper](https://github.com/ccomkhj/hyperoptmm/)
+11. [MLflow-HyperOpt-MMOpenLab wraper](https://github.com/ccomkhj/hyperoptmm/)
+12. [Science into Code](https://github.com/ccomkhj/ScienceNote)
+13. [Datumaro GUI app](https://github.com/ccomkhj/datumaro-gui)
 
 ---
 
-## III. Research
-1. [Deep Learning-Based Semiautomatic Generation of HD maps from Aerial Imagery, Master thesis ](https://drive.google.com/file/d/1q3pC5JXqJ754aHP2aQnkhm1GepznGFO5/view?usp=sharing) \
-Sharing the source code requires approval of the institute, ika. Contact me if you are interested in the algorithm in detail.
+## III. Publication
+1. Deep Learning-Based Semiautomatic Generation of HD maps from Aerial Imagery, Master thesis
 2. [Deep Aerial Mapper](https://www.arxiv.org/abs/2410.00769)
 
 ---
