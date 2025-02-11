@@ -33,3 +33,6 @@ Check out here: https://github.com/ccomkhj/ScienceNote/blob/main/ml_beyond_mAP.i
 
 #### Conclusion
 The paper highlights critical flaws in relying solely on AP for evaluating instance segmentation models. By introducing metrics that explicitly measure duplication errors and a practical solution like Semantic NMS, the research advances toward evaluation frameworks that better reflect real-world utility. These improvements are essential as AI models increasingly power applications requiring precise and trustworthy outputs.
+
+#### Reference
+[Beyond mAP: Towards Better Evaluation of Instance Segmentation](https://openaccess.thecvf.com/content/CVPR2023/papers/Jena_Beyond_mAP_Towards_Better_Evaluation_of_Instance_Segmentation_CVPR_2023_paper.pdf)
