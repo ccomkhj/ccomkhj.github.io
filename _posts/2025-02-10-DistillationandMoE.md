@@ -48,9 +48,31 @@ In situations with limited data, the richer information from soft targets can he
 ### Looking Ahead: Generalizing the Best Methods
 
 To truly understand relativity, I wrote a demo script:  
-🔗 [GitHub: Knowledge Distillation](https://github.com/ccomkhj/ScienceNote/blob/main/ml_knowledge_distillation.ipynb)  
+🔗 [GitHub: Knowledge Distillation](https://github.com/ccomkhj/ScienceNote/blob/main/ml_knowledge_distillation.ipynb)
 
-I plan to research beyond a toy demo and share my experience in determining when different approaches work best. There are times when a Mixture of Experts (MoE) model may be the best choice, while in other cases, using distillation or even a big model might be more effective. My goal is to outline the conditions under which each method works best, based on examples from both regression models and various computer vision tasks in agriculture.
+In computer vision field, distillation is regarded as a performance bonus, as well.
+[CrossKD: Cross-Head Knowledge Distillation for Object Detection](https://cvpr.thecvf.com/virtual/2024/poster/31390) also proved that average precision using `GFL ResNet-50` improved from 40.2 to 43.7 on MS COCO. 
+One simple example is: Teacher detectors use ResNet-101 as the backbone, while the students use ResNet-50 as the backbone.
+Besides performing CrossKD on GFL, RetinaNet, FCOS, and ATSS are effective on CrossKD.
+
+| Student Methods | AP   | AP50 | AP75 | APS  | APM  | APL  |
+|-----------------|------|------|------|------|------|------|
+| **RetinaNet** |      |      |      |      |      |      |
+| R101           | 38.9 | 58.0 | 41.5 | 21.0 | 32.8 | 52.4 |
+| R50            | 37.4 | 56.7 | 39.6 | 20.0 | 40.7 | 49.7 |
+| CrossKD        | 39.7 | 58.9 | 42.5 | 22.4 | 43.6 | 52.8 |
+| **FCOS**      |      |      |      |      |      |      |
+| R101           | 40.8 | 60.0 | 44.0 | 24.2 | 44.3 | 52.4 |
+| R50            | 38.5 | 57.7 | 41.0 | 21.9 | 42.8 | 48.6 |
+| CrossKD        | 41.3 | 60.6 | 44.2 | 25.1 | 45.5 | 52.4 |
+| **ATSS**      |      |      |      |      |      |      |
+| R101           | 41.5 | 59.9 | 45.2 | 24.2 | 45.9 | 53.3 |
+| R50            | 39.4 | 57.6 | 42.8 | 23.6 | 42.9 | 50.3 |
+| CrossKD        | 41.8 | 60.1 | 45.4 | 24.9 | 45.9 | 54.2 |
+
+
+I plan to research beyond a toy demo and share my experience in determining when different approaches work best. There are times when a Mixture of Experts (MoE) model may be the best choice, while in other cases, using distillation or even a big model might be more effective. My goal is to outline the conditions under which each method works best, based on examples from both regression models and various computer vision tasks in agriculture. 
+
 
 #### Reference
 [Distilling the Knowledge in a Neural Network](https://arxiv.org/abs/1503.02531)
