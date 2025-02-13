@@ -76,3 +76,7 @@ I plan to research beyond a toy demo and share my experience in determining when
 
 #### Reference
 [Distilling the Knowledge in a Neural Network](https://arxiv.org/abs/1503.02531)
+[Task Integration Distillation for Object Detectors](https://www.semanticscholar.org/paper/Task-Integration-Distillation-for-Object-Detectors-Su-Jian/8044925f55263df7de1db0c3cab15f4df487bdb7)
+[D
+3ETR: Decoder Distillation for Detection Transformer](https://arxiv.org/pdf/2211.09768)
+[Relation Knowledge Distillation by Auxiliary Learning for Object Detection](https://www.semanticscholar.org/paper/Relation-Knowledge-Distillation-by-Auxiliary-for-Wang-Jia/088a2413c8ac62952b1bee6a7caaa4e1a9288b0d)

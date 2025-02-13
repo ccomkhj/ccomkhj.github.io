@@ -60,10 +60,35 @@ TLDR;
 ---
 
 ### Critical Trade-Offs (Cloud Inference Focus)
-| Factor                | ViT                                   | CNN                                   |
-|-----------------------|---------------------------------------|---------------------------------------|
-| **4K Inference Speed**| ❌ 2.1 sec/img (A100 GPU)             | ✅ 0.3 sec/img (V100 GPU)             |
-| **Data Efficiency**   | ❌ Requires 100K+ pretraining images  | ✅ Works with 500 labeled samples     |
-| **Memory Footprint**  | ❌ 24GB VRAM for ViT-L/16             | ✅ 8GB VRAM for ResNet-152            |
-| **Interpretability**  | ✅ Attention maps highlight regions   | ❌ Grad-CAM less precise              |
+<table>
+  <tr>
+    <th>Factor</th>
+    <th>ViT</th>
+    <th>CNN</th>
+  </tr>
+  <tr>
+    <td><strong>4K Inference Speed</strong></td>
+    <td>❌ 2.1 sec/img (A100 GPU)</td>
+    <td>✅ 0.3 sec/img (V100 GPU)</td>
+  </tr>
+  <tr>
+    <td><strong>Data Efficiency</strong></td>
+    <td>❌ Requires 100K+ pretraining images</td>
+    <td>✅ Works with 500 labeled samples</td>
+  </tr>
+  <tr>
+    <td><strong>Memory Footprint</strong></td>
+    <td>❌ 24GB VRAM for ViT-L/16</td>
+    <td>✅ 8GB VRAM for ResNet-152</td>
+  </tr>
+  <tr>
+    <td><strong>Interpretability</strong></td>
+    <td>✅ Attention maps highlight regions</td>
+    <td>❌ Grad-CAM less precise</td>
+  </tr>
+</table>
 
+---
+
+### Reference
+[Do Vision Transformers See Like Convolutional Neural Networks?](https://arxiv.org/abs/2108.08810)
