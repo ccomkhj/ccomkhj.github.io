@@ -11,17 +11,17 @@
 # https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
 
 # theme                  : "minimal-mistakes-jekyll"
-# remote_theme           : "mmistakes/minimal-mistakes"
+remote_theme           : "mmistakes/minimal-mistakes"
 minimal_mistakes_skin    : "sunrise" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
-collections:
-  category:
-    output: true
-    permalink: /category/:name/
+# collections:
+#   category:
+#     output: true
+#     permalink: /category/:name/
 
-  blog:
-    output: true
-    permalink: /blog/:path/
+#   blog:
+#     output: true
+#     permalink: /blog/:path/
 
 
 
@@ -35,8 +35,8 @@ description              : "personal website"
 url                      : "https://ccomkhj.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
-teaser                   : "/assets/images/ocean.png" # path of fallback teaser image, e.g. "/assets/images/500x300.png"
-logo                     : "/assets/images/[Logo]ocean.png" # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
+teaser                   : "/assets/images/quantum_strawberry.png" # path of fallback teaser image, e.g. "/assets/images/500x300.png"
+logo                     : "/assets/images/H_logo.png" # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : " " # overrides the website title displayed in the masthead, use " " for no title
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
@@ -70,11 +70,11 @@ reCaptcha:
 atom_feed:
   path                   : # blank (default) uses feed.xml
   hide                   : # true, false (default)
-search                   : # true, false (default)
+search                   : true # true, false (default)
 search_full_content      : # true, false (default)
 search_provider          : # lunr (default), algolia, google
 lunr:
-  search_within_pages    : # true, false (default)
+  search_within_pages    : true # true, false (default)
 algolia:
   application_id         : # YOUR_APPLICATION_ID
   index_name             : # YOUR_INDEX_NAME
@@ -117,7 +117,7 @@ analytics:
 author:
   name             : "Huijo Kim"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "better world"
+  bio              : "How to take a step further"
   location         : "Somewhere"
   email            : "ccomkhj@gmail.com"
   links:
@@ -228,7 +228,8 @@ sass:
 
 
 # Outputting
-permalink: /posts/:year/:month/:day/:title/
+permalink: /:categories/:title/
+# permalink: /posts/:year/:month/:day/:title/
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
 timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
@@ -242,6 +243,7 @@ plugins:
   - jekyll-feed
   - jekyll-include-cache
   - jekyll-tagging
+  - jemoji
 
 # mimic GitHub Pages with --safe
 whitelist:

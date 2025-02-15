@@ -82,6 +82,15 @@ Click the image to watch video clip.
 
 ---
 
+- Stereo Vision \
+![Depth from Stereo Matching](..\img\raft.png) 
+  - Build hardware of stereo vision from scratch
+  - Depth computation
+  - [Reading](https://ccomkhj.github.io/StereoVision) \
+<i>developed at [hexafarms](https://www.hexafarms.com)</i>
+
+---
+
 ## II. More Source Codes
 
 1. [openHexa](https://github.com/HexaFarms/openHexa)

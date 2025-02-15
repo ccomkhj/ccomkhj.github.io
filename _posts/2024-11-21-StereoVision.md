@@ -4,9 +4,13 @@ layout: single
 author: Huijo  
 date: 2024-11-21
 tags:  
-   - Study  
+   - Study
+   - Computer Vision
 classes: wide  
-title: Stereo Vision  
+title: Stereo Vision
+header:
+#   image: /img/raft.png
+  teaser: /img/raft.png
 
 ---
 
