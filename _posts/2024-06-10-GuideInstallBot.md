@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2024-06-10
 tags:
-   - Work
+   - Programing
 classes: wide
 title:  Guide to install and run Termin bot
 ---

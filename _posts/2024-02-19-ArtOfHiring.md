@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2024-02-19
 tags:
-   - Work
+   - Business
 classes: wide
 title:  Art of Hiring
 ---

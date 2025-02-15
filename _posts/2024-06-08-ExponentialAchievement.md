@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2024-06-08
 tags:
-   - Work
+   - Philosophy
 classes: wide
 title:  Exponential Achievement
 ---

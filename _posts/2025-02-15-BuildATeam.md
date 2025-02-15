@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2025-02-15
 tags:
-   - Work
+   - Business
    - Philosophy
 classes: wide
 title: "How to Build a Team: A Resource Optimization Perspective"
