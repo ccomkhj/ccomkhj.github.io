@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2023-09-30
 tags:
-   - Technology
+   - Machine Learning
 classes: wide
 title:  Find out What really matters
 ---

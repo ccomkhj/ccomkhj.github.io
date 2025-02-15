@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2024-07-17
 tags:
-   - Study
+   - Science
 classes: wide
 title:  Statistics 1
 ---

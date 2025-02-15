@@ -4,7 +4,7 @@ classes: wide
 author: Huijo
 date: 2023-05-05
 tags:
-   - Life
+   - Philosophy
 title:  "Train Brain first"
 ---
 

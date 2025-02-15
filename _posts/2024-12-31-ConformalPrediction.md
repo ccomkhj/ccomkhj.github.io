@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2024-12-31
 tags:
-   - Study
+   - Machine Learning
 classes: wide
 title: Conformal Prediction
 ---

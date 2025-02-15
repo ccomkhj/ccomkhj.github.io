@@ -4,7 +4,6 @@ layout: single
 author: Huijo  
 date: 2024-11-21
 tags:  
-   - Study
    - Computer Vision
 classes: wide  
 title: Stereo Vision

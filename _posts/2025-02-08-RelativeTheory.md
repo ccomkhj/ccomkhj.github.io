@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2025-02-08
 tags:
-   - Study
+   - Science
 classes: wide
 title: Relative Theory
 ---

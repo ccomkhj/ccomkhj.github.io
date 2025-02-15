@@ -3,7 +3,6 @@ layout: single
 author: Huijo
 date: 2025-02-09
 tags:
-   - Study
    - Machine Learning
 classes: wide
 title: "Knowledge Distillation: A Comparative Exploration and the Role of Soft Targets"

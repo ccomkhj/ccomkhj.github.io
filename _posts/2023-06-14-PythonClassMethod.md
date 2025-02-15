@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2023-06-14
 tags:
-   - Technology
+   - Programing
 classes: wide
 title:  Python Class Method
 ---

@@ -3,7 +3,6 @@ layout: single
 author: Huijo
 date: 2025-02-10
 tags:
-   - Study
    - Computer Vision
 classes: wide
 title: "Beyond mAP: Towards Better Evaluation of Instance Segmentation"

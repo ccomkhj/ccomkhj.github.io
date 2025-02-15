@@ -3,7 +3,6 @@ layout: single
 author: Huijo
 date: 2025-02-09
 tags:
-   - Study
    - Computer Vision
 classes: wide
 title: "ViT vs CNN: A Technical Deep Dive for High-Resolution Vision Tasks"
