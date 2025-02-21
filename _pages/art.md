@@ -94,7 +94,7 @@ Click the image to watch video clip.
 ## II. More Source Codes
 
 1. [openHexa](https://github.com/HexaFarms/openHexa)
-2. [MultiConstrained LinearRegression](https://github.com/ccomkhj/constrained-linear-regression) 
+2. [MultiConstrained LinearRegression](https://github.com/ccomkhj/constrained-linear-regression)
 3. [Computer Vision Ops](https://github.com/ccomkhj/cvOps)
 4. [CharucoStereoCalibrator](https://github.com/ccomkhj/Charuco_Stereo_Calibrator)
 5. [Berlin Reservation Bot](https://github.com/ccomkhj/berlin-auslaenderbehorde-termin-bot)
@@ -106,6 +106,8 @@ Click the image to watch video clip.
 11. [MLflow-HyperOpt-MMOpenLab wraper](https://github.com/ccomkhj/hyperoptmm/)
 12. [Science into Code](https://github.com/ccomkhj/ScienceNote)
 13. [Datumaro GUI app](https://github.com/ccomkhj/datumaro-gui)
+14. [Classifier Wrapper Platform](https://github.com/ccomkhj/Lightening_Classifier/)
+15. [Custom Chain of Thought using gemini](https://github.com/ccomkhj/ChainOfThought)
 
 ---
 
