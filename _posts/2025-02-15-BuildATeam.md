@@ -21,9 +21,9 @@ $$
 \text{Outcome} = \sum_{i=1}^{n} \left( \text{Exploitation}_i \cdot s + \text{Exploration}_i \cdot (1 - s) \right), \quad s \in \{0, 1\}
 $$
 
-Where $n$ represents temporal intervals (weeks, months) or opportunity epochs. Strategic selection of $s$ values (exploitation/exploration decisions) can effectively expand $n$ through discovered opportunities.
+Where $n$ represents temporal intervals (weeks, months) or opportunity epochs. Strategic selection of $$s$$ values (exploitation/exploration decisions) can effectively expand $$n$$ through discovered opportunities.
 
-The critical challenge lies in parameter estimation: while $\text{Exploitation}_i$ can often be directly measured, $\text{Exploration}_i$ requires probabilistic forecasting of expected costs and benefits. Drawing parallels to venture capital decision-making, three critical factors emerge:  
+The critical challenge lies in parameter estimation: while $$\text{Exploitation}_i$$ can often be directly measured, $$\text{Exploration}_i$$ requires probabilistic forecasting of expected costs and benefits. Drawing parallels to venture capital decision-making, three critical factors emerge:  
 1. Market viability (Serviceable Obtainable Market)  
 2. Competitive landscape  
 3. Organizational readiness  
@@ -34,7 +34,7 @@ $$
 \text{Exploration}_i = \text{SOM} \cdot f(\text{Readiness}, \text{Tech})
 $$
 
-Where $f(\cdot)$ represents the resource conversion efficiency function. This acknowledges the inherent uncertainty in complex systems – while classical physics operates in predictable Hilbert spaces, human systems exhibit quantum-like superposition of possibilities until observed.  
+Where $$f(\cdot)$$ represents the resource conversion efficiency function. This acknowledges the inherent uncertainty in complex systems – while classical physics operates in predictable Hilbert spaces, human systems exhibit quantum-like superposition of possibilities until observed.  
 
 This quantum analogy extends further – just as particles exist in probability clouds until measurement, business opportunities occupy multiple potential states until organizational action collapses the wave function. Through Bayesian updating of priors with observed data, we can develop heuristic functions that approximate reality:
 
@@ -42,7 +42,7 @@ $$
 \mathbb{E}[\text{Success}] = \int_{0}^{t} \psi(\text{Market}) \cdot \phi(\text{Team}) \, dt
 $$
 
-Where $\psi(\cdot)$ represents market potential wavefunctions and $\phi(\cdot)$ team capability eigenstates. Competitive advantage emerges when:
+Where $$\psi(\cdot)$$ represents market potential wavefunctions and $$\phi(\cdot)$$ team capability eigenstates. Competitive advantage emerges when:
 
 $$
 \frac{\partial \phi}{\partial t} > \sum_{j=1}^{m} \frac{\partial \phi_j^{\text{(competitor)}}}{\partial t}

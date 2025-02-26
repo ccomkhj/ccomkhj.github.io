@@ -5,10 +5,10 @@ date: 2025-02-10
 tags:
    - Computer Vision
 classes: wide
-title: "Beyond mAP: Towards Better Evaluation of Instance Segmentation"
+title: "Beyond mAP: Better Evaluation of Bbox"
 ---
 
-In the pursuit of advancing computer vision technologies, evaluating the performance of instance segmentation models has predominantly relied on a metric known as Average Precision (AP). Despite its widespread use, AP has notable limitations that often result in selecting models that produce suboptimal results in real-world applications.
+In the pursuit of advancing computer vision technologies, evaluating the performance of instance segmentation or object detection models has predominantly relied on a metric known as Average Precision (AP). Despite its widespread use, AP has notable limitations that often result in selecting models that produce suboptimal results in real-world applications.
 
 Every time, I select the model architecture or run hyper-parameter tuning purely based on mAP, it often ends up unexpected model.
 Therefore, to junior AI researchers, I used to suggest using the old-fashioned model rather than chasing after state-of-the-art.
