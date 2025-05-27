@@ -2,11 +2,11 @@
 
 layout: single  
 author: Huijo  
-date: 2025-02-23  
+date: 2025-03-07  
 tags:  
    - Reading  
 classes: wide  
-title: "Embracing Uncertainty: Lessons from Hawking on Predictive Modeling and the Human Quest for Knowledge"  
+title: "Predict the future"  
 
 ---
 

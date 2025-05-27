@@ -4,7 +4,7 @@ main:
   #   url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
   - title: "story"
     url: https://ccomkhj.github.io/story/
-  - title: "art"
-    url: https://ccomkhj.github.io/art/
+  - title: "portfolio"
+    url: https://ccomkhj.github.io/portfolio/
   # - title: "Sitemap"
   #   url: /sitemap/

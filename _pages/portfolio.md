@@ -1,7 +1,7 @@
 ---
 layout: single
 class: wide
-permalink: /art/
+permalink: /portfolio/
 author_profile: false
 ---
 
