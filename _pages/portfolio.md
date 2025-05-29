@@ -13,7 +13,7 @@ author_profile: false
 ---
 
 <div class="content-section fade-in">
-  <h2 class="section-title">I. Demo Projects</h2>
+  <h2 class="section-title">I. Projects</h2>
   
   <div class="projects-grid">
     <!-- Drone Vision Project Card -->
@@ -83,15 +83,6 @@ author_profile: false
         <span class="project-tag">Visualization</span>
       </div>
     </div>
-  </div>
-</div>
-
----
-
-<div class="content-section fade-in">
-  <h2 class="section-title">II. More Projects</h2>
-  
-  <div class="projects-grid">
     <!-- Image Processing Card -->
     <div class="project-card">
       <img src="../img/plant_analysis.gif" alt="Image Processing Analysis" class="project-image">
@@ -113,27 +104,7 @@ author_profile: false
       </div>
     </div>
 
-    <!-- Web Application Card -->
-    <div class="project-card">
-      <a href="https://ums.hexafarms.com" target="_blank">
-        <img src="../img/ums.png" alt="User Management System" class="project-image">
-      </a>
-      <div class="project-content">
-        <h3 class="project-title">Web Application</h3>
-        <div class="project-description">
-          <p>Sensor and User accounts management system</p>
-          <ul>
-            <li>Full-stack development</li>
-          </ul>
-          <p><i>developed at <a href="https://www.hexafarms.com">hexafarms</a></i></p>
-        </div>
-      </div>
-      <div class="project-tags">
-        <span class="project-tag">Full-Stack</span>
-        <span class="project-tag">Web Development</span>
-        <span class="project-tag">UI/UX</span>
-      </div>
-    </div>
+
 
     <!-- LLM Powered Web Chatbot Card -->
     <div class="project-card">
@@ -155,6 +126,29 @@ author_profile: false
         <span class="project-tag">NLP</span>
         <span class="project-tag">LLM</span>
         <span class="project-tag">AI</span>
+      </div>
+    </div>
+
+    <!-- AI Cover Letter Generator Card -->
+    <div class="project-card">
+      <a href="https://github.com/ccomkhj/AI-Cover-Letter-Generator" target="_blank">
+        <img src="../img/cover_letter_generator.png" alt="AI Cover Letter Generator" class="project-image">
+      </a>
+      <div class="project-content">
+        <h3 class="project-title">AI Cover Letter Generator</h3>
+        <div class="project-description">
+          <ul>
+            <li>Multi-Agent Workflow for comprehensive letter generation</li>
+            <li>RAG (Retrieval-Augmented Generation) for company research</li>
+            <li>Intelligent Skill Extraction & Matching</li>
+          </ul>
+          <p>Streamlit-based web application that uses LLMs to generate personalized cover letters by analyzing job descriptions and researching companies in real-time.</p>
+        </div>
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">LangChain</span>
+        <span class="project-tag">RAG</span>
+        <span class="project-tag">Multi-Agent</span>
       </div>
     </div>
 
@@ -230,11 +224,11 @@ author_profile: false
     <!-- Source Code Card 1 -->
     <div class="project-card">
       <div class="project-content">
-        <h3 class="project-title">OpenHexa</h3>
+        <h3 class="project-title">AI Cover Letter Generator</h3>
         <div class="project-description">
-          <p>Open-source platform for data management and processing in agriculture.</p>
+          <p>Multi-agent workflow with RAG capabilities for personalized cover letter generation using LLMs.</p>
         </div>
-        <a href="https://github.com/HexaFarms/openHexa" class="btn" target="_blank">View on GitHub</a>
+        <a href="https://github.com/ccomkhj/AI-Cover-Letter-Generator" class="btn" target="_blank">View on GitHub</a>
       </div>
     </div>
     

@@ -10,17 +10,7 @@ title: "Terminology summary in LLM"
 
 ---
 
-**Contrasting Frameworks**
-
-I've begun to compare LangChain and the MCP. I'm starting by restating LangChain's purpose and the scope it offers, then doing the same for MCP. My focus now is on highlighting the key differences in their design and use cases for you.
-
-
 **Delineating the Differences**
-
-My current focus is on a structured comparison. I'm revisiting LangChain and MCP's core functions to clarify their roles. Then, I'll analyze their distinctions: abstraction levels, target users, and primary objectives. I'm evaluating whether they're compatible or offer alternative approaches. I plan to also explore their modularity and how they fit within the larger AI application stack.
-
-
-Okay, this makes the comparison much clearer! Thank you for clarifying "MCP" as the **Model Context Protocol**.
 
 Now, let's compare **LangChain** and the **Model Context Protocol (MCP)**:
 
