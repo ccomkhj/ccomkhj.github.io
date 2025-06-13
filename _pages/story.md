@@ -31,13 +31,11 @@ The joy of my life is seeing people happy when they use my product.
 - **Worked as a Research Engineer at Hyundai Motors**, exploring the transformative role of data science in electric vehicle manufacturing.
 - **Completed an MSc in Robotics as Top** at RWTH Aachen University (Germany), blending academic pursuits with professional experience.  
 - **Publish research paper "[Deep Aerial Mapper](https://www.arxiv.org/abs/2410.00769)"** alongside my thesis supervisor, contributing to advancements in both academic research and real-world applications.  
-- **The entrepreneurial journey** began with the foundation of a [startup](https://www.hexafarms.com), selected by [Techstars](https://www.linkedin.com/posts/techstars-berlin_indoorfarms-verticalindoorfarms-foodproduction-activity-6991309954343145472-c1hj?utm_source=share&utm_medium=member_desktop) program and then succeeded in raising 1.3 Million Euros in [pre-seed](https://www.eu-startups.com/2024/05/berlin-based-agtech-hexafarms-secures-e1-3-million-pre-seed-to-empower-commercial-indoor-farmers/).
-  - **Zero to One**, My startup swiftly achieved a **$4k MRR** in seven months,
+- **The entrepreneurial journey** began with the foundation of a [startup](https://www.hexafarms.com), selected by [Techstars](https://www.linkedin.com/posts/techstars-berlin_indoorfarms-verticalindoorfarms-foodproduction-activity-6991309954343145472-c1hj?utm_source=share&utm_medium=member_desktop) accelerating program and then succeeded in raising €1.3M in [pre-seed](https://www.eu-startups.com/2024/05/berlin-based-agtech-hexafarms-secures-e1-3-million-pre-seed-to-empower-commercial-indoor-farmers/).
+  - **Zero to One**, Built business generating **€4k MRR** in 7 months.
   - [My narrative](https://www.worldjob.or.kr/info/bbs/ovseaAdvnStry/view.do?menuId=1000006395&bbscttNo=192537) has been listed as the top story by HRDK (<i>Human Resources Development Service of Korea</i>). (Published in Korean.)
   - Laser-focus on **building a business that matters**, beyond Product Market Fit and scaling.
-
-
 <figure>
-    <img src="../img/bird_aquarium.png" alt="bird in aquarium" width="300" height="300">
-    <figcaption>Don't be limited in the well's constraints, let's shape the world.</figcaption>
+    <img src="../assets\images\photo_in_farm.jpg" alt="Solution in the field" width="300" height="300">
+    <figcaption>Build a solution driving the actual value.</figcaption>
 </figure>
