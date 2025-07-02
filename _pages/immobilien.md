@@ -93,20 +93,19 @@ sitemap: false
               </svg>
             </div>
             <span style="font-weight: 500;">SCHUFA-Auskunft</span>
-            <span style="background-color: #fff8e1; color: #f39c12; font-size: 12px; padding: 2px 8px; border-radius: 12px; display: inline-block; margin-left: 8px;">In Bearbeitung</span>
-            - Aktuelle Bonitätsauskunft ohne negative Einträge (in wenigen Tagen verfügbar)
+            <span style="background-color: #fff8e1; color: #f39c12; font-size: 12px; padding: 2px 8px; border-radius: 12px; display: inline-block; margin-left: 8px;">In 5 Tagen</span>
+            - Aktuelle Bonitätsauskunft ohne negative Einträge (bereits bestellt)
           </li>
           <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
             <div style="position: absolute; left: 0; top: 2px;">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="1" y="1" width="18" height="18" rx="3" stroke="#f39c12" stroke-width="2"/>
-                <path d="M10 5v7" stroke="#f39c12" stroke-width="2" stroke-linecap="round"/>
-                <circle cx="10" cy="15" r="1" fill="#f39c12"/>
+                <path d="M6.5 9L9 11.5L13.5 7" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="1" y="1" width="18" height="18" rx="3" stroke="#2e7d32" stroke-width="2"/>
               </svg>
             </div>
             <span style="font-weight: 500;">Mietzahlungsbestätigung</span>
-            <span style="background-color: #fff8e1; color: #f39c12; font-size: 12px; padding: 2px 8px; border-radius: 12px; display: inline-block; margin-left: 8px;">In Bearbeitung</span>
-            - Nachweis pünktlicher Mietzahlungen (wird in den nächsten Tagen hinzugefügt)
+            <span style="background-color: #e6f7e6; color: #2e7d32; font-size: 12px; padding: 2px 8px; border-radius: 12px; display: inline-block; margin-left: 8px;">Verfügbar</span>
+            - Nachweis pünktlicher Mietzahlungen
           </li>
         </ul>
         
