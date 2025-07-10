@@ -6,165 +6,320 @@ author_profile: false
 sitemap: false
 ---
 
-<div id="password-protection" style="text-align: center; margin: 50px auto; max-width: 500px; background-color: #f5f9fd; border: 2px solid #2a5885; border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-  <h2 style="color: #2a5885; margin-bottom: 20px;">Geschützter Inhalt</h2>
-  <p style="font-size: 16px; color: #444; margin-bottom: 25px;">Bitte geben Sie das Passwort ein, um auf diese Seite zuzugreifen, die Huijo zur Verfügung gestellt hat:</p>
-  <div style="margin: 25px 0;">
-    <input type="password" id="page-password" style="padding: 12px; width: 200px; border: 2px solid #c0d6e8; border-radius: 6px; font-size: 16px; background-color: white;">
-    <button onclick="checkPassword()" style="padding: 12px 20px; margin-left: 10px; background-color: #2a5885; color: white; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; font-size: 16px;">Einreichen</button>
-  </div>
-  <p id="password-error" style="color: #d32f2f; font-weight: 500; background-color: #ffebee; padding: 10px; border-radius: 4px; display: none;">Falsches Passwort. Bitte versuchen Sie es erneut.</p>
+<style>
+  :root {
+    --primary-color: #2E7D32; /* Main Green */
+    --secondary-color: #55a65a; /* Lighter Green */
+    --background-color: #f4f7f6;
+    --card-background: #ffffff;
+    --text-color: #333333;
+    --subtle-text-color: #666666;
+    --accent-color: #2E7D32; /* Kept for consistency */
+    --border-radius: 12px;
+    --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+
+  .immo-page-container {
+    font-family: var(--font-sans);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .immo-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .immo-header h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .immo-header p {
+    font-size: 1.1rem;
+    color: var(--subtle-text-color);
+  }
+
+  .immo-card {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .immo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .immo-card h2 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 0.5rem;
+  }
+
+  .about-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .about-text {
+    flex: 1; 
+    min-width: 300px;
+    line-height: 1.7;
+  }
+  
+  .about-text a {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--primary-color);
+  }
+
+  .family-photo {
+    flex-basis: 250px;
+    text-align: center;
+  }
+
+  .family-photo img {
+    max-width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .glance-box {
+    background-color: #f8faff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    border-left: 4px solid var(--primary-color);
+  }
+
+  .glance-box h3 {
+    margin-top: 0; color: var(--primary-color);
+  }
+
+  .glance-box ul {
+    padding-left: 0; list-style: none;
+  }
+  .glance-box li {
+    margin-bottom: 0.75rem;
+    position: relative;
+    padding-left: 25px;
+  }
+  .glance-box li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-weight: bold;
+  }
+
+  .docs-link {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    margin-bottom: 1.5rem;
+  }
+
+  .docs-link:hover {
+    background-color: var(--secondary-color);
+  }
+
+  .docs-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .docs-list li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+  }
+  .docs-list li:not(:last-child) { margin-bottom: 10px; }
+  .docs-list li:hover { background-color: #f8faff; }
+
+  .docs-list .icon {
+    color: var(--accent-color);
+    margin-right: 15px;
+    font-size: 1.5rem;
+  }
+
+  .contact-card {
+    background: var(--primary-color);
+    color: white;
+    text-align: center;
+  }
+  .contact-card h2 { color: white; border-bottom-color: rgba(255,255,255,0.5); }
+  .contact-card p { color: rgba(255,255,255,0.9); }
+  .contact-card a { color: white; text-decoration: underline; }
+
+  /* Password Modal */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; visibility: hidden; transition: all 0.3s ease;
+    z-index: 1000;
+  }
+  .modal-overlay.active {
+    opacity: 1; visibility: visible;
+  }
+  .modal-content {
+    background: white; padding: 2.5rem; border-radius: var(--border-radius);
+    width: 90%; max-width: 400px; text-align: center;
+    transform: scale(0.9); transition: transform 0.3s ease;
+  }
+  .modal-overlay.active .modal-content { transform: scale(1); }
+  .modal-content h3 { margin-top: 0; color: var(--primary-color); }
+  .modal-content p { margin-bottom: 1.5rem; color: var(--subtle-text-color); }
+  .modal-input {
+    width: 100%; padding: 12px; margin-bottom: 1rem;
+    border: 1px solid #ccc; border-radius: 8px; font-size: 1rem;
+  }
+  .modal-button {
+    width: 100%; padding: 12px; border: none; border-radius: 8px;
+    background: var(--primary-color); color: white; font-size: 1rem; cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  .modal-button:hover { background: var(--secondary-color); }
+  .modal-error {
+    color: #d93025; margin-top: 10px; font-size: 0.9rem; display: none;
+  }
+</style>
+
+<div class="immo-page-container">
+  <header class="immo-header">
+    <h1>Bewerbungsunterlagen für Ihre Immobilie</h1>
+    <p>Alle relevanten Unterlagen für Ihre Beurteilung</p>
+  </header>
+
+  <section class="immo-card">
+    <h2>Über uns</h2>
+    <div class="about-section">
+      <div class="about-text">
+        <p>
+          Hallo, danke, dass Sie meine Familie als Mieterin in Betracht ziehen.<br>
+          Mein Name ist Huijo Kim, habe an der RWTH den Master in Robotik studiert und bin danach in den Bereichen KI und Daten tätig. Ich arbeite als Data Scientist bei einem renommierten Unternehmen (<a href="https://www.voids.ai/" target="_blank">VOIDS technology GmbH</a>).<br>
+          Meine kleine Familie besteht aus meiner Frau Eunhye, unserem 6 Monate alten Baby Ijun und mir. <br>
+          Wir haben keine Haustiere, wir rauchen nicht und leben ruhig. Als verantwortungsvolle und zuverlässige Mieter legen wir großen Wert auf einen gepflegten Wohnraum und ein harmonisches Mietverhältnis.
+        </p>
+      </div>
+    </div>
+    <div class="family-photo" style="text-align: center; margin-top: 2rem;">
+      <img src="../img/family_photo.jpeg" alt="Unsere Familie">
+    </div>
+    <div class="glance-box">
+      <h3>Auf einen Blick:</h3>
+      <ul>
+        <li><strong>Einkommen:</strong> 4700 EUR netto monatlich aus meiner neuen Anstellung</li>
+        <li><strong>Berufliche Veränderung:</strong> Neue Position, vorher 3500 EUR, jetzt 4700 EUR netto</li>
+        <li><strong>Umzugszeitpunkt:</strong> Flexibel, idealerweise im August 2025</li>
+        <li><strong>Unterlagen:</strong> Vollständige Dokumente sofort verfügbar</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="immo-card">
+    <h2>Bereitgestellte Dokumente</h2>
+    <p>Für Ihre umfassende Beurteilung stellen wir alle erforderlichen Dokumente in einem gemeinsamen Google Drive-Ordner bereit. Klicken Sie hier, um darauf zuzugreifen:</p>
+    <a href="#" class="docs-link" onclick="showPasswordModal(event)">Google Drive-Ordner öffnen ↗</a>
+    <div class="docs-list">
+      <p>In diesem Ordner finden Sie folgende Dokumente:</p>
+      <ul>
+        <li><span class="icon">✓</span> <div><strong>Mieterselbstauskunft</strong><br><small>Vollständig ausgefüllt mit allen persönlichen Angaben</small></div></li>
+        <li><span class="icon">✓</span> <div><strong>Gehaltsnachweise der letzten 3 Monate</strong><br><small>Nachweis stabiler Einkommensverhältnisse</small></div></li>
+        <li><span class="icon">✓</span> <div><strong>SCHUFA-Auskunft</strong><br><small>Aktuelle Bonitätsauskunft ohne negative Einträge</small></div></li>
+        <li><span class="icon">✓</span> <div><strong>Mietzahlungsbestätigung</strong><br><small>Nachweis pünktlicher Mietzahlungen</small></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="immo-card contact-card">
+    <h2>Kontaktaufnahme</h2>
+    <p>Über die Möglichkeit, die Wohnung zu besichtigen, würde ich mich sehr freuen. Gerne stehe ich für weitere Informationen zur Verfügung.</p>
+    <p>
+      <strong>Huijo Kim</strong> | Data Scientist<br>
+      <a href="mailto:ccomkhj@gmail.com">ccomkhj@gmail.com</a> | 
+      <a href="tel:+4915205981504">+49 152 05981504</a>
+    </p>
+  </section>
 </div>
 
-<div id="content" style="display: none;">
-  <div style="max-width: 800px; margin: 0 auto; padding: 20px;">
-    <div style="text-align: center; margin-bottom: 40px;">
-      <h1 style="color: #2a5885; font-size: 28px; margin-bottom: 15px;">Bewerbungsunterlagen für Ihre Immobilie</h1>
-      <p style="font-size: 16px; color: #555; border-bottom: 1px solid #eee; padding-bottom: 20px;">Alle relevanten Unterlagen für Ihre Beurteilung</p>
-    </div>
-    
-    <div style="background-color: #f9f9f9; border-left: 4px solid #2a5885; padding: 20px; margin-bottom: 30px;">
-      <h2 style="color: #2a5885; font-size: 22px; margin-top: 0;">Über uns</h2>
-      
-      <div style="display: flex; margin: 20px 0; flex-wrap: wrap;">
-        <div style="flex: 1; min-width: 250px; margin-right: 30px; margin-bottom: 20px;">
-          <p style="line-height: 1.6; font-size: 16px;">
-            Ich arbeite als Data Scientist bei einem renommierten Unternehmen (<a href="https://www.voids.ai/" target="_blank" style="color: #2a5885; font-weight: 500; text-decoration: none; border-bottom: 1px solid #2a5885;">VOIDS technology GmbH</a>), und meine kleine Familie besteht aus meiner Frau, unserem 6 Monate alten Baby und mir. Als verantwortungsvolle und zuverlässige Mieter legen wir großen Wert auf einen gepflegten Wohnraum und ein harmonisches Mietverhältnis. Wir suchen eine langfristige Wohnlösung und bieten finanzielle Stabilität und sorgfältigen Umgang mit der Mietsache.
-          </p>
-        </div>
-        <div style="flex: 0 0 250px; text-align: center;">
-          <img src="../img/family_photo.jpeg" alt="Unsere Familie" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-        </div>
-      </div>
-      
-      <div style="background-color: white; border-radius: 8px; padding: 20px; margin-top: 15px;">
-        <h3 style="color: #2a5885; font-size: 18px; margin-top: 0;">Auf einen Blick:</h3>
-        <ul style="padding-left: 20px;">
-          <li style="margin-bottom: 10px;"><strong>Einkommen:</strong> 4700 EUR netto monatlich aus meiner neuen Anstellung</li>
-          <li style="margin-bottom: 10px;"><strong>Berufliche Veränderung:</strong> Neue Position angetreten, vorheriges Gehalt 3500 EUR netto, jetzt 4700 EUR netto</li>
-          <li style="margin-bottom: 10px;"><strong>Umzugszeitpunkt:</strong> Flexibel, idealerweise Ende Juli oder im August 2025</li>
-        </ul>
-      </div>
-    </div>
-    
-    <div style="margin-bottom: 30px;">
-      <h2 style="color: #2a5885; font-size: 22px;">Bereitgestellte Dokumente</h2>
-      <p style="font-size: 16px; margin-bottom: 20px;">
-        Für Ihre umfassende Beurteilung stellen wir alle erforderlichen Dokumente in einem gemeinsamen Google Drive-Ordner bereit. 
-        <a href="https://drive.google.com/drive/folders/1vdixMRH9mG4E_mh8-8kFYuMthsRJuNwT?usp=sharing" target="_blank" style="color: #2a5885; font-weight: 500; text-decoration: none; border-bottom: 2px solid #2a5885; padding-bottom: 2px;">
-          Google Drive-Ordner mit allen Unterlagen ↗
-        </a>
-      </p>
-      
-      <div style="background-color: #f5f9fd; border-radius: 8px; padding: 20px;">
-        <p style="font-size: 16px; margin-top: 0; margin-bottom: 15px;">
-          In diesem Ordner finden Sie folgende Dokumente. Einige sind bereits hochgeladen, andere werden in den nächsten Tagen hinzugefügt:
-        </p>
-        
-        <ul style="list-style-type: none; padding: 0;">
-          <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
-            <div style="position: absolute; left: 0; top: 2px;">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6.5 9L9 11.5L13.5 7" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <rect x="1" y="1" width="18" height="18" rx="3" stroke="#2e7d32" stroke-width="2"/>
-              </svg>
-            </div>
-            <span style="font-weight: 500;">Mieterselbstauskunft</span> 
-            <span style="background-color: #e6f7e6; color: #2e7d32; font-size: 12px; padding: 2px 8px; border-radius: 12px; display: inline-block; margin-left: 8px;">Verfügbar</span>
-            - Vollständig ausgefüllt mit allen persönlichen Angaben
-          </li>
-          <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
-            <div style="position: absolute; left: 0; top: 2px;">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6.5 9L9 11.5L13.5 7" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <rect x="1" y="1" width="18" height="18" rx="3" stroke="#2e7d32" stroke-width="2"/>
-              </svg>
-            </div>
-            <span style="font-weight: 500;">Gehaltsnachweise der letzten 3 Monate</span>
-            <span style="background-color: #e6f7e6; color: #2e7d32; font-size: 12px; padding: 2px 8px; border-radius: 12px; display: inline-block; margin-left: 8px;">Verfügbar</span>
-            - Nachweis stabiler Einkommensverhältnisse
-          </li>
-          <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
-            <div style="position: absolute; left: 0; top: 2px;">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6.5 9L9 11.5L13.5 7" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <rect x="1" y="1" width="18" height="18" rx="3" stroke="#2e7d32" stroke-width="2"/>
-              </svg>
-            </div>
-            <span style="font-weight: 500;">SCHUFA-Auskunft</span>
-            <span style="background-color: #e6f7e6; color: #2e7d32; font-size: 12px; padding: 2px 8px; border-radius: 12px; display: inline-block; margin-left: 8px;">Verfügbar</span>
-            - Aktuelle Bonitätsauskunft ohne negative Einträge
-          </li>
-          <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
-            <div style="position: absolute; left: 0; top: 2px;">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6.5 9L9 11.5L13.5 7" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <rect x="1" y="1" width="18" height="18" rx="3" stroke="#2e7d32" stroke-width="2"/>
-              </svg>
-            </div>
-            <span style="font-weight: 500;">Mietzahlungsbestätigung</span>
-            <span style="background-color: #e6f7e6; color: #2e7d32; font-size: 12px; padding: 2px 8px; border-radius: 12px; display: inline-block; margin-left: 8px;">Verfügbar</span>
-            - Nachweis pünktlicher Mietzahlungen
-          </li>
-        </ul>
-        
-        <p style="font-size: 14px; color: #555; margin-top: 20px; margin-bottom: 0;">
-          <svg width="16" height="16" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 5px;">
-            <circle cx="8" cy="8" r="7" stroke="#555" stroke-width="1.5" fill="none"/>
-            <path d="M8 4v5" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
-            <circle cx="8" cy="11.5" r="0.75" fill="#555"/>
-          </svg>
-          Die fehlenden Dokumente werden in den nächsten Tagen nachgereicht und im selben Ordner verfügbar sein.
-        </p>
-      </div>
-    </div>
-    
-    <div style="background-color: #eef5fb; border-radius: 8px; padding: 25px; margin-top: 30px;">
-      <h2 style="color: #2a5885; font-size: 22px; margin-top: 0;">Kontaktaufnahme</h2>
-      <p style="line-height: 1.6; font-size: 16px; margin-bottom: 20px;">
-        Über die Möglichkeit, die Wohnung zu besichtigen, würde ich mich sehr freuen. Gerne stehe ich für weitere Informationen zur Verfügung.
-      </p>
-      <div style="display: flex; align-items: center;">
-        <div style="background-color: #2a5885; color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
-          <span style="font-size: 18px;">H</span>
-        </div>
-        <div>
-          <p style="margin: 0; font-weight: bold; font-size: 18px;">Huijo Kim</p>
-          <p style="margin: 0; font-size: 14px; color: #555;">Data Scientist</p>
-          <p style="margin: 5px 0 0; font-size: 14px;">
-            <a href="mailto:ccomkhj@gmail.com" style="color: #2a5885; text-decoration: none;">ccomkhj@gmail.com</a> | 
-            <a href="tel:+4915205981504" style="color: #2a5885; text-decoration: none;">+49 152 05981504</a>
-          </p>
-        </div>
-      </div>
-    </div>
+<!-- Password Modal HTML -->
+<div id="passwordModal" class="modal-overlay">
+  <div class="modal-content" onclick="event.stopPropagation();">
+    <h3>Passwort erforderlich</h3>
+    <p>Bitte geben Sie das Passwort ein, um auf die Dokumente zuzugreifen.</p>
+    <input type="password" id="passwordInput" class="modal-input" placeholder="Passwort">
+    <div id="passwordError" class="modal-error">Falsches Passwort.</div>
+    <button id="passwordSubmit" class="modal-button">Zugriff</button>
   </div>
 </div>
 
 <script>
+  const modal = document.getElementById('passwordModal');
+  const passwordInput = document.getElementById('passwordInput');
+  const passwordSubmit = document.getElementById('passwordSubmit');
+  const passwordError = document.getElementById('passwordError');
+
+  function showPasswordModal(event) {
+    event.preventDefault();
+    modal.classList.add('active');
+    passwordInput.focus();
+  }
+
+  function hidePasswordModal() {
+    modal.classList.remove('active');
+    passwordInput.value = '';
+    passwordError.style.display = 'none';
+  }
+
   function checkPassword() {
-    // Set your password here
     const correctPassword = "0525";
-    const enteredPassword = document.getElementById('page-password').value;
-    
-    if (enteredPassword === correctPassword) {
-      // Show content
-      document.getElementById('password-protection').style.display = 'none';
-      document.getElementById('content').style.display = 'block';
-      
-      // Store in session storage so user doesn't have to re-enter password
-      // if they refresh the page
-      sessionStorage.setItem('immobilienAuth', 'true');
+    if (passwordInput.value === correctPassword) {
+      window.open("https://drive.google.com/drive/folders/1vdixMRH9mG4E_mh8-8kFYuMthsRJuNwT?usp=sharing", "_blank");
+      hidePasswordModal();
     } else {
-      document.getElementById('password-error').style.display = 'block';
+      passwordError.style.display = 'block';
+      passwordInput.focus();
     }
   }
-  
-  // Check if user has already entered password in this session
-  window.onload = function() {
-    if (sessionStorage.getItem('immobilienAuth') === 'true') {
-      document.getElementById('password-protection').style.display = 'none';
-      document.getElementById('content').style.display = 'block';
+
+  // Event Listeners
+  passwordSubmit.addEventListener('click', checkPassword);
+  passwordInput.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') {
+      checkPassword();
     }
-  }
+  });
+  modal.addEventListener('click', hidePasswordModal);
 </script>
