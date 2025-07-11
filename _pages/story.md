@@ -5,37 +5,50 @@ permalink: /story/
 author_profile: true
 ---
 
-### Embracing Polymathy: A Journey of Self-Discovery
+I am obsessed with building a solution that drives the actual value.
 
-To become a polymath, I need to understand myself as much as I need to learn new things. Experts from different fields are helpful, but the real work begins with self-assessment.
+Pursuing a polymath is my super power.
 
-When I explore new topics, knowing my own strengths and weaknesses is critical. Connecting complex ideas across various subjects demands not just information, but also clear self-awareness and a realistic view of what I can do.
+## Things I am proud of
 
-My approach isn't just about gaining skills. It's about combining external learning with internal self-discovery. This blend guides my journey forward. My aim is to gain practical understanding and personal insight, not just facts.
+- being a husband and a father
+- founded and built [hexafarms](https://www.hexafarms.com) from 0 to 400k ARR and left when it's time for the next step
+  - [World Best Accelerator Program: Techstars](https://www.linkedin.com/posts/techstars-berlin_indoorfarms-verticalindoorfarms-foodproduction-activity-6991309954343145472-c1hj?utm_source=share&utm_medium=member_desktop)
+  - [€1.3M Funding](https://www.eu-startups.com/2024/05/berlin-based-agtech-hexafarms-secures-e1-3-million-pre-seed-to-empower-commercial-indoor-farmers/)
+- volunteered as a math teacher for students from less fortunate families
+- flew to Australia without money and English knowledge, but finally saved the money for tuition fees
+- served in the Special Forces and learned what the patience is like
+- joined one of the biggest automotive companies (Hyundai Motors) and left when it's time for the next step
+- graduated with honors in Mechanical Engineering (BSc) and Robotics (MSc)
+- voluntarily extended master research and published it in the [research paper](https://www.arxiv.org/abs/2410.00769)
+- narrated [my story](https://www.worldjob.or.kr/info/bbs/ovseaAdvnStry/view.do?menuId=1000006395&bbscttNo=192537) and was listed as the top story by HRDK
 
-<figure>
-    <img src="../img/penguins_time_square.png" alt="different penguin" width="300" height="300">
-    <figcaption>1% change means more.</figcaption>
-</figure>
+## Things I believe
 
-The joy of my life is seeing people happy when they use my product.
+- shipping fast beats waiting for perfection
+  - better to iterate quickly, fail fast, and fix than to over-engineer
+- pursue truth ruthlessly
+  - truth often hurts—but it’s necessary
+  - truth comes after a long reflection
+- seek and embrace feedback
+  - take criticism objectively, without ego
+  - give feedback that’s clear, kind, and constructive
+  - [radical candor](https://www.amazon.de/-/en/Radical-Candor-without-losing-humanity/dp/1509845356)
+- leadership is accountability, not authority
+  - own outcomes, regardless of title or role
+- measure success by quantitative impact
+  - it’s often hard to track progress—but what gets measured gets improved
+- hard things take time
+  - difficult concept to understand? take time to read repeatedly
+  - non agreeable opinions? experience it and be in one's shoes.
+- customers pay you, not your boss
+  - customers tell you what they want, but it's not always what solves their pain
+  - be obsessed with finding what really solves their pain
+  - seek to understand, not to be understood
 
 ---
 
-### My Journey
-
-- **Serve Military Duty in the Special Forces**, instilling in me discipline, resilience, and a profound sense of duty.
-- **Adventurous Chapter in Sydney, Australia**, arriving with neither language skills nor money, driven by the goal of securing tuition fees for college and learning the language.  
-- **Volunteer Math Teacher** for students from less fortunate families, a commitment to community.
-- **Graduate BSc (Mechanical Engineering) at SKKU (South Korea)**, dean's list.
-- **Worked as a Research Engineer at Hyundai Motors**, exploring the transformative role of data science in electric vehicle manufacturing.
-- **Completed an MSc in Robotics as Top** at RWTH Aachen University (Germany), blending academic pursuits with professional experience.  
-- **Publish research paper "[Deep Aerial Mapper](https://www.arxiv.org/abs/2410.00769)"** alongside my thesis supervisor, contributing to advancements in both academic research and real-world applications.  
-- **The entrepreneurial journey** began with the foundation of a [startup](https://www.hexafarms.com), selected by [Techstars](https://www.linkedin.com/posts/techstars-berlin_indoorfarms-verticalindoorfarms-foodproduction-activity-6991309954343145472-c1hj?utm_source=share&utm_medium=member_desktop) accelerating program and then succeeded in raising €1.3M in [pre-seed](https://www.eu-startups.com/2024/05/berlin-based-agtech-hexafarms-secures-e1-3-million-pre-seed-to-empower-commercial-indoor-farmers/).
-  - **Zero to One**, Built business generating **€4k MRR** in 7 months.
-  - [My narrative](https://www.worldjob.or.kr/info/bbs/ovseaAdvnStry/view.do?menuId=1000006395&bbscttNo=192537) has been listed as the top story by HRDK (<i>Human Resources Development Service of Korea</i>). (Published in Korean.)
-  - Laser-focus on **building a business that matters**, beyond Product Market Fit and scaling.
 <figure>
     <img src="../assets\images\photo_in_farm.jpg" alt="Solution in the field" width="300" height="300">
-    <figcaption>Build a solution driving the actual value.</figcaption>
+    <figcaption>True joy comes after customer satisfaction.</figcaption>
 </figure>
