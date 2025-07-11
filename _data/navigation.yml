@@ -2,9 +2,11 @@
 main:
   # - title: "Quick-Start Guide"
   #   url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
+  - title: "posts"
+    url: /
   - title: "story"
-    url: https://ccomkhj.github.io/story/
+    url: /story/
   - title: "portfolio"
-    url: https://ccomkhj.github.io/portfolio/
+    url: /portfolio/
   # - title: "Sitemap"
   #   url: /sitemap/
