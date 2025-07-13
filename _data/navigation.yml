@@ -2,11 +2,13 @@
 main:
   # - title: "Quick-Start Guide"
   #   url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
-  - title: "posts"
-    url: /
+  - title: "writings"
+    url: /writings/
   - title: "story"
     url: /story/
   - title: "portfolio"
     url: /portfolio/
+  # - title: "tags"
+  #   url: /tags/
   # - title: "Sitemap"
   #   url: /sitemap/
