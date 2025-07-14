@@ -5,7 +5,7 @@ date: 2024-02-19
 tags:
    - Business
 classes: wide
-title:  Art of Hiring
+title:  Art of Hiring II
 ---
 
 I used to be a job seeker.

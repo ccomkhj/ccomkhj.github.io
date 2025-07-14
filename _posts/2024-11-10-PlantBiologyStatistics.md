@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2024-11-10
 tags:
-   - Science
+   - Philosophy
 classes: wide
 title: Understanding Strawberry Yields with Statistical Distributions
 ---
