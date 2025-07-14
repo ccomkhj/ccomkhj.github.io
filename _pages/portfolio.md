@@ -6,8 +6,8 @@ author_profile: false
 ---
 
 <div class="content-section fade-in">
-  <h2 class="section-title">Develop technology to make life better</h2>
-  <p>Here is my technology repo. Anyone can use my work. Feel free to use it to help others.</p>
+  <h2 class="section-title">Fraction of my work that can be shared</h2>
+  <p>Happy to share my work. Feel free to reach out to me if you need any assistance or have any questions.</p>
 </div>
 
 ---
@@ -31,7 +31,6 @@ author_profile: false
             <li><a href="https://github.com/ccomkhj/ORB_SLAM3">Drone-Visual SLAM in farming</a></li>
             <li><a href="https://github.com/ccomkhj/PCL_Plants">Point Cloud Processing</a></li>
           </ul>
-          <p><i>developed at <a href="https://www.hexafarms.com">hexafarms</a></i></p>
         </div>
       </div>
       <div class="project-tags">
@@ -50,7 +49,6 @@ author_profile: false
         <h3 class="project-title">3D Reconstruction</h3>
         <div class="project-description">
           <p>Advanced 3D reconstruction system for creating detailed digital models.</p>
-          <p><i>developed at <a href="https://www.hexafarms.com">hexafarms</a></i></p>
         </div>
       </div>
       <div class="project-tags">
@@ -74,7 +72,6 @@ author_profile: false
             <li>Data Processing</li>
             <li>Visualization</li>
           </ul>
-          <p><i>developed at <a href="https://www.hexafarms.com">hexafarms</a></i></p>
         </div>
       </div>
       <div class="project-tags">
@@ -94,7 +91,6 @@ author_profile: false
             <li>Image-tabular data combined Classification</li>
             <li>Time-series analysis for growth</li>
           </ul>
-          <p><i>developed at <a href="https://www.hexafarms.com">hexafarms</a></i></p>
         </div>
       </div>
       <div class="project-tags">
@@ -119,7 +115,6 @@ author_profile: false
             <li>Design Concurrency Functionality</li>
             <li>Prompt Engineering</li>
           </ul>
-          <p><i>developed at <a href="https://www.hexafarms.com">hexafarms</a></i></p>
         </div>
       </div>
       <div class="project-tags">
@@ -182,7 +177,6 @@ author_profile: false
             <li>Feature Engineering/Imputation (Transformer/GBT-based, statistic, plant science)</li>
             <li>XAI (Explainable AI) to understand why model performs better or worse</li>
           </ul>
-          <p><i>developed at <a href="https://www.hexafarms.com">hexafarms</a></i></p>
         </div>
       </div>
       <div class="project-tags">
@@ -201,9 +195,9 @@ author_profile: false
           <ul>
             <li>Build hardware of stereo vision from scratch</li>
             <li>Depth computation</li>
+            <li><a href="https://github.com/ccomkhj/Charuco_Stereo_Calibrator">Custom stereo calibration</a></li>
             <li><a href="https://ccomkhj.github.io/StereoVision">Reading</a></li>
           </ul>
-          <p><i>developed at <a href="https://www.hexafarms.com">hexafarms</a></i></p>
         </div>
       </div>
       <div class="project-tags">
@@ -360,5 +354,5 @@ author_profile: false
 
 <figure>
     <img src="..\img\drinking_wine.png"  alt="wine at cafe" width="500" height="500">
-    <figcaption>I learn hard and apply the knowledge assiduously. But I still relish chill, too.</figcaption>
+    <figcaption>A drink after hard work. What else?</figcaption>
 </figure>

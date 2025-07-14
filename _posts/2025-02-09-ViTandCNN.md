@@ -9,7 +9,7 @@ title: "ViT vs CNN: A Technical Deep Dive for High-Resolution Vision Tasks"
 ---
 
 **This isn’t just theory—it’s battle-tested.**  
-Over years of deploying vision systems for industrial-scale applications (from 4K surveillance to precision monitoring), I’ve learned one truth: **architecture choice makes or breaks performance**. While [this paper](https://arxiv.org/abs/2108.08810) provides excellent theoretical grounding, my conclusions come from burning through GPU hours, debugging edge cases, and optimizing for real-world 4K pipelines. Surprisingly, the paper’s findings align perfectly with what I’ve seen in practice. Let’s bridge academia and deployment.
+Over years of deploying vision systems for farming applications, I’ve learned one truth: **architecture choice makes or breaks performance**. While [this paper](https://arxiv.org/abs/2108.08810) provides excellent theoretical grounding, my conclusions come from burning through GPU hours, debugging edge cases, and optimizing for real-world 4K pipelines. Surprisingly, the paper’s findings align perfectly with what I’ve seen in practice. Let’s bridge academia and deployment.
 
 ---
 
@@ -24,7 +24,7 @@ Over years of deploying vision systems for industrial-scale applications (from 4
 Hybrid architectures like **ConvNeXt** or **Swin Transformer** balance efficiency and accuracy. As the paper notes—and my deployments confirm—*ViTs need scale. Skip connections and pretraining are non-negotiable*.
 
 ---
-TLDR;
+**TLDR;**
 
 #### 1. **ViTs: The Global Context Masters**
 - **Self-attention > Convolution**  
