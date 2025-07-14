@@ -5,6 +5,8 @@ permalink: /portfolio/
 author_profile: false
 ---
 
+<link rel="stylesheet" href="/assets/css/portfolio.css">
+
 <div class="content-section fade-in">
   <h2 class="section-title">Fraction of my work that can be shared</h2>
   <p>Happy to share my work. Feel free to reach out to me if you need any assistance or have any questions.</p>
@@ -137,7 +139,7 @@ author_profile: false
             <li>RAG (Retrieval-Augmented Generation) for company research</li>
             <li>Intelligent Skill Extraction & Matching</li>
           </ul>
-          <p>Streamlit-based web application that uses LLMs to generate personalized cover letters by analyzing job descriptions and researching companies in real-time.</p>
+          <p>Web app that uses LLMs to generate personalized cover letters by analyzing job descriptions and researching companies.</p>
         </div>
       </div>
       <div class="project-tags">
@@ -251,7 +253,7 @@ author_profile: false
     <!-- Source Code Card 4 -->
     <div class="project-card">
       <div class="project-content">
-        <h3 class="project-title">CharucoStereoCalibrator</h3>
+        <h3 class="project-title">Charuco Stereo Calibrator</h3>
         <div class="project-description">
           <p>Tool for calibrating stereo camera systems using Charuco boards.</p>
         </div>
