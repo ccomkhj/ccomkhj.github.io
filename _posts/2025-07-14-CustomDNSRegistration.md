@@ -10,7 +10,7 @@ title: "How to Set Up a Custom Domain on GitHub Pages with Namecheap"
 
 ---
 
-Today, I went through the process of connecting my custom domain, `huijo.xyz`, to my GitHub Pages site. It's a common task for developers looking to personalize their web presence. Here’s a step-by-step guide on how I did it, specifically for a domain registered with Namecheap.
+Today, I went through the process of connecting my custom domain, `huijo.xyz`, to my GitHub Pages site. It's a common task for developers looking to personalize their web presence. Here’s a step-by-step guide on how I did it, specifically for a domain registered with [Namecheap](https://www.namecheap.com/).
 
 ### The Goal
 
