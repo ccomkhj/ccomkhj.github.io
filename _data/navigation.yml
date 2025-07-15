@@ -6,6 +6,8 @@ main:
     url: /writings/
   - title: "story"
     url: /story/
+  - title: "bookmarks"
+    url: /bookmarks/
   - title: "portfolio"
     url: /portfolio/
   # - title: "tags"
