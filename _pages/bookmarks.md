@@ -12,7 +12,8 @@ A curated list of interesting links and resources I've found across the web.
 - [Hyndsight](https://robjhyndman.com/hyndsight/): Blog by Rob Hyndman, a leading expert in time series analysis.
 - [Distill.pub](https://distill.pub/): Clear, interactive articles on machine learning.
 - [Time Series Analysis and Its Applications](http://www.stat.ucla.edu/~frederic/415/S23/tsa4.pdf): A comprehensive book for time series analysis.
-- [Forecasting: Principles and Practice (2nd ed)](https://otexts.com/fpp2/): A compact book for time series forecasting. Great content for hierarchical or grouped time series.
+- [Forecasting: Principles and Practice (2nd ed)](https://otexts.com/fpp2/): A compact book for time series forecasting. 
+  - Great content for hierarchical or grouped time series.
 
 ## Ideas & Essays
 

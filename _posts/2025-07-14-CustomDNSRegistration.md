@@ -2,7 +2,7 @@
 
 layout: single  
 author: Huijo  
-date: 2025-06-14
+date: 2025-07-14
 tags:  
    - Math
 classes: wide  
