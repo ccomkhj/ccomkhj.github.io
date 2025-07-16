@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "Role of plan and trust in business"
+date: 2022-10-28
+tags:
+    - Business
 ---
 
 ## Does plan matter in business?

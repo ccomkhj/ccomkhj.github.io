@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "Start with Why"
+date: 2022-07-06
+tags:
+    - Business
 ---
 
 ### Focus on what

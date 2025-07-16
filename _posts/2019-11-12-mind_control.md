@@ -1,7 +1,10 @@
 ---
 layout: single
 classes: wide
-title:  "Morning Thoughts"
+title:  "Mind Control"
+date: 2019-11-12
+tags:
+    - Philosophy
 ---
 
 새로운 곳에서 모든것이 새로워서 인지, 하루 하루에 항상 감사하며 보내왔다.

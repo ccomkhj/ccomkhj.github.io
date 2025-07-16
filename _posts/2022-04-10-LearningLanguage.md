@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "Learning Language"
+date: 2022-04-10
+tags:
+    - Philosophy
 ---
 
 # My lesson in learning new languages

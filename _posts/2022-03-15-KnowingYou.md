@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "Keep your friends close and your enemies closer."
+date: 2022-03-15
+tags:
+    - Philosophy
 ---
 
 It’s better to know better something disturb and annoy you. People tend to believe that they know themselves. However, the more one contemplate for yourselves, you will realize that the less you know confident how much you understand yourselves. 

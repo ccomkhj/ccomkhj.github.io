@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "How one likes another"
+date: 2022-06-03
+tags:
+    - Philosophy
 ---
 
 인간의 심리를 이해하고 그를 활용해야 더 지혜로운, 만족스러운, 그리고 성공적인 삶을 보낼 수 있다.

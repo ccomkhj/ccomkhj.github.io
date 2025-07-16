@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "Don't follow the metric in research papers: Vision Transformer"
+date: 2023-01-01
+tags:
+    - Machine Learning
 ---
 
 Every year, plenty of research papers are released, boasting their metric (IoU, Precision, recall, ...) which beats the last state-of-the-art.

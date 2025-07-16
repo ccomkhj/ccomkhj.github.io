@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "Relation of Ignorance and Evaluation"
+date: 2022-07-12
+tags:
+    - Philosophy
 ---
 
 ## It is not necessarily bad, even if you couldn't understand it.

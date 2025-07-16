@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "Balance Of Collaboration"
+date: 2023-02-09
+tags:
+    - Business
 ---
 
 How do you collaborate?  

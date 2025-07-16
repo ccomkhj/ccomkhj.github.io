@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "Study in Germany"
+date: 2022-02-07
+tags:
+    - Business
 ---
 
 독일 유학을 결심할때, 많은 사람들의 블로그를 보며 내가 어떻게 해나갈지에 대한 그림을 그려보곤 했다.

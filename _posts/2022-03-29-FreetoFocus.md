@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "Free to Focus"
+date: 2022-03-29
+tags:
+    - Business
 ---
 
 ## Know what to do

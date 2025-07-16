@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "AI service"
+date: 2022-10-01
+tags:
+    - Machine Learning
 ---
 
 As a CTO of AI-first-company, my first approach to solve problems was AI.

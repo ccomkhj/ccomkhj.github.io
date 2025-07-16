@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "Lesson from Startup in the last half year"
+date: 2022-03-23
+tags:
+    - Business
 ---
 
 Countless jobs exist in the world. <br> Some work for one of the countless jobs in one’s life, and some work for a few jobs of them. <br>

@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "Retrorepsective Self Analysis myself"
+date: 2023-03-22
+tags:
+    - Philosophy
 ---
 
 There are often multiple versions of me to folks.

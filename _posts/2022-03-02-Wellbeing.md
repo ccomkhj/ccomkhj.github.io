@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "Science of Wellbeing"
+date: 2022-03-02
+tags:
+    - Philosophy
 ---
 
 The science of well-being is one of the topics I have been reading and thinking often. \

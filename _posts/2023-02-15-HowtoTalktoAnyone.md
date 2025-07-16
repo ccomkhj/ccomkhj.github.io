@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "How to Talk to Anyone"
+date: 2023-02-15
+tags:
+    - Business
 ---
 
 Book summary of starting a talk.

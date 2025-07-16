@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "Paper Review - Deep Learning is Not All You Need"
+date: 2022-11-23
+tags:
+    - Machine Learning
 ---
 
 There is one rule of thumb in Deep Learning research.

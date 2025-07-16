@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "Journey to Flow state"
+date: 2023-01-07
+tags:
+    - Philosophy
 ---
 
 In positive psychology, a flow state, also known colloquially as being in the zone, is the mental state in which a person performing some activity is fully immersed in a feeling of energized focus, full involvement, and enjoyment in the process of the activity. -Wikipedia 

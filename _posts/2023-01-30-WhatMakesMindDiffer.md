@@ -2,6 +2,9 @@
 layout: single
 classes: wide
 title:  "What makes mind differ"
+date: 2023-01-30
+tags:
+    - Philosophy
 ---
 
 Your mind decides whether what you are doing now makes you happy or stressed.
