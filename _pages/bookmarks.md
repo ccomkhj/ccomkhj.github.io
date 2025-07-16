@@ -9,11 +9,20 @@ A curated list of interesting links and resources I've found across the web.
 
 ## Engineering
 
+**Forecasting**
 - [Hyndsight](https://robjhyndman.com/hyndsight/): Blog by Rob Hyndman, a leading expert in time series analysis.
-- [Distill.pub](https://distill.pub/): Clear, interactive articles on machine learning.
 - [Time Series Analysis and Its Applications](http://www.stat.ucla.edu/~frederic/415/S23/tsa4.pdf): A comprehensive book for time series analysis.
 - [Forecasting: Principles and Practice (2nd ed)](https://otexts.com/fpp2/): A compact book for time series forecasting. 
   - Great content for hierarchical or grouped time series.
+- [To Explain or to Predict?](https://projecteuclid.org/journals/statistical-science/volume-25/issue-3/To-Explain-or-to-Predict/10.1214/10-STS330.full): Clear distinction between Explanatory and Predictive modeling.
+  - [My summary](../_posts/2025-07-16-ExplanatoryvsPredictiveModeling.md)
+
+**Machine Learning**
+- [Distill.pub](https://distill.pub/): Clear, interactive articles on machine learning.
+- [Interpretable Machine Learning](https://originalstatic.aminer.cn/misc/pdf/Molnar-interpretable-machine-learning_compressed.pdf): the Bible of interpretability. It’s been cited everywhere, even in scikit-learn’s docs.
+
+**Data Engineering**
+- TBA
 
 ## Ideas & Essays
 
