@@ -67,9 +67,37 @@ This approach is fraught with problems for several reasons:
 
 When a stakeholder asks us for p-values, it often indicates a background in inferential statistics rather than predictive modeling. It's our job to gently explain this distinction and steer the conversation toward more appropriate predictive metrics like Mean Absolute Error (MAE) or Root Mean Squared Error (RMSE) on a holdout set.
 
-### Conclusion
+### Two Paths, Two Different Models: Real-World Examples
 
-Embracing the distinction between explaining and predicting has made my work more rigorous. It clarifies why we choose certain algorithms, how we evaluate them, and what conclusions we can legitimately draw. While our main job as forecasting engineers is **prediction**, understanding the principles of **explanation** gives us a more complete picture of the data science landscape and helps us use our tools more effectively.
+Shmueli's paper provides powerful examples that make these abstract distinctions concrete.
+
+The **Netflix Prize** is a classic case of a purely predictive goal. The task was simple: predict user movie ratings with the highest accuracy possible. The winning teams didn't build elaborate causal models of movie preference. Instead, they used methods that are hallmarks of predictive modeling:
+* **Non-interpretable data reduction**: Methods like Singular Value Decomposition (SVD) were key to success, even though the resulting components have no clear theoretical meaning.
+* **Ensemble methods**: The best results came from blending multiple simpler models, a technique that prioritizes predictive power over interpretability.
+* **Data over theory**: Interestingly, adding theoretically relevant data, like movie attributes (actors, director), often *decreased* the accuracy of a well-tuned predictive model. The association in the ratings data itself was more powerful.
+
+Contrast this with typical **online auction research**, which has been dominated by explanatory modeling 494]. An explanatory study trying to determine the factors affecting an auction's final price would be deeply concerned with theory. It might exclude the number of bidders as a predictor due to **endogeneity**—the idea that the number of bidders is itself determined by the auction's characteristics, creating a messy causal loop.
+
+A predictive model, however, would have no such qualms. If my goal is simply to forecast the final price, and I know the number of bidders at a given time, I would absolutely use it as a predictor! It's a powerful signal, and in a predictive context, I don't need to worry about its causal interpretation. These two scenarios lead to completely different models built from the same data.
+
+### Implications for Our Work
+
+The failure to distinguish between explaining and predicting has real consequences. I see it as my responsibility to be aware of these pitfalls.
+
+#### The Danger of Confusing R² with Predictive Power
+
+A common mistake is to infer predictive power from a high R² or other in-sample goodness-of-fit measures. Shmueli points to numerous studies in fields from ecology to economics where researchers claim predictive power based on a high R² from a regression model, without performing any out-of-sample validation. This is a critical error. An explanatory model can fit the existing data perfectly but fail miserably at predicting new data. **True predictive power can only be assessed on a holdout set**.
+
+#### Two Dimensions, Not a Single Spectrum
+
+It's tempting to think of explanation and prediction as a simple trade-off, but Shmueli suggests a more nuanced view: they are **two separate dimensions**. Any given model has some level of explanatory power and some level of predictive accuracy.
+
+
+The goal of a study should be determined upfront so the model can be optimized for the desired dimension. However, we should always evaluate and report on *both*. An explanatory model should still be tested for its predictive accuracy to check its real-world relevance, and a predictive model's relationship to theory should be discussed to help generate new hypotheses.
+
+#### Our Responsibility as Practitioners
+
+Ultimately, as statisticians and machine learning engineers, we have a responsibility to use our tools correctly and to advocate for their proper use. By clearly distinguishing between explaining and predicting, we can bridge the gap between academic research and practice, prevent the misuse of statistical methods, and contribute more effectively to both scientific knowledge and practical results.
 
 ### Reference
 - [P-values for prediction intervals](https://robjhyndman.com/hyndsight/forecasting-pvalues.html)
