@@ -317,3 +317,5 @@ defaults:
       layout: single
       author_profile: true
       mathjax: true # keep it true only when math equation is used.
+
+github: [metadata]

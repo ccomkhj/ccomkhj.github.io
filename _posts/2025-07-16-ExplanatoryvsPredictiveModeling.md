@@ -26,13 +26,13 @@ The core difference lies in the **goal**. Explanatory modeling seeks to test cau
 
 #### **Theory & Causation vs. Data & Association**
 
-In **explanatory modeling**, we start with a strong causal theory. Let's say a theory postulates that a theoretical construct $\mathcal{Y}$ is caused by a construct $\mathcal{X}$, which we can represent as:
+In **explanatory modeling**, we start with a strong causal theory. Let's say a theory postulates that a theoretical construct $$\mathcal{Y}$$ is caused by a construct $$\mathcal{X}$$, which we can represent as:
 
 $$\mathcal{Y} = \mathcal{F}(\mathcal{X})$$
 
-Here, $\mathcal{F}$ represents the true, underlying causal relationship. Our job is to operationalize these abstract constructs into measurable variables, $Y$ and $X$, and then find a statistical model, $f$, that is the best possible representation of $\mathcal{F}$. The entire exercise is about using data to test hypotheses about $\mathcal{F}$. The focus is on **causation**.
+Here, $$\mathcal{F}$$ represents the true, underlying causal relationship. Our job is to operationalize these abstract constructs into measurable variables, $$Y$$ and $$X$$, and then find a statistical model, $$f$$, that is the best possible representation of $$\mathcal{F}$$. The entire exercise is about using data to test hypotheses about $$\mathcal{F}$$. The focus is on **causation**.
 
-In **predictive modeling**, the focus shifts dramatically. We are primarily interested in the measurable variables $Y$ and $X$ themselves, not necessarily the abstract constructs they might represent. Our goal is to find a function $f$ that produces the most accurate predictions of new $Y$ values, given new $X$ values. This function $f$ only needs to capture the **association** between $X$ and $Y$; it doesn't need to be an interpretable or causal model. This is why algorithmic "black box" methods, like neural networks, are perfectly acceptable and often superior in a predictive context.
+In **predictive modeling**, the focus shifts dramatically. We are primarily interested in the measurable variables $$Y$$ and $$X$$ themselves, not necessarily the abstract constructs they might represent. Our goal is to find a function $$f$$ that produces the most accurate predictions of new $$Y$$ values, given new $$X$$ values. This function $$f$$ only needs to capture the **association** between $$X$$ and $$Y$$; it doesn't need to be an interpretable or causal model. This is why algorithmic "black box" methods, like neural networks, are perfectly acceptable and often superior in a predictive context.
 
 ---
 
@@ -44,7 +44,7 @@ $$EPE = E\{(Y - \hat{f}(x))^2\} = \underbrace{Var(Y)}_{\text{Irreducible Error}}
 
 
 
-* In **explanatory modeling**, the absolute priority is to minimize **bias**. We need our estimated model, $\hat{f}(x)$, to be the most accurate possible representation of the true underlying function, $f(x)$. We are willing to accept higher variance to get an unbiased estimate of the causal parameters.
+* In **explanatory modeling**, the absolute priority is to minimize **bias**. We need our estimated model, $$\hat{f}(x)$$, to be the most accurate possible representation of the true underlying function, $$f(x)$$. We are willing to accept higher variance to get an unbiased estimate of the causal parameters.
 
 * In **predictive modeling**, our goal is to minimize the total **EPE** (the combination of bias and variance). We are often willing to introduce some bias into our model if it leads to a larger reduction in variance, thereby improving overall predictive accuracy. This is precisely what regularization techniques do. As Shmueli's paper shows, a misspecified or "wrong" model can sometimes predict better than the "true" one if the data is noisy or the sample size is small.
 
@@ -62,6 +62,7 @@ This approach is fraught with problems for several reasons:
 
 * **Forecasting Isn't Hypothesis Testing:** Our primary goal is not to test a hypothesis but to fit a model that generates accurate predictions.
 * **Unreliable Intervals:** Prediction intervals from forecasting models are often too narrow, as they fail to account for all sources of uncertainty (like model specification error). A test based on these intervals would not be well-calibrated.
+
 * **Dependence:** Forecast errors are correlated over time, which violates the independence assumptions required for many statistical tests.
 
 When a stakeholder asks us for p-values, it often indicates a background in inferential statistics rather than predictive modeling. It's our job to gently explain this distinction and steer the conversation toward more appropriate predictive metrics like Mean Absolute Error (MAE) or Root Mean Squared Error (RMSE) on a holdout set.
