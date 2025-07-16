@@ -240,8 +240,8 @@ sitemap: false
     <div class="glance-box">
       <h3>Auf einen Blick:</h3>
       <ul>
-        <li><strong>Einkommen:</strong> 4700 EUR netto monatlich aus meiner neuen Anstellung</li>
-        <li><strong>Berufliche Veränderung:</strong> Neue Position, vorher 3500 EUR, jetzt 4700 EUR netto</li>
+        <li><strong>Einkommen:</strong> - EUR netto monatlich aus meiner neuen Anstellung</li>
+        <li><strong>Berufliche Veränderung:</strong> Neue Position, vorher - EUR, jetzt - EUR netto</li>
         <li><strong>Umzugszeitpunkt:</strong> Flexibel, idealerweise im August 2025</li>
         <li><strong>Unterlagen:</strong> Vollständige Dokumente sofort verfügbar</li>
       </ul>

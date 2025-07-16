@@ -76,7 +76,7 @@ The **Netflix Prize** is a classic case of a purely predictive goal. The task wa
 * **Ensemble methods**: The best results came from blending multiple simpler models, a technique that prioritizes predictive power over interpretability.
 * **Data over theory**: Interestingly, adding theoretically relevant data, like movie attributes (actors, director), often *decreased* the accuracy of a well-tuned predictive model. The association in the ratings data itself was more powerful.
 
-Contrast this with typical **online auction research**, which has been dominated by explanatory modeling 494]. An explanatory study trying to determine the factors affecting an auction's final price would be deeply concerned with theory. It might exclude the number of bidders as a predictor due to **endogeneity**—the idea that the number of bidders is itself determined by the auction's characteristics, creating a messy causal loop.
+Contrast this with typical **online auction research**, which has been dominated by explanatory modeling. An explanatory study trying to determine the factors affecting an auction's final price would be deeply concerned with theory. It might exclude the number of bidders as a predictor due to **endogeneity**—the idea that the number of bidders is itself determined by the auction's characteristics, creating a messy causal loop.
 
 A predictive model, however, would have no such qualms. If my goal is simply to forecast the final price, and I know the number of bidders at a given time, I would absolutely use it as a predictor! It's a powerful signal, and in a predictive context, I don't need to worry about its causal interpretation. These two scenarios lead to completely different models built from the same data.
 
