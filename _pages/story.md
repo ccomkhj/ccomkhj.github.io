@@ -5,9 +5,9 @@ permalink: /story/
 author_profile: true
 ---
 
-I am obsessed with building a solution that drives the actual value.
+I am obsessed with getting 1% better every day.
 
-Pursuing a polymath is my super power.
+Becoming a polymath is the reason behind.
 
 ## Things I am proud of
 
