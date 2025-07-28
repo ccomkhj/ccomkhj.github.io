@@ -18,7 +18,6 @@ A curated list of interesting links and resources I've found across the web.
   - [My summary](../_posts/2025-07-16-ExplanatoryvsPredictiveModeling.md)
 
 **Machine Learning**
-- [Distill.pub](https://distill.pub/): Clear, interactive articles on machine learning.
 - [Interpretable Machine Learning](https://originalstatic.aminer.cn/misc/pdf/Molnar-interpretable-machine-learning_compressed.pdf): the Bible of interpretability. It’s been cited everywhere, even in scikit-learn’s docs.
 
 **Data Engineering**
