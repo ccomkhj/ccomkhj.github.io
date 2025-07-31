@@ -125,7 +125,7 @@ This was first confirmed in **1919**, when astronomers observed light bending ar
 
 ---
 
-## **Real-World Examples (and Why I Love Programming Relativity)**  
+## **Real-World Examples (and Why I Love programing Relativity)**  
 
 ### **1. The Twin Paradox: Aging Differently in Space**  
 

@@ -17,7 +17,7 @@ Also, when I was a newbie in the computer vision domain, when I process images a
 it was really fun to test my knowledge from university and research papers.
 However, since I have done vision-task hundreds of times already, it doesn't send me to the flow state. 
 It becomes somehow boring job because it's easy and only time-consuming.
-From another perspective, when I study a new programming language with no background, it requires huge concentration, even if it's one of the great joy in my life.
+From another perspective, when I study a new programing language with no background, it requires huge concentration, even if it's one of the great joy in my life.
 
 Based on my journey to be into the flow state,
 There are several conditions to reach and retain the flow state.

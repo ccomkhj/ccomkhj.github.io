@@ -37,7 +37,7 @@ Which means brain cell is reconstructed.
 
 Through these research results, we can deduce that brains change based on how we think.
 It casts a thought to me that we believe that our thoughts come from the brain, but the brain also changes from its byproduct.
-It reminds me of the infinite loop in programming.
+It reminds me of the infinite loop in programing.
 If brains can manipulate this mechanism, can one brilliant and disciplined human being behave as if she/he is god?
 Why there's no such person?
 
