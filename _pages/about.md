@@ -1,18 +1,24 @@
 ---
 layout: single
 class: wide
-permalink: /story/
+permalink: /about/
 author_profile: true
 ---
 
-I am obsessed with getting 1% better every day.
+<div style="text-align: center; margin-top: 2em; margin-bottom: 2em;">
+  <span style="font-size: 2.2em; font-weight: bold; color: #2c3e50; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; letter-spacing: 1px;">
+    Hey, I'm Huijo.
+  </span>
+  <hr style="margin: 1.2em auto 0.8em auto; border: none; border-top: 3px solid #2c3e50; width: 80%; max-width: 400px;">
+</div>
 
-Becoming a polymath is the reason behind.
+I am an entrepreneurial data scientist by day, and lifelong learner by night.
+Journey to be a polymath is my joy by getting 1% better day by day.
 
-## Things I am proud of
+### Things I am proud of
 
 - being a husband and a father
-- founded and built [hexafarms](https://www.hexafarms.com) from 0 to 400k ARR and left when it's time for the next step
+- founded and built [hexafarms](https://www.hexafarms.com) from 0 to 400k ARR business and left when it's time for the next step
   - [World Best Accelerator Program: Techstars](https://www.linkedin.com/posts/techstars-berlin_indoorfarms-verticalindoorfarms-foodproduction-activity-6991309954343145472-c1hj?utm_source=share&utm_medium=member_desktop)
   - [€1.3M Funding](https://www.eu-startups.com/2024/05/berlin-based-agtech-hexafarms-secures-e1-3-million-pre-seed-to-empower-commercial-indoor-farmers/)
   - [Essay](../_posts/2025-07-15-LessonAfterEndAndBeforeNewStart.md)
@@ -24,7 +30,7 @@ Becoming a polymath is the reason behind.
 - extended master research and published it in the [research paper](https://www.arxiv.org/abs/2410.00769)
 - narrated [my story](https://www.worldjob.or.kr/info/bbs/ovseaAdvnStry/view.do?menuId=1000006395&bbscttNo=192537) as the top story
 
-## Things I believe
+### Things I believe
 
 - shipping fast beats waiting for perfection
   - better to iterate quickly, fail fast, and fix than to over-engineer
@@ -42,6 +48,7 @@ Becoming a polymath is the reason behind.
 - hard things take time
   - difficult concept to understand? take time to read repeatedly
   - non agreeable opinions? experience it and be in one's shoes.
+  - break it down into smaller pieces and tackle them one by one
 - customers pay you, not your boss
   - customers tell you what they want, but it's not always what solves their pain
   - be obsessed with finding what really solves their pain
