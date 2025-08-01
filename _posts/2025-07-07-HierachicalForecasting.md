@@ -126,5 +126,5 @@ Since \(\bm{W}_h\) is unknown, it must be estimated. Common approaches include:
 
 ## Reference
 
-- [Forecasting: Principles and Practice (2nd ed), Rob J Hyndman and George Athanasopoulos](https://otexts.com/fpp2/hierarchical.html)
+- [Forecasting: Principles and Practice (3rd ed), Rob J Hyndman and George Athanasopoulos](https://otexts.com/fpp3/hierarchical.html)
 - [Huijo's Hierarchical Forecast Notebook](https://github.com/ccomkhj/ScienceNote/blob/main/ml_hierarchical_forecast.ipynb)

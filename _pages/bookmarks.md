@@ -12,7 +12,7 @@ A curated list of interesting links and resources I've found across the web.
 **Forecasting**
 - [Hyndsight](https://robjhyndman.com/hyndsight/): Blog by Rob Hyndman, a leading expert in time series analysis.
 - [Time Series Analysis and Its Applications](http://www.stat.ucla.edu/~frederic/415/S23/tsa4.pdf): A comprehensive book for time series analysis.
-- [Forecasting: Principles and Practice (2nd ed)](https://otexts.com/fpp2/): A compact book for time series forecasting. 
+- [Forecasting: Principles and Practice (3rd ed)](https://otexts.com/fpp3/): A compact book for time series forecasting.
   - Great content for hierarchical or grouped time series.
 - [To Explain or to Predict?](https://projecteuclid.org/journals/statistical-science/volume-25/issue-3/To-Explain-or-to-Predict/10.1214/10-STS330.full): Clear distinction between Explanatory and Predictive modeling.
   - [My summary](../_posts/2025-07-16-ExplanatoryvsPredictiveModeling.md)
