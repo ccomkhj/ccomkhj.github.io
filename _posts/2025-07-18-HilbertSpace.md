@@ -103,3 +103,5 @@ In conclusion:
 - GBDT and other advanced ML models do not use this framework. They rely on iterative optimization and function approximation to tackle forecasting problems, often outperforming linear models when the underlying data-generating process is non-linear.
 
 For a practitioner, the choice depends on the data and the goal. For a series that is largely linear and requires interpretability, ARIMA is a theoretically sound choice. For a complex series where predictive accuracy is paramount, GBDT is a powerful tool. The Hilbert space framework provides the clear, theoretical line that separates these two powerful, but fundamentally different, approaches to forecasting.
+
+Check out the [GitHub repository](https://github.com/ccomkhj/ScienceNote/blob/main/math_hilbert_space.ipynb) for the code and examples for better understanding.
