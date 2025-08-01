@@ -11,6 +11,7 @@ title: "Explanatory vs. Predictive Modeling: A Guide for the Machine Learning En
 
 ---
 
+> **Note:** This post is mainly written with deep research.
 
 As machine learning engineers focused on forecasting, we often live in a world of predictive accuracy. Our goal is to build models that generate the best possible predictions for future outcomes. However, to be well-rounded data scientists, it's vital to understand that prediction is just one facet of statistical modeling. In my work, I find it crucial to distinguish between **predictive modeling** and its counterpart, **explanatory modeling**, a distinction brilliantly detailed in Galit Shmueli's paper, "To Explain or to Predict?". This paper actively informs my approach to modeling.
 

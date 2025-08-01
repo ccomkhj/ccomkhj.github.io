@@ -11,6 +11,8 @@ title: "The Linear Gaussian State Model: Dynamic Systems"
 
 ---
 
+> **Note:** This post is mainly written with deep research.
+
 ## 1. Introduction to State-Space Models
 
 State-space models offer a robust and flexible framework for analyzing and understanding dynamic systems, particularly those evolving over time, such as time series data. This approach provides a powerful lens through which to conceptualize a system's behavior, distinguishing between its internal, unobservable dynamics and its external, measurable manifestations. The framework is especially adept at managing multivariate data and intricate dynamic relationships, providing a systematic method for modeling processes under uncertainty.

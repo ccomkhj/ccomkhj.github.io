@@ -11,6 +11,8 @@ title: "Hilbert Spaces in Time Series"
 
 ---
 
+> **Note:** This post is mainly written with deep research.
+
 ### 1. Introduction: The Theoretical Bedrock of Forecasting
 In time series analysis, a fundamental goal is to produce the best possible forecast given a set of historical data. The concept of "best" is formally defined as the forecast that minimizes the mean square error (MSE). The theoretical framework that provides the rigorous foundation for this minimization problem, particularly for linear models, is rooted in the geometry of **Hilbert spaces** and the powerful Projection Theorem.
 
