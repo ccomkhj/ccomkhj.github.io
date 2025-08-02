@@ -11,7 +11,7 @@ title: "The Linear Gaussian State Model: Dynamic Systems"
 
 ---
 
-> **Note:** This post is mainly written with deep research.
+> **Note:** This post is initially composed with deep research and finalized by me.
 
 ## 1. Introduction to State-Space Models
 

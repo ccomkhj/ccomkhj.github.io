@@ -14,6 +14,7 @@ A curated list of interesting links and resources I've found across the web.
 - [Time Series Analysis and Its Applications](http://www.stat.ucla.edu/~frederic/415/S23/tsa4.pdf): A comprehensive book for time series analysis.
 - [Forecasting: Principles and Practice (3rd ed)](https://otexts.com/fpp3/): A compact book for time series forecasting.
   - Great content for hierarchical or grouped time series.
+  - [Python edition](https://otexts.com/fpppy/nbs/11-hierarchical-forecasting.html)
 - [To Explain or to Predict?](https://projecteuclid.org/journals/statistical-science/volume-25/issue-3/To-Explain-or-to-Predict/10.1214/10-STS330.full): Clear distinction between Explanatory and Predictive modeling.
   - [My summary](../_posts/2025-07-16-ExplanatoryvsPredictiveModeling.md)
 - [Ranking a Random Feature for Variable and Feature Selection](https://jmlr.org/papers/volume3/stoppiglia03a/stoppiglia03a.pdf): Probes—random variables added to compare feature importance—offer an intuitive feature selection method, but their effectiveness depends on handling correlations and cardinality, making them more common in competitions like Kaggle than in industry for simplicity.
