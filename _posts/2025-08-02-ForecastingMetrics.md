@@ -15,7 +15,7 @@ title: "Forecasting Accuracy Metrics"
 
 ## Beyond MAPE & RMSE: A Strategic Guide to Forecasting Metrics
 
-#### Why Forecast Accuracy Matters More Than Ever
+### Why Forecast Accuracy Matters More Than Ever
 
 **From Strawberry Fields to Energy Grids:** My journey through agricultural yield forecasting at [hexafarms](http://hexafarms.com/) (predicting strawberry and tomato yields 1-4 weeks ahead) and now demand forecasting in e-commerce and energy has taught me this: forecasting isn't about crystal balls—it's about quantifying uncertainty to drive better decisions. Whether it's a farmer deciding harvest schedules, an e-commerce manager allocating inventory, or an energy trader balancing grids, the stakes of forecast accuracy are always tangible.
 
@@ -31,7 +31,7 @@ title: "Forecasting Accuracy Metrics"
 
 **The Evolution I've Lived:** Early in my career, we obsessed over single-point accuracy (MAPE for yields). Today, I advocate for **probabilistic thinking**—whether predicting the 90th percentile of tomato harvests or the distribution of next week's EV charging demand. The breakthrough moment? When our team replaced "We'll harvest 12 tons" with "80% chance of 10-14 tons" and reduced food waste by 23%.
 
-#### Demystifying Point Forecast Metrics: A Taxonomy
+### Demystifying Point Forecast Metrics: A Taxonomy
 
 No single metric fits all scenarios. Understanding their construction and properties is key to strategic selection. Metrics are built from three core components:
 
@@ -134,7 +134,7 @@ This framework explains *why* metrics behave as they do. Below is a comparative 
 *   **Relative-Error Metrics (MdRAE, GMRAE):** Error relative to a benchmark (e.g., naïve forecast). **Pro:** Scale-independent. **Con:** **Undefined if benchmark error is zero** (common with intermittent data).
 *   **Scale-Free Metrics (MASE):** Error scaled by in-sample benchmark error. **Pro:** Universally applicable, robust to zeros/intermittency, comparable. **Gold standard for intermittent demand.**
 
-###### The Intermittent Demand Challenge
+#### The Intermittent Demand Challenge
 
 Sales of slow-moving items (e.g., specific lubricants) are characterized by many zeros and sporadic spikes. This wreaks havoc on traditional metrics:
 
@@ -145,7 +145,7 @@ Sales of slow-moving items (e.g., specific lubricants) are characterized by many
 
 **MASE is the unequivocal champion for intermittent demand forecasting evaluation.**
 
-###### The Myth of the "Best" Metric
+#### The Myth of the "Best" Metric
 
 The quest for a single, universally "best" metric is futile. Here's why:
 
@@ -158,7 +158,7 @@ The quest for a single, universally "best" metric is futile. Here's why:
 
 **Selection is strategic:** Choose metrics based on **business objective**, **data characteristics**, and **interpretability needs**.
 
-###### Handling Outliers & Distribution
+#### Handling Outliers & Distribution
 
 *   **Squared Errors (MSE/RMSE):** Highly sensitive. Amplify large errors. Use if large errors are exceptionally costly.
 *   **Absolute Errors (MAE):** Less sensitive. Equal weight to all errors.
@@ -167,7 +167,7 @@ The quest for a single, universally "best" metric is futile. Here's why:
 
 #### Leveling Up: Advanced Evaluation Techniques
 
-###### Time Series Cross-Validation (Rolling Forecast Origin)
+#### Time Series Cross-Validation (Rolling Forecast Origin)
 
 Forget simple train/test splits. Time series data demands chronological preservation:
 
@@ -179,7 +179,7 @@ Forget simple train/test splits. Time series data demands chronological preserva
 
 **Why it's critical:** Simulates real-world forecasting. Prevents overfitting to historical patterns. Provides reliable estimate of future performance. (Minimizing Gaussian AIC ≈ Minimizing 1-step MSE via this method).
 
-###### Evaluating Probabilistic Forecasts
+#### Evaluating Probabilistic Forecasts
 
 Assessing a full distribution against a single observation (e.g., seasonal peak demand) is hard. Key qualities:
 
@@ -195,7 +195,7 @@ Assessing a full distribution against a single observation (e.g., seasonal peak 
     *   **Mean Absolute Excess Probability (MAEP):** Avg. absolute diff between proportion of obs exceeding a percentile and that percentile. → 0 for perfect fit.
     *   **Kolmogorov-Smirnov (KS) Statistic:** Max absolute diff between empirical and forecast CDF. → 0 for perfect fit. Scale-independent.
 
-###### Residual Analysis: The Diagnostic Powerhouse
+#### Residual Analysis: The Diagnostic Powerhouse
 
 Residuals (`Observed - Fitted`) are gold for model improvement. A good model's residuals should be:
 
@@ -209,9 +209,9 @@ Residuals (`Observed - Fitted`) are gold for model improvement. A good model's r
 *   Compare residuals generating *simulated* extremes vs. residuals from *actual* extremes.
 *   Reveals where distributional assumptions break or model fails critically.
 
-#### Lessons from the Trenches: AEMO & KPMG
+### Lessons from the Trenches: AEMO & KPMG
 
-###### Australian Energy Market Operator (AEMO)
+#### Australian Energy Market Operator (AEMO)
 
 AEMO forecasts critical energy metrics, facing intense scrutiny. Their practices highlight context-driven assessment:
 
@@ -230,7 +230,7 @@ AEMO forecasts critical energy metrics, facing intense scrutiny. Their practices
 
 **Key Takeaway:** Rigorous internal diagnostics (PD) differ from clear, contextual stakeholder reporting (FAR).
 
-###### KPMG (Financial Forecasting)
+#### KPMG (Financial Forecasting)
 
 Focuses on Prospective Financial Information (PFI) accuracy. Highlights benchmarking nuances:
 
@@ -244,9 +244,9 @@ Focuses on Prospective Financial Information (PFI) accuracy. Highlights benchmar
 
 **Key Takeaway:** A "good" MdAPE is relative to your industry and the economic climate.
 
-#### Strategic Recommendations & Conclusion
+### Strategic Recommendations & Conclusion
 
-###### Choosing Your Metrics Wisely
+#### Choosing Your Metrics Wisely
 
 Select metrics strategically, considering:
 
@@ -259,7 +259,7 @@ Select metrics strategically, considering:
 | **Detecting Bias**           | Is systematic over/under-forecasting a concern?                                                                | **Bias Metrics:** Mean Error (ME), Mean Percentage Error (MPE)                               |
 | **Stakeholder Interpretability** | Need simple communication?                                                                                     | **Intuitive:** MAE, MAPE (if applicable), PE, MdAPE                                          |
 
-###### Embrace Hybrid Metric Sets
+#### Embrace Hybrid Metric Sets
 
 No single metric tells the whole story. Combine complementary metrics to get a comprehensive view:
 
@@ -269,7 +269,7 @@ No single metric tells the whole story. Combine complementary metrics to get a c
 
 Research opportunities exist in identifying non-redundant, maximally informative hybrid sets.
 
-###### Conclusion: A Framework for Confidence
+#### Conclusion: A Framework for Confidence
 
 Effective forecast evaluation is not about finding a magic number. It's a strategic discipline requiring:
 
