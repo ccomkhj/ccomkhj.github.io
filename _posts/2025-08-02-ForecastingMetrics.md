@@ -41,16 +41,92 @@ No single metric fits all scenarios. Understanding their construction and proper
 
 This framework explains *why* metrics behave as they do. Below is a comparative analysis of common metrics:
 
-| Metric (Abbrev)          | Formula (Simplified)                   | Distance (D) | Normalization (N) | Aggregation (G) | Key Properties                                                                 | Strengths                                                                 | Weaknesses                                                                                               |
-| :----------------------- | :------------------------------------- | :----------- | :---------------- | :-------------- | :----------------------------------------------------------------------------- | :------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------- |
-| **Mean Abs Error (MAE)** | `MAE = (1/n) * Σ \|Actual - Forecast\|` | Absolute (D2) | Unitary (N1)      | Mean (G1)       | Scale-dependent, preserves units, equal weighting.                             | Intuitive, easy to compute & interpret (avg error magnitude).             | Not comparable across series; non-differentiable.                                                        |
-| **Mean Sq Error (MSE)**  | `MSE = (1/n) * Σ (Actual - Forecast)²` | Squared (D3) | Unitary (N1)      | Mean (G1)       | Scale-dependent (squared units), emphasizes large errors.                      | Differentiable; penalizes large errors; good for model discrimination.    | Highly sensitive to outliers; not comparable; units unintuitive.                                          |
-| **Root MSE (RMSE)**      | `RMSE = √MSE`                          | Squared (D3) | Unitary (N1)      | Mean (G1)       | Scale-dependent (original units).                                              | Brings MSE back to data scale; interpretable.                             | Highly sensitive to outliers; not comparable; criticized for cross-series use.                            |
-| **Mean Abs % Error (MAPE)** | `MAPE = (100/n) * Σ \|(Actual - Forecast)/Actual\|` | Absolute (D2) | By Actuals (N2)   | Mean (G1)       | Scale-independent.                                                             | Popular; easy to interpret as % error.                                    | **Undefined if Actual=0**; skewed near zero; penalizes over-forecasts more; asymmetric.                 |
-| **sMAPE**                | `sMAPE = (100/n) * Σ (2*\|e\|)/(\|Actual\|+\|Forecast\|)` | Absolute (D2) | Sum Actual+Pred (N4) | Mean (G1)       | Scale-independent.                                                             | Attempts symmetry.                                                        | **Problematic near zero**; can be negative; still asymmetric in practice.                                |
-| **Median Abs % Error (MdAPE)** | `MdAPE = Median( \|(Actual - Forecast)/Actual\| * 100 )` | Absolute (D2) | By Actuals (N2)   | Median (G2)     | Scale-independent, median-based.                                              | Robust to large outliers; isolates accuracy from bias; easy to calculate. | Less sensitive than mean; handling of zeros not always explicit.                                         |
-| **Mean Abs Scaled Error (MASE)** | `MASE = mean( \|e_t\| / Q )` <br>*Q = MAE of in-sample naïve forecast* | Absolute (D2) | Variability (N3)  | Mean (G1)       | **Scale-free, robust denominator.**                                            | **Never undefined**; handles intermittent data; comparable across series; handles trend/seasonality. | Requires historical data for benchmark; interpretation needs context (Q).                                |
-
+<table>
+  <thead>
+    <tr>
+      <th>Metric (Abbrev)</th>
+      <th>Formula (Simplified)</th>
+      <th>Distance (D)</th>
+      <th>Normalization (N)</th>
+      <th>Aggregation (G)</th>
+      <th>Key Properties</th>
+      <th>Strengths</th>
+      <th>Weaknesses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Mean Abs Error (MAE)</strong></td>
+      <td><code>MAE = (1/n) * Σ |Actual - Forecast|</code></td>
+      <td>Absolute (D2)</td>
+      <td>Unitary (N1)</td>
+      <td>Mean (G1)</td>
+      <td>Scale-dependent, preserves units, equal weighting.</td>
+      <td>Intuitive, easy to compute & interpret (avg error magnitude).</td>
+      <td>Not comparable across series; non-differentiable.</td>
+    </tr>
+    <tr>
+      <td><strong>Mean Sq Error (MSE)</strong></td>
+      <td><code>MSE = (1/n) * Σ (Actual - Forecast)²</code></td>
+      <td>Squared (D3)</td>
+      <td>Unitary (N1)</td>
+      <td>Mean (G1)</td>
+      <td>Scale-dependent (squared units), emphasizes large errors.</td>
+      <td>Differentiable; penalizes large errors; good for model discrimination.</td>
+      <td>Highly sensitive to outliers; not comparable; units unintuitive.</td>
+    </tr>
+    <tr>
+      <td><strong>Root MSE (RMSE)</strong></td>
+      <td><code>RMSE = √MSE</code></td>
+      <td>Squared (D3)</td>
+      <td>Unitary (N1)</td>
+      <td>Mean (G1)</td>
+      <td>Scale-dependent (original units).</td>
+      <td>Brings MSE back to data scale; interpretable.</td>
+      <td>Highly sensitive to outliers; not comparable; criticized for cross-series use.</td>
+    </tr>
+    <tr>
+      <td><strong>Mean Abs % Error (MAPE)</strong></td>
+      <td><code>MAPE = (100/n) * Σ |(Actual - Forecast)/Actual|</code></td>
+      <td>Absolute (D2)</td>
+      <td>By Actuals (N2)</td>
+      <td>Mean (G1)</td>
+      <td>Scale-independent.</td>
+      <td>Popular; easy to interpret as % error.</td>
+      <td><strong>Undefined if Actual=0</strong>; skewed near zero; penalizes over-forecasts more; asymmetric.</td>
+    </tr>
+    <tr>
+      <td><strong>sMAPE</strong></td>
+      <td><code>sMAPE = (100/n) * Σ (2*|e|)/(|Actual|+|Forecast|)</code></td>
+      <td>Absolute (D2)</td>
+      <td>Sum Actual+Pred (N4)</td>
+      <td>Mean (G1)</td>
+      <td>Scale-independent.</td>
+      <td>Attempts symmetry.</td>
+      <td><strong>Problematic near zero</strong>; can be negative; still asymmetric in practice.</td>
+    </tr>
+    <tr>
+      <td><strong>Median Abs % Error (MdAPE)</strong></td>
+      <td><code>MdAPE = Median( |(Actual - Forecast)/Actual| * 100 )</code></td>
+      <td>Absolute (D2)</td>
+      <td>By Actuals (N2)</td>
+      <td>Median (G2)</td>
+      <td>Scale-independent, median-based.</td>
+      <td>Robust to large outliers; isolates accuracy from bias; easy to calculate.</td>
+      <td>Less sensitive than mean; handling of zeros not always explicit.</td>
+    </tr>
+    <tr>
+      <td><strong>Mean Abs Scaled Error (MASE)</strong></td>
+      <td><code>MASE = mean( |e_t| / Q )</code><br><em>Q = MAE of in-sample naïve forecast</em></td>
+      <td>Absolute (D2)</td>
+      <td>Variability (N3)</td>
+      <td>Mean (G1)</td>
+      <td><strong>Scale-free, robust denominator.</strong></td>
+      <td><strong>Never undefined</strong>; handles intermittent data; comparable across series; handles trend/seasonality.</td>
+      <td>Requires historical data for benchmark; interpretation needs context (Q).</td>
+    </tr>
+  </tbody>
+</table>
 ###### Understanding the Categories
 
 *   **Scale-Dependent Metrics (MAE, MSE, RMSE):** Error is in the original data units. **Pro:** Intuitive magnitude. **Con:** Useless for comparing series on different scales (e.g., sales of pencils vs. trucks).
