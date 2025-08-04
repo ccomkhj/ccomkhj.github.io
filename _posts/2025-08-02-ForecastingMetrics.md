@@ -19,13 +19,13 @@ title: "Forecasting Accuracy Metrics"
 
 **From Strawberry Fields to Energy Grids:** My journey through agricultural yield forecasting at [hexafarms](http://hexafarms.com/) (predicting strawberry and tomato yields 1-4 weeks ahead) and now demand forecasting in e-commerce and energy has taught me this: forecasting isn't about crystal balls—it's about quantifying uncertainty to drive better decisions. Whether it's a farmer deciding harvest schedules, an e-commerce manager allocating inventory, or an energy trader balancing grids, the stakes of forecast accuracy are always tangible.
 
-**The Core Challenge:** In agriculture, a 10% overforecast could mean rotting strawberries. In energy, it could mean emergency gas purchases at peak prices. Actual results *will* deviate—our job is to answer three questions:
+**The Core Challenge:** In agriculture, a 10% underforecast could mean rotting strawberries. In energy, it could mean emergency gas purchases at peak prices. Actual results *will* deviate—our job is to answer three questions:
 1. Are deviations within expected bounds?
 2. What do they reveal about our models?
 3. How do we communicate uncertainty to decision-makers?
 
 **The Stakes Are Always Concrete:**
-- **Agricultural Forecasting:** 1kg overprediction → €4 wasted strawberries; underprediction → missed €8/kg market premiums
+- **Agricultural Forecasting:** 1kg underprediction → €2 wasted strawberries; overprediction → missed €4/kg market premiums
 - **E-Commerce:** 10% demand misforecast → 15% excess inventory costs or 20% stockout losses
 - **Energy:** 5% load forecast error → €200k imbalance penalties per trading period
 
