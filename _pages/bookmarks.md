@@ -44,3 +44,6 @@ A curated list of interesting links and resources I've found across the web.
 - [First Round Review](https://review.firstround.com/): Actionable insights for building great companies.
 - [Farnam Street (FS.blog)](https://fs.blog/): Mastering the best of what other people have already figured out.
 - [Radical Candor](https://radicalcandor.com/): Psychology of decision making building trust and respect in the workplace.
+- [Lenny's Newsletter](https://www.lennysnewsletter.com/): Lenny Rachitsky's insights on product management and growth.
+- [The Generalist](https://www.generalist.com/): In-depth analysis of startups and tech trends.
+- [Andrew Chen's Newsletter](https://andrewchen.substack.com/): Andrew Chen's insights on startups, growth, and technology.
