@@ -5,6 +5,8 @@ permalink: /about/
 author_profile: true
 ---
 
+<link rel="stylesheet" href="/assets/css/about.css">
+
 <div style="text-align: center; margin-top: 2em; margin-bottom: 2em;">
   <span style="font-size: 2.2em; font-weight: bold; color: #2c3e50; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; letter-spacing: 1px;">
     Hey, I'm Huijo.
@@ -12,8 +14,22 @@ author_profile: true
   <hr style="margin: 1.2em auto 0.8em auto; border: none; border-top: 3px solid #2c3e50; width: 80%; max-width: 400px;">
 </div>
 
-I am an entrepreneurial data scientist by day, and lifelong learner by night.
-Journey to be a polymath is my joy by getting 1% better day by day.
+<div class="polymath-card">
+  <p class="tagline">Data scientist by day, lifelong learner by night.</p>
+  <p class="tagline">My polymath journey thrives on daily 1% growth, anchored in:</p>
+  <div class="polymath-core">
+    <ul class="pillars">
+      <li><span class="pillar-highlight">Zero to One</span> <span class="pillar-note">Entrepreneurship</span></li>
+      <li><span class="pillar-highlight">Leadership &amp; Feedback</span> <span class="pillar-note"></span><span class="pillar-note">Radical Candor</span></li>
+      <li><span class="pillar-highlight">Predictive Modeling</span> <span class="pillar-note">Forecasting</span></li>
+      <li><span class="pillar-highlight">Computer Vision</span><span class="pillar-note">Extract insights from images</span></li>
+      <li><span class="pillar-highlight">MLOps &amp; Data Engineering</span><span class="pillar-note">Scratch to Scalable</span></li>
+      <li><span class="pillar-highlight">IoT</span><span class="pillar-note">Source data from the ground</span></li>
+    </ul>
+  </div>
+  
+  <p class="expansion-note">Eager to expand this list—and myself—through life's adventures.</p>
+</div>
 
 ### Things I am proud of
 
