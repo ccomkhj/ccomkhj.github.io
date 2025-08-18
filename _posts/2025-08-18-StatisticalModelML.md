@@ -22,7 +22,7 @@ When you train a Gradient Boosting model (or almost any regression model) using 
 
 
 
-[!BellCurve](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.simplypsychology.org%2Fnormal-distribution.html&psig=AOvVaw1Zr_A8-x-vVBTdVhhFhf71&ust=1755614118979000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMiWlbHKlI8DFQAAAAAdAAAAABAE)
+![Normal Distribution Bell Curve](https://www.simplypsychology.org/wp-content/uploads/normal-distribution.jpg "Normal Distribution Bell Curve")
 
 
 This assumption works perfectly fine for certain problems. In my work with **energy demand forecasting**, the target variable (megawatt-hours) is continuous and typically high-volume. The demand curve is smooth, and the errors tend to cluster symmetrically around zero. In this scenario, the Normal distribution is a reasonable approximation of reality, and MSE is an excellent choice. It aggressively penalizes large deviations, pushing the model to be accurate for this high-stakes task.
