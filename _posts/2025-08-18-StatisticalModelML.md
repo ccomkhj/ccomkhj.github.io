@@ -109,7 +109,3 @@ The choice of distribution $$P$$ directly determines the loss function:
 
 ### **Key Takeaway**  
 **Your loss function is a distributional assumption in disguise.** Choose it based on the data’s statistical nature, not convenience. MLE provides the mathematical framework to derive the *right* loss function for your problem.
-
---- 
-
-*Images sourced from Wikimedia Commons for clarity and open licensing.*
