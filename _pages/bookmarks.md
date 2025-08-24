@@ -11,6 +11,7 @@ A curated list of interesting links and resources I've found across the web.
 
 **Forecasting**
 - [Hyndsight](https://robjhyndman.com/hyndsight/): Blog by Rob Hyndman, a leading expert in time series analysis.
+  - [Optimally Reconciling Forecasts in a Hierarchy](https://robjhyndman.com/papers/Foresight-hts-final.pdf)
 - [Time Series Analysis and Its Applications](http://www.stat.ucla.edu/~frederic/415/S23/tsa4.pdf): A comprehensive book for time series analysis.
 - [Demand Forecasting for Executives and Professionals](https://dfep.netlify.app/): A compact book focused on demand forecasting.
 - [Forecasting: Principles and Practice (3rd ed)](https://otexts.com/fpp3/): A compact book for time series forecasting.

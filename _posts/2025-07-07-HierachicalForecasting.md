@@ -18,23 +18,30 @@ When forecasting such collections, it is crucial that the forecasts are **cohere
 
 ### Example: E-commerce Product Hierarchy
 
-To make this more concrete, consider a company that sells electronics. Its sales data can be structured as a hierarchy:
+To make this more concrete, consider a company that sells electronics. Its sales data can be structured graphically as follows:
 
-*   **Level 0 (Total):** Total sales for all products.
-*   **Level 1 (Category):** Sales are broken down by product category.
-    *   Computers
-    *   Smartphones
-*   **Level 2 (Product):** Each category is further broken down into individual products.
-    *   *Computers*
-        *   Laptop
-        *   Desktop
-    *   *Smartphones*
-        *   Brand A
-        *   Brand B
+<div style="border: 1px solid #ccc; padding: 10px; border-radius: 5px; font-family: monospace;">
+  <p style="margin: 0 0 10px 0;"><strong>Total Sales</strong></p>
+  <div style="margin-left: 20px; padding-left: 15px; border-left: 1px solid #aaa;">
+    <p style="margin: 0 0 10px 0;"><strong>Computers</strong></p>
+    <div style="margin-left: 20px; padding-left: 15px; border-left: 1px solid #aaa;">
+      <p style="margin: 0;">Laptop</p>
+      <p style="margin: 5px 0 0 0;">Desktop</p>
+    </div>
+  </div>
+  <div style="margin-left: 20px; padding-left: 15px; border-left: 1px solid #aaa; margin-top: 10px;">
+    <p style="margin: 0 0 10px 0;"><strong>Smartphones</strong></p>
+    <div style="margin-left: 20px; padding-left: 15px; border-left: 1px solid #aaa;">
+      <p style="margin: 0;">Brand A</p>
+      <p style="margin: 5px 0 0 0;">Brand B</p>
+    </div>
+  </div>
+</div>
+<br>
 
 In this hierarchy, the following relationships must hold for the forecasts to be coherent:
 - `Forecast(Laptop) + Forecast(Desktop) = Forecast(Computers)`
-- `Forecast(Brand A) + Forecast(Brand B) = Forecast(Smartphon)`
+- `Forecast(Brand A) + Forecast(Brand B) = Forecast(Smartphones)`
 - `Forecast(Computers) + Forecast(Smartphones) = Forecast(Total)`
 
 This structure ensures that forecasts are consistent and can be meaningfully aggregated or disaggregated across the business.
@@ -136,7 +143,25 @@ Since $$\boldsymbol{W}_h$$ is unknown, it must be estimated. Common approaches i
 - **Pros:** Statistically optimal and produces unbiased forecasts (unlike top-down methods). It effectively uses information from all levels of the hierarchy.
 - **Cons:** Can be significantly more complex and computationally intensive, especially for very large hierarchies.
 
+## Final remark
+
+A proper understanding of customer needs is absolutely critical to construct an accurate **hierarchical forecast**. This is one of the challenges I faced.
+
+**every department needs the same data, but aggregated in a completely different way**: Reconciling these conflicting views into one coherent system is incredibly complex.
+
+For example:
+*   The **manufacturing team** needs a **granular, SKU-level** forecast to schedule production lines.
+*   A **salesperson** needs a **customer-centric** forecast for their key accounts.
+*   The **marketing team** requests a **brand-level** forecast to measure campaign impact.
+*   The **distribution center (warehouse)** requires a **location-specific** forecast for all SKUs to manage capacity and staffing.
+*   The **finance department** only cares about the **top-level, aggregated** forecast for revenue planning.
+
+The biggest technical struggle is ensuring **consistency**. The sum of all the store-level forecasts must match the warehouse forecast, and the sum of all brand forecasts must match the company total that finance uses. If they don't, the entire plan falls apart, leading to mistrust in the data.
+
+In short, the main challenge is never just about predicting demand. It was about building a single, unified forecast that could be accurately broken down and rolled up across every **product, customer, and geographical hierarchy**—all while keeping every stakeholder happy.
+
 ## Reference
 
 - [Forecasting: Principles and Practice (3rd ed), Rob J Hyndman and George Athanasopoulos](https://otexts.com/fpp3/hierarchical.html)
 - [Huijo's Hierarchical Forecast Notebook](https://github.com/ccomkhj/ScienceNote/blob/main/ml_hierarchical_forecast.ipynb)
+- [Optimally Reconciling Forecasts in a Hierarchy](https://robjhyndman.com/papers/Foresight-hts-final.pdf)
