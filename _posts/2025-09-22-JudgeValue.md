@@ -10,18 +10,6 @@ title: "Judge the value of your company"
 
 ---
 
----
-layout: single  
-author: Huijo  
-date: 2025-9-22
-tags:
-   - Philosophy
-   - Business
-classes: wide  
-title: "Judge the value of your company"
-
----
-
 After founding and forming my startup, I left my company.
 As the company found Product-Market-Fit, it operates well without my day-to-day monitoring.
 Setting up all techincal operations in the automated-manner pays off finally.
