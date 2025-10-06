@@ -7,7 +7,6 @@ tags:
    - Business
 classes: wide  
 title: "Judge the value of your company"
-
 ---
 
 After founding and forming my startup, I left my company.
