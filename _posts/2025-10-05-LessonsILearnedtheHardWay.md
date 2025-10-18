@@ -83,8 +83,4 @@ At my startup, we were strong on passion but weak on celebration. Feedback and r
 
 It’s such a small thing, but consistent recognition creates momentum and trust.
 
-## Building a Culture of Trust and Accountability
-
-Together, these ten practices don’t just create accountability – they shape a culture where trust is reinforced at every level. I’ve experienced what happens when some of these are missing — and how powerful it is when they’re present.
-
 My journey has taken me from founder to leader, and now, back to being a follower in another startup. This transition has taught me that great leadership isn’t about authority — it’s about discipline, clarity, and care.
