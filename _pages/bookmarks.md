@@ -28,6 +28,7 @@ A curated list of interesting links and resources I've found across the web.
 - [Interpretable Machine Learning](https://originalstatic.aminer.cn/misc/pdf/Molnar-interpretable-machine-learning_compressed.pdf): the Bible of interpretability. It’s been cited everywhere, even in scikit-learn’s docs.
 - [Mathematics for Machine Learning](https://mml-book.github.io/book/mml-book.pdf): Essential math (linear algebra, calculus, probability) for ML in an accessible format.
 - [The Elements of Statistical Learning: Data Mining, Inference, and Prediction](https://www.sas.upenn.edu/~fdiebold/NoHesitations/BookAdvanced.pdf): Foundational statistical learning theory and methods, rigorous but dense.
+- [Building ML Powered Applications](https://github.com/hundredblocks/ml-powered-applications?tab=readme-ov-file)
 
 **Data Engineering**
 - TBA
