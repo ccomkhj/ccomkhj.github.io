@@ -126,26 +126,26 @@ author_profile: false
       </div>
     </div>
 
-    <!-- AI Cover Letter Generator Card -->
+    <!-- Job Agent Card -->
     <div class="project-card">
-      <a href="https://github.com/ccomkhj/AI-Cover-Letter-Generator" target="_blank">
-        <img src="../img/cover_letter_generator.png" alt="AI Cover Letter Generator" class="project-image">
+      <a href="https://github.com/ccomkhj/job_agent" target="_blank">
+        <img src="../img/job_agent_interface_1.png" alt="Job Agent cover letter interface" class="project-image">
+        <img src="../img/job_agent_interface_2.png" alt="Job Agent assistant interface" class="project-image">
       </a>
       <div class="project-content">
-        <h3 class="project-title">AI Cover Letter Generator</h3>
+        <h3 class="project-title">Job Agent</h3>
         <div class="project-description">
+          <p>Multi-agent job application assistant that helps users create tailored cover letters from job descriptions.</p>
           <ul>
-            <li>Multi-Agent Workflow for comprehensive letter generation</li>
-            <li>RAG (Retrieval-Augmented Generation) for company research</li>
-            <li>Intelligent Skill Extraction & Matching</li>
+            <li>Designed to help my network generate cover letters quickly</li>
+            <li>Guided by role requirements and company context</li>
           </ul>
-          <p>Web app that uses LLMs to generate personalized cover letters by analyzing job descriptions and researching companies.</p>
         </div>
       </div>
       <div class="project-tags">
-        <span class="project-tag">LangChain</span>
-        <span class="project-tag">RAG</span>
         <span class="project-tag">Multi-Agent</span>
+        <span class="project-tag">LLM</span>
+        <span class="project-tag">Career Tools</span>
       </div>
     </div>
 
@@ -220,11 +220,11 @@ author_profile: false
     <!-- Source Code Card 1 -->
     <div class="project-card">
       <div class="project-content">
-        <h3 class="project-title">AI Cover Letter Generator</h3>
+        <h3 class="project-title">Job Agent</h3>
         <div class="project-description">
-          <p>Multi-agent workflow with RAG capabilities for personalized cover letter generation using LLMs.</p>
+          <p>Multi-agent job application assistant for tailored cover letters from job descriptions.</p>
         </div>
-        <a href="https://github.com/ccomkhj/AI-Cover-Letter-Generator" class="btn" target="_blank">View on GitHub</a>
+        <a href="https://github.com/ccomkhj/job_agent" class="btn" target="_blank">View on GitHub</a>
       </div>
     </div>
     
