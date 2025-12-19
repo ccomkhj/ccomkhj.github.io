@@ -29,6 +29,7 @@ A curated list of interesting links and resources I've found across the web.
 - [Mathematics for Machine Learning](https://mml-book.github.io/book/mml-book.pdf): Essential math (linear algebra, calculus, probability) for ML in an accessible format.
 - [The Elements of Statistical Learning: Data Mining, Inference, and Prediction](https://www.sas.upenn.edu/~fdiebold/NoHesitations/BookAdvanced.pdf): Foundational statistical learning theory and methods, rigorous but dense.
 - [Building ML Powered Applications](https://github.com/hundredblocks/ml-powered-applications?tab=readme-ov-file)
+- [VN2 Challenges](https://www.youtube.com/watch?v=pypzcvwmApA): VN2 Inventory Planning Competition
 
 **Data Engineering**
 - TBA
