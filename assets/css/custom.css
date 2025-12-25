@@ -899,6 +899,7 @@ input[type="submit"]:active {
 /* Compact archive tweaks */
 .compact-archive .page__title {
   font-size: 3em;
+  margin-bottom: 0px;
 }
 
 .compact-archive .list__item {
