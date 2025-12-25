@@ -7,11 +7,9 @@ author_profile: true
 
 <link rel="stylesheet" href="/assets/css/about.css">
 
-<div style="text-align: center; margin-top: 2em; margin-bottom: 2em;">
-  <span style="font-size: 2.2em; font-weight: bold; color: #2c3e50; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; letter-spacing: 1px;">
-    Hey, I'm Huijo.
-  </span>
-  <hr style="margin: 1.2em auto 0.8em auto; border: none; border-top: 3px solid #2c3e50; width: 80%; max-width: 400px;">
+<div class="about-hero">
+  <span class="about-hero-title">Hey, I'm Huijo.</span>
+  <hr class="about-hero-rule">
 </div>
 
 <div class="polymath-card">

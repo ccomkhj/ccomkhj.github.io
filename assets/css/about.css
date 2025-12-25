@@ -1,75 +1,101 @@
 /* /assets/css/about.css */
 
+.about-hero {
+  background: #c0c0c0;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  margin: 1.5rem 0;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.about-hero-title {
+  color: #000;
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.3rem 0.6rem;
+}
+
+.about-hero-rule {
+  border: 0;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #fff;
+  margin: 0.8rem auto 0;
+  max-width: 400px;
+  width: 80%;
+}
+
 .polymath-card {
-  max-width: 700px;
+  background: #c0c0c0;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  color: #000;
+  line-height: 1.4;
   margin: 1em auto;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  line-height: 1;
-  color: #333;
+  max-width: 700px;
+  padding: 0.75rem;
 }
 
 .tagline {
-  font-size: 1.2em;
-  font-weight: 300;
-  letter-spacing: 0.5px;
-  margin-bottom: 1em;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
   text-align: center;
 }
 
 .polymath-core p {
-    text-align: center;
-    font-size: 1.1em;
-    margin-bottom: 2em;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 .expansion-note {
-  font-size: 0.95em;
-  text-align: center;
+  color: #000;
+  font-size: 0.9rem;
   font-style: italic;
-  color: #7f8c8d;
-  margin-top: 1.5em;
+  margin-top: 1rem;
+  text-align: center;
 }
 
 /* 3-column card layout for pillars */
 .pillars {
-  list-style-type: none;
-  padding: 0;
-  margin: 1em 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5em;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  list-style-type: none;
+  margin: 1em 0;
+  padding: 0;
 }
 
 .pillars li {
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  padding: 1em;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #c0c0c0;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-height: 50px;
+  padding: 0.75rem;
+  text-align: center;
+  transition: none;
 }
 
 .pillars li:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  transform: none;
 }
 
 .pillar-highlight {
-  font-size: 1.1em;
-  font-weight: 600;
-  color: #2c3e50;
+  color: #000;
   display: block;
-  margin-bottom: 0.5em;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.4em;
 }
 
 .pillar-note {
-  font-size: 0.9em;
-  color: #7f8c8d;
+  color: #000;
+  font-size: 0.85rem;
   font-style: italic;
 }
 
