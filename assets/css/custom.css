@@ -535,23 +535,23 @@ article.page .page__content h6 {
 }
 
 article.page .page__content h1 {
-  font-size: 3em;
+  font-size: 2em;
 }
 
 article.page .page__content h2 {
-  font-size: 2em;
+  font-size: 1.75em;
 }
 
 article.page .page__content h3 {
-  font-size: 2em;
-}
-
-article.page .page__content h4 {
   font-size: 1.5em;
 }
 
-article.page .page__content h5 {
+article.page .page__content h4 {
   font-size: 1.25em;
+}
+
+article.page .page__content h5 {
+  font-size: 1em;
 }
 
 article.page .page__content h6 {
@@ -898,7 +898,7 @@ input[type="submit"]:active {
 
 /* Compact archive tweaks */
 .compact-archive .page__title {
-  font-size: 3em;
+  font-size: 2em;
   margin-bottom: 0px;
 }
 
