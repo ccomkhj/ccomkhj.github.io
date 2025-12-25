@@ -118,7 +118,7 @@ author:
   name             : "Huijo Kim"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "How to take the next step"
-  location         : "Somewhere"
+  # location         : "Somewhere"
   email            : "ccomkhj@gmail.com"
   links:
     - label: "Email"
@@ -126,7 +126,7 @@ author:
 #     url: "mailto:ccomkhj@gmail.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
-#      url: "https://your-website.com"
+      url: "https://huijo.xyz"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
 #      url: "https://twitter.com/"
