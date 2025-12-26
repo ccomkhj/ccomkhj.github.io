@@ -60,72 +60,6 @@ author_profile: false
       </div>
     </div>
 
-    <!-- Data Science Project Card -->
-    <div class="project-card">
-      <a href="https://www.youtube.com/watch?v=0BWNJPVAx4I/" target="_blank">
-        <img src="../img/DataScience.png" alt="Data Science Demo" class="project-image">
-      </a>
-      <div class="project-content">
-        <h3 class="project-title">Data Science</h3>
-        <div class="project-description">
-          <p>Advanced data science solutions for complex problems.</p>
-          <ul>
-            <li><a href="https://github.com/HexaFarms/openHexa">Image Segmentation</a></li>
-            <li>Data Processing</li>
-            <li>Visualization</li>
-          </ul>
-        </div>
-      </div>
-      <div class="project-tags">
-        <span class="project-tag">Data Science</span>
-        <span class="project-tag">ML</span>
-        <span class="project-tag">Visualization</span>
-      </div>
-    </div>
-    <!-- Image Processing Card -->
-    <div class="project-card">
-      <img src="../img/plant_analysis.gif" alt="Image Processing Analysis" class="project-image">
-      <div class="project-content">
-        <h3 class="project-title">Image Processing</h3>
-        <div class="project-description">
-          <ul>
-            <li><a href="https://github.com/HexaFarms/openHexa">Instant Segmentation</a></li>
-            <li>Image-tabular data combined Classification</li>
-            <li>Time-series analysis for growth</li>
-          </ul>
-        </div>
-      </div>
-      <div class="project-tags">
-        <span class="project-tag">Computer Vision</span>
-        <span class="project-tag">Classification</span>
-        <span class="project-tag">Segmentation</span>
-      </div>
-    </div>
-
-
-
-    <!-- LLM Powered Web Chatbot Card -->
-    <div class="project-card">
-      <a href="https://www.youtube.com/watch?v=DuGfEOmKQTc" target="_blank">
-        <img src="../img/hexaGPT.png" alt="Plant-specialized GPT" class="project-image">
-      </a>
-      <div class="project-content">
-        <h3 class="project-title">LLM Powered Web Chatbot</h3>
-        <div class="project-description">
-          <ul>
-            <li>Natural Language Processing, Word Embedding</li>
-            <li>Design Concurrency Functionality</li>
-            <li>Prompt Engineering</li>
-          </ul>
-        </div>
-      </div>
-      <div class="project-tags">
-        <span class="project-tag">NLP</span>
-        <span class="project-tag">LLM</span>
-        <span class="project-tag">AI</span>
-      </div>
-    </div>
-
     <!-- Job Agent Card -->
     <div class="project-card">
       <a href="https://github.com/ccomkhj/job_agent" target="_blank">
@@ -144,8 +78,8 @@ author_profile: false
       </div>
       <div class="project-tags">
         <span class="project-tag">Multi-Agent</span>
-        <span class="project-tag">LLM</span>
-        <span class="project-tag">Career Tools</span>
+        <span class="project-tag">Front: Vite&ReAct</span>
+        <span class="project-tag">Back: FastAPI</span>
       </div>
     </div>
 
@@ -165,26 +99,6 @@ author_profile: false
         <span class="project-tag">MLOps</span>
         <span class="project-tag">Model Tuning</span>
         <span class="project-tag">Experiment Tracking</span>
-      </div>
-    </div>
-
-    <!-- Time-series Forecast Card -->
-    <div class="project-card">
-      <img src="../img/tsforecast.gif" alt="Time-series Forecast" class="project-image">
-      <div class="project-content">
-        <h3 class="project-title">Time-series Forecast</h3>
-        <div class="project-description">
-          <ul>
-            <li>Develop domain knowledge-supported custom ML <a href="https://github.com/ccomkhj/constrained-linear-regression">MultiConstrainedLinearRegression</a></li>
-            <li>Feature Engineering/Imputation (Transformer/GBT-based, statistic, plant science)</li>
-            <li>XAI (Explainable AI) to understand why model performs better or worse</li>
-          </ul>
-        </div>
-      </div>
-      <div class="project-tags">
-        <span class="project-tag">Time Series</span>
-        <span class="project-tag">Forecasting</span>
-        <span class="project-tag">XAI</span>
       </div>
     </div>
 
@@ -208,6 +122,24 @@ author_profile: false
         <span class="project-tag">Depth Estimation</span>
       </div>
     </div>
+
+    <!-- Stock Price Forecast Card -->
+    <div class="project-card">
+      <a href="https://github.com/ccomkhj/stock_forecast" target="_blank">
+        <img src="https://raw.githubusercontent.com/ccomkhj/stock_forecast/main/demo/forecast.png" alt="Stock Price Forecast" class="project-image">
+      </a>
+      <div class="project-content">
+        <h3 class="project-title">Stock Price Forecast</h3>
+        <div class="project-description">
+          <p>stock price forecasting system with automated data pipelines and ensemble modeling. Consists of full-stack (Vite&React + FastAPI) with minimal code structure. DuckDB to keep it last but fast and local. Backtest and probablisitic forecasting gives hint on reliability of the bet.</p>
+        </div>
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">Forecasting</span>
+        <span class="project-tag">Finance</span>
+        <span class="project-tag">Time Series</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -220,28 +152,6 @@ author_profile: false
     <!-- Source Code Card 1 -->
     <div class="project-card">
       <div class="project-content">
-        <h3 class="project-title">Job Agent</h3>
-        <div class="project-description">
-          <p>Multi-agent job application assistant for tailored cover letters from job descriptions.</p>
-        </div>
-        <a href="https://github.com/ccomkhj/job_agent" class="btn" target="_blank">View on GitHub</a>
-      </div>
-    </div>
-    
-    <!-- Source Code Card 2 -->
-    <div class="project-card">
-      <div class="project-content">
-        <h3 class="project-title">MultiConstrained LinearRegression</h3>
-        <div class="project-description">
-          <p>Advanced regression algorithms with multiple constraints for scientific applications.</p>
-        </div>
-        <a href="https://github.com/ccomkhj/constrained-linear-regression" class="btn" target="_blank">View on GitHub</a>
-      </div>
-    </div>
-    
-    <!-- Source Code Card 3 -->
-    <div class="project-card">
-      <div class="project-content">
         <h3 class="project-title">Computer Vision Ops</h3>
         <div class="project-description">
           <p>Operations and utilities for computer vision applications.</p>
@@ -250,7 +160,7 @@ author_profile: false
       </div>
     </div>
     
-    <!-- Source Code Card 4 -->
+    <!-- Source Code Card 2 -->
     <div class="project-card">
       <div class="project-content">
         <h3 class="project-title">Charuco Stereo Calibrator</h3>
@@ -261,33 +171,21 @@ author_profile: false
       </div>
     </div>
     
-    <!-- Source Code Card 5 -->
-    <div class="project-card">
-      <div class="project-content">
-        <h3 class="project-title">Berlin Reservation Bot</h3>
-        <div class="project-description">
-          <p>Automated system for booking appointments with Berlin authorities.</p>
-        </div>
-        <a href="https://github.com/ccomkhj/berlin-auslaenderbehorde-termin-bot" class="btn" target="_blank">View on GitHub</a>
-      </div>
-    </div>
-    
     <!-- Additional source codes -->
     <div class="project-card">
       <div class="project-content">
         <h3 class="project-title">More Projects</h3>
         <div class="project-description">
           <ul>
-            <li><a href="https://github.com/ccomkhj/Pixel_Area">Compute pixel's actual dimension</a></li>
+            <li><a href="https://github.com/ccomkhj/ScienceNote">Science into Code</a></li>
+            <li><a href="https://github.com/ccomkhj/Lightening_Classifier/">Medical Research Contribution</a></li>
+            <li><a href="https://github.com/ccomkhj/datumaro-gui">Datumaro GUI app</a></li>
             <li><a href="https://github.com/ccomkhj/YOLO_data_generator">YOLO data generator</a></li>
-            <li><a href="https://github.com/ccomkhj/classify_seg_mask">Image classification & mass estimation</a></li>
             <li><a href="https://github.com/ccomkhj/crop_generator">Image cropping tool</a></li>
             <li><a href="https://github.com/HexaFarms/GraphCut">Image Segmentation using Graph-cut</a></li>
             <li><a href="https://github.com/ccomkhj/hyperoptmm/">MLflow-HyperOpt wrapper</a></li>
-            <li><a href="https://github.com/ccomkhj/ScienceNote">Science into Code</a></li>
-            <li><a href="https://github.com/ccomkhj/datumaro-gui">Datumaro GUI app</a></li>
-            <li><a href="https://github.com/ccomkhj/Lightening_Classifier/">Classifier Wrapper Platform</a></li>
-            <li><a href="https://github.com/ccomkhj/ChainOfThought">Custom Chain of Thought using Gemini</a></li>
+            <li><a href="https://github.com/ccomkhj/classify_seg_mask">Image classification & mass estimation</a></li>
+            <li><a href="https://github.com/ccomkhj/Pixel_Area">Compute pixel's actual dimension</a></li>
           </ul>
         </div>
       </div>
