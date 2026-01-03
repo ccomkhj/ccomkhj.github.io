@@ -4,6 +4,9 @@
     <div 
       data-lyket-type="like" 
       data-lyket-id="{{ page.id | slugify }}"
+      {% if page.tags[0] %}
+      data-lyket-namespace="{{ page.tags[0] }}"
+      {% endif %}
     ></div>
   </fieldset>
 </div>
