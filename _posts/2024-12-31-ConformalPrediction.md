@@ -14,40 +14,67 @@ title: Conformal Prediction
 
 ## What is Conformalized Quantile Regression?
 
-**Conformalized Quantile Regression** is an innovative method that enhances traditional quantile regression by integrating the concept of conformal prediction to form prediction intervals with guaranteed coverage probability. This method is particularly beneficial for making predictions in regression scenarios with continuous output while accurately quantifying uncertainty.
+**Conformalized Quantile Regression** improves traditional quantile regression by combining it with conformal prediction to produce prediction intervals with guaranteed coverage. This is especially useful in regression with continuous outputs where uncertainty quantification matters.
 
-### Fundamentals of Quantile Regression
+## Fundamentals of Quantile Regression
 
-Quantile Regression is a method used to estimate the conditional quantiles of a response variable, such as the median or other percentiles, given a set of predictor variables. It provides a more comprehensive view of the potential outcomes compared to mean regression.
+Quantile regression estimates conditional quantiles of a response variable (e.g., the median or the 90th percentile) given predictors. Unlike mean regression, it characterizes the entire distribution of possible outcomes.
 
-The pinball loss function is central to quantile regression. For a given quantile level $$\gamma$$ (where $$0 < \gamma < 1$$), the pinball loss function is defined as:
+### The Pinball Loss Function
+
+The central tool for this estimation is the **pinball loss**. For a quantile level $\gamma$ where $0 < \gamma < 1$, the loss is defined as:
 
 $$
 L_{\gamma}(\hat{t}_{\gamma}, y) = (\gamma - \mathbf{1}_{\{y < \hat{t}_{\gamma}\}})(y - \hat{t}_{\gamma})
 $$
 
-This loss function is instrumental in estimating the quantile $$ t_{\gamma}(x) $$.
+where $y$ is the observed target and $\hat{t}_{\gamma}$ is the predicted $\gamma$-quantile.
 
-### Conformalized Quantile Regression
+---
 
-The innovation of Conformalized Quantile Regression lies in adjusting the quantile estimates to incorporate conformal prediction intervals:
+> ### 💡 Understanding the Intuition
+> 
+> The indicator term $$\mathbf{1}_{\{y < \hat{t}_{\gamma}\}}$$ splits the loss into two distinct cases, creating an asymmetric penalty:
+>
+> #### Case 1: Underprediction ($y \ge \hat{t}_{\gamma}$)
+> In this case, $$\mathbf{1}_{\{y < \hat{t}_{\gamma}\}} = 0$$. The loss simplifies to:
+> $$L_{\gamma}(\hat{t}_{\gamma}, y) = \gamma (y - \hat{t}_{\gamma})$$
+> *The error is weighted by $\gamma$.*
+>
+> #### Case 2: Overprediction ($y < \hat{t}_{\gamma}$)
+> In this case, $$\mathbf{1}_{\{y < \hat{t}_{\gamma}\}} = 1$$. The loss simplifies to:
+> $$L_{\gamma}(\hat{t}_{\gamma}, y) = (1-\gamma)(\hat{t}_{\gamma} - y)$$
+> *The error is weighted by $$(1-\gamma)$$.*
+>
+> #### Summary: Why This Produces Quantiles
+> By minimizing the expected pinball loss, the model is forced to find the point where the probability of being below the prediction is exactly $$\gamma$$:
+> - **High $$\gamma$$ (e.g., 0.9):** Underprediction is very expensive, so the model predicts a high value.
+> - **Low $$\gamma$$ (e.g., 0.1):** Overprediction is expensive, so the model predicts a low value.
+> - **$$\gamma = 0.5$$:** Becomes proportional to absolute error, yielding the **median**.
 
+---
+
+## Conformalized Quantile Regression (CQR)
+
+The innovation of CQR lies in adjusting the raw quantile estimates to incorporate conformal prediction guarantees. 
+
+### The CQR Adjustment
+First, we calculate the scores on a **calibration set**:
 $$
-s(x,y) = max{\{\hat{t}_{\alpha/2}(x)-y}, y-\hat{t}_{1-\alpha/2}(x)\}, \text{calibration set}
+s(x,y) = \max \{ \hat{t}_{\alpha/2}(x) - y, y - \hat{t}_{1-\alpha/2}(x) \}
 $$
 
-setting
+Then, we find the conformal quantile:
 $$
-\hat{q}=Quantile(s_1,..., s_n; \dfrac{[(n+1)(1-\alpha)]}{n})
+\hat{q} = \text{Quantile} \left( s_1, \dots, s_n; \frac{\lceil (n+1)(1-\alpha) \rceil}{n} \right)
 $$
-prediction interval is formed
+
+Finally, the **statistically valid prediction interval** is formed:
 $$
 C(x) = [\hat{t}_{\alpha/2}(x) - \hat{q}, \hat{t}_{1-\alpha/2}(x) + \hat{q}]
 $$
 
-Here, $$\hat{q}$$ is a conformal quantile derived from a calibration dataset, ensuring that the intervals maintain the specified coverage probability.
-
-### Time-Series Data and Conformal Prediction
+## Conformal Prediction in Time-Series
 
 Time-series data consist of sequential observations recorded over time. Unlike independent and identically distributed (i.i.d.) data, time-series datasets exhibit dependencies and correlations between observations due to their sequential nature. This intrinsic characteristic makes them particularly challenging for prediction tasks, as traditional models often assume i.i.d. data.
 

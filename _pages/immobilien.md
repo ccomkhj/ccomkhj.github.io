@@ -3,7 +3,9 @@ layout: single
 class: wide
 permalink: /immobilien/
 author_profile: false
+search: false
 sitemap: false
+robots: noindex
 ---
 
 <style>
@@ -216,7 +218,18 @@ sitemap: false
   }
 </style>
 
-<div class="immo-page-container">
+<!-- Page-level Password Gate -->
+<div id="page-gate" class="modal-overlay active" style="opacity: 1; visibility: visible;">
+  <div class="modal-content">
+    <h3>Privater Bereich</h3>
+    <p>Bitte geben Sie das Passwort ein, um die Bewerbungsunterlagen zu sehen.</p>
+    <input type="password" id="pagePasswordInput" class="modal-input" placeholder="Passwort">
+    <div id="pagePasswordError" class="modal-error">Falsches Passwort.</div>
+    <button id="pagePasswordSubmit" class="modal-button">Zugriff</button>
+  </div>
+</div>
+
+<div class="immo-page-container" id="main-content" style="display: none;">
   <header class="immo-header">
     <h1>Bewerbungsunterlagen für Ihre Immobilie</h1>
     <p>Alle relevanten Unterlagen für Ihre Beurteilung</p>
@@ -274,23 +287,56 @@ sitemap: false
   </section>
 </div>
 
-<!-- Password Modal HTML -->
+<!-- Password Modal for Google Drive Link -->
 <div id="passwordModal" class="modal-overlay">
   <div class="modal-content" onclick="event.stopPropagation();">
-    <h3>Passwort erforderlich</h3>
-    <p>Bitte geben Sie das Passwort ein, um auf die Dokumente zuzugreifen.</p>
+    <h3>Dokumentenzugriff</h3>
+    <p>Bitte geben Sie das Passwort erneut ein, um den Google Drive Ordner zu öffnen.</p>
     <input type="password" id="passwordInput" class="modal-input" placeholder="Passwort">
     <div id="passwordError" class="modal-error">Falsches Passwort.</div>
-    <button id="passwordSubmit" class="modal-button">Zugriff</button>
+    <button id="passwordSubmit" class="modal-button">Ordner öffnen</button>
   </div>
 </div>
 
 <script>
+  const pageGate = document.getElementById('page-gate');
+  const mainContent = document.getElementById('main-content');
+  const pagePasswordInput = document.getElementById('pagePasswordInput');
+  const pagePasswordSubmit = document.getElementById('pagePasswordSubmit');
+  const pagePasswordError = document.getElementById('pagePasswordError');
+  
   const modal = document.getElementById('passwordModal');
   const passwordInput = document.getElementById('passwordInput');
   const passwordSubmit = document.getElementById('passwordSubmit');
-  const passwordError = document.getElementById('passwordError');
+  const passwordError = document.getElementById('pagePasswordError'); // Fixed variable name conflict
+  const drivePasswordError = document.getElementById('passwordError');
 
+  const CORRECT_PASSWORD = "0525";
+
+  // Page Gate Logic
+  function checkPagePassword() {
+    if (pagePasswordInput.value === CORRECT_PASSWORD) {
+      pageGate.style.display = 'none';
+      mainContent.style.display = 'block';
+      sessionStorage.setItem('immo_access', 'true');
+    } else {
+      pagePasswordError.style.display = 'block';
+      pagePasswordInput.focus();
+    }
+  }
+
+  pagePasswordSubmit.addEventListener('click', checkPagePassword);
+  pagePasswordInput.addEventListener('keyup', (e) => { if (e.key === 'Enter') checkPagePassword(); });
+
+  // Check session storage on load
+  if (sessionStorage.getItem('immo_access') === 'true') {
+    pageGate.style.display = 'none';
+    mainContent.style.display = 'block';
+  } else {
+    pagePasswordInput.focus();
+  }
+
+  // Google Drive Link Modal Logic
   function showPasswordModal(event) {
     event.preventDefault();
     modal.classList.add('active');
@@ -300,26 +346,24 @@ sitemap: false
   function hidePasswordModal() {
     modal.classList.remove('active');
     passwordInput.value = '';
-    passwordError.style.display = 'none';
+    drivePasswordError.style.display = 'none';
   }
 
-  function checkPassword() {
-    const correctPassword = "0525";
-    if (passwordInput.value === correctPassword) {
-      window.open("https://drive.google.com/drive/folders/1vdixMRH9mG4E_mh8-8kFYuMthsRJuNwT?usp=sharing", "_blank");
-      hidePasswordModal();
-    } else {
-      passwordError.style.display = 'block';
-      passwordInput.focus();
-    }
-  }
+  // function checkDrivePassword() {
+  //   if (passwordInput.value === CORRECT_PASSWORD) {
+  //     window.open("https://drive.google.com/...", "_blank");
+  //     hidePasswordModal();
+  //   } else {
+  //     drivePasswordError.style.display = 'block';
+  //     passwordInput.focus();
+  //   }
+  // }
 
-  // Event Listeners
-  passwordSubmit.addEventListener('click', checkPassword);
-  passwordInput.addEventListener('keyup', (event) => {
-    if (event.key === 'Enter') {
-      checkPassword();
-    }
-  });
-  modal.addEventListener('click', hidePasswordModal);
+  // passwordSubmit.addEventListener('click', checkDrivePassword);
+  // passwordInput.addEventListener('keyup', (event) => {
+  //   if (event.key === 'Enter') {
+  //     checkDrivePassword();
+  //   }
+  // });
+  // modal.addEventListener('click', hidePasswordModal);
 </script>
