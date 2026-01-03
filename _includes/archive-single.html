@@ -14,7 +14,22 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     {% if include.type == "grid" and teaser %}
       <div class="archive__item-teaser">
-        <img src="{{ teaser | relative_url }}" alt="">
+        {% if teaser == site.teaser %}
+          {% assign icons = "fa-laptop-code,fa-chart-line,fa-brain,fa-seedling,fa-book-open,fa-quote-right,fa-lightbulb,fa-infinity" | split: "," %}
+          {% assign colors = "#FF6B6B,#4ECDC4,#1A535C,#FFE66D,#FF9F1C,#556270,#6A0572,#AB83A1" | split: "," %}
+          {% assign hash = post.date | date: "%s" %}
+          {% if hash == nil or hash == "" %}
+            {% assign hash = post.title | size %}
+          {% endif %}
+          {% assign index = hash | modulo: 8 %}
+          {% assign icon = icons[index] %}
+          {% assign color = colors[index] %}
+          <div style="width: 100%; height: 160px; background-color: {{ color }}; display: flex; align-items: center; justify-content: center;">
+            <i class="fas {{ icon }} fa-4x" style="color: white; opacity: 0.5; margin-bottom: 1.5em;"></i>
+          </div>
+        {% else %}
+          <img src="{{ teaser | relative_url }}" alt="">
+        {% endif %}
       </div>
     {% endif %}
     <h2 class="archive__item-title no_toc" itemprop="headline">

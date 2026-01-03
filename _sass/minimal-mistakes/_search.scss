@@ -4,7 +4,7 @@
 
 .layout--search {
   .archive__item-teaser {
-    margin-bottom: 0.25em;
+    display: none;
   }
 }
 
@@ -101,6 +101,10 @@
     @include breakpoint($x-large) {
       width: 50%;
     }
+  }
+
+  .archive__item-teaser {
+    display: none;
   }
 
   .archive__item-title {
