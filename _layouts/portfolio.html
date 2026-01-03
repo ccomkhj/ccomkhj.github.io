@@ -1,0 +1,125 @@
+---
+layout: single
+---
+
+<style>
+  /* Base 98.css-like styles for the portfolio layout */
+  .window-portfolio {
+    max-width: 100%;
+    margin: 20px auto;
+    font-family: "Pixelated MS Sans Serif", Arial;
+  }
+  
+  .window-portfolio .window-body {
+    padding: 15px;
+  }
+
+  /* Grid Layout for Projects */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+  }
+
+  /* Project Card Styling - mimicking a window or fieldset */
+  .project-card {
+    background: #c0c0c0;
+    box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff,
+      inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  /* Card Title Bar */
+  .project-title-bar {
+    background: #000080;
+    color: #fff;
+    padding: 3px 5px;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  /* Card Content */
+  .project-content {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  
+  .project-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border: 2px inset #dfdfdf;
+    background: #fff;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .project-content ul {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 20px;
+  }
+
+  .project-tags {
+    margin-top: auto;
+    padding: 8px 5px 5px;
+    border-top: 1px solid #808080;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .project-tag {
+    font-size: 11px;
+    background: #fff;
+    border: 1px solid #808080;
+    padding: 2px 5px;
+    box-shadow: inset 1px 1px #000;
+  }
+  
+  /* Section headers within the portfolio content */
+  h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #000080;
+    border-bottom: 2px solid #000080;
+  }
+
+  a {
+    color: #000080;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
+</style>
+
+<div class="window window-portfolio">
+  <div class="title-bar">
+    <div class="title-bar-text">Portfolio.exe</div>
+    <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close"></button>
+    </div>
+  </div>
+  <div class="window-body">
+    <p style="text-align: center; margin-bottom: 20px;">
+      Fraction of my work that can be shared. Happy to share my work. Feel free to reach out to me if you need any assistance or have any questions.
+    </p>
+    
+    {{ content }}
+  </div>
+</div>

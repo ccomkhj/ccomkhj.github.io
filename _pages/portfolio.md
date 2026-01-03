@@ -1,238 +1,191 @@
 ---
-layout: single
+layout: portfolio
 class: wide
 permalink: /portfolio/
 author_profile: false
 ---
 
-<link rel="stylesheet" href="/assets/css/portfolio.css">
-
-<div class="content-section fade-in">
-  <h2 class="section-title">Fraction of my work that can be shared</h2>
-  <p>Happy to share my work. Feel free to reach out to me if you need any assistance or have any questions.</p>
-</div>
-
----
-
-<div class="content-section fade-in">
-  <h2 class="section-title">I. Projects</h2>
-  
-  <div class="projects-grid">
-    <!-- Drone Vision Project Card -->
-    <div class="project-card">
-      <a href="https://youtu.be/AqAXgcsjH5k" target="_blank">
-        <img src="../img/demo_video.PNG" alt="Drone Vision DEMO" class="project-image">
-      </a>
-      <div class="project-content">
-        <h3 class="project-title">Drone Vision</h3>
-        <div class="project-description">
-          <p>Advanced drone vision system with trajectory planning, object detection, and visual SLAM.</p>
-          <ul>
-            <li><a href="https://github.com/ccomkhj/tello_ros_drone">Drone control using ROS2</a></li>
-            <li><a href="https://github.com/HexaFarms/yolov5">Customized YOLOv5</a></li>
-            <li><a href="https://github.com/ccomkhj/ORB_SLAM3">Drone-Visual SLAM in farming</a></li>
-            <li><a href="https://github.com/ccomkhj/PCL_Plants">Point Cloud Processing</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="project-tags">
-        <span class="project-tag">Computer Vision</span>
-        <span class="project-tag">ROS2</span>
-        <span class="project-tag">SLAM</span>
-      </div>
+<div class="projects-grid">
+  <!-- Drone Vision -->
+  <div class="project-card">
+    <div class="project-title-bar">Drone Vision</div>
+    <a href="https://youtu.be/AqAXgcsjH5k" target="_blank">
+      <img src="../img/demo_video.PNG" alt="Drone Vision DEMO" class="project-image">
+    </a>
+    <div class="project-content">
+      Advanced drone vision system with trajectory planning, object detection, and visual SLAM.
+      <ul>
+        <li><a href="https://github.com/ccomkhj/tello_ros_drone">Drone control using ROS2</a></li>
+        <li><a href="https://github.com/HexaFarms/yolov5">Customized YOLOv5</a></li>
+        <li><a href="https://github.com/ccomkhj/ORB_SLAM3">Drone-Visual SLAM in farming</a></li>
+        <li><a href="https://github.com/ccomkhj/PCL_Plants">Point Cloud Processing</a></li>
+      </ul>
     </div>
-
-    <!-- 3D Reconstruction Project Card -->
-    <div class="project-card">
-      <a href="https://youtu.be/Ypbvzz4kERU" target="_blank">
-        <img src="../img/reconstruction.PNG" alt="3D Reconstruction Demo" class="project-image">
-      </a>
-      <div class="project-content">
-        <h3 class="project-title">3D Reconstruction</h3>
-        <div class="project-description">
-          <p>Advanced 3D reconstruction system for creating detailed digital models.</p>
-        </div>
-      </div>
-      <div class="project-tags">
-        <span class="project-tag">Computer Vision</span>
-        <span class="project-tag">3D Modeling</span>
-        <span class="project-tag">SfM</span>
-      </div>
+    <div class="project-tags">
+      <span class="project-tag">Computer Vision</span>
+      <span class="project-tag">ROS2</span>
+      <span class="project-tag">SLAM</span>
     </div>
+  </div>
 
-    <!-- Job Agent Card -->
-    <div class="project-card">
-      <a href="https://github.com/ccomkhj/job_agent" target="_blank">
-        <img src="../img/job_agent_interface_1.png" alt="Job Agent cover letter interface" class="project-image">
-        <img src="../img/job_agent_interface_2.png" alt="Job Agent assistant interface" class="project-image">
-      </a>
-      <div class="project-content">
-        <h3 class="project-title">Job Agent</h3>
-        <div class="project-description">
-          <p>Multi-agent job application assistant that helps users create tailored cover letters from job descriptions.</p>
-          <ul>
-            <li>Designed to help my network generate cover letters quickly</li>
-            <li>Guided by role requirements and company context</li>
-          </ul>
-        </div>
-      </div>
-      <div class="project-tags">
-        <span class="project-tag">Multi-Agent</span>
-        <span class="project-tag">Front: Vite&ReAct</span>
-        <span class="project-tag">Back: FastAPI</span>
-      </div>
+  <!-- 3D Reconstruction -->
+  <div class="project-card">
+    <div class="project-title-bar">3D Reconstruction</div>
+    <a href="https://youtu.be/Ypbvzz4kERU" target="_blank">
+      <img src="../img/reconstruction.PNG" alt="3D Reconstruction Demo" class="project-image">
+    </a>
+    <div class="project-content">
+      Advanced 3D reconstruction system for creating detailed digital models.
     </div>
-
-    <!-- MLOps & HyperParameter Tuning Card -->
-    <div class="project-card">
-      <img src="../img/mlflow.png" alt="MLOps & HyperParameter Tuning" class="project-image">
-      <div class="project-content">
-        <h3 class="project-title">MLOps & HyperParameter Tuning</h3>
-        <div class="project-description">
-          <ul>
-            <li>Fully Open source-based full MLOps (Version, feature control)</li>
-            <li>Hyper parameter tuning with experiment tracking</li>
-          </ul>
-        </div>
-      </div>
-      <div class="project-tags">
-        <span class="project-tag">MLOps</span>
-        <span class="project-tag">Model Tuning</span>
-        <span class="project-tag">Experiment Tracking</span>
-      </div>
+    <div class="project-tags">
+      <span class="project-tag">Computer Vision</span>
+      <span class="project-tag">3D Modeling</span>
+      <span class="project-tag">SfM</span>
     </div>
+  </div>
 
-    <!-- Stereo Vision Card -->
-    <div class="project-card">
-      <img src="../img/raft.png" alt="Depth from Stereo Matching" class="project-image">
-      <div class="project-content">
-        <h3 class="project-title">Stereo Vision</h3>
-        <div class="project-description">
-          <ul>
-            <li>Build hardware of stereo vision from scratch</li>
-            <li>Depth computation</li>
-            <li><a href="https://github.com/ccomkhj/Charuco_Stereo_Calibrator">Custom stereo calibration</a></li>
-            <li><a href="https://ccomkhj.github.io/StereoVision">Reading</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="project-tags">
-        <span class="project-tag">Computer Vision</span>
-        <span class="project-tag">3D Reconstruction</span>
-        <span class="project-tag">Depth Estimation</span>
-      </div>
+  <!-- Job Agent -->
+  <div class="project-card">
+    <div class="project-title-bar">Job Agent</div>
+    <a href="https://github.com/ccomkhj/job_agent" target="_blank">
+      <img src="../img/job_agent_interface_1.png" alt="Job Agent Interface" class="project-image">
+    </a>
+    <div class="project-content">
+      Multi-agent job application assistant that helps users create tailored cover letters.
+      <ul>
+        <li>Designed to help my network generate cover letters quickly</li>
+        <li>Guided by role requirements and company context</li>
+      </ul>
     </div>
+    <div class="project-tags">
+      <span class="project-tag">Multi-Agent</span>
+      <span class="project-tag">Front: Vite&ReAct</span>
+      <span class="project-tag">Back: FastAPI</span>
+    </div>
+  </div>
 
-    <!-- Stock Price Forecast Card -->
-    <div class="project-card">
-      <a href="https://github.com/ccomkhj/stock_forecast" target="_blank">
-        <img src="https://raw.githubusercontent.com/ccomkhj/stock_forecast/main/demo/forecast.png" alt="Stock Price Forecast" class="project-image">
-      </a>
-      <div class="project-content">
-        <h3 class="project-title">Stock Price Forecast</h3>
-        <div class="project-description">
-          <p>stock price forecasting system with automated data pipelines and ensemble modeling. Consists of full-stack (Vite&React + FastAPI) with minimal code structure. DuckDB to keep it last but fast and local. Backtest and probablisitic forecasting gives hint on reliability of the bet.</p>
-        </div>
-      </div>
-      <div class="project-tags">
-        <span class="project-tag">Forecasting</span>
-        <span class="project-tag">Finance</span>
-        <span class="project-tag">Time Series</span>
-      </div>
+  <!-- MLOps & HyperParameter Tuning -->
+  <div class="project-card">
+    <div class="project-title-bar">MLOps & Tuning</div>
+    <img src="../img/mlflow.png" alt="MLOps & Tuning" class="project-image">
+    <div class="project-content">
+      <ul>
+        <li>Fully Open source-based full MLOps (Version, feature control)</li>
+        <li>Hyper parameter tuning with experiment tracking</li>
+      </ul>
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">MLOps</span>
+      <span class="project-tag">Model Tuning</span>
+      <span class="project-tag">Experiment Tracking</span>
+    </div>
+  </div>
+
+  <!-- Stereo Vision -->
+  <div class="project-card">
+    <div class="project-title-bar">Stereo Vision</div>
+    <img src="../img/raft.png" alt="Stereo Vision" class="project-image">
+    <div class="project-content">
+      <ul>
+        <li>Build hardware of stereo vision from scratch</li>
+        <li>Depth computation</li>
+        <li><a href="https://github.com/ccomkhj/Charuco_Stereo_Calibrator">Custom stereo calibration</a></li>
+        <li><a href="https://ccomkhj.github.io/StereoVision">Reading</a></li>
+      </ul>
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">Computer Vision</span>
+      <span class="project-tag">3D Reconstruction</span>
+      <span class="project-tag">Depth Estimation</span>
+    </div>
+  </div>
+
+  <!-- Stock Price Forecast -->
+  <div class="project-card">
+    <div class="project-title-bar">Stock Forecast</div>
+    <a href="https://github.com/ccomkhj/stock_forecast" target="_blank">
+      <img src="https://raw.githubusercontent.com/ccomkhj/stock_forecast/main/demo/forecast.png" alt="Stock Forecast" class="project-image">
+    </a>
+    <div class="project-content">
+      Stock price forecasting system with automated data pipelines and ensemble modeling.
+      Full-stack (Vite&React + FastAPI) with minimal code structure. DuckDB for local speed.
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">Forecasting</span>
+      <span class="project-tag">Finance</span>
+      <span class="project-tag">Time Series</span>
     </div>
   </div>
 </div>
 
----
+## II. More Source Codes
 
-<div class="content-section fade-in">
-  <h2 class="section-title" id="source-code">II. More Source Codes</h2>
-  
-  <div class="projects-grid">
-    <!-- Source Code Card 1 -->
-    <div class="project-card">
-      <div class="project-content">
-        <h3 class="project-title">Computer Vision Ops</h3>
-        <div class="project-description">
-          <p>Operations and utilities for computer vision applications.</p>
-        </div>
-        <a href="https://github.com/ccomkhj/cvOps" class="btn" target="_blank">View on GitHub</a>
-      </div>
+<div class="projects-grid">
+  <div class="project-card">
+    <div class="project-title-bar">CV Ops</div>
+    <div class="project-content">
+      Operations and utilities for computer vision applications.
+      <br><br>
+      <a href="https://github.com/ccomkhj/cvOps" target="_blank">View on GitHub</a>
     </div>
-    
-    <!-- Source Code Card 2 -->
-    <div class="project-card">
-      <div class="project-content">
-        <h3 class="project-title">Charuco Stereo Calibrator</h3>
-        <div class="project-description">
-          <p>Tool for calibrating stereo camera systems using Charuco boards.</p>
-        </div>
-        <a href="https://github.com/ccomkhj/Charuco_Stereo_Calibrator" class="btn" target="_blank">View on GitHub</a>
-      </div>
+  </div>
+
+  <div class="project-card">
+    <div class="project-title-bar">Charuco Calib</div>
+    <div class="project-content">
+      Tool for calibrating stereo camera systems using Charuco boards.
+      <br><br>
+      <a href="https://github.com/ccomkhj/Charuco_Stereo_Calibrator" target="_blank">View on GitHub</a>
     </div>
-    
-    <!-- Additional source codes -->
-    <div class="project-card">
-      <div class="project-content">
-        <h3 class="project-title">More Projects</h3>
-        <div class="project-description">
-          <ul>
-            <li><a href="https://github.com/ccomkhj/ScienceNote">Science into Code</a></li>
-            <li><a href="https://github.com/ccomkhj/Lightening_Classifier/">Medical Research Contribution</a></li>
-            <li><a href="https://github.com/ccomkhj/datumaro-gui">Datumaro GUI app</a></li>
-            <li><a href="https://github.com/ccomkhj/YOLO_data_generator">YOLO data generator</a></li>
-            <li><a href="https://github.com/ccomkhj/crop_generator">Image cropping tool</a></li>
-            <li><a href="https://github.com/HexaFarms/GraphCut">Image Segmentation using Graph-cut</a></li>
-            <li><a href="https://github.com/ccomkhj/hyperoptmm/">MLflow-HyperOpt wrapper</a></li>
-            <li><a href="https://github.com/ccomkhj/classify_seg_mask">Image classification & mass estimation</a></li>
-            <li><a href="https://github.com/ccomkhj/Pixel_Area">Compute pixel's actual dimension</a></li>
-          </ul>
-        </div>
-      </div>
+  </div>
+
+  <div class="project-card">
+    <div class="project-title-bar">More Projects</div>
+    <div class="project-content">
+      <ul>
+        <li><a href="https://github.com/ccomkhj/ScienceNote">Science into Code</a></li>
+        <li><a href="https://github.com/ccomkhj/Lightening_Classifier/">Medical Research Contribution</a></li>
+        <li><a href="https://github.com/ccomkhj/datumaro-gui">Datumaro GUI app</a></li>
+        <li><a href="https://github.com/ccomkhj/YOLO_data_generator">YOLO data generator</a></li>
+        <li><a href="https://github.com/ccomkhj/crop_generator">Image cropping tool</a></li>
+        <li><a href="https://github.com/HexaFarms/GraphCut">Image Segmentation using Graph-cut</a></li>
+        <li><a href="https://github.com/ccomkhj/hyperoptmm/">MLflow-HyperOpt wrapper</a></li>
+        <li><a href="https://github.com/ccomkhj/classify_seg_mask">Image classification & mass estimation</a></li>
+        <li><a href="https://github.com/ccomkhj/Pixel_Area">Compute pixel's actual dimension</a></li>
+      </ul>
     </div>
   </div>
 </div>
 
----
+## III. Publications
 
-<div class="content-section fade-in">
-  <h2 class="section-title" id="publications">III. Publications</h2>
-  
-  <div class="projects-grid">
-    <!-- Publication 1 -->
-    <div class="project-card">
-      <div class="project-content">
-        <h3 class="project-title">Master Thesis</h3>
-        <div class="project-description">
-          <p>Deep Learning-Based Semiautomatic Generation of HD maps from Aerial Imagery</p>
-        </div>
-      </div>
-      <div class="project-tags">
-        <span class="project-tag">Deep Learning</span>
-        <span class="project-tag">HD Maps</span>
-        <span class="project-tag">Aerial Imagery</span>
-      </div>
+<div class="projects-grid">
+  <div class="project-card">
+    <div class="project-title-bar">Master Thesis</div>
+    <div class="project-content">
+      Deep Learning-Based Semiautomatic Generation of HD maps from Aerial Imagery
     </div>
-    
-    <!-- Publication 2 -->
-    <div class="project-card">
-      <div class="project-content">
-        <h3 class="project-title">Deep Aerial Mapper</h3>
-        <div class="project-description">
-          <p>Research paper on advanced aerial mapping techniques using deep learning.</p>
-        </div>
-        <a href="https://www.arxiv.org/abs/2410.00769" class="btn" target="_blank">View Paper</a>
-      </div>
-      <div class="project-tags">
-        <span class="project-tag">Research</span>
-        <span class="project-tag">Computer Vision</span>
-        <span class="project-tag">arXiv</span>
-      </div>
+    <div class="project-tags">
+      <span class="project-tag">Deep Learning</span>
+      <span class="project-tag">HD Maps</span>
+      <span class="project-tag">Aerial Imagery</span>
+    </div>
+  </div>
+
+  <div class="project-card">
+    <div class="project-title-bar">Deep Aerial Mapper</div>
+    <div class="project-content">
+      Research paper on advanced aerial mapping techniques using deep learning.
+      <br><br>
+      <a href="https://www.arxiv.org/abs/2410.00769" target="_blank">View Paper</a>
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">Research</span>
+      <span class="project-tag">Computer Vision</span>
+      <span class="project-tag">arXiv</span>
     </div>
   </div>
 </div>
-
----
 
 ## IV. Learning
 

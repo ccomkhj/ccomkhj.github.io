@@ -1,0 +1,28 @@
+---
+layout: single
+---
+
+<style>
+  .window-content-wrapper {
+    max-width: 800px;
+    margin: 20px auto;
+    font-family: "Pixelated MS Sans Serif", Arial;
+  }
+  .window-body ul {
+    list-style-type: square; 
+  }
+</style>
+
+<div class="window window-content-wrapper">
+  <div class="title-bar">
+    <div class="title-bar-text">{{ page.window_title | default: page.title | default: "Window" }}</div>
+    <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close"></button>
+    </div>
+  </div>
+  <div class="window-body">
+    {{ content }}
+  </div>
+</div>

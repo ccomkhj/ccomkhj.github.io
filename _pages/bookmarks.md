@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: bookmarks
 class: wide
 permalink: /bookmarks/
 author_profile: true

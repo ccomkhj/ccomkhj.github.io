@@ -647,21 +647,27 @@ article.page .page__content table th {
 }
 
 .sidebar .author__name {
-  background: #000080;
-  color: #fff;
+  color: #000;
   display: block;
-  font-size: 0.95rem;
-  margin: 0.5rem 0 0.6rem;
-  padding: 0.25rem 0.4rem;
+  font-size: 0.75rem;
+  margin: 0.1rem 0 0.1rem;
+  padding: 0.1rem 0.1rem;
 }
 
 .sidebar .author__name a {
-  color: #fff;
+  color: #000;
+}
+
+.sidebar fieldset {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0px;
 }
 
 .sidebar .author__bio {
   color: #000;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   line-height: 1.3;
   margin: 0 0 0.6rem;
 }
@@ -672,19 +678,19 @@ article.page .page__content table th {
 
 .sidebar .author__urls {
   background: #fff;
-  border: 2px inset #dfdfdf;
+  border: 1px inset #dfdfdf;
   box-shadow: none;
   list-style: none;
-  margin: 0.4rem 0 0;
-  padding: 0.35rem;
+  margin: 0.2rem 0 0;
+  padding: 0.15rem;
   position: static;
 }
 
 .sidebar .author__urls li {
   border-bottom: 1px solid #c0c0c0;
-  font-size: 0.8rem;
+  font-size: 0.5rem;
   margin: 0;
-  padding: 0.2rem 0.25rem;
+  padding: 0.1rem 0.1rem;
   white-space: nowrap;
 }
 
@@ -694,8 +700,8 @@ article.page .page__content table th {
 
 .sidebar .author__urls a {
   color: #000;
-  font-size: 0.8rem;
-  margin: 0;
+  font-size: 0.5rem;
+  margin: 0.1rem 0 0.1rem;
   padding: 0;
   text-decoration: none;
 }

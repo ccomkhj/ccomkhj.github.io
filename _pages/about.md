@@ -1,33 +1,25 @@
 ---
-layout: single
+layout: window
 class: wide
 permalink: /about/
 author_profile: true
+window_title: Polymath.exe
 ---
 
-<link rel="stylesheet" href="/assets/css/about.css">
+Hacker by day, lifelong learner by night.
 
-<div class="about-hero">
-  <span class="about-hero-title">Hey, I'm Huijo.</span>
-  <hr class="about-hero-rule">
-</div>
+My polymath journey thrives on daily 1% growth, anchored in:
 
-<div class="polymath-card">
-  <p class="tagline">Data scientist by day, lifelong learner by night.</p>
-  <p class="tagline">My polymath journey thrives on daily 1% growth, anchored in:</p>
-  <div class="polymath-core">
-    <ul class="pillars">
-      <li><span class="pillar-highlight">Zero to One</span> <span class="pillar-note">Entrepreneurship</span></li>
-      <li><span class="pillar-highlight">Leadership &amp; Feedback</span> <span class="pillar-note"></span><span class="pillar-note">Radical Candor</span></li>
-      <li><span class="pillar-highlight">Predictive Modeling</span> <span class="pillar-note">Forecasting</span></li>
-      <li><span class="pillar-highlight">Computer Vision</span><span class="pillar-note">Extract insights from images</span></li>
-      <li><span class="pillar-highlight">MLOps &amp; Data Engineering</span><span class="pillar-note">Scratch to Scalable</span></li>
-      <li><span class="pillar-highlight">IoT</span><span class="pillar-note">Source data from the ground</span></li>
-    </ul>
-  </div>
-  
-  <p class="expansion-note">Eager to expand this list—and myself—through life's adventures.</p>
-</div>
+### Core Pillars
+
+- **Zero to One**: Entrepreneurship
+- **Leadership & Feedback**: Radical Candor 
+- **Predictive Modeling**: Forecasting
+- **Computer Vision**: Extract insights from images
+- **MLOps & Data Engineering**: Scratch to Scalable
+- **IoT**: Source data from the ground
+
+_Eager to expand this list—and myself—through life's adventures._
 
 ### Things I am proud of
 
@@ -71,6 +63,6 @@ author_profile: true
 ---
 
 <figure>
-    <img src="../assets\images\photo_in_farm.jpg" alt="Solution in the field" width="300" height="300">
+    <img src="../assets/images/photo_in_farm.jpg" alt="Solution in the field" width="300" height="300">
     <figcaption>True joy comes after customer satisfaction.</figcaption>
 </figure>

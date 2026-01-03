@@ -1,0 +1,128 @@
+---
+layout: single
+---
+
+<style>
+  .window-tags {
+    max-width: 800px;
+    margin: 20px auto;
+    font-family: "Pixelated MS Sans Serif", Arial;
+  }
+  
+  .window-tags .window-body {
+    padding: 10px;
+    min-height: 400px;
+  }
+  
+  ul.tree-view {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: white;
+    border: inset 2px;
+    padding: 6px;
+    height: 100%;
+    overflow-y: auto;
+  }
+  
+  ul.tree-view li {
+    margin-top: 0;
+    list-style: none;
+  }
+  
+  ul.tree-view summary {
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  ul.tree-view ul {
+    margin-left: 16px;
+    border-left: 1px dotted #808080;
+    padding-left: 0;
+    list-style: none;
+  }
+  
+  ul.tree-view ul li {
+    position: relative;
+    padding-left: 16px;
+  }
+  
+  ul.tree-view ul li::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 12px;
+    border-top: 1px dotted #808080;
+  }
+  
+  ul.tree-view a {
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  ul.tree-view a:hover {
+    background-color: #000080;
+    color: white;
+  }
+  
+  /* Post Date styling */
+  .tree-post-date {
+    font-size: 0.8em;
+    color: #555;
+    margin-left: 5px;
+  }
+  ul.tree-view a:hover .tree-post-date {
+    color: #ccc;
+  }
+</style>
+
+<div class="window window-tags">
+  <div class="title-bar">
+    <div class="title-bar-text">Writings Explorer by Tags</div>
+    <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close"></button>
+    </div>
+  </div>
+  <div class="window-body">
+    <p style="margin-bottom: 10px;">Browse writings by topic:</p>
+    
+    {% assign tags_max = 0 %}
+    {% for tag in site.tags %}
+      {% if tag[1].size > tags_max %}
+        {% assign tags_max = tag[1].size %}
+      {% endif %}
+    {% endfor %}
+
+    <ul class="tree-view">
+      {% for i in (1..tags_max) reversed %}
+        {% for tag in site.tags %}
+          {% if tag[1].size == i %}
+            <li>
+              <details>
+                <summary>
+                  <strong>{{ tag[0] }}</strong> ({{ i }})
+                </summary>
+                <ul>
+                  {% for post in tag.last %}
+                    <li>
+                      <a href="{{ post.url | relative_url }}">
+                        {{ post.title }}
+                        <span class="tree-post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </details>
+            </li>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
