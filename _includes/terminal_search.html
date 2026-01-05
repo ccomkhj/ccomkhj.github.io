@@ -1,9 +1,13 @@
 <link rel="stylesheet" href="/assets/css/terminal.css">
 
-<div id="terminal-container" class="terminal-container">
+<!-- Background Canvas for Math Animation -->
+<canvas id="math-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; background-color: #050505;"></canvas>
+
+<!-- Terminal Container (Overlay) -->
+<div id="terminal-container" class="terminal-container" style="position: relative; z-index: 1; background-color: rgba(0, 0, 0, 0.65); border: 1px solid #33ff00; height: 70vh; margin-top: 5vh;">
   <div id="terminal-output"></div>
   <div id="terminal-input-line" style="display: none; display: flex; align-items: center;">
-    <span class="terminal-prompt">guest@ccomkhj.github.io:~$</span>
+    <span class="terminal-prompt">whoami@huijo.xyz:~$</span>
     <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false">
   </div>
   <div id="terminal-search-results"></div>
@@ -11,29 +15,84 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+  // --- 1. Lorenz Attractor Animation ---
+  const canvas = document.getElementById('math-canvas');
+  const ctx = canvas.getContext('2d');
+  
+  let width, height;
+  
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    ctx.fillStyle = '#050505';
+    ctx.fillRect(0, 0, width, height);
+  }
+  
+  window.addEventListener('resize', resize);
+  resize();
+
+  // Lorenz System Parameters
+  let x = 0.1, y = 0, z = 0;
+  const sigma = 10;
+  const rho = 28;
+  const beta = 8/3;
+  const dt = 0.01;
+  
+  function drawLorenz() {
+    ctx.beginPath();
+    ctx.strokeStyle = `rgba(0, 255, 100, 0.4)`; // Matrix green, semi-transparent
+    ctx.lineWidth = 0.8;
+    
+    // Draw multiple steps per frame for speed
+    for (let i = 0; i < 20; i++) {
+      ctx.moveTo(width/2 + x * 15, height/2 + z * 10 - 200); // Scale and center
+      
+      const dx = sigma * (y - x) * dt;
+      const dy = (x * (rho - z) - y) * dt;
+      const dz = (x * y - beta * z) * dt;
+      
+      x += dx;
+      y += dy;
+      z += dz;
+      
+      ctx.lineTo(width/2 + x * 15, height/2 + z * 10 - 200);
+    }
+    
+    ctx.stroke();
+    
+    // Fade effect
+    ctx.fillStyle = 'rgba(5, 5, 5, 0.01)';
+    ctx.fillRect(0, 0, width, height);
+    
+    requestAnimationFrame(drawLorenz);
+  }
+  
+  drawLorenz();
+
+
+  // --- 2. Terminal Boot & Logic ---
   const outputDiv = document.getElementById('terminal-output');
   const inputLine = document.getElementById('terminal-input-line');
   const inputField = document.getElementById('terminal-input');
   const resultsDiv = document.getElementById('terminal-search-results');
 
   const bootText = [
-    "Initializing system...",
-    "Loading kernel modules... OK",
-    "Mounting file systems... OK",
-    "Starting search daemon... OK",
-    "Loading index...",
+    "Initializing Kernel...",
+    "Verifying Euler's Identity: e^(iπ) + 1 = 0 ... [Verified]",
     "----------------------------------------------------------------",
     "To be uncertain is to be uncomfortable,",
     "but to be certain is to be ridiculous.",
     "                                          — Goethe",
     "----------------------------------------------------------------",
-    "Welcome. Type to search writings."
+    "System Ready.",
+    "Enter query to search database."
+
   ];
 
   let lineIndex = 0;
   let charIndex = 0;
-  const typeSpeed = 30; // ms per char
-  const linePause = 300; // ms between lines
+  const typeSpeed = 20; 
+  const linePause = 150;
 
   function typeWriter() {
     if (lineIndex < bootText.length) {
@@ -56,37 +115,42 @@ document.addEventListener("DOMContentLoaded", function() {
         setTimeout(typeWriter, linePause);
       }
     } else {
-      // Boot complete
       inputLine.style.display = 'flex';
       inputField.focus();
     }
   }
 
-  // Start boot sequence
   typeWriter();
 
-  // Focus input on click anywhere in terminal
   document.getElementById('terminal-container').addEventListener('click', function() {
-    if (inputLine.style.display !== 'none') {
-      inputField.focus();
-    }
+    if (inputLine.style.display !== 'none') inputField.focus();
   });
 
-  // Search Logic
   inputField.addEventListener('keyup', function(e) {
     const query = this.value.toLowerCase();
     resultsDiv.innerHTML = '';
 
     if (query.length === 0) return;
+    
+    // Easter Egg: Math Eval
+    if (query.startsWith("eval ")) {
+       try {
+         const expr = query.substring(5);
+         // Safety: minimal evaluator or just basic JS math
+         const res = eval(expr); // Warning: eval is dangerous in open web, but static site input is local.
+         resultsDiv.innerHTML = `<div class="terminal-line">> Result: ${res}</div>`;
+         return;
+       } catch (err) {
+         resultsDiv.innerHTML = `<div class="terminal-line" style="color:red;">> Error: ${err.message}</div>`;
+         return;
+       }
+    }
 
-    // Check if lunr idx is available
     if (typeof idx === 'undefined' || typeof store === 'undefined') {
-      resultsDiv.innerHTML = '<div class="terminal-line" style="color:red;">Error: Search index not loaded yet. Please wait...</div>';
+      resultsDiv.innerHTML = '<div class="terminal-line" style="color:red;">Error: Index loading...</div>';
       return;
     }
 
-    // Use existing lunr index
-    // Logic adapted from lunr-en.js
     const result = idx.query(function (q) {
       query.split(lunr.tokenizer.separator).forEach(function (term) {
         q.term(term, { boost: 100 })
@@ -101,27 +165,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (result.length > 0) {
        resultsDiv.innerHTML = `<div class="terminal-line">> Found ${result.length} result(s):</div>`;
-       // Limit to top 10 to avoid flooding terminal
-       const limit = Math.min(result.length, 10);
+       const limit = Math.min(result.length, 8);
        
        for (let i = 0; i < limit; i++) {
          const item = result[i];
-         const ref = item.ref;
-         const doc = store[ref];
-         
+         const doc = store[item.ref];
          const resultItem = document.createElement('div');
          resultItem.className = 'search-result-item';
-         resultItem.innerHTML = `[${doc.categories ? doc.categories : 'Page'}] <a href="${doc.url}">${doc.title}</a> - ${doc.excerpt.substring(0, 50)}...`;
+         resultItem.innerHTML = `[${doc.categories || 'File'}] <a href="${doc.url}">${doc.title}</a>`;
          resultsDiv.appendChild(resultItem);
        }
-       
-       if (result.length > 10) {
-         const more = document.createElement('div');
-         more.className = 'terminal-line';
-         more.textContent = `... and ${result.length - 10} more.`;
-         resultsDiv.appendChild(more);
-       }
-
     } else {
       resultsDiv.innerHTML = '<div class="terminal-line">> No results found.</div>';
     }
