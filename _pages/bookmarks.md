@@ -4,9 +4,6 @@ class: wide
 permalink: /bookmarks/
 author_profile: true
 ---
-
-A curated list of interesting links and resources I've found across the web.
-
 ## Engineering
 
 **Forecasting**
@@ -32,7 +29,12 @@ A curated list of interesting links and resources I've found across the web.
 - [VN2 Challenges](https://www.youtube.com/watch?v=pypzcvwmApA): VN2 Inventory Planning Competition
 
 **Data Engineering**
-- TBA
+
+* [Designing Data-Intensive Applications (DDIA)](https://github.com/letthedataconfess/Data-Engineering-Books/blob/main/Book-2Designing-data-intensive-applications.pdf): The definitive foundation for modern data systems—storage, replication, partitioning, consistency, and stream/batch architectures.
+* [Fundamentals of Data Engineering](https://soclibrary.futa.edu.ng/books/Fundamentals%20of%20Data%20Engineering%20(Reis,%20JoeHousley,%20Matt)%20(Z-Library).pdf): Practical end-to-end view of data engineering: lifecycle, architecture, governance, and how to evaluate tools and build reliable systems.
+* [Streaming Systems](https://www.oreilly.com/library/view/streaming-systems/9781491983867/): The best conceptual treatment of real-time data processing—event time, watermarks, correctness, and design patterns that prevent subtle failures.
+* [Data Engineering Zoomcamp (DataTalksClub)](https://github.com/DataTalksClub/data-engineering-zoomcamp): Best free, end-to-end hands-on curriculum to build real pipelines (orchestration, warehousing, analytics engineering, batch + streaming).
+
 
 ## Ideas & Essays
 
@@ -50,3 +52,34 @@ A curated list of interesting links and resources I've found across the web.
 - [Lenny's Newsletter](https://www.lennysnewsletter.com/): Lenny Rachitsky's insights on product management and growth.
 - [The Generalist](https://www.generalist.com/): In-depth analysis of startups and tech trends.
 - [Andrew Chen's Newsletter](https://andrewchen.substack.com/): Andrew Chen's insights on startups, growth, and technology.
+
+## Finance
+
+**Macro Investing (Foundations)**
+- [How the Economic Machine Works](https://www.youtube.com/watch?v=PHe0bXAIuk0): Ray Dalio’s clear intro to credit, debt cycles, and policy transmission.
+- [Expected Returns](https://www.wiley.com/en-us/Expected+Returns%3A+An+Investor%27s+Guide+to+Harvesting+Market+Rewards%2C+3rd+Edition-p-9781119997617): Antti Ilmanen’s institutional-grade reference on macro risk premia and long-run returns.
+- [Mastering the Market Cycle](https://www.amazon.com/Mastering-Market-Cycle-Getting-Odds/dp/1328479255): Howard Marks on cycles, risk appetite, and avoiding pro-cyclical mistakes.
+
+**Monetary Policy, Liquidity, and Financial Plumbing**
+- [The New Lombard Street](https://press.princeton.edu/books/hardcover/9780691168927/the-new-lombard-street): Perry Mehrling’s best-in-class explanation of money markets, liquidity, and central bank backstops.
+- [Federal Reserve: Monetary Policy](https://www.federalreserve.gov/monetarypolicy.htm): Primary-source reference for policy tools, minutes, and explanations.
+- [Bank for International Settlements (BIS) Publications](https://www.bis.org/publ/index.htm): High-signal work on global liquidity, credit cycles, banking stability, and FX.
+
+**Bonds & Rates (Macro’s Backbone)**
+- [Bond Markets, Analysis, and Strategies](https://www.amazon.com/Bond-Markets-Analysis-Strategies-9th/dp/0133796770): Fabozzi’s classic reference on yield curves, duration, and fixed income mechanics.
+- [FRED (St. Louis Fed)](https://fred.stlouisfed.org/): Best free source for macro time series (rates, CPI, unemployment, growth, credit spreads).
+  - Useful: yield curve, inflation expectations (breakevens), unemployment, credit spreads.
+
+**Crises, Regimes, and History**
+- [This Time Is Different](https://press.princeton.edu/books/paperback/9780691152643/this-time-is-different): Reinhart & Rogoff’s empirical history of leverage, banking crises, and sovereign defaults.
+- [The Changing World Order](https://www.amazon.com/Changing-World-Order-Nations-Succeed/dp/1982160276): Dalio’s macro-historical view of reserve currencies and geopolitical cycles.
+- [Irrational Exuberance](https://press.princeton.edu/books/paperback/9780691173129/irrational-exuberance): Shiller on valuation regimes, bubbles, and long-cycle market behavior.
+
+**Practical Macro Strategy (Turning Views Into Trades/Portfolios)**
+- [Global Macro Trading](https://www.amazon.com/Global-Macro-Trading-Profit-Second/dp/1118996365): Professional overview of cross-asset macro thinking and implementation.
+- [Geopolitical Alpha](https://www.amazon.com/Geopolitical-Alpha-Investment-Strategy-Economics/dp/1119740211): Marko Papic’s structured way to convert macro/geopolitics into investable scenarios.
+- [Systematic Trading](https://www.amazon.com/Systematic-Trading-Designing-Trading-Investing/dp/0857194453): Risk-managed and process-driven approach (valuable antidote to narrative macro).
+
+**Asset Allocation**
+- [Dynamic Asset Allocation](https://www.amazon.com/Dynamic-Asset-Allocation-Modern-Investors/dp/0071622723): A practical framework for building macro-aware portfolios over time.
+- [IMF World Economic Outlook](https://www.imf.org/en/Publications/WEO): High-quality baseline for macro projections, risks, and global conditions.

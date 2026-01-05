@@ -47,7 +47,20 @@
 .polymath-core p {
   font-size: 1rem;
   margin-bottom: 1rem;
-  text-align: center;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+}
+
+.field-row input[type="checkbox"] {
+  margin-right: 6px;
+}
+
+.field-row label {
+  color: #000;
+  font-family: "Pixelated MS Sans Serif", Arial, sans-serif;
 }
 
 .expansion-note {
@@ -97,6 +110,35 @@
   color: #000;
   font-size: 0.85rem;
   font-style: italic;
+}
+
+/* Tab Panel content area - Custom spacing/scroll for the window body */
+.tab-window-content {
+  padding: 16px;
+  margin-top: 0;
+  position: relative;
+  min-height: 200px;
+}
+
+/* Custom TreeView Spacing - 98.css handles lines, we just add the requested empty line effect */
+.tab-window-content ul.tree-view li {
+  padding-bottom: 14px;
+}
+
+/* Parent items (summary) are folders -> Bold & Big */
+.tab-window-content ul.tree-view summary {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Reset nested items (standard text) */
+.tab-window-content ul.tree-view ul li {
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.tab-window-content strong {
+  color: #000080;
 }
 
 /* Responsive adjustments */

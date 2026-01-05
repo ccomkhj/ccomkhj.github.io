@@ -1,5 +1,5 @@
 ---
-layout: window
+layout: about_me
 class: wide
 permalink: /about/
 author_profile: true
@@ -59,10 +59,3 @@ _Eager to expand this list—and myself—through life's adventures._
   - customers tell you what they want, but it's not always what solves their pain
   - be obsessed with finding what really solves their pain
   - seek to understand, not to be understood
-
----
-
-<figure>
-    <img src="../assets/images/photo_in_farm.jpg" alt="Solution in the field" width="300" height="300">
-    <figcaption>True joy comes after customer satisfaction.</figcaption>
-</figure>

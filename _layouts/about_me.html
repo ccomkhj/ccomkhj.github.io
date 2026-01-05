@@ -1,0 +1,205 @@
+---
+layout: single
+---
+<link rel="stylesheet" href="{{ '/assets/css/about.css' | relative_url }}">
+
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-content e-content" itemprop="articleBody">
+    
+    <!-- 98.css Window Container -->
+    <div class="window" style="width: 100%; max-width: 100%; margin: 20px auto; font-family: 'Pixelated MS Sans Serif', Arial, sans-serif;">
+      <div class="title-bar">
+        <div class="title-bar-text">{{ page.window_title | default: page.title }}</div>
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        
+        <!-- Intro Section (Everything before first H3) -->
+        <div id="about-intro" class="polymath-core">
+          <!-- Content injected via JS -->
+        </div>
+
+        <!-- Tabs -->
+        <menu role="tablist" id="about-tabs">
+          <!-- Tabs injected via JS -->
+        </menu>
+
+        <!-- Progress Indicator -->
+        <div class="progress-indicator">
+          <span class="progress-indicator-bar" id="about-progress-bar" style="width: 0%;"></span>
+        </div>
+
+        <!-- Tab Content Panel -->
+        <div class="tab-window-content" role="tabpanel" id="about-panel">
+          <!-- Active content injected via JS -->
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Hidden Raw Content Source -->
+    <div id="raw-content" style="display: none;">
+      {{ content }}
+    </div>
+
+  </div>
+
+</article>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const rawContent = document.getElementById('raw-content');
+    const introContainer = document.getElementById('about-intro');
+    const tabsContainer = document.getElementById('about-tabs');
+    const panelContainer = document.getElementById('about-panel');
+
+    const progressBar = document.getElementById('about-progress-bar');
+
+    if (!rawContent) return;
+
+    // Parse the raw content
+    // We assume structure: Intro... <h3>Tab 1</h3> Content... <h3>Tab 2</h3> Content...
+    // The rawContent is HTML rendered from Markdown.
+    
+    // Convert children to array for easier handling
+    const children = Array.from(rawContent.children);
+    let currentTab = null;
+    let tabData = [];
+    let introNodes = [];
+
+    children.forEach(node => {
+      if (node.tagName === 'H3') {
+        // New Tab
+        currentTab = {
+          title: node.textContent.trim(),
+          contentNodes: []
+        };
+        tabData.push(currentTab);
+      } else {
+        if (currentTab) {
+          currentTab.contentNodes.push(node);
+        } else {
+          introNodes.push(node);
+        }
+      }
+    });
+
+    // Render Intro
+    introNodes.forEach((node, index) => {
+      const clone = node.cloneNode(true);
+      if (clone.tagName === 'P') {
+        const fieldRow = document.createElement('div');
+        fieldRow.className = 'field-row';
+        fieldRow.style.marginBottom = '8px';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = true;
+        checkbox.id = `intro-check-${index}`;
+        
+        const label = document.createElement('label');
+        label.setAttribute('for', `intro-check-${index}`);
+        label.textContent = clone.textContent;
+
+        fieldRow.appendChild(checkbox);
+        fieldRow.appendChild(label);
+        introContainer.appendChild(fieldRow);
+      } else {
+        introContainer.appendChild(clone);
+      }
+    });
+
+    // Render Tabs and setup interactions
+    if (tabData.length > 0) {
+      tabData.forEach((tab, index) => {
+        const li = document.createElement('li');
+        li.setAttribute('role', 'tab');
+        if (index === 0) li.setAttribute('aria-selected', 'true');
+        
+        const a = document.createElement('a');
+        a.textContent = tab.title;
+        a.onclick = (e) => {
+            e.preventDefault();
+            selectTab(index);
+        };
+        
+        li.appendChild(a);
+        tabsContainer.appendChild(li);
+      });
+
+      // Function to switch tabs
+      function selectTab(index) {
+        // Update tab styling
+        Array.from(tabsContainer.children).forEach((li, i) => {
+          if (i === index) li.setAttribute('aria-selected', 'true');
+          else li.removeAttribute('aria-selected');
+        });
+
+        // Update progress bar
+        if (tabData.length > 0) {
+            const progress = ((index + 1) / tabData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Update panel content
+        panelContainer.innerHTML = '';
+        tabData[index].contentNodes.forEach(node => {
+          const clone = node.cloneNode(true);
+          // If it's a UL, ensure it has tree-view class and transform structure
+          if (clone.tagName === 'UL') {
+            clone.classList.add('tree-view');
+            transformListToDetails(clone);
+          }
+          panelContainer.appendChild(clone);
+        });
+      }
+
+      function transformListToDetails(ul) {
+        const items = Array.from(ul.children);
+        items.forEach(li => {
+          if (li.tagName !== 'LI') return;
+
+          // Find direct child UL
+          let nestedUl = null;
+          for (let i = 0; i < li.children.length; i++) {
+            if (li.children[i].tagName === 'UL') {
+              nestedUl = li.children[i];
+              break;
+            }
+          }
+
+          if (nestedUl) {
+            const details = document.createElement('details');
+            details.open = true;
+            const summary = document.createElement('summary');
+
+            // Move all content except nestedUl to summary
+            while (li.firstChild) {
+              const node = li.firstChild;
+              if (node === nestedUl) {
+                li.removeChild(node); // Detach list
+              } else {
+                summary.appendChild(node); // Move text/other elements
+              }
+            }
+
+            details.appendChild(summary);
+            details.appendChild(nestedUl); // Re-attach list inside details
+            li.appendChild(details);
+
+            // Recurse
+            transformListToDetails(nestedUl);
+          }
+        });
+      }
+
+      // Initial render
+      selectTab(0);
+    }
+  });
+</script>
