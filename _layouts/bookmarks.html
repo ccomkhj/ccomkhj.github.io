@@ -1,144 +1,42 @@
 ---
-layout: single
+layout: default
 ---
 
-<style>
-  .window-bookmarks {
-    max-width: 800px;
-    margin: 20px auto;
-    font-family: "Pixelated MS Sans Serif", Arial;
-  }
-  .bookmarks-menubar {
-    display: flex;
-    gap: 15px;
-    padding-bottom: 6px;
-    margin-bottom: 2px;
-  }
-  .bookmarks-menubar span {
-    cursor: default;
-  }
-  .bookmarks-menubar span:hover {
-    background-color: #000080;
-    color: white;
-  }
-  .bookmarks-address-bar {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #808080;
-    box-shadow: 0 1px 0 #fff;
-  }
-  .bookmarks-address-label {
-    color: #000;
-    font-size: 12px;
-  }
-  .bookmarks-address-input {
-    flex-grow: 1;
-    background: #fff;
-    border: 2px solid;
-    border-color: #808080 #dfdfdf #dfdfdf #808080;
-    padding: 2px 5px;
-    font-family: inherit;
-    font-size: 12px;
-  }
-  .bookmarks-body {
-    background: #fff;
-    border: 2px solid;
-    border-color: #808080 #dfdfdf #dfdfdf #808080;
-    padding: 15px;
-    height: 600px;
-    overflow-y: auto;
-  }
-  
-  /* Markdown Content Styling within the window */
-  .bookmarks-body h2 {
-    font-size: 16px;
-    border-bottom: 2px solid #000080;
-    color: #000;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    padding-bottom: 2px;
-  }
-  
-  .bookmarks-body p strong {
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 5px;
-    color: #000080;
-    font-weight: bold;
-  }
+<link rel="stylesheet" href="{{ '/assets/css/window-theme.css' | relative_url }}">
 
-  .bookmarks-body ul {
-    list-style: none;
-    padding-left: 5px;
-  }
+<div id="main" role="main">
+  {% include sidebar.html %}
 
-  .bookmarks-body li {
-    padding-left: 20px;
-    position: relative;
-    margin-bottom: 4px;
-    line-height: 1.4;
-  }
-
-  .bookmarks-body li::before {
-    content: "★";
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: #ffcc00; /* Gold star */
-    text-shadow: 1px 1px 0 #808080;
-    font-size: 12px;
-  }
-  
-  /* Nested lists (if any) */
-  .bookmarks-body li ul {
-    margin-top: 5px;
-  }
-  .bookmarks-body li ul li::before {
-    content: "📄";
-    color: #000;
-    text-shadow: none;
-  }
-
-  .bookmarks-body a {
-    text-decoration: none;
-    color: #000;
-  }
-  .bookmarks-body a:hover {
-    text-decoration: underline;
-    color: #000080;
-  }
-</style>
-
-<div class="window window-bookmarks">
-  <div class="title-bar">
-    <div class="title-bar-text">Favorites</div>
-    <div class="title-bar-controls">
-      <button aria-label="Minimize"></button>
-      <button aria-label="Maximize"></button>
-      <button aria-label="Close"></button>
-    </div>
-  </div>
-  <div class="window-body">
-    <div class="bookmarks-menubar">
-      <span><u>F</u>ile</span>
-      <span><u>E</u>dit</span>
-      <span><u>V</u>iew</span>
-      <span>F<u>a</u>vorites</span>
-      <span><u>T</u>ools</span>
-      <span><u>H</u>elp</span>
-    </div>
-    <div class="bookmarks-address-bar">
-      <span class="bookmarks-address-label">Address</span>
-      <div class="bookmarks-address-input bg-white">
-        C:\Users\Huijo\Favorites
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <div class="window window-themed">
+      <div class="title-bar">
+        <div class="title-bar-text">Favorites</div>
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="window-menubar">
+          <span><u>F</u>ile</span>
+          <span><u>E</u>dit</span>
+          <span><u>V</u>iew</span>
+          <span>F<u>a</u>vorites</span>
+          <span><u>T</u>ools</span>
+          <span><u>H</u>elp</span>
+        </div>
+        <div class="window-address-bar">
+          <span class="window-address-label">Address</span>
+          <div class="window-address-input">
+            C:\Users\Huijo\Favorites
+          </div>
+        </div>
+        
+        <div class="window-content">
+          {{ content }}
+        </div>
       </div>
     </div>
-    
-    <div class="bookmarks-body">
-      {{ content }}
-    </div>
-  </div>
+  </article>
 </div>

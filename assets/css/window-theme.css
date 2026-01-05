@@ -1,0 +1,161 @@
+/* Shared Window Theme (Bookmarks & About) */
+.window-themed {
+  max-width: 800px;
+  margin: 20px auto;
+  font-family: "Pixelated MS Sans Serif", Arial, sans-serif;
+}
+
+/* Menubar */
+.window-menubar {
+  display: flex;
+  gap: 15px;
+  padding-bottom: 6px;
+  margin-bottom: 2px;
+}
+.window-menubar span {
+  cursor: default;
+  font-size: 12px;
+  color: #000;
+}
+.window-menubar span:hover {
+  background-color: #000080;
+  color: white;
+}
+
+/* Address Bar */
+.window-address-bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #808080;
+  box-shadow: 0 1px 0 #fff;
+}
+.window-address-label {
+  color: #000;
+  font-size: 12px;
+}
+.window-address-input {
+  flex-grow: 1;
+  background: #fff;
+  border: 2px solid;
+  border-color: #808080 #dfdfdf #dfdfdf #808080;
+  padding: 2px 5px;
+  font-family: inherit;
+  font-size: 12px;
+  color: #000;
+  display: flex;
+  align-items: center;
+}
+
+/* Document/IE Icon in address bar (optional, can be added via class) */
+.window-address-input.with-icon {
+  padding-left: 24px;
+  position: relative;
+}
+.window-address-input.with-icon::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYcDyM9nC91OAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAABYklEQVQ4y42RvUoDQRPFf7M7m0iIIGppJJ2vkE4QRLCwEyx8A/EDWAgWfgoLwcJHsLUSsVEsRSSgRvyZnZ3xYnZDUOQmBw6zM+d/zpkd+N9l5+fngyZCCF5eXvB9n7OzM3zfp9Vq0Ww26XQ6GGMwxiClRGs98D3wfZ9Wq0Wv16Pf72OMQUqJlBItZTDGkM1m5HK5wB8sLy+Tz+fJ5/N4nke326XRaISxWq2GlJJOp0Mmk8HzPHK5HPl8nkwmQzabxbIswj+0Wi06nQ6dTidoj8cjjDGMx2PS6TSWZWGtJZ/PE0Jg2zaWZWGMQUqJlJJkMonWOhBQSjEajbAsi3Q6jZSGVqtFq9UinU6H8fv7O1JK2rYdCtbaUCAE2rbN/f09Nzc3tG07FIbDIfv7+6RSqVA4OTkhm81yfX1N27ZDoTEG13XDv+p2u+TzeSzLCgVCCFzX5fLykqOjI0IIwj/0fT/8w38A1tq2fQAAAABJRU5ErkJggg==");
+  background-repeat: no-repeat;
+}
+
+/* Content Area (Sunken White Box) */
+.window-content {
+  background: #fff;
+  border: 2px solid;
+  border-color: #808080 #dfdfdf #dfdfdf #808080;
+  padding: 15px;
+  overflow-y: auto;
+  /* Height can be overridden per page */
+  height: 600px; 
+}
+
+/* Typography & Lists inside Content */
+.window-content h2 {
+  font-size: 16px;
+  border-bottom: 2px solid #000080;
+  color: #000;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  padding-bottom: 2px;
+}
+
+.window-content p strong {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  color: #000080;
+  font-weight: bold;
+}
+
+/* Base List Style (Bookmarks Style) */
+.window-content ul {
+  list-style: none;
+  padding-left: 5px;
+  margin: 0;
+}
+
+.window-content li {
+  padding-left: 20px;
+  position: relative;
+  margin-bottom: 4px;
+  line-height: 1.4;
+  color: #000;
+}
+
+/* Root list items get Gold Star */
+.window-content > ul > li::before,
+.window-content li::before { 
+  /* We use specificity or direct child selectors to differentiate if needed. 
+     But .window-content li matches all. Let's start with Star for all, 
+     then override for nested. */
+  content: "★";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #ffcc00; 
+  text-shadow: 1px 1px 0 #808080;
+  font-size: 12px;
+}
+
+/* Nested lists */
+.window-content li ul {
+  margin-top: 5px;
+  padding-left: 5px; /* Indent nested list slightly more if needed, or keep 5px */
+}
+
+/* Nested list items get Document Icon */
+.window-content li ul li::before {
+  content: "📄";
+  color: #000;
+  text-shadow: none;
+}
+
+/* Links */
+.window-content a {
+  text-decoration: none;
+  color: #000;
+}
+.window-content a:hover {
+  text-decoration: underline;
+  color: #000080;
+}
+
+/* Search Result Specifics within Windows */
+.window .archive__item-teaser {
+  display: block !important;
+  margin-bottom: 10px;
+}
+
+.window .archive__item-teaser img {
+  max-width: 100%;
+  height: auto;
+  border: 2px inset #dfdfdf;
+}

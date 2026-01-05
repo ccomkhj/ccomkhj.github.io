@@ -1,14 +1,18 @@
 ---
-layout: single
+layout: default
 ---
 <link rel="stylesheet" href="{{ '/assets/css/about.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/window-theme.css' | relative_url }}">
 
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <div class="post-content e-content" itemprop="articleBody">
     
-    <!-- 98.css Window Container -->
-    <div class="window" style="width: 100%; max-width: 100%; margin: 20px auto; font-family: 'Pixelated MS Sans Serif', Arial, sans-serif;">
+    <div id="main" role="main">
+      {% include sidebar.html %}
+
+      <!-- 98.css Window Container -->
+      <div class="window window-themed">
       <div class="title-bar">
         <div class="title-bar-text">{{ page.window_title | default: page.title }}</div>
         <div class="title-bar-controls">
@@ -19,6 +23,22 @@ layout: single
       </div>
       <div class="window-body">
         
+        <div class="window-menubar">
+          <span><u>F</u>ile</span>
+          <span><u>E</u>dit</span>
+          <span><u>V</u>iew</span>
+          <span>F<u>a</u>vorites</span>
+          <span><u>T</u>ools</span>
+          <span><u>H</u>elp</span>
+        </div>
+
+        <div class="window-address-bar">
+          <span class="window-address-label">Address</span>
+          <div class="window-address-input with-icon" id="address-display">
+            C:\Users\Huijo\About
+          </div>
+        </div>
+
         <!-- Intro Section (Everything before first H3) -->
         <div id="about-intro" class="polymath-core">
           <!-- Content injected via JS -->
@@ -35,12 +55,19 @@ layout: single
         </div>
 
         <!-- Tab Content Panel -->
-        <div class="tab-window-content" role="tabpanel" id="about-panel">
+        <div class="tab-window-content window-content" role="tabpanel" id="about-panel">
           <!-- Active content injected via JS -->
         </div>
 
       </div>
-    </div>
+
+      <!-- Status Bar -->
+      <div class="status-bar">
+        <p class="status-bar-field" id="status-tab">Status: Ready</p>
+        <p class="status-bar-field" id="status-items">Items: 0</p>
+        <p class="status-bar-field">Polymath.exe</p>
+      </div>
+    </div> <!-- Close main -->
 
     <!-- Hidden Raw Content Source -->
     <div id="raw-content" style="display: none;">
@@ -150,52 +177,17 @@ layout: single
         panelContainer.innerHTML = '';
         tabData[index].contentNodes.forEach(node => {
           const clone = node.cloneNode(true);
-          // If it's a UL, ensure it has tree-view class and transform structure
-          if (clone.tagName === 'UL') {
-            clone.classList.add('tree-view');
-            transformListToDetails(clone);
-          }
           panelContainer.appendChild(clone);
         });
-      }
 
-      function transformListToDetails(ul) {
-        const items = Array.from(ul.children);
-        items.forEach(li => {
-          if (li.tagName !== 'LI') return;
-
-          // Find direct child UL
-          let nestedUl = null;
-          for (let i = 0; i < li.children.length; i++) {
-            if (li.children[i].tagName === 'UL') {
-              nestedUl = li.children[i];
-              break;
-            }
-          }
-
-          if (nestedUl) {
-            const details = document.createElement('details');
-            details.open = true;
-            const summary = document.createElement('summary');
-
-            // Move all content except nestedUl to summary
-            while (li.firstChild) {
-              const node = li.firstChild;
-              if (node === nestedUl) {
-                li.removeChild(node); // Detach list
-              } else {
-                summary.appendChild(node); // Move text/other elements
-              }
-            }
-
-            details.appendChild(summary);
-            details.appendChild(nestedUl); // Re-attach list inside details
-            li.appendChild(details);
-
-            // Recurse
-            transformListToDetails(nestedUl);
-          }
-        });
+        // Update status bar
+        document.getElementById('status-tab').textContent = `Tab: ${tabData[index].title}`;
+        const listItems = panelContainer.querySelectorAll('li').length;
+        document.getElementById('status-items').textContent = `Items: ${listItems}`;
+        
+        // Update Address Bar
+        const safeTitle = tabData[index].title.replace(/\s+/g, '_');
+        document.getElementById('address-display').textContent = `C:\\Users\\Huijo\\About\\${safeTitle}`;
       }
 
       // Initial render

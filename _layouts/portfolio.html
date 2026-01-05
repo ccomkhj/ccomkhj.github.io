@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: default
 ---
 
 <style>
@@ -106,20 +106,26 @@ layout: single
 
 </style>
 
-<div class="window window-portfolio">
-  <div class="title-bar">
-    <div class="title-bar-text">Portfolio.exe</div>
-    <div class="title-bar-controls">
-      <button aria-label="Minimize"></button>
-      <button aria-label="Maximize"></button>
-      <button aria-label="Close"></button>
+<div id="main" role="main">
+  {% include sidebar.html %}
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <div class="window window-portfolio">
+      <div class="title-bar">
+        <div class="title-bar-text">Portfolio.exe</div>
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <p style="text-align: center; margin-bottom: 20px;">
+          Fraction of my work that can be shared. Happy to share my work. Feel free to reach out to me if you need any assistance or have any questions.
+        </p>
+        
+        {{ content }}
+      </div>
     </div>
-  </div>
-  <div class="window-body">
-    <p style="text-align: center; margin-bottom: 20px;">
-      Fraction of my work that can be shared. Happy to share my work. Feel free to reach out to me if you need any assistance or have any questions.
-    </p>
-    
-    {{ content }}
-  </div>
+  </article>
 </div>

@@ -495,31 +495,43 @@ $(document).ready(function() {
     resultdiv.prepend('<p class="results__found">'+result.length+' {{ site.data.ui-text[site.locale].results_found | default: "Result(s) found" }}</p>');
     for (var item in result) {
       var ref = result[item].ref;
-      if(store[ref].teaser){
-        var searchitem =
-          '<div class="list__item">'+
-            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
-              '<h2 class="archive__item-title" itemprop="headline">'+
-                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
-              '</h2>'+
-              '<div class="archive__item-teaser">'+
-                '<img src="'+store[ref].teaser+'" alt="">'+
-              '</div>'+
-              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
-            '</article>'+
-          '</div>';
+      var tags = store[ref].tags;
+      var tagString = "None";
+      if (tags) {
+         if (Array.isArray(tags)) {
+             tagString = tags.join(", ");
+         } else {
+             tagString = tags;
+         }
       }
-      else{
-    	  var searchitem =
-          '<div class="list__item">'+
-            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
-              '<h2 class="archive__item-title" itemprop="headline">'+
-                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
-              '</h2>'+
-              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
-            '</article>'+
-          '</div>';
-      }
+
+      var searchitem =
+        '<div class="window" style="margin-bottom: 1.5rem;">' +
+          '<div class="title-bar">' +
+            '<div class="title-bar-text">' + store[ref].title + '</div>' +
+            '<div class="title-bar-controls">' +
+              '<button aria-label="Minimize"></button>' +
+              '<button aria-label="Maximize"></button>' +
+              '<button aria-label="Close"></button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="window-body" style="padding: 6px;">' +
+            (store[ref].teaser ? 
+              '<div class="archive__item-teaser" style="margin-bottom: 6px;">' +
+                '<img src="' + store[ref].teaser + '" alt="" style="max-width: 100%; max-height: 120px; object-fit: cover; border: 2px inset #dfdfdf;">' +
+              '</div>' : ''
+            ) +
+            '<p class="archive__item-excerpt" style="margin-bottom: 0.5rem; font-size: 13px;">' + 
+              store[ref].excerpt.split(" ").splice(0,15).join(" ") + '...' + 
+            '</p>' +
+            '<div class="field-row" style="justify-content: flex-end; margin-top: 4px;">' +
+              '<button onclick="window.location.href=\'' + store[ref].url + '\'">View</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="status-bar">' +
+            '<p class="status-bar-field">' + tagString + '</p>' +
+          '</div>' +
+        '</div>';
       resultdiv.append(searchitem);
     }
   });

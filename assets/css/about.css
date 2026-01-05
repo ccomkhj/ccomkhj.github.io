@@ -112,33 +112,73 @@
   font-style: italic;
 }
 
-/* Tab Panel content area - Custom spacing/scroll for the window body */
+/* Tab Panel content area - Only keep structural override for tabs */
 .tab-window-content {
-  padding: 16px;
   margin-top: 0;
-  position: relative;
   min-height: 200px;
+  /* max-height handled by window-content/98.css containers */
 }
 
-/* Custom TreeView Spacing - 98.css handles lines, we just add the requested empty line effect */
-.tab-window-content ul.tree-view li {
-  padding-bottom: 14px;
+/* Progress Indicator */
+.progress-indicator {
+  box-shadow: inset -1px -1px #fff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+  background: #c0c0c0;
+  padding: 0;
+  height: 20px;
+  position: relative;
+  margin: 10px 4px; /* match tab padding roughly */
 }
 
-/* Parent items (summary) are folders -> Bold & Big */
-.tab-window-content ul.tree-view summary {
-  font-weight: bold;
-  font-size: 14px;
+.progress-indicator-bar {
+  display: block;
+  height: 100%;
+  background-color: #000080;
+  width: 0%;
+  transition: width 0.3s ease;
 }
 
-/* Reset nested items (standard text) */
-.tab-window-content ul.tree-view ul li {
-  font-weight: normal;
+/* --- 98.css Tabs Styling --- */
+menu[role="tablist"] {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0 0 -2px 0;
+  padding: 0;
+  padding-left: 3px;
+  position: relative;
+  z-index: 1;
+}
+
+menu[role="tablist"] > li {
+  margin: 0 2px 0 0;
+}
+
+menu[role="tablist"] > li > a {
+  display: block;
+  background: #c0c0c0;
+  border: 1px solid #fff;
+  border-right-color: #808080;
+  border-bottom-color: #808080;
+  border-radius: 3px 3px 0 0;
+  box-shadow: inset 1px 1px #fff; 
+  color: #000;
+  padding: 4px 8px;
+  text-decoration: none;
+  font-family: inherit;
   font-size: 12px;
+  cursor: pointer;
+  position: relative;
+  top: 0;
 }
 
-.tab-window-content strong {
-  color: #000080;
+menu[role="tablist"] > li[aria-selected="true"] > a {
+  background: #c0c0c0;
+  border-bottom: none;
+  box-shadow: inset 1px 1px #fff, -1px 0 #fff; /* tweak for 98 look */
+  padding-bottom: 6px;
+  top: -2px;
+  z-index: 10;
+  margin-bottom: -2px;
 }
 
 /* Responsive adjustments */
