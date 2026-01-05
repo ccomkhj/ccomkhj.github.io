@@ -3,6 +3,7 @@ layout: portfolio
 class: wide
 permalink: /portfolio/
 author_profile: false
+title: "portfolio"
 ---
 
 <div class="projects-grid">
@@ -206,6 +207,6 @@ author_profile: false
 
 
 <figure>
-    <img src="..\img\drinking_wine.png"  alt="wine at cafe" width="500" height="500">
-    <figcaption>A drink after hard work. What else?</figcaption>
+    <img src="../assets/images/photo_in_farm.jpg" alt="Working in the field" width="150">
+    <figcaption>I enjoy working close to the field and clients. </figcaption>
 </figure>

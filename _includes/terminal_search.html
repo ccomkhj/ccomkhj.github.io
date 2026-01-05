@@ -1,0 +1,130 @@
+<link rel="stylesheet" href="/assets/css/terminal.css">
+
+<div id="terminal-container" class="terminal-container">
+  <div id="terminal-output"></div>
+  <div id="terminal-input-line" style="display: none; display: flex; align-items: center;">
+    <span class="terminal-prompt">guest@ccomkhj.github.io:~$</span>
+    <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false">
+  </div>
+  <div id="terminal-search-results"></div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const outputDiv = document.getElementById('terminal-output');
+  const inputLine = document.getElementById('terminal-input-line');
+  const inputField = document.getElementById('terminal-input');
+  const resultsDiv = document.getElementById('terminal-search-results');
+
+  const bootText = [
+    "Initializing system...",
+    "Loading kernel modules... OK",
+    "Mounting file systems... OK",
+    "Starting search daemon... OK",
+    "Loading index...",
+    "----------------------------------------------------------------",
+    "To be uncertain is to be uncomfortable,",
+    "but to be certain is to be ridiculous.",
+    "                                          — Goethe",
+    "----------------------------------------------------------------",
+    "Welcome. Type to search writings."
+  ];
+
+  let lineIndex = 0;
+  let charIndex = 0;
+  const typeSpeed = 30; // ms per char
+  const linePause = 300; // ms between lines
+
+  function typeWriter() {
+    if (lineIndex < bootText.length) {
+      if (charIndex === 0) {
+        const p = document.createElement('div');
+        p.className = 'terminal-line';
+        outputDiv.appendChild(p);
+      }
+      
+      const currentLine = bootText[lineIndex];
+      const currentP = outputDiv.lastElementChild;
+      
+      if (charIndex < currentLine.length) {
+        currentP.textContent += currentLine.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeWriter, typeSpeed);
+      } else {
+        lineIndex++;
+        charIndex = 0;
+        setTimeout(typeWriter, linePause);
+      }
+    } else {
+      // Boot complete
+      inputLine.style.display = 'flex';
+      inputField.focus();
+    }
+  }
+
+  // Start boot sequence
+  typeWriter();
+
+  // Focus input on click anywhere in terminal
+  document.getElementById('terminal-container').addEventListener('click', function() {
+    if (inputLine.style.display !== 'none') {
+      inputField.focus();
+    }
+  });
+
+  // Search Logic
+  inputField.addEventListener('keyup', function(e) {
+    const query = this.value.toLowerCase();
+    resultsDiv.innerHTML = '';
+
+    if (query.length === 0) return;
+
+    // Check if lunr idx is available
+    if (typeof idx === 'undefined' || typeof store === 'undefined') {
+      resultsDiv.innerHTML = '<div class="terminal-line" style="color:red;">Error: Search index not loaded yet. Please wait...</div>';
+      return;
+    }
+
+    // Use existing lunr index
+    // Logic adapted from lunr-en.js
+    const result = idx.query(function (q) {
+      query.split(lunr.tokenizer.separator).forEach(function (term) {
+        q.term(term, { boost: 100 })
+        if(query.lastIndexOf(" ") != query.length-1){
+          q.term(term, {  usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING, boost: 10 })
+        }
+        if (term != ""){
+          q.term(term, {  usePipeline: false, editDistance: 1, boost: 1 })
+        }
+      })
+    });
+
+    if (result.length > 0) {
+       resultsDiv.innerHTML = `<div class="terminal-line">> Found ${result.length} result(s):</div>`;
+       // Limit to top 10 to avoid flooding terminal
+       const limit = Math.min(result.length, 10);
+       
+       for (let i = 0; i < limit; i++) {
+         const item = result[i];
+         const ref = item.ref;
+         const doc = store[ref];
+         
+         const resultItem = document.createElement('div');
+         resultItem.className = 'search-result-item';
+         resultItem.innerHTML = `[${doc.categories ? doc.categories : 'Page'}] <a href="${doc.url}">${doc.title}</a> - ${doc.excerpt.substring(0, 50)}...`;
+         resultsDiv.appendChild(resultItem);
+       }
+       
+       if (result.length > 10) {
+         const more = document.createElement('div');
+         more.className = 'terminal-line';
+         more.textContent = `... and ${result.length - 10} more.`;
+         resultsDiv.appendChild(more);
+       }
+
+    } else {
+      resultsDiv.innerHTML = '<div class="terminal-line">> No results found.</div>';
+    }
+  });
+});
+</script>

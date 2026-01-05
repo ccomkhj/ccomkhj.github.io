@@ -4,6 +4,7 @@ class: wide
 permalink: /about/
 author_profile: true
 window_title: Polymath.exe
+title: "About"
 ---
 
 Hacker by day, lifelong learner by night.

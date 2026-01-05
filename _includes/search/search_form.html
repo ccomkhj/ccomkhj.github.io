@@ -1,3 +1,100 @@
+<style>
+  .search-content {
+    background-color: rgba(0, 0, 0, 0.95);
+    color: #ffb000;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .search-content__inner-wrap {
+    background-color: #000;
+    border: 2px solid #ffb000;
+    box-shadow: 0 0 20px rgba(255, 176, 0, 0.3);
+    padding: 20px !important;
+    border-radius: 5px;
+    max-width: 800px !important;
+    position: relative;
+  }
+
+  /* Amber Terminal Header */
+  .search-content__inner-wrap::before {
+    content: "[ SEARCH TERMINAL v3.0 - SECURE ACCESS ]";
+    display: block;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 1px solid #ffb000;
+    padding-bottom: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+
+  .search-content__form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .search-content__form::before {
+    content: "QUERY > ";
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .search-input {
+    color: #ffb000 !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    width: 100% !important;
+    font-size: 1.2rem !important;
+  }
+
+  .results__found {
+    color: #ffb000;
+    border-bottom: 1px dashed #ffb000;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+  }
+
+  /* Custom result item styling for terminal */
+  .search-result-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid transparent;
+  }
+
+  .search-result-item:hover {
+    border-color: #ffb000;
+    background: rgba(255, 176, 0, 0.1);
+  }
+
+  .search-result-item a {
+    color: #ffb000;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    font-size: 1.1rem;
+  }
+
+  .search-result-item a::before {
+    content: "> ";
+  }
+
+  .search-result-item .excerpt {
+    color: #cc8e00;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    display: block;
+  }
+
+  .search-result-item .meta {
+    font-size: 0.8rem;
+    color: #996b00;
+    margin-top: 5px;
+  }
+</style>
+
 <div class="search-content__inner-wrap">
   {%- assign search_provider = site.search_provider | default: "lunr" -%}
   {%- case search_provider -%}
@@ -6,9 +103,12 @@
     <label class="sr-only" for="search">
       {{ site.data.ui-text[site.locale].search_label_text | default: 'Enter your search term...' }}
     </label>
-    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="{{ site.data.ui-text[site.locale].search_placeholder_text | default: 'Enter your search term...' }}" />
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Type to search..." />
   </form>
   <div id="results" class="results"></div>
+  <div style="margin-top: 20px; border-top: 1px solid #ffb000; padding-top: 10px; font-size: 0.8rem; opacity: 0.7;">
+    [ PRESS ESC TO EXIT ]
+  </div>
   {%- when "google" -%}
   <form onsubmit="return googleCustomSearchExecute();" id="cse-search-box-form-id" role="search">
     <label class="sr-only" for="cse-search-input-box-id">

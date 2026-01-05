@@ -1,0 +1,113 @@
+/* Shared Terminal Styles */
+.terminal-container {
+  background-color: #000;
+  color: #33ff00;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 20px;
+  width: 100%;
+  min-height: 400px;
+  height: 80vh; /* Increased height for content pages */
+  overflow-y: auto;
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0 0 10px rgba(51, 255, 0, 0.2);
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+/* Scanline effect */
+.terminal-container::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+.terminal-line {
+  margin: 0;
+  padding: 0;
+  white-space: pre-wrap;
+}
+
+.terminal-prompt {
+  color: #33ff00;
+  margin-right: 5px;
+}
+
+.terminal-input {
+  background: transparent;
+  border: none;
+  color: #33ff00;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  outline: none;
+  width: 60%;
+  caret-color: #33ff00;
+}
+
+.search-result-item {
+  margin-top: 5px;
+  color: #ccc;
+}
+.search-result-item a {
+  color: #33ff00;
+  text-decoration: none;
+  border-bottom: 1px dashed #33ff00;
+}
+.search-result-item a:hover {
+  background-color: #33ff00;
+  color: #000;
+}
+
+/* Content Styling overrides for terminal theme */
+.terminal-content {
+  color: #ccc;
+  margin-top: 20px;
+}
+
+.terminal-content a {
+  color: #33ff00;
+  text-decoration: underline;
+}
+
+.terminal-content h1, 
+.terminal-content h2, 
+.terminal-content h3 {
+  color: #fff;
+  border-bottom: 1px dashed #33ff00;
+  padding-bottom: 5px;
+  margin-top: 20px;
+}
+
+.terminal-content ul {
+  list-style-type: square;
+}
+
+.terminal-content code {
+  background: #222;
+  color: #fff;
+  padding: 2px 4px;
+}
+
+/* Scrollbar styling */
+.terminal-container::-webkit-scrollbar {
+  width: 10px;
+}
+.terminal-container::-webkit-scrollbar-track {
+  background: #000; 
+}
+.terminal-container::-webkit-scrollbar-thumb {
+  background: #33ff00; 
+  border: 1px solid #000;
+}
+.terminal-container::-webkit-scrollbar-thumb:hover {
+  background: #2cb800; 
+}

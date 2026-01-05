@@ -3,6 +3,7 @@ layout: bookmarks
 class: wide
 permalink: /bookmarks/
 author_profile: true
+title: bookmarks
 ---
 
 _Collection of worthwhile readinglist._
@@ -64,12 +65,11 @@ _Collection of worthwhile readinglist._
 - [Mastering the Market Cycle](https://www.amazon.com/Mastering-Market-Cycle-Getting-Odds/dp/1328479255): Howard Marks on cycles, risk appetite, and avoiding pro-cyclical mistakes.
 
 **Monetary Policy, Liquidity, and Financial Plumbing**
-- [The New Lombard Street](https://press.princeton.edu/books/hardcover/9780691168927/the-new-lombard-street): Perry Mehrling’s best-in-class explanation of money markets, liquidity, and central bank backstops.
+- [The New Lombard Street](https://weaxsey.org/recommend/economy/Perry%20Mehrling%20-%20The%20New%20Lombard%20Street.pdf): Perry Mehrling’s best-in-class explanation of money markets, liquidity, and central bank backstops.
 - [Federal Reserve: Monetary Policy](https://www.federalreserve.gov/monetarypolicy.htm): Primary-source reference for policy tools, minutes, and explanations.
-- [Bank for International Settlements (BIS) Publications](https://www.bis.org/publ/index.htm): High-signal work on global liquidity, credit cycles, banking stability, and FX.
+- [Bank for International Settlements (BIS) Publications](https://www.bis.org/bispapers/index.htm): High-signal work on global liquidity, credit cycles, banking stability, and FX.
 
 **Bonds & Rates (Macro’s Backbone)**
-- [Bond Markets, Analysis, and Strategies](https://www.amazon.com/Bond-Markets-Analysis-Strategies-9th/dp/0133796770): Fabozzi’s classic reference on yield curves, duration, and fixed income mechanics.
 - [FRED (St. Louis Fed)](https://fred.stlouisfed.org/): Best free source for macro time series (rates, CPI, unemployment, growth, credit spreads).
   - Useful: yield curve, inflation expectations (breakevens), unemployment, credit spreads.
 
