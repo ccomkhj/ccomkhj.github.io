@@ -127,28 +127,33 @@ document.addEventListener("DOMContentLoaded", function() {
     } else {
       inputLine.style.display = 'flex';
       inputField.focus();
-      
-      // Check for commands
-      const urlParams = new URLSearchParams(window.location.search);
-      const cmd = urlParams.get('cmd');
-      if (cmd === 'cat_bio') {
-        const cmdLine = document.createElement('div');
-        cmdLine.className = 'terminal-line';
-        cmdLine.innerHTML = '<span class="terminal-prompt">whoami@huijo.xyz:~$</span> cat bio.txt';
-        outputDiv.appendChild(cmdLine);
-        
-        const resultDiv = document.createElement('div');
-        resultDiv.className = 'terminal-line';
-        resultDiv.innerHTML = bioContent;
-        outputDiv.appendChild(resultDiv);
-        
-        // Clean up URL
-        window.history.replaceState({}, document.title, "/");
-      }
     }
   }
 
-  typeWriter();
+  // Check for commands early - skip boot animation for bio
+  const urlParams = new URLSearchParams(window.location.search);
+  const cmd = urlParams.get('cmd');
+
+  if (cmd === 'cat_bio') {
+    // Skip boot animation and go straight to bio
+    inputLine.style.display = 'flex';
+    inputField.focus();
+
+    const cmdLine = document.createElement('div');
+    cmdLine.className = 'terminal-line';
+    cmdLine.innerHTML = '<span class="terminal-prompt">whoami@huijo.xyz:~$</span> cat bio.txt';
+    outputDiv.appendChild(cmdLine);
+
+    const resultDiv = document.createElement('div');
+    resultDiv.className = 'terminal-line';
+    resultDiv.innerHTML = bioContent;
+    outputDiv.appendChild(resultDiv);
+
+    // Clean up URL
+    window.history.replaceState({}, document.title, "/");
+  } else {
+    typeWriter();
+  }
 
   document.getElementById('terminal-container').addEventListener('click', function() {
     if (inputLine.style.display !== 'none') inputField.focus();
