@@ -474,16 +474,42 @@ body {
   background: transparent;
 }
 
-.greedy-nav a,
-.masthead__menu-item a,
 .site-title {
   color: #000;
 }
 
-.greedy-nav a:hover,
-.masthead__menu-item a:hover {
+/* Navigation Links as Windows 95 Buttons */
+.greedy-nav .visible-links a {
+  display: inline-block;
+  background: #c0c0c0;
   color: #000;
-  text-decoration: underline;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 4px 8px;
+  margin: 0 4px;
+  border: none;
+  /* Windows 95 Outset Border */
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff,
+              inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  font-family: "Pixelated MS Sans Serif", Arial, sans-serif;
+}
+
+.greedy-nav .visible-links a:hover {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.greedy-nav .visible-links a:active {
+  /* Windows 95 Inset Border (Pressed) */
+  box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a,
+              inset -2px -2px #dfdfdf, inset 2px 2px #808080;
+  padding: 5px 7px 3px 9px; /* Simulate text shift */
+}
+
+/* Remove default underline pseudo-element from theme */
+.greedy-nav .visible-links a:before {
+  display: none !important;
 }
 
 .greedy-nav__toggle {
