@@ -45,43 +45,6 @@ title: "portfolio"
     </div>
   </div>
 
-  <!-- Job Agent -->
-  <div class="project-card">
-    <div class="project-title-bar">Job Agent</div>
-    <a href="https://github.com/ccomkhj/job_agent" target="_blank">
-      <img src="../img/job_agent_interface_1.png" alt="Job Agent Interface" class="project-image">
-    </a>
-    <div class="project-content">
-      Multi-agent job application assistant that helps users create tailored cover letters.
-      <ul>
-        <li>Designed to help my network generate cover letters quickly</li>
-        <li>Guided by role requirements and company context</li>
-      </ul>
-    </div>
-    <div class="project-tags">
-      <span class="project-tag">Multi-Agent</span>
-      <span class="project-tag">Front: Vite&ReAct</span>
-      <span class="project-tag">Back: FastAPI</span>
-    </div>
-  </div>
-
-  <!-- MLOps & HyperParameter Tuning -->
-  <div class="project-card">
-    <div class="project-title-bar">MLOps & Tuning</div>
-    <img src="../img/mlflow.png" alt="MLOps & Tuning" class="project-image">
-    <div class="project-content">
-      <ul>
-        <li>Fully Open source-based full MLOps (Version, feature control)</li>
-        <li>Hyper parameter tuning with experiment tracking</li>
-      </ul>
-    </div>
-    <div class="project-tags">
-      <span class="project-tag">MLOps</span>
-      <span class="project-tag">Model Tuning</span>
-      <span class="project-tag">Experiment Tracking</span>
-    </div>
-  </div>
-
   <!-- Stereo Vision -->
   <div class="project-card">
     <div class="project-title-bar">Stereo Vision</div>
@@ -98,6 +61,82 @@ title: "portfolio"
       <span class="project-tag">Computer Vision</span>
       <span class="project-tag">3D Reconstruction</span>
       <span class="project-tag">Depth Estimation</span>
+    </div>
+  </div>
+
+  <!-- Cancer Detector -->
+  <div class="project-card">
+    <div class="project-title-bar">Cancer Detector</div>
+    <div class="project-content">
+      End-to-end pipeline for multi-class segmentation and classification on prostate MRI data.
+      <ul>
+        <li>Config-driven modular architecture with layered YAML composition</li>
+        <li>Full HPC/SLURM support with sweep/grid search and auto model promotion</li>
+        <li>Research runner orchestrating data import through inference</li>
+      </ul>
+      <a href="https://github.com/ccomkhj/cancer_detector" target="_blank">View on GitHub</a>
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">Deep Learning</span>
+      <span class="project-tag">Medical Imaging</span>
+      <span class="project-tag">MRI Segmentation</span>
+    </div>
+  </div>
+
+  <!-- MCP Airflow -->
+  <div class="project-card">
+    <div class="project-title-bar">MCP Airflow</div>
+    <div class="project-content">
+      MCP server for Apache Airflow 2.5 focused on ops monitoring and debugging via Claude Desktop.
+      <ul>
+        <li>50+ tools covering DAGs, runs, tasks, logs, variables, connections, and pools</li>
+        <li>Read-only mode for safe production monitoring</li>
+        <li>Direct HTTP calls with stdio/SSE transport for AI-assisted operations</li>
+      </ul>
+      <a href="https://github.com/ccomkhj/mcp-airflow-2.5" target="_blank">View on GitHub</a>
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">MCP</span>
+      <span class="project-tag">Airflow</span>
+      <span class="project-tag">DevOps</span>
+    </div>
+  </div>
+
+  <!-- Polarize -->
+  <div class="project-card">
+    <div class="project-title-bar">Polarize</div>
+    <div class="project-content">
+      Agent-native CLI that discovers compute-heavy pandas operations and validates their Polars conversions.
+      <ul>
+        <li>AST-based discovery with compute-weight ranking (loop-aware, impact-sorted)</li>
+        <li>Validates correctness and benchmarks time/memory improvement</li>
+        <li>Structured JSON output designed for autonomous agent loops</li>
+      </ul>
+      <a href="https://github.com/ccomkhj/polarize" target="_blank">View on GitHub</a>
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">Python</span>
+      <span class="project-tag">Pandas-to-Polars</span>
+      <span class="project-tag">Agent Tools</span>
+    </div>
+  </div>
+
+  <!-- Event Inventory Kafra -->
+  <div class="project-card">
+    <div class="project-title-bar">Event Inventory</div>
+    <div class="project-content">
+      Event-driven inventory sync replacing daily batch pulls with near-real-time Shopify webhook updates.
+      <ul>
+        <li>Shopify webhooks → FastAPI → Kafka (KRaft) → PostgreSQL pipeline</li>
+        <li>Idempotent & order-safe with partition-keyed Kafka messages</li>
+        <li>Fully containerized with mock webhook generator for local testing</li>
+      </ul>
+      <a href="https://github.com/ccomkhj/event_inventory_kafra" target="_blank">View on GitHub</a>
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">Kafka</span>
+      <span class="project-tag">Event-Driven</span>
+      <span class="project-tag">Shopify</span>
     </div>
   </div>
 

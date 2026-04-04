@@ -137,6 +137,30 @@
   }
 </script>
 
+{% if page.date %}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ page.title | jsonify }},
+    "description": {{ seo_description | jsonify }},
+    "url": {{ canonical_url | jsonify }},
+    "datePublished": "{{ page.date | date_to_xmlschema }}",
+    {% if page.last_modified_at %}"dateModified": "{{ page.last_modified_at | date_to_xmlschema }}",{% endif %}
+    "author": {
+      "@type": "Person",
+      "name": {{ site.author.name | default: site.name | jsonify }},
+      "url": {{ '/' | absolute_url | jsonify }}
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": {{ site.author.name | default: site.name | jsonify }}
+    }{% if page_large_image or page_teaser_image %},
+    "image": {{ page_large_image | default: page_teaser_image | jsonify }}{% endif %}
+  }
+</script>
+{% endif %}
+
 {% if site.google_site_verification %}
   <meta name="google-site-verification" content="{{ site.google_site_verification }}" />
 {% endif %}

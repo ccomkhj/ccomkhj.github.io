@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /docs/
+Disallow: /test/
+
+Sitemap: https://ccomkhj.github.io/sitemap.xml
