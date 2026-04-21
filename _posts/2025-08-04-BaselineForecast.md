@@ -25,17 +25,25 @@ Before we get into *why* my expert judgment failed, let's talk about the simple,
 
 * **Random Walk Forecast:** This is the simplest of all. It assumes the forecast for the future is just the last observed value. It's surprisingly effective for many financial and economic time series.
     * **The logic:** "Tomorrow will be the same as today."
-    * **The math:** $$\hat{y}_{T+h|T} = y_T$$
-        (The forecast $$\hat{y}$$ for a future time $$T+h$$ is simply the value at the last observation $$y_T$$.)
+    * **The math:**
+
+        $$\hat{y}_{T+h \mid T} = y_T$$
+
+        (The forecast $\hat{y}$ for a future time $T+h$ is simply the value at the last observation $y_T$.)
 
 * **Seasonal Naive Method:** This is for data with clear seasonal patterns. The forecast is simply the value from the same season last year.
     * **The logic:** "This April will be like last April."
-    * **The math:** $$\hat{y}_{T+h|T} = y_{T+h-m}$$
-        (The forecast is the value from one seasonal period $$m$$ ago.)
+    * **The math:**
+
+        $$\hat{y}_{T+h \mid T} = y_{T+h-m}$$
+
+        (The forecast is the value from one seasonal period $m$ ago.)
 
 * **Average Method:** Here, the forecast for all future periods is just the mean of all your historical data. It's stable but doesn't adapt to recent changes.
     * **The logic:** "The future will be the average of the past."
-    * **The math:** $$\hat{y}_{T+h|T} = \bar{y} = \frac{1}{T}\sum_{t=1}^{T}y_t$$
+    * **The math:**
+
+        $$\hat{y}_{T+h \mid T} = \bar{y} = \frac{1}{T}\sum_{t=1}^{T}y_t$$
 
 These methods are powerful because they are **objective**, **transparent**, and **robust against overfitting**. They don't have egos or bad days. They mechanically execute a simple rule, which protects them from the very thing that tripped me up: cognitive bias.
 

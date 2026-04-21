@@ -262,73 +262,6 @@ article.page .page__content figure.highlight pre {
   color: inherit;
 }
 
-article.page .page__content .highlight,
-article.page .page__content .highlight code {
-  color: var(--el-text-color-primary);
-}
-
-article.page .page__content .highlight .c,
-article.page .page__content .highlight .cm,
-article.page .page__content .highlight .c1,
-article.page .page__content .highlight .cs,
-article.page .page__content .highlight .cp {
-  color: #6e7781;
-}
-
-article.page .page__content .highlight .k,
-article.page .page__content .highlight .kc,
-article.page .page__content .highlight .kd,
-article.page .page__content .highlight .kn,
-article.page .page__content .highlight .kp,
-article.page .page__content .highlight .kr,
-article.page .page__content .highlight .kt {
-  color: #cf222e;
-}
-
-article.page .page__content .highlight .s,
-article.page .page__content .highlight .sa,
-article.page .page__content .highlight .sb,
-article.page .page__content .highlight .sc,
-article.page .page__content .highlight .s1,
-article.page .page__content .highlight .s2,
-article.page .page__content .highlight .sd,
-article.page .page__content .highlight .se,
-article.page .page__content .highlight .sh,
-article.page .page__content .highlight .si,
-article.page .page__content .highlight .sx,
-article.page .page__content .highlight .sr {
-  color: #0a3069;
-}
-
-article.page .page__content .highlight .m,
-article.page .page__content .highlight .mb,
-article.page .page__content .highlight .mf,
-article.page .page__content .highlight .mh,
-article.page .page__content .highlight .mi,
-article.page .page__content .highlight .mo,
-article.page .page__content .highlight .il {
-  color: #0550ae;
-}
-
-article.page .page__content .highlight .na,
-article.page .page__content .highlight .nb,
-article.page .page__content .highlight .nc,
-article.page .page__content .highlight .nd,
-article.page .page__content .highlight .ne,
-article.page .page__content .highlight .nf,
-article.page .page__content .highlight .nn,
-article.page .page__content .highlight .nt,
-article.page .page__content .highlight .nv,
-article.page .page__content .highlight .nx {
-  color: #8250df;
-}
-
-article.page .page__content .highlight .o,
-article.page .page__content .highlight .p,
-article.page .page__content .highlight .w {
-  color: var(--el-text-color-primary);
-}
-
 article.page .page__content table {
   width: 100%;
   border-collapse: collapse;
@@ -1109,4 +1042,78 @@ input[type="submit"]:active {
   .window-address-bar {
     display: none;
   }
+}
+
+/* ============================
+   Technical blog code blocks
+   ============================ */
+article.page .page__content pre,
+article.page .page__content code,
+article.page .page__content .highlight,
+article.page .page__content .highlight pre,
+article.page .page__content .highlighter-rouge,
+article.page .page__content figure.highlight {
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+  font-size: 0.85rem;
+  font-variant-ligatures: contextual;
+}
+
+article.page .page__content pre {
+  line-height: 1.55;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  tab-size: 4;
+}
+
+article.page .page__content :not(pre) > code {
+  font-size: 0.85em;
+  padding: 0.1rem 0.35rem;
+}
+
+/* Language label (via kramdown class .language-xxx on <div>) */
+article.page .page__content .highlighter-rouge {
+  position: relative;
+}
+
+article.page .page__content .highlighter-rouge::before {
+  content: attr(data-lang);
+  position: absolute;
+  top: 4px;
+  right: 42px;
+  font-family: "Pixelated MS Sans Serif", "MS Sans Serif", Tahoma, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+
+/* Copy-to-clipboard button — Windows 95 style */
+.copy-code-button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: #c0c0c0;
+  border: none;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  color: #000;
+  cursor: pointer;
+  font-family: "Pixelated MS Sans Serif", "MS Sans Serif", Tahoma, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  z-index: 2;
+}
+
+.copy-code-button:active,
+.copy-code-button.copied {
+  box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a,
+    inset -2px -2px #dfdfdf, inset 2px 2px #808080;
+}
+
+.copy-code-button.copied {
+  color: #006400;
 }
