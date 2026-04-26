@@ -6,15 +6,15 @@ tags:
    - Machine Learning
    - Philosophy
 classes: wide  
-title: "Rold of AI&ML in forecasting"
+title: "Role of AI&ML in forecasting"
+excerpt: "Why deep learning usually loses to simpler statistical models in time-series forecasting, and how to handle the gap honestly when investors only want to hear about AI."
 
 ---
 
 
-When it comes to predicting or forecasting something, folks—including marketers, customers, and especially investors—really like to hear that a product is using **Artificial Intelligence (AI)**. It’s well-proven that in many problem domains like image classification, detection, and language processing, AI, and especially deep learning, has outperformed many statistical models. However, when it comes to predicting the future (or time-series forecasting), that’s mostly not the case. 
-This isn't just from my own experience, but also from stories coming from multiple industries and companies, as I’ve exchanged insights with various engineers.
+**When it comes to predicting the future, AI usually loses to simpler statistical models.** That's not a hot take — it's something I've watched play out in my own work and in stories from engineers across multiple industries. And it's awkward, because marketers, customers, and especially investors really like to hear that a product is using **Artificial Intelligence (AI)**. It's well-proven that in domains like image classification, detection, and language, AI — and especially deep learning — has outperformed many statistical models. Time-series forecasting just isn't one of those domains.
 
-Through my startup journey with successful (but very tough) fundraising rounds, I had to cope with multiple investor talks and Due Diligence prepration and it was my dilema if I had to lie our technology for the sake of money raising, because investors want to hear about deep learning. 
+Through my startup journey, with successful (but very tough) fundraising rounds, I had to cope with multiple investor talks and due-diligence prep. It became my dilemma whether to oversell our technology for the sake of raising money, because investors want to hear about deep learning. 
 
 ## The Reality of AI/ML in Forecasting
 

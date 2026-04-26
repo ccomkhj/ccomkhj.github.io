@@ -1117,3 +1117,21 @@ article.page .page__content .highlighter-rouge::before {
 .copy-code-button.copied {
   color: #006400;
 }
+
+/* Reader-friendly tables: roomier cells, top-aligned, subtle zebra. */
+.page__content {
+  table {
+    font-size: $type-size-5;
+    line-height: 1.5;
+  }
+
+  th,
+  td {
+    padding: 0.6em 0.85em;
+    vertical-align: top;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: mix(#fff, $border-color, 60%);
+  }
+}

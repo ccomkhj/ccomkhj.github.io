@@ -7,6 +7,7 @@ tags:
    - Business
 classes: wide  
 title: "Judge the value of your company"
+excerpt: "How private-market valuation actually works for an early-stage startup once the founder steps away — and why the textbook revenue/profit multiples don't apply when profit is negative by design."
 ---
 
 After founding and forming my startup, I left my company.

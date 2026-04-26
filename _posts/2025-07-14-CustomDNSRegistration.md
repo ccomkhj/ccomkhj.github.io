@@ -12,11 +12,11 @@ title: "How to Set Up a Custom Domain on GitHub Pages with Namecheap"
 
 Today, I went through the process of connecting my custom domain, `huijo.xyz`, to my GitHub Pages site. It's a common task for developers looking to personalize their web presence. Here’s a step-by-step guide on how I did it, specifically for a domain registered with [Namecheap](https://www.namecheap.com/).
 
-### The Goal
+## The Goal
 
 The objective is to make my GitHub Pages site, originally hosted at `ccomkhj.github.io`, accessible through my custom domain `huijo.xyz`.
 
-### Step 1: Configure Your GitHub Repository
+## Step 1: Configure Your GitHub Repository
 
 The first step is to tell GitHub which custom domain you want to use. This is done by adding a `CNAME` file to your repository.
 
@@ -33,7 +33,7 @@ The first step is to tell GitHub which custom domain you want to use. This is do
     git push
     ```
 
-### Step 2: Configure DNS Records on Namecheap
+## Step 2: Configure DNS Records on Namecheap
 
 Next, you need to configure your domain's DNS records to point to GitHub's servers.
 
@@ -53,7 +53,7 @@ Next, you need to configure your domain's DNS records to point to GitHub's serve
     |--------------|------|---------------------|
     | CNAME Record | www  | ccomkhj.github.io   |
 
-### Step 3: Wait for DNS Propagation
+## Step 3: Wait for DNS Propagation
 
 This is the part that requires patience. After saving the DNS records, it takes time for the changes to spread across the internet. This is called DNS propagation.
 

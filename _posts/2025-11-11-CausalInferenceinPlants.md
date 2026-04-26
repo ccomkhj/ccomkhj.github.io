@@ -6,6 +6,7 @@ tags:
    - Machine Learning
 classes: wide  
 title: "Causal Inference in Plants"
+excerpt: "Adding causal inference (DoWhy + a hand-drawn DAG) on top of a LightGBM yield model so a greenhouse simulator can answer 'what happens if we raise temperature 2°C?' instead of just predicting tomorrow's yield."
 ---
 
 I have built a yield forecasting model using LightGBM.
@@ -20,7 +21,7 @@ As the farm can truly reduce the energy cost per kg of production by knowing the
 For that, I needed **causal inference** — a way to estimate how much yield changes when I intervene on variables (like raising temperature by +2°C).
 Imagine how much heating 2°C more for 10 ha facility will cost.
 
-### 1. Setting up causal modeling
+## 1. Setting up causal modeling
 
 I began by drawing a simple **causal graph (DAG)** that represents how different factors affect yield:
 - Temperature and light directly influence yield.
@@ -29,7 +30,7 @@ I began by drawing a simple **causal graph (DAG)** that represents how different
 
 This step helped me define what needs to be controlled to get valid causal effects.
 
-### 2. Integrating with DoWhy
+## 2. Integrating with DoWhy
 
 I used **DoWhy**, a causal inference library, to wrap around my LightGBM model.  
 DoWhy helps connect the model to causal concepts:
@@ -41,7 +42,7 @@ DoWhy helps connect the model to causal concepts:
 
 My LightGBM still does the heavy lifting for nonlinear relationships, while DoWhy handles the logic of “*what if*” changes.
 
-### 3. Checking trustworthiness
+## 3. Checking trustworthiness
 
 A big question was: can I trust these causal effects?
 
@@ -55,7 +56,7 @@ I tested this with:
 
 These tests gave me confidence that the model captures real causal influence, not just correlation noise.
 
-### 4. Results and next steps
+## 4. Results and next steps
 
 Now, the system can simulate different environmental settings and show **expected yield changes** under those interventions.  
 For example, “if I increase PAR by 15% by turning on LED while keeping CO₂ constant, yield increases by ~6%.”  
@@ -65,7 +66,7 @@ Next step would be:
 - Combine multiple cultivars to learn condition-specific responses.
 - Validate the system with controlled greenhouse trials.
 
-### 5. Reflection
+## 5. Reflection
 
 This process taught me that causal inference is not just a statistical trick — it’s a framework for thinking.  
 The key was translating plant science knowledge into a graph of cause and effect, then testing those assumptions systematically.  

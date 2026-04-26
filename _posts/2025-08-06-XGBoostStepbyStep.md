@@ -8,6 +8,7 @@ tags:
    - Math
 classes: wide  
 title: "Understanding XGBoost: A Deep Dive into the Mathematics and From-Scratch Implementation"
+excerpt: "Deriving XGBoost from first principles — objective function, structural and weight regularization, exact greedy split-finding — plus a from-scratch Python implementation that depends only on the standard library."
 
 ---
 

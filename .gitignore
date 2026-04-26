@@ -9,7 +9,6 @@
 # Ruby Gem
 *.gem
 .bundle
-Gemfile.lock
 **/vendor/bundle
 
 # Node.js and NPM
@@ -20,6 +19,11 @@ codekit-config.json
 
 # macOS
 .DS_Store
+
+# Editor / IDE
+.cursor/
+.idea/
+.vscode/
 
 # Jekyll generated files
 .jekyll-cache

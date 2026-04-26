@@ -11,15 +11,13 @@ title: "My Expert Forecasts Got Crushed by a Dumb Algorithm"
 
 ---
 
-> **Note:** This post is initially composed with deep research and finalized by me.
-
 I have to admit something humbling. After spending months building what I thought were **good forecasting models** *(MAPE less than 15%)*, I ran a check against the simplest possible approach: a **naive forecast** *(moving average)*. The result? My expert judgment, backed by complex models and deep domain knowledge, was consistently less accurate. 🤦‍♂️
 
 This wasn't just a fluke. It was a classic "expert paradox," an experience that forced me to re-evaluate how we approach forecasting. It turns out that our greatest asset—our expert brain—can also be our biggest liability, thanks to a host of cognitive biases. This post is my deep dive into why simple baselines are so powerful and how I'm changing my approach to forecasting for good.
 
 ---
 
-### The Underrated Power of Simple Baselines
+## The Underrated Power of Simple Baselines
 
 Before we get into *why* my expert judgment failed, let's talk about the simple, "dumb" methods that beat me. These are essential baselines that should be the starting point for any forecasting project. They are the ultimate test of whether your complex model is actually adding any value.
 
@@ -49,7 +47,7 @@ These methods are powerful because they are **objective**, **transparent**, and 
 
 ---
 
-### Why My Brain Failed Me: The Peril of Cognitive Biases
+## Why My Brain Failed Me: The Peril of Cognitive Biases
 
 So, why did my judgment perform so poorly? Because even with deep expertise, the human mind takes mental shortcuts (heuristics) that lead to systematic errors. A mechanical approach like the naive method is immune to these. Looking back, I could see these biases clearly in my own thinking.
 
@@ -65,26 +63,26 @@ These biases aren't a sign of incompetence; they are a fundamental part of human
 
 ---
 
-### My New Forecasting Playbook: A Hybrid Approach
+## My New Forecasting Playbook: A Hybrid Approach
 
 This humbling experience led me to adopt a new, more rigorous forecasting framework. It's all about leveraging the strengths of both statistical methods and expert judgment while mitigating their weaknesses.
 
-#### 1. **Baselines Are Mandatory**
+### 1. **Baselines Are Mandatory**
 No complex model gets a pass without first proving it can consistently beat a simple baseline (like naive or seasonal naive). If your fancy ML model can't outperform "tomorrow will be like today," you have a problem. This is my non-negotiable first step.
 
-#### 2. **Systematically Mitigate Bias**
+### 2. **Systematically Mitigate Bias**
 I can't eliminate my cognitive biases, but I can tame them. My new process involves:
 * **Writing down my assumptions** *before* making a forecast.
 * **Seeking out disconfirming evidence** on purpose.
 * **Separating the forecast from the target.** A forecast is a realistic estimate, not a goal. These two things must be kept separate to avoid wishful thinking.
 
-#### 3. **Combine, Don't Just Choose**
+### 3. **Combine, Don't Just Choose**
 The best approach is often a hybrid one. I now use a simple statistical forecast as my objective anchor. Then, I use my expert judgment to make *structured adjustments* for things the model can't possibly know—a new product launch, a planned marketing campaign, or a looming supply chain disruption. This combines the objectivity of the machine with the contextual intelligence of the human.
 
-#### 4. **Prioritize Interpretability**
+### 4. **Prioritize Interpretability**
 A "black box" forecast that no one understands is a forecast no one trusts or acts on. Simple models are transparent by nature. For more complex models, I now put extra effort into explaining the "why" behind the numbers. An accurate forecast is useless if it's not actionable.
 
-### Final Thoughts
+## Final Thoughts
 
 Getting beaten by a simple algorithm was a crucial lesson in intellectual humility. It taught me that in the world of forecasting, complexity is not a virtue in itself. **Objectivity and consistency often trump subjective expertise.**
 

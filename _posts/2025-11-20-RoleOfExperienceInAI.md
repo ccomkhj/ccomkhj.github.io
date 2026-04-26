@@ -6,6 +6,7 @@ tags:
    - Philosophy
 classes: wide  
 title: "Role of Experience in AI era"
+excerpt: "Why LLMs are unreliable judges of feasibility, and how to find the impact bottleneck of an ML project before tuning the model."
 ---
 
 LLMs are ambitious when it comes to judging whether a task is feasible or not.

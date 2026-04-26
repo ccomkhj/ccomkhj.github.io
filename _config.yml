@@ -308,7 +308,7 @@ defaults:
       share: true
       related: true
       mathjax: true # keep it true only when math equation is used.
-      show_date: ture
+      show_date: true
   # _pages
   - scope:
       path: "_pages"

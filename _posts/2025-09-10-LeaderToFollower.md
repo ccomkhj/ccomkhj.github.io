@@ -6,6 +6,7 @@ tags:
    - Philosophy
 classes: wide  
 title: "Leader To Follower"
+excerpt: "What changed when I stepped down from co-founder to individual contributor at a similarly-sized startup — and why a leadership role pulls you toward the org instead of the boss."
 
 ---
 

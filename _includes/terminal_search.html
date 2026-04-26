@@ -1,10 +1,10 @@
 <!-- Background Canvas for Math Animation -->
-<canvas id="math-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; background-color: #050505;"></canvas>
+<canvas id="math-canvas" class="math-canvas"></canvas>
 
 <!-- Terminal Container (Overlay) -->
-<div id="terminal-container" class="terminal-container" style="position: relative; z-index: 1; background-color: rgba(0, 0, 0, 0.65); border: 1px solid #33ff00; height: 70vh; margin-top: 5vh;">
+<div id="terminal-container" class="terminal-container terminal-container--overlay">
   <div id="terminal-output"></div>
-  <div id="terminal-input-line" style="display: none; display: flex; align-items: center;">
+  <div id="terminal-input-line" class="terminal-input-line" style="display: none;">
     <span class="terminal-prompt">whoami@huijo.xyz:~$</span>
     <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false">
   </div>
