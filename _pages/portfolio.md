@@ -83,22 +83,43 @@ title: "portfolio"
     </div>
   </div>
 
-  <!-- MCP Airflow -->
+  <!-- Agent Materialize -->
   <div class="project-card">
-    <div class="project-title-bar">MCP Airflow</div>
+    <div class="project-title-bar">Agent Materialize</div>
     <div class="project-content">
-      MCP server for Apache Airflow 2.5 focused on ops monitoring and debugging via Claude Desktop.
+      Foundation layer for agents over Postgres — agent-curated materialized views behind a two-role access boundary.
       <ul>
-        <li>50+ tools covering DAGs, runs, tasks, logs, variables, connections, and pools</li>
-        <li>Read-only mode for safe production monitoring</li>
-        <li>Direct HTTP calls with stdio/SSE transport for AI-assisted operations</li>
+        <li>Setup + runtime MCP servers; agent never touches base tables</li>
+        <li>Access boundary enforced inside Postgres, not the app layer</li>
+        <li>Lineage parsed by sqlglot; static HTML dashboard with refresh history</li>
       </ul>
-      <a href="https://github.com/ccomkhj/mcp-airflow-2.5" target="_blank">View on GitHub</a>
+      <a href="https://github.com/ccomkhj/agent_materialize" target="_blank">View on GitHub</a>
     </div>
     <div class="project-tags">
       <span class="project-tag">MCP</span>
-      <span class="project-tag">Airflow</span>
-      <span class="project-tag">DevOps</span>
+      <span class="project-tag">Postgres</span>
+      <span class="project-tag">Agent Tools</span>
+    </div>
+  </div>
+
+  <!-- Agentune -->
+  <div class="project-card">
+    <div class="project-title-bar">Agentune</div>
+    <a href="https://github.com/ccomkhj/agentune" target="_blank">
+      <img src="https://raw.githubusercontent.com/ccomkhj/agentune/main/assets/logo.png" alt="Agentune logo" class="project-image">
+    </a>
+    <div class="project-content">
+      Agent-driven hyperparameter optimization with Optuna — Claude Code adapts the search strategy round-by-round.
+      <ul>
+        <li>LLM agent reads round summaries via MCP, proposes search-space changes</li>
+        <li>Optuna runs deterministically within each round (XGBoost, LightGBM, CatBoost)</li>
+        <li>Auto-generated HTML reports per campaign; Postgres + MLflow backend</li>
+      </ul>
+    </div>
+    <div class="project-tags">
+      <span class="project-tag">HPO</span>
+      <span class="project-tag">MCP</span>
+      <span class="project-tag">Optuna</span>
     </div>
   </div>
 
@@ -140,64 +161,27 @@ title: "portfolio"
     </div>
   </div>
 
-  <!-- Stock Price Forecast -->
+  <!-- Finance Portfolio -->
   <div class="project-card">
-    <div class="project-title-bar">Stock Forecast</div>
-    <a href="https://github.com/ccomkhj/stock_forecast" target="_blank">
-      <img src="https://raw.githubusercontent.com/ccomkhj/stock_forecast/main/demo/forecast.png" alt="Stock Forecast" class="project-image">
-    </a>
+    <div class="project-title-bar">Finance Portfolio</div>
     <div class="project-content">
-      Stock price forecasting system with automated data pipelines and ensemble modeling.
-      Full-stack (Vite&React + FastAPI) with minimal code structure. DuckDB for local speed.
+      Plain-text, git-tracked personal portfolio manager — check, visualize, and rebalance from terminal or dashboard.
+      <ul>
+        <li>Drift-to-target in one command; EUR-native with auto FX conversion</li>
+        <li>Trades live in CSV, targets in YAML; git is the audit trail</li>
+        <li>Streamlit dashboard with inline editing; ~500 lines of Python</li>
+      </ul>
+      <a href="https://github.com/ccomkhj/finance_portfolio" target="_blank">View on GitHub</a>
     </div>
     <div class="project-tags">
-      <span class="project-tag">Forecasting</span>
       <span class="project-tag">Finance</span>
-      <span class="project-tag">Time Series</span>
+      <span class="project-tag">CLI</span>
+      <span class="project-tag">Streamlit</span>
     </div>
   </div>
 </div>
 
-## II. More Source Codes
-
-<div class="projects-grid">
-  <div class="project-card">
-    <div class="project-title-bar">CV Ops</div>
-    <div class="project-content">
-      Operations and utilities for computer vision applications.
-      <br><br>
-      <a href="https://github.com/ccomkhj/cvOps" target="_blank">View on GitHub</a>
-    </div>
-  </div>
-
-  <div class="project-card">
-    <div class="project-title-bar">Charuco Calib</div>
-    <div class="project-content">
-      Tool for calibrating stereo camera systems using Charuco boards.
-      <br><br>
-      <a href="https://github.com/ccomkhj/Charuco_Stereo_Calibrator" target="_blank">View on GitHub</a>
-    </div>
-  </div>
-
-  <div class="project-card">
-    <div class="project-title-bar">More Projects</div>
-    <div class="project-content">
-      <ul>
-        <li><a href="https://github.com/ccomkhj/ScienceNote">Science into Code</a></li>
-        <li><a href="https://github.com/ccomkhj/Lightening_Classifier/">Medical Research Contribution</a></li>
-        <li><a href="https://github.com/ccomkhj/datumaro-gui">Datumaro GUI app</a></li>
-        <li><a href="https://github.com/ccomkhj/YOLO_data_generator">YOLO data generator</a></li>
-        <li><a href="https://github.com/ccomkhj/crop_generator">Image cropping tool</a></li>
-        <li><a href="https://github.com/HexaFarms/GraphCut">Image Segmentation using Graph-cut</a></li>
-        <li><a href="https://github.com/ccomkhj/hyperoptmm/">MLflow-HyperOpt wrapper</a></li>
-        <li><a href="https://github.com/ccomkhj/classify_seg_mask">Image classification & mass estimation</a></li>
-        <li><a href="https://github.com/ccomkhj/Pixel_Area">Compute pixel's actual dimension</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-## III. Publications
+## II. Publications
 
 <div class="projects-grid">
   <div class="project-card">
@@ -226,24 +210,6 @@ title: "portfolio"
     </div>
   </div>
 </div>
-
-## IV. Learning
-
-1. [Camera Parameter](https://zesty-diagnostic-d99.notion.site/Camera-parameters-3d92a1adcfed4db5ac78ce2c3920dbbc)
-2. [Point Cloud Library](https://zesty-diagnostic-d99.notion.site/Point-Cloud-Library-82907376be92423da826b1efb5fd979d)
-3. [3D Reconstruction](https://zesty-diagnostic-d99.notion.site/Method-of-3D-surface-reconstruction-SfM-33f7b026881b4492886607881cf4ebff)
-4. [Color and Illumination](https://zesty-diagnostic-d99.notion.site/Colour-and-illumination-19881d5dc00a435aa7309b6387239685)
-5. [Feature extraction](https://zesty-diagnostic-d99.notion.site/Feature-Extraction-in-Image-12a0518e242d43048087237ad4e3b564)
-6. [Plant nutrient deficiency](https://zesty-diagnostic-d99.notion.site/Plant-Nutrition-Deficiency-6210108fcc1447ff88972e0cb198ebd9)
-7. [Public Leaf dataset](https://zesty-diagnostic-d99.notion.site/Leaf-Dataset-ae1be0ffaae0405aae4c72002b198f00)
-8. [Plant biology](https://zesty-diagnostic-d99.notion.site/Plant-Biology-9e152090427b49aa873526572010da81) 
-9. [ROS2, Udemy](https://zesty-diagnostic-d99.notion.site/ROS2-Udemy-845ca132939748ea89f6faef66462ef7)
-10. [Advanced C++, Coursera](https://zesty-diagnostic-d99.notion.site/Advanced-C-Coursera-9e41832c0cad4c549970ce9231b1155f)
-11. [Data Structure](https://zesty-diagnostic-d99.notion.site/Data-Structure-d83e758cf5af4d88a251c56bf725987c)
-12. [Airflow, Udemy](https://zesty-diagnostic-d99.notion.site/Apache-Airflow-204dce0a034c43559ed4f73863128de2)
-13. [Open3d](https://zesty-diagnostic-d99.notion.site/Open3D-9f366a54e9354893a1a3955107960b9d)
-14. [Elixir, Phoenix](https://zesty-diagnostic-d99.notion.site/Elixir-1a41eb484826417ab1975339abc1d3a1)
-
 
 <figure>
     <img src="../assets/images/photo_in_farm.jpg" alt="Working in the field" width="150">
