@@ -16,6 +16,7 @@ My polymath journey thrives on daily 1% growth, anchored in:
 - **Zero to One**: Entrepreneurship
 - **Leadership & Feedback**: Radical Candor 
 - **Predictive Modeling**: Forecasting
+- **Agent Engineering**: Team leverage and product value
 - **Computer Vision**: Extract insights from images
 - **MLOps & Data Engineering**: Scratch to Scalable
 - **IoT**: Source data from the ground
@@ -35,7 +36,16 @@ _Eager to expand this list—and myself—through life's adventures._
 - joined one of the biggest automotive companies (Hyundai Motors) and left when it's time for the next step
 - graduated with honors in Mechanical Engineering (BSc) and Robotics (MSc)
 - extended master research and published it in the [research paper](https://www.arxiv.org/abs/2410.00769)
+- share hard-won lessons across major conferences, university lectures, and public-sector events to inspire others to build
 - narrated [my story](https://www.worldjob.or.kr/info/bbs/ovseaAdvnStry/view.do?menuId=1000006395&bbscttNo=192537) as the top story
+
+<figure class="presentation-gallery">
+  <div class="presentation-gallery__grid">
+    <img src="../assets/images/presentation-pyconde-1.jpg" alt="Presenting at PyConDE and PyData">
+    <img src="../assets/images/presentation-pyconde-2.jpg" alt="Speaking to a conference audience">
+    <img src="../assets/images/presentation-pyconde-3.jpg" alt="Sharing lessons on stage">
+  </div>
+</figure>
 
 ### Things I believe
 
