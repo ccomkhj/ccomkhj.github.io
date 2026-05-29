@@ -37,17 +37,17 @@ sitemap: false
   <div class="terminal-line"><span class="terminal-prompt">whoami@huijo.xyz:~$</span> ls -la ./contact/</div>
 
   <div class="card-links">
-    <a class="card-link" href="https://github.com/ccomkhj" target="_blank" rel="noopener">
-      <span class="card-link__perm">-rw-r--r--</span>
-      <span class="card-link__icon"><i class="fab fa-github"></i></span>
-      <span class="card-link__name">github</span>
-      <span class="card-link__val">github.com/ccomkhj</span>
-    </a>
     <a class="card-link" href="https://www.linkedin.com/in/khj17" target="_blank" rel="noopener">
       <span class="card-link__perm">-rw-r--r--</span>
       <span class="card-link__icon"><i class="fab fa-linkedin"></i></span>
       <span class="card-link__name">linkedin</span>
       <span class="card-link__val">linkedin.com/in/khj17</span>
+    </a>
+    <a class="card-link" href="https://github.com/ccomkhj" target="_blank" rel="noopener">
+      <span class="card-link__perm">-rw-r--r--</span>
+      <span class="card-link__icon"><i class="fab fa-github"></i></span>
+      <span class="card-link__name">github</span>
+      <span class="card-link__val">github.com/ccomkhj</span>
     </a>
     <a class="card-link" href="mailto:huijo.kim@voids.ai">
       <span class="card-link__perm">-rw-r--r--</span>
@@ -73,6 +73,18 @@ sitemap: false
       <span class="card-link__name">phone</span>
       <span class="card-link__val">+49 152 0598 1504</span>
     </div>
+  </div>
+
+  <div class="terminal-line">&nbsp;</div>
+  <div class="terminal-line"><span class="terminal-prompt">whoami@huijo.xyz:~$</span> ./save_contact</div>
+  <div class="terminal-line card-save-out">&gt; writing vCard → tap to add me to your phone</div>
+  <div class="card-links">
+    <a class="card-link card-link--save" href="/assets/huijo.vcf" download="huijo-kim.vcf">
+      <span class="card-link__perm">-rwxr-xr-x</span>
+      <span class="card-link__icon"><i class="fas fa-address-card"></i></span>
+      <span class="card-link__name">save_contact</span>
+      <span class="card-link__val">./add-to-phone.vcf</span>
+    </a>
   </div>
 
   <div class="terminal-line">&nbsp;</div>
@@ -229,6 +241,20 @@ sitemap: false
   .card-link__icon { color: #33ff00; text-align: center; }
   .card-link__name { color: #33ff00; }
   .card-link__val  { color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* save_contact command output line */
+  .card-save-out {
+    color: #ccc;
+    margin: 4px 0 6px 18px;
+    position: relative;
+    z-index: 3;
+  }
+
+  /* Save-contact CTA — subtle green tint to mark it as the primary action */
+  .card-link--save {
+    background: rgba(51, 255, 0, 0.08);
+    border: 1px solid rgba(51, 255, 0, 0.35);
+    margin-bottom: 4px;
+  }
   .card-link--static { cursor: default; }
   .card-link--static:hover { background: transparent; color: #ccc; }
   .card-link--static:hover .card-link__perm { color: #888; }
