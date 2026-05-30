@@ -88,39 +88,11 @@ sitemap: false
   </div>
 
   <div class="terminal-line">&nbsp;</div>
-  <div class="terminal-line"><span class="terminal-prompt">whoami@huijo.xyz:~$</span> chafa ./qr.png</div>
-  <button type="button" class="card-qr" id="card-qr-trigger" aria-label="Show QR code fullscreen">
-    <img src="/assets/images/huijo-card.png" alt="QR code linking to https://www.huijo.xyz/card">
-    <span class="card-qr__hint">tap to enlarge · share</span>
-  </button>
-
-  <div class="terminal-line">&nbsp;</div>
   <div class="terminal-line"><span class="terminal-prompt">whoami@huijo.xyz:~$</span> <span class="card-cursor">_</span></div>
 </div>
 
   </div>
 </div>
-
-<div class="card-qr-overlay" id="card-qr-overlay" role="dialog" aria-modal="true" aria-label="QR code — huijo.xyz/card" hidden>
-  <img src="/assets/images/huijo-card.png" alt="QR code linking to https://www.huijo.xyz/card">
-  <div class="card-qr-overlay__url">https://www.huijo.xyz/card</div>
-  <div class="card-qr-overlay__hint">tap anywhere to close</div>
-</div>
-
-<script>
-  (function() {
-    var trigger = document.getElementById('card-qr-trigger');
-    var overlay = document.getElementById('card-qr-overlay');
-    if (!trigger || !overlay) return;
-    function open()  { overlay.hidden = false; document.body.style.overflow = 'hidden'; }
-    function close() { overlay.hidden = true;  document.body.style.overflow = ''; }
-    trigger.addEventListener('click', open);
-    overlay.addEventListener('click', close);
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && !overlay.hidden) close();
-    });
-  })();
-</script>
 
 <style>
   /* Hide site chrome — this page is a single-purpose share card */
@@ -262,69 +234,6 @@ sitemap: false
   .card-link--static:hover .card-link__name { color: #33ff00; }
   .card-link--static:hover .card-link__val { color: #fff; }
 
-  /* Inline QR thumbnail */
-  .card-qr {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    margin: 8px 0 4px 18px;
-    padding: 8px;
-    background: #fff;
-    border: 1px solid #33ff00;
-    box-shadow: 0 0 10px rgba(51, 255, 0, 0.25);
-    cursor: pointer;
-    position: relative;
-    z-index: 3;
-  }
-  .card-qr img {
-    width: 120px;
-    height: 120px;
-    display: block;
-    image-rendering: pixelated;
-  }
-  .card-qr__hint {
-    color: #050505;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 10px;
-    letter-spacing: 0.05em;
-  }
-  .card-qr:hover {
-    box-shadow: 0 0 18px rgba(51, 255, 0, 0.6);
-  }
-
-  /* Fullscreen QR overlay (for showing on phone screen at conferences) */
-  .card-qr-overlay {
-    position: fixed;
-    inset: 0;
-    background: #fff;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-    cursor: zoom-out;
-    padding: 24px;
-  }
-  .card-qr-overlay[hidden] { display: none; }
-  .card-qr-overlay img {
-    width: min(80vmin, 520px);
-    height: min(80vmin, 520px);
-    image-rendering: pixelated;
-  }
-  .card-qr-overlay__url {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 16px;
-    color: #050505;
-    letter-spacing: 0.02em;
-  }
-  .card-qr-overlay__hint {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 12px;
-    color: #888;
-  }
-
   /* Blinking cursor */
   .card-cursor {
     display: inline-block;
@@ -355,8 +264,6 @@ sitemap: false
       font-size: 11px;
       padding: 2px 4px;
     }
-    .card-qr { margin-left: 10px; }
-    .card-qr img { width: 100px; height: 100px; }
   }
   @media (max-width: 360px) {
     .card-id__lines { font-size: 10px; }
