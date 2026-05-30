@@ -67,12 +67,12 @@ sitemap: false
       <span class="card-link__name">website</span>
       <span class="card-link__val">huijo.xyz</span>
     </a>
-    <div class="card-link card-link--static">
-      <span class="card-link__perm">-r--------</span>
+    <a class="card-link" href="tel:+4915205981504">
+      <span class="card-link__perm">-rw-r--r--</span>
       <span class="card-link__icon"><i class="fas fa-phone"></i></span>
       <span class="card-link__name">phone</span>
       <span class="card-link__val">+49 152 0598 1504</span>
-    </div>
+    </a>
   </div>
 
   <div class="terminal-line">&nbsp;</div>
@@ -230,13 +230,7 @@ sitemap: false
     text-decoration: none;
   }
 
-  .card-link--static { cursor: default; }
-  .card-link--static:hover { background: transparent; color: #ccc; }
-  .card-link--static:hover .card-link__perm { color: #888; }
-  .card-link--static:hover .card-link__icon,
-  .card-link--static:hover .card-link__name { color: #33ff00; }
-  .card-link--static:hover .card-link__val { color: #fff; }
-  /* iOS auto-detects phone numbers and wraps them in a gray <a href="tel:"> — force white */
+  /* iOS styles tel: links gray by default — force the value white (hover handles the invert) */
   .card-link__val a { color: inherit !important; text-decoration: none !important; }
 
   /* Blinking cursor */
