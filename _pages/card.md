@@ -236,6 +236,8 @@ sitemap: false
   .card-link--static:hover .card-link__icon,
   .card-link--static:hover .card-link__name { color: #33ff00; }
   .card-link--static:hover .card-link__val { color: #fff; }
+  /* iOS auto-detects phone numbers and wraps them in a gray <a href="tel:"> — force white */
+  .card-link__val a { color: inherit !important; text-decoration: none !important; }
 
   /* Blinking cursor */
   .card-cursor {
