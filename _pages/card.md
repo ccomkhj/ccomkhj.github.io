@@ -8,6 +8,7 @@ classes:
   - card-page
 author_profile: false
 sitemap: false
+noindex: true
 ---
 
 <div class="window card-window">

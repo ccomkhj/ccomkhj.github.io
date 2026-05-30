@@ -8,6 +8,7 @@ classes:
   - qr-page
 author_profile: false
 sitemap: false
+noindex: true
 ---
 
 <div class="qr-screen">
