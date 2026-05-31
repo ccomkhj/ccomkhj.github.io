@@ -6,4 +6,4 @@ classes: none
 title: "A Space for Thoughts"  
 ---
 
-{% include terminal_search.html %}
+{% include terminal_shell.html %}
