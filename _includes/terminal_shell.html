@@ -1,0 +1,27 @@
+<!-- Interactive terminal shell. Replaces terminal_search.html on the landing page.
+     Commands live in assets/js/terminal-commands.js; engine in terminal-shell.js. -->
+<canvas id="math-canvas" class="math-canvas"></canvas>
+
+<div id="terminal-container" class="terminal-container terminal-container--overlay">
+  <div id="terminal-output"></div>
+  <div id="terminal-input-line" class="terminal-input-line" style="display: none;">
+    <span class="terminal-prompt">whoami@huijo.xyz:~$</span>
+    <input type="text" id="terminal-input" class="terminal-input"
+           autocomplete="off" spellcheck="false" aria-label="terminal input">
+  </div>
+</div>
+
+<noscript>
+  <div class="terminal-container">
+    <p>JavaScript is disabled. The essentials:</p>
+    <ul>
+      <li><a href="/about/">about</a></li>
+      <li><a href="/portfolio/">portfolio</a></li>
+      <li><a href="/writings/">writings</a></li>
+      <li><a href="/card/">contact card</a></li>
+    </ul>
+  </div>
+</noscript>
+
+<script src="{{ '/assets/js/terminal-commands.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/terminal-shell.js' | relative_url }}"></script>
