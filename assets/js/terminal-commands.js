@@ -20,7 +20,7 @@
     "<p>Machine learning practitioner and former founder working across predictive " +
     "modeling, computer vision, MLOps, and autonomous systems. After mechanical " +
     "engineering, worked on EV development at <strong>Hyundai Motor Group</strong>.</p>" +
-    "<p>Founded and scaled an <a href='http://hexafarms.com'>agtech startup</a> from " +
+    "<p>Founded and scaled an <a href='https://hexafarms.com'>agtech startup</a> from " +
     "zero to six-figure ARR, then moved into e-commerce, applying ML to large-scale " +
     "experimentation and operational optimization.</p>" +
     "<p>Interested in explainability-driven optimization, agent-based workflows, and " +
