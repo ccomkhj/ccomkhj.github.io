@@ -180,13 +180,13 @@ I keep one equation for each decision. Any more than that belongs in the papers.
 
 ### B: the candidate set
 
-Let a document be a token sequence \(d=(x_1,\ldots,x_n)\). A boundary policy with configuration \(\theta\) produces:
+Let a document be a token sequence $d=(x_1,\ldots,x_n)$. A boundary policy with configuration $\theta$ produces:
 
 $$
 \mathcal{C}_\theta(d)=\{c_i=x_{a_i:b_i}\}_{i=1}^{m}.
 $$
 
-Changing \(\theta\) changes the candidates themselves. Candidate count, duplicated tokens, dense embeddings, BM25 length statistics, ingestion cost, and update cost change with it. A fair boundary experiment rebuilds every affected index.
+Changing $\theta$ changes the candidates themselves. Candidate count, duplicated tokens, dense embeddings, BM25 length statistics, ingestion cost, and update cost change with it. A fair boundary experiment rebuilds every affected index.
 
 For plain text, [LangChain's `RecursiveCharacterTextSplitter`](https://docs.langchain.com/oss/python/integrations/splitters/recursive_text_splitter) is a reasonable baseline. [Docling's `HybridChunker`](https://docling-project.github.io/docling/concepts/chunking/) is more interesting for PDFs and manuals because it uses document hierarchy, tokenizer limits, headings, captions, and repeated table headers. [RAGLite](https://github.com/superlinear-ai/raglite) adds semantic boundaries over Markdown-oriented input. [HiChunk](https://aclanthology.org/2026.acl-long.1372/) explores learned hierarchical boundaries and auto-merge retrieval.
 
@@ -194,13 +194,13 @@ Recursive or structure-aware splitting is my baseline. Semantic or learned split
 
 ### R: the indexed representation
 
-Let \(f\) be the embedding model. The representation can include context that is absent from the cited source span:
+Let $f$ be the embedding model. The representation can include context that is absent from the cited source span:
 
 $$
 s_R(q,c_i)=\cos\!\left(f(q),f([\text{title};\text{heading};\text{context};c_i])\right).
 $$
 
-The source span \(c_i\) stays put while the searchable form changes. This is why I test boundaries and representations separately.
+The source span $c_i$ stays put while the searchable form changes. This is why I test boundaries and representations separately.
 
 [Anthropic's Contextual Retrieval](https://www.anthropic.com/engineering/contextual-retrieval) is a concrete recipe for adding chunk-specific prefixes to dense and BM25 indexes. [RAGLite](https://github.com/superlinear-ai/raglite) implements segmented late chunking for supported local embedders and keeps multiple contextualized vectors for a chunk. Jina AI publishes a [late-chunking reference implementation](https://github.com/jina-ai/late-chunking) for models that expose token-level outputs. If one pooled vector still loses too much local detail, [ColBERTv2](https://aclanthology.org/2022.naacl-main.272/) shows the late-interaction end of the design space, at a higher storage cost.
 
@@ -208,7 +208,7 @@ With a pooled embedding API, deterministic title and heading prefixes come first
 
 ### P: the context budget
 
-Let \(A\) be the reranked anchors and \(p(c)\) the payload built around anchor \(c\):
+Let $A$ be the reranked anchors and $p(c)$ the payload built around anchor $c$:
 
 $$
 S^*=\arg\max_{S\subseteq A}
@@ -217,7 +217,7 @@ S^*=\arg\max_{S\subseteq A}
 \sum_{c\in S}\operatorname{tokens}(p(c))\le B_{\mathrm{ctx}}.
 $$
 
-\(B_{\mathrm{ctx}}\) is the generator's context budget. The objective favors useful evidence and broader coverage while charging for repetition.
+$B_{\mathrm{ctx}}$ is the generator's context budget. The objective favors useful evidence and broader coverage while charging for repetition.
 
 [LlamaIndex's `HierarchicalNodeParser` and `AutoMergingRetriever`](https://developers.llamaindex.ai/python/framework/integrations/retrievers/auto_merging_retriever/) implement the child-to-parent pattern directly. Leaf nodes are precise search anchors; related leaves can be replaced by a broader parent before synthesis. Its sentence-window and node-postprocessor patterns suit cases where a full parent is too much.
 
@@ -225,7 +225,7 @@ Whichever framework I use, I keep source offsets. They are far more dependable t
 
 ### E: evidence recall
 
-Let \(E_q\) be the source positions required to answer query \(q\), and \(U_k(q)\) the unique source positions covered by the top \(k\) results:
+Let $E_q$ be the source positions required to answer query $q$, and $U_k(q)$ the unique source positions covered by the top $k$ results:
 
 $$
 \operatorname{EvidenceRecall}@k=\frac{|E_q\cap U_k(q)|}{|E_q|}.
