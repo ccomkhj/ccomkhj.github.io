@@ -6,36 +6,32 @@ tags:
   - Machine Learning
   - RAG
 classes: wide
-title: "Chunking in RAG, Practically — Why 512 Tokens Is Not a Strategy"
-excerpt: "Chunking is four decisions: which units exist, how they are represented, what context the LLM receives, and how the complete policy is evaluated."
+title: "Chunking in RAG: why 512 tokens is not a strategy"
+excerpt: "Chunking involves four separate decisions: which units exist, how search represents them, what context the LLM receives, and how the whole policy is tested."
 ---
 
-I used to treat chunking as a minor ingestion parameter:
+I used to set `chunk_size=512`, add some overlap, and move on. It felt like plumbing.
 
-> Split every document into 512-token chunks, add some overlap, generate embeddings, and move on.
+That worked often enough that I did not question it. Then I started looking more closely at retrieval failures. Some answers were split across chunks. Other chunks contained the answer but were too vague to match the query. Sometimes retrieval was fine and the LLM still got the wrong context.
 
-That recipe is convenient, but it hides the decisions that actually determine whether retrieval works.
+"Chunk size" is too small an idea for all of those problems. I now separate chunking into four decisions:
 
-A RAG system does not search the original documents directly. It searches the units that ingestion created. It ranks representations of those units, and then it constructs a new context for the answer-writing LLM.
+- B, boundary: which source spans can be retrieved?
+- R, representation: what text or vectors does search use for each span?
+- P, payload: what does the answer-writing LLM receive after retrieval?
+- E, evaluation: does the test resemble the work the system will do?
 
-The most useful mental model I have found is:
+I write this as:
 
-> **A chunking policy is B × R × P, judged by E.**
+> B × R × P, judged by E.
 
-- **B — Boundary:** What source spans exist as searchable units?
-- **R — Representation:** What text or vectors are used to match each unit to a query?
-- **P — Payload:** What context is assembled for the answer-writing LLM after retrieval?
-- **E — Evaluation:** Does the test reveal the failures and costs that matter in production?
-
-The multiplication sign is a reminder that these decisions interact. It is not a numerical score. A strong boundary policy can still fail with an ambiguous representation, and perfect retrieval can still produce a bad answer if the final payload is incomplete or noisy.
-
-This post has two parts. The first teaches the model through one example. The second keeps one representative equation for each decision and maps the ideas to practical libraries and frameworks.
+It is a mnemonic, not an equation. An ambiguous representation can ruin a sensible boundary, and a bad final prompt can waste a perfectly good retrieval. That sounds obvious written down. It was less obvious when all four choices hid behind one `chunk_size` setting.
 
 ---
 
-## Part I — Four decisions, one example
+## Part I: one warranty question, four decisions
 
-Consider this text from a vehicle manual:
+Consider these lines from a vehicle manual:
 
 ```text
 Traction-battery warranty
@@ -50,11 +46,11 @@ The user asks:
 When does the traction-battery warranty end?
 ```
 
-The complete answer requires the subject, the time limit, and the distance exception. We can now follow the evidence through B, R, P, and E.
+The answer needs the subject, the eight-year limit, and the distance exception. Following those pieces through the pipeline makes B, R, P, and E much easier to distinguish.
 
-### B — Boundary: what can be retrieved?
+### B: which spans exist?
 
-Suppose ingestion creates these units:
+Suppose ingestion creates these chunks:
 
 ```text
 Chunk 1: Traction-battery warranty
@@ -64,11 +60,11 @@ Chunk 2: The traction battery is covered for eight years.
 Chunk 3: The coverage ends earlier when the vehicle reaches 160,000 km.
 ```
 
-Chunk 1 has the strongest exact match for the subject but contains no answer. Chunk 2 contains the time limit. Chunk 3 contains the exception but relies on the previous sentence to identify the subject.
+Chunk 1 matches the subject but contains no answer. Chunk 2 has the time limit. Chunk 3 has the exception, though "the coverage" is unclear on its own.
 
-Even an excellent retriever now has an awkward candidate set. It may retrieve all three chunks, but no single unit expresses the complete rule. The problem began before ranking: the boundary policy fragmented the evidence.
+A retriever may return all three. Still, the candidate set is awkward because none of its members states the complete rule. This failure happened before ranking. The splitter broke apart evidence that a reader needs together.
 
-A better boundary might keep the rule and its exception together:
+For this document, I would probably keep the rule and its exception in one chunk:
 
 ```text
 Chunk 1: Traction-battery warranty
@@ -78,31 +74,19 @@ The traction battery is covered for eight years.
 The coverage ends earlier when the vehicle reaches 160,000 km.
 ```
 
-This does not mean that every pair of sentences should be merged. It means that boundaries should respect the units that readers need to interpret together.
+I would not merge every adjacent sentence. I only want to preserve relationships that a reader actually needs. In manuals, that often means keeping table headers with rows, rules with exceptions, and procedure steps with their warnings or prerequisites. Headings and captions need similar care. Token limits still matter, but they are constraints on a boundary policy, not a definition of meaning.
 
-For product manuals, useful boundary rules often include:
+The first check is simple: does the index contain a complete, citable span? If it does not, a better embedding model will not invent one. I need to change the parser or splitter and rebuild the affected indexes.
 
-- Keep a table header with its rows.
-- Keep a rule with its exceptions and qualifications.
-- Keep a procedure step with the warnings or prerequisites that govern it.
-- Keep headings, captions, lists, code units, and legal clauses structurally attached.
-- Use a token limit as a constraint, not as the primary definition of meaning.
+### R: what does search see?
 
-The diagnostic question for B is:
-
-> **Does a complete, citable evidence span exist as a retrieval candidate?**
-
-If the answer is no, changing the embedding model cannot create the missing span. Fix the parser or splitter first.
-
-### R — Representation: how can the unit be found?
-
-Now assume we intentionally keep a short source span:
+Now suppose I deliberately keep this short source span:
 
 ```text
 The coverage ends earlier when the vehicle reaches 160,000 km.
 ```
 
-This is a precise citation, but the phrase “the coverage” is ambiguous when embedded alone. We can keep the source span unchanged while indexing a more informative representation:
+It is a good citation. It is also hard to retrieve by itself because "the coverage" could refer to almost anything. I can leave the source untouched and index a more descriptive version:
 
 ```text
 Document: 2026 Vehicle Warranty
@@ -112,51 +96,38 @@ Context: This section defines the time and distance limits of battery coverage.
 The coverage ends earlier when the vehicle reaches 160,000 km.
 ```
 
-The added title, heading, and context make the unit easier to match to a query about the traction battery. They do not have to appear in the citation as if they were original source text.
+The title and heading make the sentence easier to match with a query about the traction battery. They do not need to appear in the citation as though they came from the manual.
 
-This distinction produces three different objects:
+At this point there are three different objects, which is where I kept getting confused:
 
-| Object | Job | Example |
+| Object | What it is for | Example |
 | --- | --- | --- |
-| Source span | Provenance and citation | Exact sentence and source offsets |
-| Index representation | Retrieval matching | Title, heading, context, and source span |
-| Answer payload | Answer construction | Retrieved span plus selected neighbours or parent context |
+| Source span | Provenance and citation | The exact sentence and source offsets |
+| Index representation | Search | Title, heading, context, and source span |
+| Answer payload | Answer construction | The retrieved span plus selected surrounding text |
 
-The index representation can be created in several ways:
+The simplest representation is the chunk text with its existing title and heading path. [Contextual Retrieval](https://www.anthropic.com/engineering/contextual-retrieval) goes further: an LLM writes a short, chunk-specific prefix before ingestion, and that prefix becomes part of the embedding and BM25 index. [Late chunking](https://arxiv.org/abs/2409.04701) takes another route. It encodes a larger context first, then pools the token vectors that belong to the smaller span. A multivector index can also keep several local representations instead of forcing the whole chunk into one vector.
 
-- Prefix the source span with existing metadata such as the title and heading path.
-- Generate a short chunk-specific context before indexing, as in [Contextual Retrieval](https://www.anthropic.com/engineering/contextual-retrieval).
-- Encode a larger context first and pool the token vectors of the smaller span afterward, as in [late chunking](https://arxiv.org/abs/2409.04701).
-- Store several vectors for one chunk so that one relevant local concept is not averaged away.
+What matters is when and why the extra text is used. An LLM-generated prefix belongs to R because search indexes it. The label does not depend on whether an LLM wrote the text. And metadata sitting unused next to a vector will not improve similarity; search has to embed it, index it for sparse retrieval, filter on it, or otherwise include it in scoring.
 
-The generated context in Contextual Retrieval is **ingestion-time preprocessing**. It belongs to R because it is embedded or indexed to improve matching. The word “generated” does not make it part of P.
+So if a good source span exists but will not match the query, I keep its offsets fixed and experiment with its representation. That tells me whether R was the problem without quietly changing B at the same time.
 
-Similarly, metadata helps only if retrieval uses it. Metadata that is merely stored beside a vector does not change vector similarity. It must participate in the indexed text, sparse search, filtering, or another scoring step.
+### P: what reaches the answer-writing LLM?
 
-The diagnostic question for R is:
-
-> **A good source span exists, but does its searchable representation make it identifiable to this query?**
-
-If the answer is no, keep the source offsets fixed and test a different representation. This isolates the representation change from the boundary change.
-
-### P — Payload: what does the answer-writing LLM receive?
-
-Suppose retrieval correctly ranks this short child span first:
+Assume retrieval ranks this child span first:
 
 ```text
 The coverage ends earlier when the vehicle reaches 160,000 km.
 ```
 
-The search has succeeded, but the answer-writing LLM still needs the preceding sentence to give the complete rule. After retrieval, the context builder can expand the anchor:
+Search has done its job. The final LLM still needs the preceding sentence to state the warranty correctly. At query time, the context builder can fetch the neighbour:
 
 ```text
 The traction battery is covered for eight years.
 The coverage ends earlier when the vehicle reaches 160,000 km.
 ```
 
-This is P. The boundary did not change, and the neighbour did not affect the similarity score. The system changed only what it handed to the final LLM after the anchor had been selected.
-
-The timing is the easiest way to remember the distinction:
+That is P. Neither the stored boundary nor the similarity score changed. The system added context after it had chosen the anchor.
 
 ```text
 INGESTION
@@ -172,118 +143,72 @@ question
   → answer-writing LLM
 ```
 
-Useful payload operations include:
+In practice, P might add a neighbouring span, replace several children with their parent section, or merge overlapping offsets. Procedures usually need their original order. Expansion must also stop at version and permission boundaries.
 
-- Add one or two neighbouring spans when the anchor contains a pronoun, continuation, or exception.
-- Replace several related children with their parent section.
-- Merge overlapping source offsets instead of sending duplicate text.
-- Preserve document order for procedures and narratives.
-- Stop expansion at document-version and permission boundaries.
-- Fit the selected evidence into a fixed token budget.
+More context is not automatically safer. If every 100-token child expands into a 2,000-token parent, the prompt fills with the same noise that small retrieval units were meant to avoid. I prefer to rerank first, expand only the surviving anchors, remove overlap by source offset, and then pack the result into the token budget.
 
-Expansion should be conditional. Returning a 2,000-token parent for every 100-token hit can recreate the noise problem that smaller retrieval units were meant to solve.
+When a correct anchor ranks well but the answer is still incomplete, I leave the index alone at first. Replaying the same ranked anchors through another packing policy is a cleaner test.
 
-The diagnostic question for P is:
+### E: what did the experiment prove?
 
-> **The right anchor ranked highly; did the final LLM receive enough nonredundant context to answer correctly?**
+Suppose a fixed-window splitter and a structure-aware splitter both score 95% on a set of single-sentence fact questions. They are tied on that set. That is all I can safely say.
 
-If retrieval already succeeded, do not rechunk the corpus first. Replay the same ranked anchors through different expansion and packing policies.
+Production might contain tables, exceptions, comparisons, and multi-step procedures. The test has told me nothing about those cases. Structure-aware chunks may work better there. Fixed windows may be just as good and cheaper. Both may fail for unrelated reasons.
 
-### E — Evaluation: what does the result actually prove?
+The papers do not give us one winner either. [Dense X Retrieval](https://aclanthology.org/2024.emnlp-main.845/) reported strong proposition-level retrieval on its open-domain QA setup. [Is Semantic Chunking Worth the Computational Cost?](https://aclanthology.org/2025.findings-naacl.114/) did not find consistent gains that paid for semantic chunking across its tasks. [HiChunk](https://aclanthology.org/2026.acl-long.1372/) argues that evidence-sparse RAG benchmarks can hide differences between chunking policies.
 
-Suppose a fixed-window splitter and a structure-aware splitter both score 95% on a test set of single-sentence fact questions.
+Those findings apply to the policies and workloads that the papers tested. My own evaluation set needs local facts, rules with exceptions, tables, procedures, and comparisons. It also needs questions that draw on several evidence spans, plus section-level and document-level questions. Some questions should have no answer in the corpus so that abstention is testable.
 
-The valid conclusion is:
+Source annotations matter as much as reference answers. A correct answer can hide bad retrieval if the model already knows the fact. When an answer is wrong, source offsets help locate the failure in B, R, P, or generation.
 
-> The two policies performed equally on this test set.
+While debugging, I use this table:
 
-It is not:
-
-> The two policies are equally good chunkers.
-
-If production users ask about tables, exceptions, comparisons, and multi-step procedures, the test set has not measured the important differences. The structure-aware policy might work better, the fixed policy might remain sufficient and cheaper, or both might fail for another reason. We need evidence rather than an intuition about which method sounds more semantic.
-
-This is why credible studies can point in different directions. [Dense X Retrieval](https://aclanthology.org/2024.emnlp-main.845/) found strong results from fine-grained proposition-level units in its evaluated open-domain QA setting. [Is Semantic Chunking Worth the Computational Cost?](https://aclanthology.org/2025.findings-naacl.114/) found that semantic chunking did not deliver consistent gains that justified its additional cost across the authors’ tasks. [HiChunk](https://aclanthology.org/2026.acl-long.1372/) argues that evidence-sparse RAG benchmarks may be unable to expose meaningful chunking differences.
-
-These results are not universal rankings. They are measurements of complete policies under particular corpora, queries, retrievers, readers, metrics, and cost models.
-
-A useful evaluation set should cover the real query mix:
-
-- Local facts and definitions.
-- Rules with exceptions.
-- Tables and structured fields.
-- Multi-step procedures.
-- Comparisons across sections or documents.
-- Multi-hop questions requiring several evidence spans.
-- Section summaries and whole-document synthesis.
-- Questions whose evidence is absent, so abstention can be tested.
-
-It should also annotate the expected source spans. Without source-level ground truth, a correct final answer can hide a retrieval failure, and an incorrect answer cannot tell us whether B, R, P, or the generator failed.
-
-The diagnostic question for E is:
-
-> **Can the benchmark reveal the failure mode and the quality–cost trade-off that matter in production?**
-
-### The four-question diagnosis
-
-When a RAG answer fails, ask these questions in order:
-
-| Question | First place to look | First controlled change |
+| Question | Check | First experiment |
 | --- | --- | --- |
-| Does a complete evidence span exist? | **B — Boundary** | Change parsing or splitting; rebuild dense and sparse indexes. |
-| Does the searchable form identify that span? | **R — Representation** | Keep source offsets fixed; change prefixes, embeddings, or scoring. |
-| Did the final LLM receive usable context? | **P — Payload** | Keep ranked anchors fixed; change expansion, deduplication, or packing. |
-| Did the test expose the real failure? | **E — Evaluation** | Add representative queries, source labels, metrics, and cost logging. |
+| Does a complete evidence span exist? | B, boundary | Change parsing or splitting, then rebuild dense and sparse indexes. |
+| Does its searchable form identify it? | R, representation | Keep source offsets fixed and change prefixes, embeddings, or scoring. |
+| Did the final LLM get usable context? | P, payload | Keep ranked anchors fixed and change expansion, deduplication, or packing. |
+| Did the test expose the real failure? | E, evaluation | Add realistic queries, source labels, system metrics, and cost logging. |
 
-This order matters. It stops “try another chunk size” from becoming the default response to every retrieval problem.
+This sequence has saved me from treating every retrieval problem as a request for a different token count.
 
 ---
 
-## Part II — One equation per decision, and tools to try
+## Part II: one equation for each decision
 
-The following equations are not a theory of everything. Each one is a compact way to remember what its decision controls.
+I keep one equation for each decision. Any more than that belongs in the papers.
 
-### B — The chunker defines the candidate set
+### B: the candidate set
 
-Let a document be a token sequence \(d=(x_1,\ldots,x_n)\). A boundary policy with configuration \(\theta\) produces source spans:
+Let a document be a token sequence \(d=(x_1,\ldots,x_n)\). A boundary policy with configuration \(\theta\) produces:
 
 $$
 \mathcal{C}_\theta(d)=\{c_i=x_{a_i:b_i}\}_{i=1}^{m}.
 $$
 
-Changing \(\theta\) changes which candidates exist. It also changes candidate count, token duplication, dense embeddings, BM25 length statistics, ingestion cost, and update cost. A boundary experiment therefore requires rebuilding every affected index.
+Changing \(\theta\) changes the candidates themselves. Candidate count, duplicated tokens, dense embeddings, BM25 length statistics, ingestion cost, and update cost change with it. A fair boundary experiment rebuilds every affected index.
 
-**Libraries and frameworks worth trying:**
+For plain text, [LangChain's `RecursiveCharacterTextSplitter`](https://docs.langchain.com/oss/python/integrations/splitters/recursive_text_splitter) is a reasonable baseline. [Docling's `HybridChunker`](https://docling-project.github.io/docling/concepts/chunking/) is more interesting for PDFs and manuals because it uses document hierarchy, tokenizer limits, headings, captions, and repeated table headers. [RAGLite](https://github.com/superlinear-ai/raglite) adds semantic boundaries over Markdown-oriented input. [HiChunk](https://aclanthology.org/2026.acl-long.1372/) explores learned hierarchical boundaries and auto-merge retrieval.
 
-- [LangChain `RecursiveCharacterTextSplitter`](https://docs.langchain.com/oss/python/integrations/splitters/recursive_text_splitter) is a useful simple baseline for mostly homogeneous text. A sophisticated policy should have to beat it.
-- [Docling `HybridChunker`](https://docling-project.github.io/docling/concepts/chunking/) combines document hierarchy with tokenizer-aware splitting and merging. Its support for headings, captions, and repeated table headers is useful for PDFs and manuals.
-- [RAGLite](https://github.com/superlinear-ai/raglite) combines Markdown-aware semantic boundaries with contextualized chunklet representations.
-- [HiChunk](https://aclanthology.org/2026.acl-long.1372/) is promising when a corpus and workload genuinely need hierarchical boundaries and auto-merge retrieval, but its additional model and ingestion cost should be measured against a strong baseline.
+Recursive or structure-aware splitting is my baseline. Semantic or learned splitting has to fix a measured boundary failure and earn back its extra ingestion cost.
 
-A practical progression is fixed or recursive splitting → structure-aware splitting → semantic or learned splitting only when observed boundary failures justify it.
+### R: the indexed representation
 
-### R — Retrieval scores the indexed representation
-
-Let \(f\) be an embedding model. A compact representation equation is:
+Let \(f\) be the embedding model. The representation can include context that is absent from the cited source span:
 
 $$
 s_R(q,c_i)=\cos\!\left(f(q),f([\text{title};\text{heading};\text{context};c_i])\right).
 $$
 
-The exact source span \(c_i\) can stay unchanged while the indexed representation changes. This is the main reason boundary selection and representation should be evaluated separately.
+The source span \(c_i\) stays put while the searchable form changes. This is why I test boundaries and representations separately.
 
-**Libraries and frameworks worth trying:**
+[Anthropic's Contextual Retrieval](https://www.anthropic.com/engineering/contextual-retrieval) is a concrete recipe for adding chunk-specific prefixes to dense and BM25 indexes. [RAGLite](https://github.com/superlinear-ai/raglite) implements segmented late chunking for supported local embedders and keeps multiple contextualized vectors for a chunk. Jina AI publishes a [late-chunking reference implementation](https://github.com/jina-ai/late-chunking) for models that expose token-level outputs. If one pooled vector still loses too much local detail, [ColBERTv2](https://aclanthology.org/2022.naacl-main.272/) shows the late-interaction end of the design space, at a higher storage cost.
 
-- [Anthropic’s Contextual Retrieval](https://www.anthropic.com/engineering/contextual-retrieval) provides a concrete recipe for generating chunk-specific prefixes and applying them to both dense embeddings and BM25.
-- [RAGLite](https://github.com/superlinear-ai/raglite) implements segmented late chunking for supported local token-level embedders and stores multiple contextualized vectors per chunk. This is a practical option for studying late chunking without building the full pipeline from scratch.
-- The [late-chunking reference implementation](https://github.com/jina-ai/late-chunking) is useful when the embedding model exposes token-level outputs over a sufficiently large context.
-- [ColBERTv2](https://aclanthology.org/2022.naacl-main.272/) is the representative next step when one pooled vector per chunk loses too much local detail and the additional vector storage is acceptable.
+With a pooled embedding API, deterministic title and heading prefixes come first; I do not pay an LLM to write context for every chunk until that baseline fails. For a local embedder that exposes token vectors, the clean comparison is ordinary embeddings versus late chunking over identical source spans.
 
-For pooled embedding APIs, start with deterministic title and heading prefixes before paying for LLM-generated context. For local embedders that expose token vectors, compare conventional embeddings with late chunking on the same source spans.
+### P: the context budget
 
-### P — Context construction is a budgeted selection problem
-
-Let \(A\) be the reranked retrieval anchors and \(p(c)\) the payload produced by expanding anchor \(c\). One useful objective is:
+Let \(A\) be the reranked anchors and \(p(c)\) the payload built around anchor \(c\):
 
 $$
 S^*=\arg\max_{S\subseteq A}
@@ -292,43 +217,29 @@ S^*=\arg\max_{S\subseteq A}
 \sum_{c\in S}\operatorname{tokens}(p(c))\le B_{\mathrm{ctx}}.
 $$
 
-Here, \(B_{\mathrm{ctx}}\) is the generator’s context budget. The equation says: keep useful evidence, avoid repetition, cover distinct needs, and respect that budget.
+\(B_{\mathrm{ctx}}\) is the generator's context budget. The objective favors useful evidence and broader coverage while charging for repetition.
 
-**Libraries and frameworks worth trying:**
+[LlamaIndex's `HierarchicalNodeParser` and `AutoMergingRetriever`](https://developers.llamaindex.ai/python/framework/integrations/retrievers/auto_merging_retriever/) implement the child-to-parent pattern directly. Leaf nodes are precise search anchors; related leaves can be replaced by a broader parent before synthesis. Its sentence-window and node-postprocessor patterns suit cases where a full parent is too much.
 
-- [LlamaIndex `HierarchicalNodeParser` and `AutoMergingRetriever`](https://developers.llamaindex.ai/python/framework/integrations/retrievers/auto_merging_retriever/) provide a concrete child-to-parent retrieval pattern. Leaf nodes act as precise anchors; related leaves can be merged into broader parent context for synthesis.
-- LlamaIndex’s sentence-window and node-postprocessor patterns are useful for neighbour expansion when full parent replacement is too broad.
-- Rerankers available through RAG frameworks can reduce the anchor set before expansion. Rerank first, expand second; otherwise irrelevant candidates become expensive parents.
+Whichever framework I use, I keep source offsets. They are far more dependable than string similarity for removing overlap, finding neighbours, preserving provenance, and enforcing version or permission boundaries.
 
-Whatever framework is used, retain source offsets. They make overlap removal, neighbour lookup, provenance, document-version checks, and permission-safe expansion substantially more reliable than string similarity alone.
+### E: evidence recall
 
-### E — Evidence recall measures whether retrieval covered the answer
-
-Let \(E_q\) be the annotated source positions required for query \(q\), and let \(U_k(q)\) be the unique source positions covered by the top-\(k\) retrieved results. A representative retrieval metric is:
+Let \(E_q\) be the source positions required to answer query \(q\), and \(U_k(q)\) the unique source positions covered by the top \(k\) results:
 
 $$
 \operatorname{EvidenceRecall}@k=\frac{|E_q\cap U_k(q)|}{|E_q|}.
 $$
 
-This metric asks whether retrieval covered the required evidence. It should be paired with context precision or redundancy, because retrieving an entire document can produce perfect coverage with terrible evidence density.
+Evidence recall tells me whether retrieval covered the answer. It needs a companion metric for density or redundancy. Retrieving the whole document can achieve perfect recall while burying the answer in irrelevant text.
 
-**Libraries and frameworks worth trying:**
+[Ragas](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/) includes context precision, context recall, faithfulness, and other RAG metrics, though source-offset metrics may need custom code. [LangSmith](https://docs.langchain.com/langsmith/evaluate-rag-tutorial) can store datasets, trace retrieval and generation, and compare experiments even when the application itself does not use LangChain. [HiCBench](https://aclanthology.org/2026.acl-long.1372/) shows one way to build evidence-dense questions with hierarchical boundary annotations.
 
-- [Ragas](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/) provides context precision, context recall, faithfulness, and related RAG metrics. Source-offset metrics may still need custom code.
-- [LangSmith](https://docs.langchain.com/langsmith/evaluate-rag-tutorial) supports datasets, retrieval and generation evaluators, experiment comparison, and production traces. It is useful for keeping B/R/P experiments reproducible even when the application does not use LangChain.
-- [HiCBench in HiChunk](https://aclanthology.org/2026.acl-long.1372/) is a useful reference for evidence-dense questions and hierarchical boundary annotations designed to make chunking differences more visible.
+No single score settles a chunking experiment. I track evidence coverage and context precision, then inspect answer and citation correctness. I also log index size, ingestion cost, retrieved tokens, and latency. A quality gain that doubles the index or makes updates painfully slow may still be the wrong trade.
 
-Do not collapse evaluation into one number. Track at least:
+### My starting point
 
-- Evidence recall and context precision.
-- Unique source coverage and overlap redundancy.
-- Answer correctness, citation correctness, and faithfulness.
-- Indexed chunks, tokens, bytes, and ingestion cost.
-- Retrieval latency, reranking latency, retrieved tokens, and generator cost.
-
-### A practical starting policy
-
-For a new documentation or manual corpus, I would start with this policy:
+For a new documentation or manual corpus, my first version would look like this:
 
 ```text
 Source documents
@@ -350,20 +261,13 @@ Source-offset deduplication and budgeted packing
 Answer-writing LLM with explicit citations
 ```
 
-The operational rules are:
+I preserve tables, procedures, code units, headings, lists, and clauses before enforcing the token cap. I store the exact source span separately from its indexed representation. Metadata prefixes come first; generated context or late chunking only enter the experiment if that baseline has a representation problem.
 
-1. Preserve tables, headings, procedures, code units, lists, and clauses before enforcing a token cap.
-2. Store the exact source span separately from the text used for indexing.
-3. Start with deterministic metadata prefixes; test generated context or late chunking only against that baseline.
-4. Retrieve small anchors, rerank them, and expand only the anchors that survive.
-5. Never expand across document versions or permission boundaries.
-6. Rebuild dense and sparse indexes whenever boundaries or indexed text change.
-7. Evaluate by query class and keep source-level evidence labels.
-8. Require advanced chunking to improve a quality–cost frontier, not merely one headline metric.
+At query time, I retrieve small anchors, rerank them, and expand the survivors. Expansion cannot cross a document version or permission boundary. Any change to boundaries or indexed text triggers a rebuild of both dense and sparse indexes.
 
-The final takeaway is:
+I split evaluation results by query type and keep source-level evidence labels. An advanced chunker earns its place by improving the quality-cost trade-off on that workload, not by sounding more sophisticated.
 
-> **A chunk is not one string and chunking is not one parameter. It is a policy for creating evidence units, representing them for search, constructing answer context, and proving that the complete system works.**
+When the system fails, I now work from left to right: B, R, P, then E. That usually tells me what to test next. It is slower than changing 512 to 768 and hoping, but at least I can explain what changed.
 
 ## References
 
