@@ -299,13 +299,20 @@ article.post-reader {
       width: 100%;
     }
 
-    :not(pre) > code {
-      background: #eef2f8;
-      border: 1px solid #d8dee9;
-      border-radius: 3px;
-      color: #9d174d;
-      font: 0.84em/1.2 "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-      padding: 0.12em 0.35em;
+    // Rouge adds this class to inline code as well as block wrappers. Including
+    // it here keeps the legacy window-theme block selector from winning.
+    :not(pre) > code,
+    :not(pre) > code.highlighter-rouge {
+      background: #f1f5f9;
+      border: 0;
+      border-radius: 0.25em;
+      box-decoration-break: clone;
+      color: #334155;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.84em;
+      font-weight: 500;
+      padding: 0.08em 0.28em;
+      -webkit-box-decoration-break: clone;
 
       &::before,
       &::after {
