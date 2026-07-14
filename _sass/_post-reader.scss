@@ -20,7 +20,7 @@ article.post-reader {
   float: none;
   margin: 0 auto;
   padding-right: 0;
-  width: min(100%, 1120px);
+  width: min(100%, 1280px);
 
   .page__inner-wrap {
     background: #c0c0c0;
@@ -121,8 +121,8 @@ article.post-reader {
     border: 1px solid #d7dce5;
     box-shadow: 0 10px 28px rgba(30, 41, 59, 0.12);
     margin: 0 auto;
-    max-width: 880px;
-    padding: clamp(1.5rem, 6vw, 4.75rem);
+    max-width: 1020px;
+    padding: clamp(1.5rem, 5vw, 4rem);
   }
 
   .post-reader__paper > header {
