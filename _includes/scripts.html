@@ -28,3 +28,7 @@
 <script src="{{ script | relative_url }}"></script>
 {% endfor %}
 {% endif %}
+
+{% unless page.collection == "posts" %}
+  {% include mathjax-config.html %}
+{% endunless %}

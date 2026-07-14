@@ -25,26 +25,10 @@
   {% endfor %}
 {% endif %}
 
-<!-- MathJax configuration must be declared before the async library. -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    extensions: ["tex2jax.js"],
-    jax: ["input/TeX", "output/HTML-CSS"],
-    tex2jax: {
-      inlineMath: [ ["$", "$"], ["\\(", "\\)"] ],
-      displayMath: [ ["$$", "$$"], ["\\[", "\\]"] ],
-      processEscapes: true
-    },
-    "HTML-CSS": {
-      availableFonts: ["TeX"],
-      scale: {% if page.collection == "posts" %}108{% else %}100{% endif %},
-      linebreaks: {
-        automatic: {% if page.collection == "posts" %}true{% else %}false{% endif %},
-        width: "container"
-      }
-    }
-  });
-</script>
+{% if page.collection == "posts" %}
+  <!-- Post math configuration must be declared before the async library. -->
+  {% include mathjax-config.html post_reader=true %}
+{% endif %}
 
 <!-- Mathjax Support -->
 <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">

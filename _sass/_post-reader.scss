@@ -457,10 +457,9 @@ article.post-reader {
       background: #f8fafc;
     }
 
-    /* MathJax 2 HTML-CSS/CommonHTML and MathJax 3 output. */
+    /* MathJax 2 HTML-CSS and CommonHTML output. */
     .MathJax_Display,
-    .MJXc-display,
-    mjx-container[display="true"] {
+    .MJXc-display {
       background: var(--post-formula);
       border: 1px solid #dce2eb;
       border-left: 4px solid var(--post-accent-dark);
@@ -476,16 +475,14 @@ article.post-reader {
     }
 
     .MathJax_Display > .MathJax,
-    .MJXc-display > .mjx-chtml,
-    mjx-container[display="true"] > * {
+    .MJXc-display > .mjx-chtml {
       font-size: 1.08em !important;
       margin-left: auto !important;
       margin-right: auto !important;
     }
 
     .MathJax,
-    .mjx-chtml,
-    mjx-container {
+    .mjx-chtml {
       color: var(--post-ink);
     }
 
@@ -697,16 +694,14 @@ article.post-reader {
       pre,
       table,
       .MathJax_Display,
-      .MJXc-display,
-      mjx-container[display="true"] {
+      .MJXc-display {
         margin-left: -0.5rem;
         margin-right: -0.5rem;
         max-width: calc(100% + 1rem);
       }
 
       .MathJax_Display,
-      .MJXc-display,
-      mjx-container[display="true"] {
+      .MJXc-display {
         padding: 1rem 0.85rem;
         text-align: left !important;
       }
@@ -741,8 +736,7 @@ article.post-reader {
       font-size: 11pt;
 
       .MathJax_Display,
-      .MJXc-display,
-      mjx-container[display="true"] {
+      .MJXc-display {
         background: transparent;
         break-inside: avoid;
       }
