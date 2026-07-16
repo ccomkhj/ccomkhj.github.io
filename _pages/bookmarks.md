@@ -39,6 +39,13 @@ _Collection of worthwhile readinglist._
 * [Streaming Systems](https://www.oreilly.com/library/view/streaming-systems/9781491983867/): The best conceptual treatment of real-time data processing—event time, watermarks, correctness, and design patterns that prevent subtle failures.
 * [Data Engineering Zoomcamp (DataTalksClub)](https://github.com/DataTalksClub/data-engineering-zoomcamp): Best free, end-to-end hands-on curriculum to build real pipelines (orchestration, warehousing, analytics engineering, batch + streaming).
 
+## Agent
+
+- [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents): Anthropic's practical, framework-neutral introduction to agent patterns and when to use them.
+- [RAG From Scratch](https://github.com/langchain-ai/rag-from-scratch): LangChain notebooks and videos covering indexing, retrieval, generation, routing, and query transformation from the ground up.
+- [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents): A practical guide to tasks, trials, graders, transcripts, nondeterminism, and maintaining useful agent evals.
+- [Welcome to the Hugging Face AI Agents Course](https://huggingface.co/learn/agents-course/unit0/introduction): A friendly course progressing from agent fundamentals to tools, frameworks, agentic RAG, observability, and evaluation.
+- [Introducing Contextual Retrieval](https://www.anthropic.com/engineering/contextual-retrieval): An intuitive explanation of contextual embeddings, BM25, and reranking for more accurate RAG retrieval.
 
 ## Ideas & Essays
 
