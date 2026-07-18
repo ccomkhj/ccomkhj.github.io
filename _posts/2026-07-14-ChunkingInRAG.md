@@ -3,8 +3,7 @@ layout: single
 author: Huijo
 date: 2026-07-14
 tags:
-  - Machine Learning
-  - RAG
+  - Agents
 classes: wide
 title: "Chunking in RAG: why 512 tokens is not a strategy"
 excerpt: "Chunking involves four separate decisions: which units exist, how search represents them, what context the LLM receives, and how the whole policy is tested."
