@@ -14,12 +14,44 @@ layout: default
     padding: 15px;
   }
 
+  .portfolio-intro {
+    background: #fff;
+    box-shadow: inset -1px -1px #fff, inset 1px 1px #808080,
+      inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    padding: 12px 14px;
+    text-align: center;
+  }
+
+  .portfolio-intro strong {
+    color: #000080;
+  }
+
   /* Grid Layout for Projects */
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 15px;
     margin-top: 15px;
+    margin-bottom: 28px;
+  }
+
+  .projects-grid--agent {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .projects-grid--agent .project-card--half {
+    grid-column: span 6;
+  }
+
+  .projects-grid--agent .project-card--third {
+    grid-column: span 4;
+  }
+
+  .projects-grid--applied,
+  .projects-grid--publications {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   /* Project Card Styling - mimicking a window or fieldset */
@@ -44,6 +76,31 @@ layout: default
     justify-content: space-between;
     align-items: center;
     margin-bottom: 5px;
+    gap: 8px;
+  }
+
+  .project-status {
+    background: #c0c0c0;
+    box-shadow: inset -1px -1px #808080, inset 1px 1px #fff;
+    color: #000;
+    flex: 0 0 auto;
+    font-size: 10px;
+    font-weight: normal;
+    line-height: 1.2;
+    padding: 2px 5px;
+    white-space: nowrap;
+  }
+
+  .project-status--maintained {
+    background: #c0ffc0;
+  }
+
+  .project-status--beta {
+    background: #ffffc0;
+  }
+
+  .project-status--prototype {
+    background: #dfdfdf;
   }
 
   /* Card Content */
@@ -68,6 +125,33 @@ layout: default
     margin-top: 5px;
     margin-bottom: 5px;
     padding-left: 20px;
+  }
+
+  .project-flow {
+    align-items: center;
+    background: #fff;
+    box-shadow: inset -1px -1px #fff, inset 1px 1px #808080,
+      inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+    display: flex;
+    flex-wrap: wrap;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    gap: 5px;
+    justify-content: center;
+    margin: 5px 8px 2px;
+    min-height: 52px;
+    padding: 9px;
+  }
+
+  .project-flow-step {
+    background: #c0c0c0;
+    box-shadow: inset -1px -1px #808080, inset 1px 1px #fff;
+    padding: 3px 6px;
+  }
+
+  .project-flow-arrow {
+    color: #000080;
+    font-weight: bold;
   }
 
   .project-tags {
@@ -104,6 +188,34 @@ layout: default
     text-decoration: underline;
   }
 
+  @media (max-width: 900px) {
+    .projects-grid--agent .project-card--half,
+    .projects-grid--agent .project-card--third {
+      grid-column: span 6;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .portfolio-intro {
+      text-align: left;
+    }
+
+    .projects-grid--agent,
+    .projects-grid--applied,
+    .projects-grid--publications {
+      grid-template-columns: 1fr;
+    }
+
+    .projects-grid--agent .project-card--half,
+    .projects-grid--agent .project-card--third {
+      grid-column: 1;
+    }
+
+    .project-title-bar {
+      align-items: flex-start;
+    }
+  }
+
 </style>
 
 <div id="main" role="main">
@@ -120,9 +232,9 @@ layout: default
         </div>
       </div>
       <div class="window-body">
-        <p style="text-align: center; margin-bottom: 20px;">
-          Fraction of my work that can be shared. Happy to share my work. Feel free to reach out to me if you need any assistance or have any questions.
-        </p>
+        <div class="portfolio-intro">
+          <strong>I build agent systems</strong> that plan, use tools, verify their work, and operate safely around code and data. Below are those systems, followed by selected ML, data, and research work.
+        </div>
         
         {{ content }}
       </div>

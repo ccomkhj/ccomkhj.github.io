@@ -8,7 +8,7 @@
 
   var PAGES = {
     about:     { url: "/about/",     blurb: "polymath journey, core pillars, things I'm proud of." },
-    portfolio: { url: "/portfolio/", blurb: "drone vision, 3D reconstruction, stereo, cancer detector." },
+    portfolio: { url: "/portfolio/", blurb: "agent workflows, self-improving harnesses, agentic ML, and applied systems." },
     writings:  { url: "/writings/",  blurb: "100+ posts on ML, forecasting, CV, MLOps, reflections." },
     bookmarks: { url: "/bookmarks/", blurb: "curated links worth keeping." },
     card:      { url: "/card/",      blurb: "terminal-style contact card." },
