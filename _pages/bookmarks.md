@@ -39,7 +39,7 @@ _Collection of worthwhile readinglist._
 * [Streaming Systems](https://www.oreilly.com/library/view/streaming-systems/9781491983867/): The best conceptual treatment of real-time data processing—event time, watermarks, correctness, and design patterns that prevent subtle failures.
 * [Data Engineering Zoomcamp (DataTalksClub)](https://github.com/DataTalksClub/data-engineering-zoomcamp): Best free, end-to-end hands-on curriculum to build real pipelines (orchestration, warehousing, analytics engineering, batch + streaming).
 
-## Agent
+**Agent**
 
 - [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents): Anthropic's practical, framework-neutral introduction to agent patterns and when to use them.
 - [RAG From Scratch](https://github.com/langchain-ai/rag-from-scratch): LangChain notebooks and videos covering indexing, retrieval, generation, routing, and query transformation from the ground up.
