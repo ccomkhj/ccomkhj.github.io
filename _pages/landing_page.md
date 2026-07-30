@@ -1,9 +1,5 @@
 ---
-layout: splash  
-permalink: /  
-author_profile: true  
-classes: none  
-title: "A Space for Thoughts"  
+layout: win98_desktop
+permalink: /
+title: "A Space for Thoughts"
 ---
-
-{% include terminal_shell.html %}

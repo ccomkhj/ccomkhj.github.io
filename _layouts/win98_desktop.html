@@ -1,0 +1,366 @@
+---
+layout: default
+---
+
+<style>
+  /* The desktop icons replace the site nav on this page */
+  .layout--win98_desktop .masthead {
+    display: none;
+  }
+
+  .desktop98 {
+    position: relative;
+    background: #008080;
+    min-height: 82vh;
+    font-family: "Pixelated MS Sans Serif", Arial, sans-serif;
+    overflow: hidden;
+    padding: 16px 16px 46px 16px; /* bottom padding clears the taskbar */
+  }
+
+  /* --- Desktop icons --- */
+  .desktop98-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    float: left;
+    margin-right: 24px;
+  }
+  .desktop98-icon {
+    width: 84px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .desktop98-icon .icon-glyph {
+    font-size: 32px;
+    line-height: 1;
+    display: block;
+    filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.5));
+  }
+  .desktop98-icon .icon-label {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 1px 3px;
+    font-size: 12px;
+    color: #fff;
+    text-shadow: 1px 1px 0 #000;
+  }
+  .desktop98-icon:hover .icon-label,
+  .desktop98-icon:focus .icon-label {
+    background: #000080;
+    outline: 1px dotted #ffff00;
+  }
+
+  /* --- MS-DOS Prompt window --- */
+  .window-dos {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .window-dos .window-body {
+    padding: 4px;
+  }
+  .window-dos .terminal-container {
+    height: 420px;
+    min-height: 0;
+    border-radius: 0;
+    box-shadow: none;
+    border: inset 2px;
+    padding: 10px;
+  }
+  .window-dos .terminal-input-line {
+    display: none; /* engine flips this to flex after boot */
+    align-items: baseline;
+  }
+
+  /* --- Taskbar --- */
+  .taskbar98 {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 34px;
+    background: #c0c0c0;
+    border-top: 2px solid #fff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 4px;
+    z-index: 50;
+  }
+  .taskbar98 .start-button {
+    font-weight: bold;
+    min-width: 64px;
+    height: 26px;
+  }
+  .taskbar98 .task-item {
+    height: 26px;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .taskbar98 .task-clock {
+    margin-left: auto;
+    border: 1px solid;
+    border-color: #808080 #fff #fff #808080;
+    padding: 3px 10px;
+    font-size: 12px;
+    min-width: 58px;
+    text-align: center;
+  }
+
+  /* --- Start menu --- */
+  .startmenu98 {
+    position: absolute;
+    bottom: 36px;
+    left: 4px;
+    width: 220px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #fff #000 #000 #fff;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+    display: none;
+    z-index: 60;
+  }
+  .startmenu98.open { display: flex; }
+  .startmenu98 .startmenu-side {
+    background: linear-gradient(#000080, #1084d0);
+    color: #fff;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-weight: bold;
+    font-size: 16px;
+    padding: 8px 2px;
+    letter-spacing: 1px;
+  }
+  .startmenu98 ul {
+    list-style: none;
+    margin: 0;
+    padding: 2px;
+    flex-grow: 1;
+  }
+  .startmenu98 li a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    font-size: 13px;
+    color: #000;
+    text-decoration: none;
+  }
+  .startmenu98 li a:hover {
+    background: #000080;
+    color: #fff;
+  }
+  .startmenu98 hr {
+    margin: 2px 4px;
+    border: none;
+    border-top: 1px solid #808080;
+    border-bottom: 1px solid #fff;
+  }
+
+  /* --- Boot splash --- */
+  .boot98 {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    color: #c0c0c0;
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+    padding: 24px;
+    z-index: 9999;
+    cursor: pointer;
+    white-space: pre-wrap;
+    line-height: 1.5;
+  }
+  .boot98 .boot-line { display: block; opacity: 0; animation: bootline 1ms forwards; }
+  .boot98 .boot-line:nth-child(1) { animation-delay: 0ms; }
+  .boot98 .boot-line:nth-child(2) { animation-delay: 250ms; }
+  .boot98 .boot-line:nth-child(3) { animation-delay: 650ms; }
+  .boot98 .boot-line:nth-child(4) { animation-delay: 1000ms; }
+  .boot98 .boot-line:nth-child(5) { animation-delay: 1350ms; }
+  .boot98 .boot-line:nth-child(6) { animation-delay: 1650ms; }
+  @keyframes bootline { to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    .boot98 { display: none; }
+  }
+
+  /* --- Shutdown screen --- */
+  .shutdown98 {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    color: #ffa500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Courier New", monospace;
+    font-size: clamp(16px, 3vw, 28px);
+    z-index: 9999;
+    cursor: pointer;
+  }
+  .shutdown98.on { display: flex; }
+
+  /* --- Mobile --- */
+  @media (max-width: 700px) {
+    .desktop98-icons {
+      float: none;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin: 0 0 14px 0;
+    }
+    .desktop98-icon { width: 72px; }
+    .window-dos .terminal-container { height: 320px; }
+  }
+</style>
+
+<div id="boot98" class="boot98" hidden>
+  <span class="boot-line">ccomkhj BIOS v4.51PG, An Energy Star Ally</span>
+  <span class="boot-line">Memory Test :  65536K OK</span>
+  <span class="boot-line">Detecting IDE Primary Master ... CCOMKHJ.GITHUB.IO</span>
+  <span class="boot-line">Loading HUIJO.SYS .......... OK</span>
+  <span class="boot-line">Starting Windows 98 ...</span>
+  <span class="boot-line">_</span>
+</div>
+
+<div class="desktop98">
+  <nav class="desktop98-icons" aria-label="Desktop shortcuts">
+    <a class="desktop98-icon" href="{{ '/writings/' | relative_url }}">
+      <span class="icon-glyph">🗄️</span>
+      <span class="icon-label">Writings</span>
+    </a>
+    <a class="desktop98-icon" href="{{ '/tags/' | relative_url }}">
+      <span class="icon-glyph">📁</span>
+      <span class="icon-label">Tags</span>
+    </a>
+    <a class="desktop98-icon" href="{{ '/portfolio/' | relative_url }}">
+      <span class="icon-glyph">💼</span>
+      <span class="icon-label">Portfolio</span>
+    </a>
+    <a class="desktop98-icon" href="{{ '/bookmarks/' | relative_url }}">
+      <span class="icon-glyph">🔖</span>
+      <span class="icon-label">Bookmarks</span>
+    </a>
+    <a class="desktop98-icon" href="{{ '/about/' | relative_url }}">
+      <span class="icon-glyph">👤</span>
+      <span class="icon-label">About Me</span>
+    </a>
+  </nav>
+
+  <div class="window window-dos">
+    <div class="title-bar">
+      <div class="title-bar-text">MS-DOS Prompt</div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize"></button>
+        <button aria-label="Maximize" onclick="window.location.href='{{ '/terminal/' | relative_url }}'"></button>
+        <button aria-label="Close"></button>
+      </div>
+    </div>
+    <div class="window-body">
+      <div id="terminal-container" class="terminal-container">
+        <div id="terminal-output"></div>
+        <div id="terminal-input-line" class="terminal-input-line">
+          <span class="terminal-prompt">whoami@huijo.xyz:~$</span>
+          <input type="text" id="terminal-input" class="terminal-input"
+                 autocomplete="off" spellcheck="false" aria-label="terminal input">
+        </div>
+      </div>
+      <noscript>
+        <div style="background: #fff; border: inset 2px; padding: 8px;">
+          <p>JavaScript is disabled. The essentials:</p>
+          <ul>
+            <li><a href="{{ '/writings/' | relative_url }}">writings</a></li>
+            <li><a href="{{ '/about/' | relative_url }}">about</a></li>
+            <li><a href="{{ '/portfolio/' | relative_url }}">portfolio</a></li>
+            <li><a href="{{ '/bookmarks/' | relative_url }}">bookmarks</a></li>
+          </ul>
+        </div>
+      </noscript>
+      <div class="status-bar" style="margin-top: 4px;">
+        <p class="status-bar-field">{{ site.posts | size }} post(s) indexed</p>
+        <p class="status-bar-field">try: help · ls writings · find &lt;query&gt;</p>
+      </div>
+    </div>
+  </div>
+
+  {{ content }}
+
+  <div id="startmenu" class="startmenu98" role="menu">
+    <div class="startmenu-side">ccomkhj&nbsp;98</div>
+    <ul>
+      <li><a href="{{ '/writings/' | relative_url }}">🗄️ Writings</a></li>
+      <li><a href="{{ '/tags/' | relative_url }}">📁 Tags</a></li>
+      <li><a href="{{ '/portfolio/' | relative_url }}">💼 Portfolio</a></li>
+      <li><a href="{{ '/bookmarks/' | relative_url }}">🔖 Bookmarks</a></li>
+      <li><a href="{{ '/about/' | relative_url }}">👤 About Me</a></li>
+      <li><a href="{{ '/terminal/' | relative_url }}">🖥️ MS-DOS Prompt (Full Screen)</a></li>
+      <hr>
+      <li><a href="{{ '/feed.xml' | relative_url }}">📡 RSS Feed</a></li>
+      <li><a href="#" id="shutdown-link">🔌 Shut Down...</a></li>
+    </ul>
+  </div>
+
+  <div class="taskbar98">
+    <button class="start-button" id="start-button" aria-haspopup="menu">🪟 Start</button>
+    <button class="task-item" onclick="document.getElementById('terminal-input').focus()">🖥️ MS-DOS Prompt</button>
+    <div class="task-clock" id="task-clock">--:--</div>
+  </div>
+</div>
+
+<div id="shutdown98" class="shutdown98">It's now safe to turn off<br>your computer.</div>
+
+<script src="{{ '/assets/js/terminal-commands.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/terminal-shell.js' | relative_url }}"></script>
+<script>
+  (function () {
+    /* Boot splash: once per browser session, skippable, skipped for reduced motion */
+    var boot = document.getElementById('boot98');
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function endBoot() {
+      if (boot) { boot.remove(); boot = null; }
+      document.removeEventListener('keydown', endBoot);
+    }
+    if (!reduced && !sessionStorage.getItem('booted98')) {
+      sessionStorage.setItem('booted98', '1');
+      boot.hidden = false;
+      boot.addEventListener('click', endBoot);
+      document.addEventListener('keydown', endBoot);
+      setTimeout(endBoot, 2300);
+    } else if (boot) {
+      boot.remove();
+    }
+
+    /* Start menu */
+    var startBtn = document.getElementById('start-button');
+    var menu = document.getElementById('startmenu');
+    startBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      menu.classList.toggle('open');
+      startBtn.setAttribute('aria-expanded', menu.classList.contains('open'));
+    });
+    document.addEventListener('click', function (e) {
+      if (!menu.contains(e.target)) menu.classList.remove('open');
+    });
+
+    /* Shut down easter egg */
+    var shutdown = document.getElementById('shutdown98');
+    document.getElementById('shutdown-link').addEventListener('click', function (e) {
+      e.preventDefault();
+      menu.classList.remove('open');
+      shutdown.classList.add('on');
+    });
+    shutdown.addEventListener('click', function () {
+      shutdown.classList.remove('on');
+    });
+
+    /* Taskbar clock */
+    var clock = document.getElementById('task-clock');
+    function tick() {
+      var d = new Date();
+      clock.textContent = ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+    }
+    tick();
+    setInterval(tick, 30000);
+  })();
+</script>
