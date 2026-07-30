@@ -3,8 +3,8 @@
 layout: single  
 author: Huijo  
 date: 2025-06-30
-tags:  
-   - Science
+tags:
+  - Career
 classes: wide  
 title: "Real experiment over job search"
 

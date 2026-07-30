@@ -3,7 +3,7 @@ layout: single
 author: Huijo  
 date: 2025-11-20
 tags:
-   - Philosophy
+  - Career
 classes: wide  
 title: "Role of Experience in AI era"
 excerpt: "Why LLMs are unreliable judges of feasibility, and how to find the impact bottleneck of an ML project before tuning the model."

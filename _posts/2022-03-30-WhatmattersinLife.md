@@ -4,7 +4,8 @@ classes: wide
 title:  "What matters in life?"
 date: 2022-03-30
 tags:
-    - Philosophy
+  - Career
+  - Mindset
 ---
 
 # What matters in life?

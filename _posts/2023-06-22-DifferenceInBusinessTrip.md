@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2023-06-22
 tags:
-   - Philosophy
+  - Mindset
 classes: wide
 title:  What makes difference in Business tip and travel
 ---

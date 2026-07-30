@@ -3,7 +3,8 @@ layout: single
 author: Huijo
 date: 2023-11-21
 tags:
-   - Philosophy
+  - Mindset
+  - Reading
 classes: wide
 title:  니체
 ---

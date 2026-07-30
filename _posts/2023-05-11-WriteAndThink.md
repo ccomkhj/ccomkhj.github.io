@@ -4,7 +4,7 @@ classes: wide
 author: Huijo
 date: 2023-05-11
 tags:
-   - Philosophy
+  - Growth
 title:  "Relation between Writing and Thinking"
 ---
 

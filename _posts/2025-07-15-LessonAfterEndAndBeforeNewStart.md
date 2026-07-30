@@ -3,8 +3,8 @@
 layout: single  
 author: Huijo  
 date: 2025-07-15
-tags:  
-   - Philosophy
+tags:
+  - Career
 classes: wide  
 title: "Lesson After End and Before New Start"  
 

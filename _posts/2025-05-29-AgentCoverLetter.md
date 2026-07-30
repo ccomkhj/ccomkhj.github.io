@@ -3,8 +3,9 @@
 layout: single  
 author: Huijo  
 date: 2025-05-29
-tags:  
-   - Programing
+tags:
+  - Agents
+  - Engineering
 classes: wide  
 title: "Job Applications with AI: My Cover Letter Generation Agent"  
 

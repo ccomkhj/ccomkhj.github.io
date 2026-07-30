@@ -3,8 +3,8 @@ layout: single
 author: Huijo
 date: 2026-07-30
 tags:
-  - Security
-  - MCP
+  - Engineering
+  - Agents
 classes: wide
 title: "What's inside that token? JWT explained with a boarding pass"
 excerpt: "I built an OAuth 2.0 server with Keycloak for our MCP setup. Here is what a JWT actually carries — issuer, audience, roles — and how we pack our own facts into it: environment, customer, and fine-grained permissions."

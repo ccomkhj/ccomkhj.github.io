@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2023-10-23
 tags:
-   - Philosophy
+  - Mindset
 classes: wide
 title:  Get Rid Of Emotion
 ---

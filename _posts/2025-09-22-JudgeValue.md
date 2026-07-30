@@ -3,8 +3,8 @@ layout: single
 author: Huijo  
 date: 2025-9-22
 tags:
-   - Philosophy
-   - Business
+  - Career
+  - Business
 classes: wide  
 title: "Judge the value of your company"
 excerpt: "How private-market valuation actually works for an early-stage startup once the founder steps away — and why the textbook revenue/profit multiples don't apply when profit is negative by design."

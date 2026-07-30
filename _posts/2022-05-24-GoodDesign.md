@@ -4,7 +4,7 @@ classes: wide
 title:  "Good Design"
 date: 2022-05-24
 tags:
-    - Philosophy
+  - Growth
 ---
 
 <b>좋은 디자인은 시간에 구애받지 않는다.</b><br />

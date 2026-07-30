@@ -3,8 +3,8 @@ layout: single
 author: Huijo  
 date: 2025-11-1
 tags:
-   - Philosophy
-   - Reading
+  - Mindset
+  - Reading
 classes: wide  
 title: "Self Image: The way you conceive yourself is what you will be."
 excerpt: "Why the same person looked extroverted to college friends and introverted to friends from age 25 — and what *Psycho-Cybernetics* says about self-image as the real driver behind that gap."

@@ -4,7 +4,8 @@ classes: wide
 author: Huijo
 date: 2023-05-21
 tags:
-   - Business
+  - Business
+  - Society
 title:  "Second Thought: Gig Economy"
 ---
 

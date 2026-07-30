@@ -3,8 +3,7 @@ layout: single
 author: Huijo  
 date: 2025-8-25
 tags:
-   - Machine Learning
-   - Philosophy
+  - Machine Learning
 classes: wide  
 title: "Role of AI&ML in forecasting"
 excerpt: "Why deep learning usually loses to simpler statistical models in time-series forecasting, and how to handle the gap honestly when investors only want to hear about AI."

@@ -3,8 +3,8 @@
 layout: single  
 author: Huijo  
 date: 2025-07-31
-tags:  
-   - Programing
+tags:
+  - Engineering
 classes: wide  
 title: "How to review code in data science"  
 

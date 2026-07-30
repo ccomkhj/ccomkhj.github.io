@@ -4,7 +4,7 @@ classes: wide
 title:  "Learning Language"
 date: 2022-04-10
 tags:
-    - Philosophy
+  - Growth
 ---
 
 # My lesson in learning new languages

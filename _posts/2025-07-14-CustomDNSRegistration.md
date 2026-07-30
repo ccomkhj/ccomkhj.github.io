@@ -3,8 +3,8 @@
 layout: single  
 author: Huijo  
 date: 2025-07-14
-tags:  
-   - Math
+tags:
+  - Engineering
 classes: wide  
 title: "How to Set Up a Custom Domain on GitHub Pages with Namecheap"  
 

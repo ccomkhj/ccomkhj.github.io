@@ -4,7 +4,8 @@ classes: wide
 author: Huijo
 date: 2023-05-05
 tags:
-   - Philosophy
+  - Mindset
+  - Reading
 title:  "Train Brain first"
 ---
 

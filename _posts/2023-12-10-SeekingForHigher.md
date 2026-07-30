@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2023-12-10
 tags:
-   - Philosophy
+  - Mindset
 classes: wide
 title:  Seeking for Higher
 ---

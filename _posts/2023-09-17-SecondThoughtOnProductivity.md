@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2023-09-17
 tags:
-   - Philosophy
+  - Growth
 classes: wide
 title:  Second Thought On Productivity
 ---

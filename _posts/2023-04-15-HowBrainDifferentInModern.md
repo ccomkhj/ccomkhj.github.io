@@ -4,7 +4,8 @@ classes: wide
 author: Huijo
 date: 2023-04-15
 tags:
-   - Philosophy
+  - Mindset
+  - Society
 title:  "How brain changes"
 
 ---

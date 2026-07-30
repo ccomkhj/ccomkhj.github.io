@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2024-12-28
 tags:
-   - Programing
+  - Engineering
 classes: wide
 title: Data Science in Elixir
 ---

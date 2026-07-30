@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2023-08-13
 tags:
-   - Philosophy
+  - Mindset
 classes: wide
 title:  How to control your mindset after vacation
 ---

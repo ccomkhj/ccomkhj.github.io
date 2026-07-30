@@ -3,8 +3,8 @@
 layout: single  
 author: Huijo  
 date: 2025-06-03
-tags:  
-   - Programing
+tags:
+  - Engineering
 classes: wide  
 title: "How to Use Obsidian using Gdrive as Valut in Linux"  
 

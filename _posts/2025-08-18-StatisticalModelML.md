@@ -3,8 +3,8 @@ layout: single
 author: Huijo  
 date: 2025-8-18
 tags:
-   - Machine Learning
-   - Mathematics
+  - Machine Learning
+  - Math
 classes: wide  
 title: "Statistical Modeling and Objective function"
 excerpt: "Why MSE quietly assumes Gaussian residuals, and what to reach for instead when your forecasting errors aren't symmetric — a practical tour of loss functions and the distributional bets they make for you."

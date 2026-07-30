@@ -3,7 +3,7 @@ layout: single
 author: Huijo
 date: 2024-08-11
 tags:
-   - Philosophy
+  - Machine Learning
 classes: wide
 title: Limitations of Autoregressive LLMs
 ---

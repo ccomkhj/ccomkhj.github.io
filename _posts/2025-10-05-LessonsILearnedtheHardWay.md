@@ -3,8 +3,8 @@ layout: single
 author: Huijo  
 date: 2025-10-05
 tags:
-   - Philosophy
-   - Business
+  - Career
+  - Business
 classes: wide  
 title: "From Founder to Leader: Lessons I Learned the Hard Way"
 excerpt: "Five leadership habits I would practice differently if I co-founded another startup tomorrow — drawn from running an early-stage team without prior management experience."

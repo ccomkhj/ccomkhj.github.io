@@ -4,7 +4,7 @@ classes: wide
 title:  "Lessons from myself"
 date: 2022-04-30
 tags:
-    - Philosophy
+  - Mindset
 ---
 
 
