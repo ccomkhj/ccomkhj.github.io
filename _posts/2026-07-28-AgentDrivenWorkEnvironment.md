@@ -81,6 +81,14 @@ My own rule: every time a session passes 200k, I stop and decide. Either I `/com
 
 Treat your context like your baby. Feed it only what it needs. And `/rewind` is not an emergency exit you use once a month. It is how you undo a bad turn before it contaminates everything after it.
 
+### The tokens you paid before you typed anything
+
+Everything above is about the session you are already in. Some of your context is gone before that. Every skill you install puts a `- name: description` line into a listing that goes out with every turn, whether you use the skill or not. Plugins and MCP servers cost you the same way.
+
+That listing sits at the very front of the window, which is the position the graph above says matters most. So if you have a hundred skills installed and use four, your best context is spent describing ninety-six things that will never run. The unused ones also give the agent more wrong answers to pick from.
+
+I built [context-saver](https://github.com/ccomkhj/context-saver) because I wanted to see the number. It is a local single-file UI that shows what each skill, plugin and MCP server costs you in always-paid tokens, and lets you switch off what you do not use. You click, review the diff, and it writes `~/.claude/settings.json` with a backup. You can also set a skill to name-only or user-invocable-only, so it stops advertising itself but still works when you ask for it.
+
 Context management is the lowest hanging fruit in getting more out of an agent. It costs nothing except discipline.
 
 ## Save your attention
