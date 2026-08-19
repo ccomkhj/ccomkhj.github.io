@@ -11,6 +11,7 @@ _Collection of worthwhile readinglist._
 ## Engineering
 
 **Forecasting**
+
 - [Hyndsight](https://robjhyndman.com/hyndsight/): Blog by Rob Hyndman, a leading expert in time series analysis.
   - [Optimally Reconciling Forecasts in a Hierarchy](https://robjhyndman.com/papers/Foresight-hts-final.pdf)
 - [Time Series Analysis and Its Applications](http://www.stat.ucla.edu/~frederic/415/S23/tsa4.pdf): A comprehensive book for time series analysis.
@@ -26,6 +27,7 @@ _Collection of worthwhile readinglist._
 
 
 **Machine Learning**
+
 - [Interpretable Machine Learning](https://originalstatic.aminer.cn/misc/pdf/Molnar-interpretable-machine-learning_compressed.pdf): the Bible of interpretability. It’s been cited everywhere, even in scikit-learn’s docs.
 - [Mathematics for Machine Learning](https://mml-book.github.io/book/mml-book.pdf): Essential math (linear algebra, calculus, probability) for ML in an accessible format.
 - [The Elements of Statistical Learning: Data Mining, Inference, and Prediction](https://www.sas.upenn.edu/~fdiebold/NoHesitations/BookAdvanced.pdf): Foundational statistical learning theory and methods, rigorous but dense.
@@ -56,6 +58,8 @@ _Collection of worthwhile readinglist._
 
 ## Strategy & Growth
 
+**Strategy & Business Analysis**
+
 - [Stratechery by Ben Thompson](https://stratechery.com/): Deep analysis of tech and business strategy.
 - [First Round Review](https://review.firstround.com/): Actionable insights for building great companies.
 - [Farnam Street (FS.blog)](https://fs.blog/): Mastering the best of what other people have already figured out.
@@ -63,6 +67,18 @@ _Collection of worthwhile readinglist._
 - [Lenny's Newsletter](https://www.lennysnewsletter.com/): Lenny Rachitsky's insights on product management and growth.
 - [The Generalist](https://www.generalist.com/): In-depth analysis of startups and tech trends.
 - [Andrew Chen's Newsletter](https://andrewchen.substack.com/): Andrew Chen's insights on startups, growth, and technology.
+
+**Customer Discovery & Product Development**
+
+- [The Mom Test](https://www.momtestbook.com/): Rob Fitzpatrick on interviewing without collecting false validation — ask about past behaviour and concrete problems, never "would you use this?". Read first: shortest path from opinions to facts.
+- [Continuous Discovery Habits](https://www.producttalk.org/continuous-discovery-habits/): Teresa Torres turns interviewing into a weekly habit and maps the stories onto an opportunity solution tree. Read for the synthesis step — what to actually do with twenty transcripts.
+  - [Product Talk](https://www.producttalk.org/): her free material on story-based interviewing, participant selection, and keeping the cadence.
+- [Steve Blank — Customer Discovery](https://steveblank.com/tag/customer-discovery/): Customer Development treats interviews as tests of hypotheses about customer, problem, and business model — not as feature requests. Read for *why* I'm interviewing at all.
+  - [The Non-Dummies Guide to Customer Discovery](https://steveblank.com/2010/08/26/the-non-dummies-guide-to-customer-discovery/)
+- [Interviewing Users](https://rosenfeldmedia.com/books/interviewing-users-second-edition/): Steve Portigal on the craft — rapport, silence, follow-up probes, reading the room. Read for the skill the other books assume I already have.
+- [Talking to Humans](https://www.talkingtohumans.com/): Giff Constable, who to talk to and how to get the meeting. Read for recruiting, the part everyone else skips.
+- [NN/g — Interviewing Users](https://www.nngroup.com/topic/interviewing-users/): Mechanics of question wording, interview structure, and common mistakes. Read for technique only — it assumes an existing product and a research function.
+- [Demand-Side Sales 101](https://therewiredgroup.com/learn/demand-side-sales-101/): Bob Moesta's Jobs-to-be-Done timeline interviews, reconstructing what actually led someone to buy. Read for a concrete interview structure that pairs with Torres.
 
 ## Finance
 
