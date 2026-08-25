@@ -23,6 +23,13 @@ minimal_mistakes_skin    : "air" # "air", "aqua", "contrast", "dark", "dirt", "n
 #     output: true
 #     permalink: /blog/:path/
 
+# German vocabulary Sessions, one file per Source. Unlisted: reachable by URL only.
+# See docs/superpowers/specs/2026-08-25-learn-german-design.md and .claude/skills/german/SKILL.md
+collections:
+  learn_german:
+    output: true
+    permalink: /learn/german/:name/
+
 
 
 # Site Settings
@@ -194,6 +201,8 @@ exclude:
   - tmp
   - /docs # ignore Minimal Mistakes /docs
   - /test # ignore Minimal Mistakes /test
+  - /scripts # build checks + fixtures (just check-german)
+  - CONTEXT.md # domain vocabulary for agents, not a page
 keep_files:
   - .git
   - .svn
@@ -317,5 +326,19 @@ defaults:
       layout: single
       author_profile: true
       mathjax: true # keep it true only when math equation is used.
+  # _learn_german — unlisted German vocabulary Sessions.
+  # To publish the section later: drop sitemap/search/robots below and in
+  # _pages/learn_german.md, then add a nav entry in _data/navigation.yml.
+  # source.date is mandatory in every Session: the index sorts on it and the build fails without it.
+  - scope:
+      path: ""
+      type: learn_german
+    values:
+      layout: german_session
+      author_profile: false
+      classes: wide
+      sitemap: false
+      search: false
+      robots: noindex
 
 github: [metadata]

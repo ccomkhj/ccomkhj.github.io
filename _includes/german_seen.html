@@ -1,0 +1,29 @@
+{%- comment -%}
+  Renders a Seen sentence with the Word's stem wrapped in <mark>, best-effort.
+  Params: include.word (headword), include.seen (the sentence).
+  Case-insensitive; falls back to the plain sentence when the stem is not found.
+  Also tries the stem minus its last two characters so "leisten" still matches
+  "leistet".
+{%- endcomment -%}
+{%- assign seen = include.seen | strip -%}
+{%- capture stem %}{% include german_stem.html word=include.word %}{% endcapture -%}
+{%- assign seen_down = seen | downcase -%}
+{%- assign stem_down = stem | downcase -%}
+{%- assign found = "" -%}
+{%- if stem_down.size >= 3 and seen_down contains stem_down -%}
+  {%- assign found = stem_down -%}
+{%- elsif stem_down.size >= 6 -%}
+  {%- assign shorter_len = stem_down.size | minus: 2 -%}
+  {%- assign shorter = stem_down | slice: 0, shorter_len -%}
+  {%- if seen_down contains shorter -%}{%- assign found = shorter -%}{%- endif -%}
+{%- endif -%}
+{%- if found == "" -%}
+  {{- seen | escape -}}
+{%- else -%}
+  {%- assign before_len = seen_down | split: found | first | size -%}
+  {%- assign after_start = before_len | plus: found.size -%}
+  {%- assign before = seen | slice: 0, before_len -%}
+  {%- assign match = seen | slice: before_len, found.size -%}
+  {%- assign after = seen | slice: after_start, seen.size -%}
+  {{- before | escape -}}<mark>{{ match | escape }}</mark>{{- after | escape -}}
+{%- endif -%}

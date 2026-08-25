@@ -1,0 +1,95 @@
+---
+layout: default
+---
+{%- comment -%}
+  Index of German vocabulary Sessions: newest-first list, then the A–Z Glossary.
+  Pure Liquid over frontmatter; no JavaScript.
+{%- endcomment -%}
+<link rel="stylesheet" href="{{ '/assets/css/learn-german.css' | relative_url }}">
+
+{%- comment -%} Sessions newest-first by Source date {%- endcomment -%}
+{%- assign sessions = site.learn_german | sort: "source.date" | reverse -%}
+
+{%- comment -%}
+  Glossary: one string per Entry "sortkey<TAB>word<TAB>date<TAB>url<TAB>title", sorted.
+  The sort key is the Word's stem (see german_stem.html), lowercased with umlauts
+  folded, so "die Prüfung" sorts under P and "sich (Dat.) etw. leisten" under L.
+  A literal TAB separates fields because it sorts below every letter (so
+  "antrag" stays ahead of "antragsteller"); date precedes url so a repeated
+  Word's links come out in Source-date order.
+{%- endcomment -%}
+{%- assign SEP = "	" -%}
+{%- assign items = "" | split: "" -%}
+{%- for s in site.learn_german -%}
+  {%- for e in s.entries -%}
+    {%- assign word = e.word | strip -%}
+    {%- if word == "" -%}{%- continue -%}{%- endif -%}
+    {%- capture key %}{% include german_stem.html word=word %}{% endcapture -%}
+    {%- assign key = key | downcase | replace: "ä", "a" | replace: "ö", "o" | replace: "ü", "u" | replace: "ß", "ss" -%}
+    {%- capture item -%}{{ key }}{{ SEP }}{{ word }}{{ SEP }}{{ s.source.date | date: '%Y-%m-%d' }}{{ SEP }}{{ s.url }}{{ SEP }}{{ s.title }}{%- endcapture -%}
+    {%- assign items = items | push: item -%}
+  {%- endfor -%}
+{%- endfor -%}
+{%- assign items = items | sort -%}
+
+<div id="main" role="main">
+  {% include sidebar.html %}
+
+  <article class="page german" itemscope itemtype="https://schema.org/CreativeWork">
+    <div class="page__inner-wrap">
+      <header class="german-header">
+        <h1 id="page-title" class="page__title" itemprop="headline">{{ page.title | default: "Learn German" | escape }}</h1>
+        <p class="german-meta">{{ sessions | size }} sessions <span class="german-meta__sep">&middot;</span> {{ items | size }} entries</p>
+      </header>
+
+      <section class="page__content">
+        <section class="german-sessions">
+          <h2>Sessions</h2>
+          {%- if sessions.size == 0 %}
+          <p class="german-empty">No Sessions yet. Add a file to <code>_learn_german/</code>.</p>
+          {%- else %}
+          <ol class="german-session-list">
+            {%- for s in sessions %}
+            <li class="german-session-item">
+              <a class="german-session-item__link" href="{{ s.url | relative_url }}">
+                <time class="german-session-item__date" datetime="{{ s.source.date | date: '%Y-%m-%d' }}">{{ s.source.date | date: '%Y-%m-%d' }}</time>
+                <span class="german-session-item__title">{{ s.title | escape }}</span>
+                <span class="german-session-item__meta">{% if s.source.type %}{{ s.source.type | escape }} <span class="german-meta__sep">&middot;</span> {% endif %}{{ s.entries | size }} {% if s.entries.size == 1 %}word{% else %}words{% endif %}</span>
+              </a>
+            </li>
+            {%- endfor %}
+          </ol>
+          {%- endif %}
+        </section>
+
+        <section class="german-glossary">
+          <h2>Glossary</h2>
+          {%- if items.size == 0 %}
+          <p class="german-empty">No Words yet.</p>
+          {%- else %}
+          <ul class="german-glossary__list">
+            {%- assign prev_word = "" -%}
+            {%- assign prev_letter = "" -%}
+            {%- for item in items -%}
+              {%- assign f = item | split: SEP -%}
+              {%- assign word = f[1] -%}
+              {%- assign letter = f[0] | slice: 0, 1 | upcase -%}
+              {%- if word != prev_word -%}
+                {%- unless forloop.first %}</span></li>{% endunless %}
+                {%- if letter != prev_letter %}
+            <li class="german-glossary__letter" aria-hidden="true">{{ letter }}</li>
+                {%- endif %}
+            <li class="german-glossary__item"><span class="german-glossary__word">{{ word | escape }}</span> <span class="german-glossary__links">
+              {%- endif -%}
+              <a href="{{ f[3] | relative_url }}" title="{{ f[4] | escape }}">{{ f[2] }}</a>
+              {%- assign prev_word = word -%}
+              {%- assign prev_letter = letter -%}
+            {%- endfor %}</span></li>
+          </ul>
+          {%- endif %}
+        </section>
+        {{ content }}
+      </section>
+    </div>
+  </article>
+</div>

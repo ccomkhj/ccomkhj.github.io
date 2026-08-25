@@ -1,0 +1,68 @@
+---
+layout: default
+---
+{%- comment -%}
+  One German vocabulary Session (see docs/superpowers/specs/2026-08-25-learn-german-design.md).
+  Renders entirely from frontmatter: one card per Entry, Quiz mode by default.
+  With JavaScript disabled everything is visible (html lacks the .js class).
+{%- endcomment -%}
+<link rel="stylesheet" href="{{ '/assets/css/learn-german.css' | relative_url }}">
+
+<div id="main" role="main">
+  {% include sidebar.html %}
+
+  <article class="page german" data-german-session itemscope itemtype="https://schema.org/CreativeWork">
+    <div class="page__inner-wrap">
+      <header class="german-header">
+        <p class="german-breadcrumb"><a href="{{ '/learn/german/' | relative_url }}">&larr; Learn German</a></p>
+        <h1 id="page-title" class="page__title" itemprop="headline">{{ page.title | escape }}</h1>
+        <p class="german-meta">
+          {%- if page.source.date -%}
+            <time datetime="{{ page.source.date | date: '%Y-%m-%d' }}">{{ page.source.date | date: '%B %-d, %Y' }}</time>
+          {%- endif -%}
+          {%- if page.source.type %} <span class="german-meta__sep">&middot;</span> {{ page.source.type | escape }}{% endif %}
+          <span class="german-meta__sep">&middot;</span> {{ page.entries | size }} {% if page.entries.size == 1 %}word{% else %}words{% endif %}
+          {%- if page.source.url %} <span class="german-meta__sep">&middot;</span> <a href="{{ page.source.url }}" target="_blank" rel="noopener">Source <span aria-hidden="true">&nearr;</span></a>{% endif %}
+        </p>
+        <button type="button" class="german-toggle-all" data-german-toggle-all aria-pressed="false">Show all</button>
+      </header>
+
+      <section class="page__content">
+        <ol class="german-cards">
+          {%- for entry in page.entries %}
+          <li class="german-card" data-german-card>
+            <button type="button" class="german-card__word" data-german-card-toggle aria-expanded="false" aria-controls="german-entry-{{ forloop.index }}">
+              <span class="german-card__index" aria-hidden="true">{{ forloop.index }}</span>
+              <span class="german-card__headword">{{ entry.word | escape }}</span>
+              <span class="german-card__chevron" aria-hidden="true">&#9656;</span>
+            </button>
+            <div class="german-card__hidden" id="german-entry-{{ forloop.index }}">
+              {%- if entry.meaning and entry.meaning != "" %}
+              <p class="german-card__meaning">{{ entry.meaning | escape }}</p>
+              {%- else %}
+              <p class="german-card__meaning german-card__meaning--pending">meaning pending &mdash; run <code>/german</code></p>
+              {%- endif %}
+              {%- if entry.seen and entry.seen != "" %}
+              <p class="german-card__seen">{% include german_seen.html word=entry.word seen=entry.seen %}</p>
+              {%- endif %}
+              {%- if entry.examples and entry.examples.size > 0 %}
+              <ul class="german-card__examples">
+                {%- for example in entry.examples %}
+                <li>{{ example | escape }}</li>
+                {%- endfor %}
+              </ul>
+              {%- endif %}
+              {%- if entry.note and entry.note != "" %}
+              <p class="german-card__note">{{ entry.note | escape }}</p>
+              {%- endif %}
+            </div>
+          </li>
+          {%- endfor %}
+        </ol>
+        {{ content }}
+      </section>
+    </div>
+  </article>
+</div>
+
+<script src="{{ '/assets/js/learn-german.js' | relative_url }}" defer></script>

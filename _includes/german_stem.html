@@ -1,0 +1,17 @@
+{%- comment -%}
+  Outputs the stem of a Word: the token a learner would look up and the one the
+  Session page highlights inside the Seen sentence. Single source of truth for
+  both the Glossary sort key and the highlight.
+    "der Antrag, -¨e"                                  → Antrag
+    "die Eltern (Pl.)"                                 → Eltern
+    "einreichen (reicht ein, reichte ein, hat …)"      → einreichen
+    "sich (Dat.) etw. leisten"                         → leisten
+  Params: include.word
+{%- endcomment -%}
+{%- assign stem = include.word | default: "" | strip -%}
+{%- assign article = stem | split: " " | first | downcase -%}
+{%- if article == "der" or article == "die" or article == "das" -%}
+  {%- assign stem = stem | slice: 4, stem.size | strip -%}
+{%- endif -%}
+{%- assign stem = stem | split: "," | first | remove: "(Akk.)" | remove: "(Dat.)" | split: " (" | first | split: "/" | first | strip | split: " " | last | default: "" -%}
+{{- stem -}}
