@@ -1,55 +1,187 @@
-/* /learn/german — German vocabulary Sessions.
-   Mobile-first cards; Quiz mode hides the answer parts only when JS is running
-   (the theme's head script adds `.js` to <html>). */
+/* /learn/german — vocabulary Sessions.
+   Self-contained: this section does not load the site's theme or 98.css, so
+   everything the pages need is here. Mobile-first, quiet, high-contrast.
+   Quiz mode hides the answer half of a card only under html.js, so a page with
+   JavaScript off shows every card open. */
 
-.german .page__title {
-  margin-bottom: 0.25em;
+:root {
+  --bg: #fbfaf7;
+  --card: #ffffff;
+  --ink: #1e2227;
+  --ink-soft: #4a5058;
+  --muted: #7b8189;
+  --line: #e7e3da;
+  --line-strong: #d3cec2;
+  --accent: #146152;
+  --accent-soft: #e8f1ee;
+  --mark-bg: #fdeeb0;
+  --mark-ink: #4a3c00;
+  --note-ink: #7a5200;
+  --note-bg: #fdf6e6;
+  --note-line: #e8c877;
+  --der: #1f5fd0;
+  --die: #c0246c;
+  --das: #0d7268;
+  --focus: #1f5fd0;
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-de: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --measure: 44rem;
 }
 
-.german-breadcrumb {
-  margin: 0 0 0.5em;
-  font-size: 0.85em;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15171b;
+    --card: #1d2025;
+    --ink: #e9e7e2;
+    --ink-soft: #c2c6cc;
+    --muted: #9198a1;
+    --line: #2b2f36;
+    --line-strong: #3a3f47;
+    --accent: #6cc6ad;
+    --accent-soft: #16302a;
+    --mark-bg: #5c4a0c;
+    --mark-ink: #ffeeb0;
+    --note-ink: #e3bd72;
+    --note-bg: #2a230f;
+    --note-line: #8a6c25;
+    --der: #79a8ff;
+    --die: #ff8fbe;
+    --das: #52d3c0;
+    --focus: #79a8ff;
+  }
 }
 
-.german-breadcrumb a {
+* {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0 0 4rem;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 17px;
+  line-height: 1.55;
+  overflow-wrap: break-word;
+}
+
+a {
+  color: var(--accent);
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+}
+
+/* Top bar — back link, progress, Show all */
+.german-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.55rem max(0.9rem, env(safe-area-inset-left));
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+  font-size: 0.85rem;
+}
+
+.german-bar__back,
+.german-bar__title {
+  flex: none;
+  font-weight: 600;
   text-decoration: none;
+  color: var(--ink-soft);
 }
 
-.german-meta {
-  margin: 0 0 1em;
-  font-size: 0.85em;
-  color: #6b6b6b;
+.german-bar__back {
+  min-height: 2.2rem;
+  display: inline-flex;
+  align-items: center;
 }
 
-.german-meta__sep {
-  color: #bbb;
-  margin: 0 0.15em;
+.german-bar__progress {
+  flex: 1 1 auto;
+  text-align: right;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
 }
 
-.german-header {
-  margin-bottom: 1.25em;
-}
-
-/* Show all / Hide all — only useful with JS */
-.german-toggle-all {
-  display: none;
-  border: 1px solid #c9c9c9;
+.german-bar__toggle {
+  flex: none;
+  min-height: 2.2rem;
+  padding: 0.3rem 0.85rem;
+  border: 1px solid var(--line-strong);
   border-radius: 999px;
-  background: #fff;
-  color: #333;
+  background: var(--card);
+  color: var(--ink);
   font: inherit;
-  font-size: 0.85em;
-  padding: 0.35em 0.9em;
+  font-weight: 600;
   cursor: pointer;
+  display: none;
 }
 
-.js .german-toggle-all {
+.js .german-bar__toggle {
   display: inline-block;
 }
 
-.german-toggle-all:hover,
-.german-toggle-all:focus-visible {
-  border-color: #666;
+.german-bar__toggle:hover {
+  border-color: var(--ink-soft);
+}
+
+/* Page frame */
+.german-wrap {
+  width: 100%;
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 1.4rem max(1rem, env(safe-area-inset-left)) 0;
+}
+
+.german-head {
+  margin-bottom: 1.6rem;
+}
+
+.german-title {
+  margin: 0 0 0.4rem;
+  font-size: clamp(1.5rem, 6vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.german-h2 {
+  margin: 0 0 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.german-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.german-meta__sep {
+  margin: 0 0.1em;
+  color: var(--line-strong);
+}
+
+.german-source {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
 }
 
 /* Cards */
@@ -58,134 +190,195 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.7rem;
+  gap: 0.75rem;
 }
 
 .german-card {
   margin: 0;
-  border: 1px solid #e3e3e3;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-  padding: 0.35rem 0.9rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  overflow: hidden;
 }
 
-.js .german-card {
-  cursor: pointer;
-}
-
-.js .german-card:not(.is-open) {
-  padding-bottom: 0.35rem;
+.js .german-card:hover {
+  border-color: var(--line-strong);
 }
 
 .german-card__word {
   display: flex;
   align-items: baseline;
-  gap: 0.6em;
+  gap: 0.7rem;
   width: 100%;
+  min-height: 3.4rem;
   margin: 0;
-  padding: 0.5rem 0;
+  padding: 0.85rem 1rem;
   border: 0;
+  border-radius: 0;
   background: none;
-  color: inherit;
+  color: var(--ink);
   font: inherit;
-  font-size: 1.15em;
-  font-weight: 600;
   text-align: left;
-  cursor: inherit;
+  text-shadow: none;
+  box-shadow: none;
+  cursor: default;
+}
+
+.js .german-card__word {
+  cursor: pointer;
 }
 
 .german-card__word:focus-visible {
-  outline: 2px solid #4a7bd0;
-  outline-offset: 2px;
-  border-radius: 6px;
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
 }
 
 .german-card__index {
   flex: none;
-  min-width: 1.6em;
-  font-size: 0.7em;
-  font-weight: 400;
-  color: #9a9a9a;
+  min-width: 1.3em;
+  color: var(--muted);
+  font-size: 0.8rem;
   font-variant-numeric: tabular-nums;
 }
 
 .german-card__headword {
   flex: 1 1 auto;
-  min-width: 0;
-  overflow-wrap: anywhere;
+  font-family: var(--font-de);
+  font-size: clamp(1.25rem, 5.2vw, 1.5rem);
+  line-height: 1.25;
 }
 
-.german-card__chevron {
+.german-word__lemma {
+  font-weight: 600;
+}
+
+/* Headword: coloured article, weighted lemma, muted grammatical detail */
+.german-word__article {
+  font-weight: 500;
+}
+
+.german-word__article[data-gender="der"] { color: var(--der); }
+.german-word__article[data-gender="die"] { color: var(--die); }
+.german-word__article[data-gender="das"] { color: var(--das); }
+
+.german-word__detail {
+  color: var(--muted);
+  font-size: 0.78em;
+  font-weight: 400;
+}
+
+/* "reveal" cue, only meaningful in Quiz mode */
+.german-card__cue {
   flex: none;
   display: none;
-  color: #9a9a9a;
-  transition: transform 0.15s ease;
+  align-self: center;
+  color: var(--muted);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-.js .german-card__chevron {
+.js .german-card:not(.is-open) .german-card__cue {
   display: inline;
 }
 
-.js .german-card.is-open .german-card__chevron {
-  transform: rotate(90deg);
+/* The answer half */
+.german-card__hidden {
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.9rem;
 }
 
-/* Quiz mode: hide answers until tapped */
 .js .german-card:not(.is-open) .german-card__hidden {
   display: none;
 }
 
-.german-card__hidden > * {
-  margin: 0.45rem 0 0;
+.german-card__hidden > * + * {
+  margin-top: 0.8rem;
 }
 
 .german-card__meaning {
-  font-weight: 500;
+  margin: 0;
+  color: var(--accent);
+  font-size: 1.02rem;
+  font-weight: 600;
 }
 
 .german-card__meaning--pending {
-  color: #9a9a9a;
+  color: var(--muted);
   font-weight: 400;
   font-style: italic;
 }
 
+.german-card__label {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .german-card__seen {
-  color: #555;
-  font-style: italic;
+  margin: 0;
+  padding-left: 0.8rem;
+  border-left: 3px solid var(--line-strong);
+  color: var(--ink-soft);
+  font-family: var(--font-de);
+  font-size: 1.05rem;
+  line-height: 1.6;
 }
 
 .german-card__seen mark {
-  background: #fff1a8;
-  color: inherit;
-  padding: 0 0.12em;
+  background: var(--mark-bg);
+  color: var(--mark-ink);
+  padding: 0 0.14em;
   border-radius: 3px;
+  font-weight: 600;
 }
 
 .german-card__examples {
-  margin-left: 0;
-  padding-left: 1.15em;
-  font-size: 0.95em;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.7rem;
 }
 
-.german-card__examples li {
-  margin-bottom: 0.2em;
+.german-card__example {
+  margin: 0;
+  padding: 0.6rem 0.75rem;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  font-family: var(--font-de);
+  font-size: 1.02rem;
+  line-height: 1.55;
 }
 
 .german-card__note {
-  font-size: 0.88em;
-  color: #7a5200;
-  border-left: 3px solid #f2c866;
-  padding-left: 0.6em;
+  margin: 0;
+  padding: 0.55rem 0.75rem;
+  border-left: 3px solid var(--note-line);
+  border-radius: 0 8px 8px 0;
+  background: var(--note-bg);
+  color: var(--note-ink);
+  font-size: 0.9rem;
 }
 
-/* Index: Sessions list */
+/* Index — Sessions */
+.german-sessions {
+  margin-bottom: 2.4rem;
+}
+
 .german-session-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.6rem;
+  gap: 0.7rem;
 }
 
 .german-session-item {
@@ -193,47 +386,35 @@
 }
 
 .german-session-item__link {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto;
-  column-gap: 0.8em;
-  align-items: baseline;
-  padding: 0.7rem 0.9rem;
-  border: 1px solid #e3e3e3;
-  border-radius: 12px;
-  background: #fff;
+  display: block;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
   color: inherit;
   text-decoration: none;
 }
 
-.german-session-item__link:hover,
-.german-session-item__link:focus-visible {
-  border-color: #999;
-  text-decoration: none;
-}
-
-.german-session-item__date {
-  grid-row: 1 / span 2;
-  font-size: 0.8em;
-  color: #6b6b6b;
-  font-variant-numeric: tabular-nums;
+.german-session-item__link:hover {
+  border-color: var(--line-strong);
 }
 
 .german-session-item__title {
+  display: block;
+  font-family: var(--font-de);
+  font-size: 1.12rem;
   font-weight: 600;
-  overflow-wrap: anywhere;
+  line-height: 1.3;
 }
 
 .german-session-item__meta {
-  font-size: 0.8em;
-  color: #6b6b6b;
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.8rem;
 }
 
-/* Index: Glossary */
-.german-glossary {
-  margin-top: 2em;
-}
-
+/* Index — Glossary */
 .german-glossary__list {
   list-style: none;
   margin: 0;
@@ -241,43 +422,82 @@
 }
 
 .german-glossary__letter {
-  margin: 1.1em 0 0.3em;
-  font-size: 0.75em;
+  margin: 1.3rem 0 0.35rem;
+  color: var(--muted);
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
-  color: #9a9a9a;
+  letter-spacing: 0.16em;
 }
 
 .german-glossary__item {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.25em 0.8em;
+  gap: 0.2rem 0.7rem;
   margin: 0;
-  padding: 0.3em 0;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .german-glossary__word {
   flex: 1 1 12em;
-  min-width: 0;
-  overflow-wrap: anywhere;
+  font-family: var(--font-de);
+  font-size: 1.05rem;
 }
 
 .german-glossary__links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25em 0.6em;
-  font-size: 0.8em;
+  gap: 0.2rem 0.55rem;
+  font-size: 0.78rem;
   font-variant-numeric: tabular-nums;
 }
 
 .german-glossary__links a {
+  color: var(--accent);
   text-decoration: none;
-  color: #4a7bd0;
+  border-bottom: 1px solid transparent;
+}
+
+.german-glossary__links a:hover {
+  border-bottom-color: currentColor;
 }
 
 .german-empty {
-  color: #9a9a9a;
+  color: var(--muted);
   font-style: italic;
+}
+
+/* Footer */
+.german-footer {
+  max-width: var(--measure);
+  margin: 3rem auto 0;
+  padding: 1.2rem 1rem 0;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.german-footer a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.german-footer a:hover {
+  color: var(--ink);
+}
+
+/* Wider screens: two columns of cards once there is room for them */
+@media (min-width: 62rem) {
+  :root { --measure: 62rem; }
+
+  .german-cards,
+  .german-session-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
 }

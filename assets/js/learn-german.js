@@ -1,13 +1,15 @@
 /* /learn/german — Quiz mode for a Session page.
-   Cards start collapsed (Word only); tapping a card toggles it; one control
-   toggles all. Stateless on purpose: nothing is persisted across loads.
-   Without JS the stylesheet shows everything (it keys off html.js). */
+   Cards start collapsed (Word only); tapping a card reveals its answer half;
+   one control toggles all and a counter shows how many are open.
+   Stateless on purpose: nothing is persisted across loads. With JavaScript off
+   the stylesheet leaves every card open (it keys off html.js). */
 (function () {
   var root = document.querySelector("[data-german-session]");
   if (!root) return;
 
   var cards = Array.prototype.slice.call(root.querySelectorAll("[data-german-card]"));
-  var toggleAll = root.querySelector("[data-german-toggle-all]");
+  var toggleAll = document.querySelector("[data-german-toggle-all]");
+  var progress = document.querySelector("[data-german-progress]");
 
   function isOpen(card) {
     return card.classList.contains("is-open");
@@ -19,15 +21,20 @@
     if (button) button.setAttribute("aria-expanded", String(open));
   }
 
-  function allOpen() {
-    return cards.length > 0 && cards.every(isOpen);
+  function openCount() {
+    return cards.filter(isOpen).length;
   }
 
-  function refreshToggleAll() {
-    if (!toggleAll) return;
-    var open = allOpen();
-    toggleAll.textContent = open ? "Hide all" : "Show all";
-    toggleAll.setAttribute("aria-pressed", String(open));
+  function refreshControls() {
+    var open = openCount();
+    if (progress) {
+      progress.textContent = open + " / " + cards.length + " revealed";
+    }
+    if (toggleAll) {
+      var all = cards.length > 0 && open === cards.length;
+      toggleAll.textContent = all ? "Hide all" : "Show all";
+      toggleAll.setAttribute("aria-pressed", String(all));
+    }
   }
 
   cards.forEach(function (card) {
@@ -39,17 +46,17 @@
       var selection = window.getSelection ? window.getSelection() : null;
       if (selection && String(selection).length > 0) return;
       setOpen(card, !isOpen(card));
-      refreshToggleAll();
+      refreshControls();
     });
   });
 
   if (toggleAll) {
     toggleAll.addEventListener("click", function () {
-      var open = !allOpen();
+      var open = openCount() !== cards.length;
       cards.forEach(function (card) { setOpen(card, open); });
-      refreshToggleAll();
+      refreshControls();
     });
   }
 
-  refreshToggleAll();
+  refreshControls();
 })();

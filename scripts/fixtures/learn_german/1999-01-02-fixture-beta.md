@@ -5,7 +5,7 @@ source:
   type: video
   date: 1999-01-02
 entries:
-  - word: die Prüfung, -en
+  - word: die Prüfung, die Prüfungen
     seen: Nach der Prüfung gingen alle feiern.
     meaning: exam; inspection, check
     examples:

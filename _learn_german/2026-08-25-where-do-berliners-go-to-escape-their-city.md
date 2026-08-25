@@ -7,7 +7,7 @@ source:
 entries:
   # Capture cost: `word` + `seen` per Entry. Leave meaning/examples/note empty;
   # `/german` fills them and normalises `word` (article, plural, principal parts).
-  - word: der Ausflug, -¨e
+  - word: der Ausflug, die Ausflüge
     seen: Viele Berliner machen am Wochenende einen Ausflug ins Umland.
     meaning: excursion, day trip; outing
     examples:
@@ -21,7 +21,7 @@ entries:
       - Ich will am Wochenende einfach mal dem Alltag entfliehen.
       - Immer mehr Städter entfliehen im Sommer der Hitze und suchen Erholung an der Ostsee.
     note: "Takes the dative with no preposition: der Stadt entfliehen (not 'von der Stadt')."
-  - word: der Badesee, -n                 # no `seen` — overheard without context is fine
+  - word: der Badesee, die Badeseen                 # no `seen` — overheard without context is fine
     meaning: bathing lake, lake for swimming
     examples:
       - Kommst du morgen mit an den Badesee? Es sollen 30 Grad werden.

@@ -335,8 +335,6 @@ defaults:
       type: learn_german
     values:
       layout: german_session
-      author_profile: false
-      classes: wide
       sitemap: false
       search: false
       robots: noindex

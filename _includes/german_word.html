@@ -1,0 +1,25 @@
+{%- comment -%}
+  Renders a headword for display: the lemma carries the weight, the grammatical
+  detail after it (plural, principal parts, case markers) is muted, and a noun's
+  article is colour-coded by gender.
+    "der Ausflug, die Ausflüge"  → [der] Ausflug  ·  , die Ausflüge
+    "entfliehen (entflieht, …)"  → entfliehen     ·  (entflieht, …)
+  Params: include.word
+{%- endcomment -%}
+{%- assign w = include.word | default: "" | strip -%}
+{%- assign article = w | slice: 0, 3 | downcase -%}
+{%- if article == "der" or article == "die" or article == "das" -%}
+  {%- assign rest = w | slice: 4, w.size | strip -%}
+  <span class="german-word__article" data-gender="{{ article }}">{{ w | slice: 0, 3 }}</span>&#32;
+{%- else -%}
+  {%- assign rest = w -%}
+{%- endif -%}
+{%- assign lemma = rest | split: "," | first | split: " (" | first | strip -%}
+{%- assign detail = rest | remove_first: lemma | strip -%}
+<span class="german-word__lemma">{{ lemma | escape }}</span>
+{%- comment -%} a comma binds tight to the lemma; a parenthesis takes a space {%- endcomment -%}
+{%- if detail != "" -%}
+  {%- assign lead = detail | slice: 0, 1 -%}
+  {%- unless lead == "," %}&#32;{% endunless -%}
+  <span class="german-word__detail">{{ detail | escape }}</span>
+{%- endif -%}

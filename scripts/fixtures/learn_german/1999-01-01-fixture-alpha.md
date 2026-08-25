@@ -5,14 +5,14 @@ source:
   type: article
   date: 1999-01-01
 entries:
-  - word: der Antrag, -¨e
+  - word: der Antrag, die Anträge
     seen: Ich habe den Antrag gestern eingereicht.
     meaning: application, motion (formal request)
     examples:
       - Hast du den Antrag schon ausgefüllt?
       - Der Antrag wurde vom Ausschuss einstimmig angenommen.
     note: "Antrag stellen = to file an application; not 'anthrax'."
-  - word: die Prüfung, -en
+  - word: die Prüfung, die Prüfungen
     seen: Die Prüfung war schwerer als erwartet.
     meaning: exam; inspection, check
     examples:

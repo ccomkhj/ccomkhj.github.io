@@ -77,9 +77,11 @@ def main():
             r'<section class="german-glossary".*?</section>', index, re.S)
         check(glossary is not None, "index has a Glossary section")
         gtext = glossary.group(0) if glossary else ""
-        items = re.findall(r'<li class="german-glossary__item".*?</li>',
-                           gtext, re.S)
-        check(len(items) == 4, f"Glossary has 4 distinct Words (got {len(items)})")
+        # Real Sessions may coexist with the fixtures: only judge fixture-linked items.
+        items = [i for i in re.findall(r'<li class="german-glossary__item".*?</li>',
+                                       gtext, re.S)
+                 if "/learn/german/1999-" in i]
+        check(len(items) == 4, f"Glossary has 4 distinct fixture Words (got {len(items)})")
         plain = [re.sub(r"<[^>]+>", "", html.unescape(i)) for i in items]
         order = [next((k for k in ("Antrag", "einreichen", "leisten", "Prüfung") if k in p), "?")
                  for p in plain]

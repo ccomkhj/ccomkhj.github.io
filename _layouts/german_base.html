@@ -1,0 +1,26 @@
+<!doctype html>
+{%- comment -%}
+  Standalone shell for /learn/german — deliberately does NOT extend `default`:
+  the site's 98.css chrome (pixelated button labels, bevels, masthead) fights a
+  reading page. Own head, own stylesheet, own typography.
+{%- endcomment -%}
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page.title | escape }} &middot; Learn German</title>
+    {%- if page.robots %}<meta name="robots" content="{{ page.robots }}">{% endif %}
+    <link rel="shortcut icon" href="{{ '/assets/images/favicons/favicon.ico' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/learn-german.css' | relative_url }}">
+    <script>document.documentElement.className = "js";</script>
+  </head>
+  <body>
+    {{ content }}
+    <footer class="german-footer">
+      <a href="{{ '/learn/german/' | relative_url }}">Learn German</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="{{ '/' | relative_url }}">pile of thoughts</a>
+    </footer>
+    <script src="{{ '/assets/js/learn-german.js' | relative_url }}" defer></script>
+  </body>
+</html>

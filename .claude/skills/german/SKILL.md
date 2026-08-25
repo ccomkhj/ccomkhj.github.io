@@ -42,14 +42,15 @@ the missing register added.
 
 | Kind | Form | Example |
 |---|---|---|
-| Noun | `der/die/das Wort, plural ending` | `der Antrag, -¨e` · `die Prüfung, -en` · `das Kind, -er` |
+| Noun | `der/die/das Wort, die Plural` | `der Antrag, die Anträge` · `die Prüfung, die Prüfungen` |
 | Noun, no plural / plural only | `(kein Pl.)` · `(Pl.)` | `der Regen (kein Pl.)` · `die Eltern (Pl.)` |
 | Regular verb | infinitive | `bezahlen` |
 | Irregular, separable or mixed verb | `infinitive (3rd sg., preterite, perfect)` | `einreichen (reicht ein, reichte ein, hat eingereicht)` |
 | Reflexive / with object | `sich (Akk./Dat.) etw. verb` | `sich (Dat.) etw. leisten` |
 | Adjective, adverb, other | bare form | `fristgerecht` |
 
-Umlaut plurals use `-¨e` / `-¨er` (`der Antrag, -¨e` → *die Anträge*). The *stem* — the
+Write the plural out in full (`die Anträge`), not as an ending — the learner should
+see the form, and `-¨e` renders badly. The *stem* — the
 last token once article, plural ending, principal parts and case markers are dropped
 (`Antrag`, `einreichen`, `leisten`) — is what the Session page highlights inside `seen`
 and what the Glossary sorts on (`_includes/german_stem.html`).
@@ -76,7 +77,7 @@ source:
   type: article | video
   date: 2026-08-25                          # when it was read/watched
 entries:
-  - word: Antrag                            # author's bare form → "der Antrag, -¨e"
+  - word: Antrag                            # author's bare form → "der Antrag, die Anträge"
     seen: Ich habe den Antrag gestern eingereicht.   # optional
     meaning:
     examples: []
