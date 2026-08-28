@@ -37,7 +37,7 @@ An optional one-line remark on an Entry (false friend, governed preposition, reg
 _Avoid_: Comment, tip, hint
 
 **Glossary**:
-The merged A–Z index of every Word across all Sessions, each linking back to the Session(s) it appears in.
+The merged A–Z index of every Word across all Sessions, each linking back to the Session(s) it appears in; tapping a Word reveals its Meaning.
 _Avoid_: Dictionary, index, word list
 
 **Quiz mode**:

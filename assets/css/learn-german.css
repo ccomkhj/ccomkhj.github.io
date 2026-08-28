@@ -439,10 +439,81 @@ code {
   border-bottom: 1px solid var(--line);
 }
 
+/* The headword is a button: tapping it reveals the Meaning row below. It is
+   reset to look like text; the disclosure marker only appears under html.js. */
 .german-glossary__word {
   flex: 1 1 12em;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
   font-family: var(--font-de);
   font-size: 1.05rem;
+  line-height: inherit;
+  text-align: left;
+  text-shadow: none;
+  box-shadow: none;
+  cursor: default;
+}
+
+.js .german-glossary__word {
+  cursor: pointer;
+}
+
+.js .german-glossary__item {
+  cursor: pointer;
+}
+
+.german-glossary__word:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.js .german-glossary__word::after {
+  content: "\25B8"; /* ▸ */
+  flex: none;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 0.7em;
+  transition: transform 120ms ease;
+}
+
+.js .german-glossary__item.is-open .german-glossary__word::after {
+  transform: rotate(90deg);
+}
+
+/* The answer row: full width under the headword and its links */
+.german-glossary__meaning {
+  flex: 1 1 100%;
+  margin-top: 0.15rem;
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.js .german-glossary__item:not(.is-open) .german-glossary__meaning {
+  display: none;
+}
+
+.german-glossary__meanings {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.german-glossary__meaning--pending {
+  color: var(--muted);
+  font-weight: 400;
+  font-style: italic;
 }
 
 .german-glossary__links {

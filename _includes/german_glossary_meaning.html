@@ -1,0 +1,19 @@
+{%- comment -%}
+  The answer row of a Glossary item: the Meaning(s) of one Word, or a pending
+  hint when no Session has filled it yet. Hidden under html.js until the item
+  is opened (see learn-german.js); always visible without JavaScript.
+  Params: include.id (item counter), include.meanings (array of distinct strings)
+{%- endcomment -%}
+<div class="german-glossary__meaning" id="german-gloss-{{ include.id }}">
+  {%- if include.meanings.size == 0 -%}
+  <span class="german-glossary__meaning--pending">meaning pending &mdash; run <code>/german</code></span>
+  {%- elsif include.meanings.size == 1 -%}
+  {{ include.meanings[0] | escape }}
+  {%- else -%}
+  <ul class="german-glossary__meanings">
+    {%- for m in include.meanings %}
+    <li>{{ m | escape }}</li>
+    {%- endfor %}
+  </ul>
+  {%- endif -%}
+</div>

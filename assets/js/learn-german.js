@@ -1,8 +1,22 @@
-/* /learn/german — Quiz mode for a Session page.
-   Cards start collapsed (Word only); tapping a card reveals its answer half;
-   one control toggles all and a counter shows how many are open.
+/* /learn/german — the two bits of behaviour the section has.
+   Session page: Quiz mode. Cards start collapsed (Word only); tapping a card
+   reveals its answer half; one control toggles all and a counter shows how many
+   are open.
+   Index page: Glossary items start collapsed (Word + Session links); tapping one
+   reveals its Meaning.
    Stateless on purpose: nothing is persisted across loads. With JavaScript off
-   the stylesheet leaves every card open (it keys off html.js). */
+   the stylesheet leaves every card and every Meaning open (it keys off html.js). */
+
+/* Shared: should a tap on `target` toggle its container? Real links keep
+   behaving as links, and a text selection is left alone instead of collapsing
+   the element under it. */
+function germanTapShouldToggle(target) {
+  if (target.closest && target.closest("a")) return false;
+  var selection = window.getSelection ? window.getSelection() : null;
+  return !(selection && String(selection).length > 0);
+}
+
+/* Session page — Quiz mode */
 (function () {
   var root = document.querySelector("[data-german-session]");
   if (!root) return;
@@ -40,11 +54,7 @@
   cards.forEach(function (card) {
     setOpen(card, false);
     card.addEventListener("click", function (event) {
-      // Let real links inside a card behave as links, and leave a text
-      // selection alone instead of collapsing the card under it.
-      if (event.target.closest && event.target.closest("a")) return;
-      var selection = window.getSelection ? window.getSelection() : null;
-      if (selection && String(selection).length > 0) return;
+      if (!germanTapShouldToggle(event.target)) return;
       setOpen(card, !isOpen(card));
       refreshControls();
     });
@@ -59,4 +69,24 @@
   }
 
   refreshControls();
+})();
+
+/* Index page — Glossary */
+(function () {
+  var items = Array.prototype.slice.call(document.querySelectorAll("[data-german-gloss]"));
+  if (items.length === 0) return;
+
+  function setOpen(item, open) {
+    item.classList.toggle("is-open", open);
+    var button = item.querySelector("[data-german-gloss-toggle]");
+    if (button) button.setAttribute("aria-expanded", String(open));
+  }
+
+  items.forEach(function (item) {
+    setOpen(item, false);
+    item.addEventListener("click", function (event) {
+      if (!germanTapShouldToggle(event.target)) return;
+      setOpen(item, !item.classList.contains("is-open"));
+    });
+  });
 })();

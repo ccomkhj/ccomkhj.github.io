@@ -37,7 +37,8 @@ _Eager to expand this list—and myself—through life's adventures._
 - graduated with honors in Mechanical Engineering (BSc) and Robotics (MSc)
 - extended master research and published it in the [research paper](https://www.arxiv.org/abs/2410.00769)
 - share hard-won lessons across major conferences, university lectures, and public-sector events to inspire others to build
-- narrated [my story](https://www.worldjob.or.kr/info/bbs/ovseaAdvnStry/view.do?menuId=1000006395&bbscttNo=192537) as the top story
+  - [PyConDE & PyData 2026: Agent-based Hyperparameter Optimization for Gradient Boosted Trees](https://pycon.de/archive/2026/talks/agent-based-hyperparameter-optimization-for-gradient-boosted-trees/)
+  - narrated [my story](https://www.worldjob.or.kr/info/bbs/ovseaAdvnStry/view.do?menuId=1000006395&bbscttNo=192537) as the top story
 
 <figure class="presentation-gallery">
   <div class="presentation-gallery__grid">
