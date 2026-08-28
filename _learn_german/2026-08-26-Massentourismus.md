@@ -2,7 +2,7 @@
 title: "Darum gibt es Massentourismus?"
 source:
   url: https://learngerman.dw.com/de/darum-gibt-es-massentourismus/l-78084081/lm
-  type: video                          # article | video
+  type: article                        # article | video
   date: 2026-08-26                       # when you read/watched it
 entries:
   # Capture cost: `word` + `seen` per Entry. Leave meaning/examples/note empty;
