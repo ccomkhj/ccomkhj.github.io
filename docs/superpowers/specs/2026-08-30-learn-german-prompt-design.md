@@ -24,9 +24,9 @@ Quiz mode only tested recognition (Word → Meaning), while the goal is producti
    sentence with the `<mark>` blanked, Meaning as hint). Each card carries all three
    questions; `data-german-direction` on the page root selects one via CSS; JS only,
    mirrored in the URL hash. No highlightable Seen sentence → falls back to *meaning*.
-5. **Capture**: *+ New Session* on the index opens GitHub's new-file editor with a prefilled
-   skeleton (`german_new_session: {repo, branch}`); `/german-new <url>` drafts a Session
-   from a Source, author strikes known Words, then runs `/german`.
+5. **Capture**: `/german-new <url>` drafts a Session from a Source, the author strikes
+   known Words, then it runs `/german`. (A "+ New Session" link into GitHub's web editor
+   was tried and removed — it only added a sign-in step.)
 
 ## Decisions
 
@@ -48,7 +48,7 @@ Quiz mode only tested recognition (Word → Meaning), while the goal is producti
 idempotent, MASTERED line, unmatched → exit 1, undo byte-identical); done rendering on
 Session, index, Glossary; prompt HTML ≡ prompt.txt, lists open fixture Words with Meaning
 and Seen sentence, omits the done one, asks for MASTERED/REVIEW, Sources newest-first;
-direction switch, both question types, cloze fallback; encoded New Session link.
+direction switch, both question types, cloze fallback.
 
 ## Out of scope
 

@@ -34,10 +34,6 @@ german_prompt:
   words: 15          # open Words per brief
   minutes: 15        # chat length stated in the brief
   level: "B1–B2"     # learner level stated in the brief
-# "+ New Session" link → GitHub new-file editor with a prefilled skeleton.
-german_new_session:
-  repo: "ccomkhj/ccomkhj.github.io"
-  branch: master
 
 
 

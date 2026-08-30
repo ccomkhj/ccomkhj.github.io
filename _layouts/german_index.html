@@ -46,32 +46,7 @@ layout: german_base
 
 <main class="german-wrap">
   <section class="german-sessions">
-    <div class="german-h2-row">
-      <h2 class="german-h2">Sessions</h2>
-      {%- if site.german_new_session.repo -%}
-      {%- comment -%} GitHub new-file editor: ?filename= & ?value=. url_encode gives "+" for spaces, which the editor keeps literally → %20. {%- endcomment -%}
-      {%- assign today = site.time | date: '%Y-%m-%d' -%}
-      {%- capture skeleton -%}
----
-title: ""
-source:
-  url: 
-  type: article                          # article | video
-  date: {{ today }}                      # when you read/watched it
-entries:
-  # Capture cost: `word` + `seen` per Entry. `/german` fills the rest.
-  - word: 
-    seen: 
-    meaning:
-    examples: []
-    note:
----
-{%- endcapture -%}
-      {%- assign branch = site.german_new_session.branch | default: "master" -%}
-      {%- assign skeleton_q = skeleton | url_encode | replace: "+", "%20" -%}
-      <a class="german-new" href="https://github.com/{{ site.german_new_session.repo }}/new/{{ branch }}/_learn_german?filename={{ today }}-.md&amp;value={{ skeleton_q }}" target="_blank" rel="noopener">+ New Session</a>
-      {%- endif %}
-    </div>
+    <h2 class="german-h2">Sessions</h2>
     {%- if sessions.size == 0 %}
     <p class="german-empty">No Sessions yet. Add a file to <code>_learn_german/</code>.</p>
     {%- else %}

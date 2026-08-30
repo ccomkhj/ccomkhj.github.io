@@ -14,8 +14,7 @@ Entry rules: `.claude/skills/german/SKILL.md`.
 
 | I want to… | Do this |
 |---|---|
-| Capture on my phone | `/learn/german/` → **+ New Session** opens GitHub's editor with the skeleton. Fix filename + `date:`, paste the URL, one `word:`/`seen:` pair per Word, commit. |
-| Capture from a URL on my laptop | `/german-new <url>` — proposes Words with sentences, you strike known ones, it writes and completes the Session. |
+| Capture from a URL | `/german-new <url>` — proposes Words with sentences, you strike known ones, it writes and completes the Session. |
 | Fill meanings/examples | `/german [file]` — normalises headwords, corrects `seen`, adds `meaning`, two `examples`, optional `note`. Never touches filled fields or `done`. |
 | Review on the phone | Open a Session; tap cards to reveal. Directions: **Word → meaning**, **Meaning → word**, **Cloze** (`#meaning` / `#cloze` in the URL bookmarks one). |
 | Look up a Word | Glossary on `/learn/german/` — A–Z by stem, tap for meaning, ✓ = done. |

@@ -147,11 +147,6 @@ def main():
         check(alpha_item is not None and re.search(r"1\s+done", alpha_item.group(0)) is not None,
               "index shows the done count of a Session with a done Entry")
         check(PROMPT_URL in index, "index links to the prompt page")
-        new_link = re.search(r'<a class="german-new" href="([^"]+)"', index)
-        check(new_link is not None and "/new/master/_learn_german?filename=" in new_link.group(1),
-              "index has a New Session link into GitHub's new-file editor")
-        check(new_link is not None and "entries%3A" in new_link.group(1) and "+" not in new_link.group(1),
-              "New Session link carries the URL-encoded skeleton (no literal +)")
 
         glossary = re.search(
             r'<section class="german-glossary".*?</section>', index, re.S)
