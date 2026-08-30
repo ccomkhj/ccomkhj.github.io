@@ -147,6 +147,11 @@ def main():
         check(alpha_item is not None and re.search(r"1\s+done", alpha_item.group(0)) is not None,
               "index shows the done count of a Session with a done Entry")
         check(PROMPT_URL in index, "index links to the prompt page")
+        new_link = re.search(r'<a class="german-new" href="([^"]+)"', index)
+        check(new_link is not None and "/new/master/_learn_german?filename=" in new_link.group(1),
+              "index has a New Session link into GitHub's new-file editor")
+        check(new_link is not None and "entries%3A" in new_link.group(1) and "+" not in new_link.group(1),
+              "New Session link carries the URL-encoded skeleton (no literal +)")
 
         glossary = re.search(
             r'<section class="german-glossary".*?</section>', index, re.S)
@@ -224,6 +229,23 @@ def main():
               "done card shows a badge")
         check(re.search(r"1\s+done", alpha) is not None, "Session meta shows the done count")
         check("is-done" not in session, "Session without done Entries has no done cards")
+
+        # --- quiz direction ----------------------------------------------
+        check('data-german-direction="word"' in session and "data-german-directions" in session,
+              "Session starts in word direction and has a direction switch")
+        check(len(re.findall(r'<button type="button" data-german-direction="(word|meaning|cloze)"', session)) == 3,
+              "direction switch offers word / meaning / cloze")
+        beta_cards = re.split(r'(?=<li class="german-card[" ])', session)[1:]
+        pruef_card = next((c for c in beta_cards if "Prüfung" in html.unescape(c)), "")
+        check('german-card__question--meaning">exam; inspection, check<' in pruef_card,
+              "card carries the Meaning as a question")
+        cloze = re.search(r'<span class="german-card__question german-card__question--cloze">(.*?)</span>\s*(?:<span class="german-card__done|<span class="german-card__cue)', pruef_card, re.S)
+        check(cloze is not None and "<mark>Prüfung</mark>" in cloze.group(1)
+              and 'class="german-card__hint">exam; inspection, check' in cloze.group(1),
+              "card carries the Seen sentence with the Word marked as a cloze question, Meaning as hint")
+        einr_card = next((c for c in beta_cards if "einreichen" in c), "")
+        check('german-card__question--cloze"><em>meaning pending</em>' in einr_card,
+              "card without a highlightable Seen sentence falls back to the Meaning question in cloze")
         order = [(re.search(r'german-card__index"[^>]*>(\d+)<', c) or [None, "?"])[1] for c in alpha_cards]
         check(order == ["1", "2", "3"] and alpha_cards[0].startswith('<li class="german-card is-done"'),
               "done card keeps its encounter-order position (Antrag stays card 1)")

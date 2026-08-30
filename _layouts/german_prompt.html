@@ -2,10 +2,8 @@
 layout: german_base
 ---
 {%- comment -%}
-  /learn/german/prompt — the voice-chat brief for humans to read and for a
-  conversation partner to fetch. The brief itself is _includes/german_prompt.txt
-  (also served raw at /learn/german/prompt.txt); this page wraps it in <pre>
-  with a copy button and the learner's own three-step routine underneath.
+  /learn/german/prompt — _includes/german_prompt.txt in <pre> with a Copy
+  button, plus the learner's routine. Raw twin: /learn/german/prompt.txt.
 {%- endcomment -%}
 {%- capture prompt %}{% include german_prompt.txt %}{% endcapture -%}
 {%- assign open_total = 0 -%}
@@ -35,9 +33,9 @@ layout: german_base
   <section class="german-howto">
     <h2 class="german-h2">For the learner</h2>
     <ol>
-      <li>Tell your conversation partner: <q>Read {{ '/learn/german/prompt.txt' | absolute_url }} and follow it.</q> Then switch to voice.</li>
-      <li>It ends with a <code>MASTERED:</code> line. In Claude Code run <code>/german-done "MASTERED: …"</code> (or <code>just german-done …</code>), check the diff, commit, push.</li>
-      <li>The site rebuilds without those Words; the next open Words move in, {{ limit }} at a time, newest Session first.</li>
+      <li>Tell your partner: <q>Read {{ '/learn/german/prompt.txt' | absolute_url }} and follow it.</q> Switch to voice.</li>
+      <li>It ends with a <code>MASTERED:</code> line → <code>/german-done "MASTERED: …"</code>, check the diff, push.</li>
+      <li>The rebuild drops those Words; the next {{ limit }} open ones move in.</li>
     </ol>
   </section>
   {{ content }}

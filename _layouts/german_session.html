@@ -4,8 +4,11 @@ layout: german_base
 {%- comment -%}
   One German vocabulary Session. Renders entirely from frontmatter: one card per
   Entry, Quiz mode by default. Without JavaScript every card is open (the
-  stylesheet hides answers only under html.js). An Entry with `done:` keeps its
-  place (encounter order) but renders muted with a badge.
+  stylesheet hides answers only under html.js). Done Entries keep their place,
+  muted with a badge. Each card carries a Meaning question and a Cloze question;
+  data-german-direction (word | meaning | cloze, JS-set, mirrored in the hash)
+  picks which stands in for the headword. No highlightable Seen sentence →
+  cloze falls back to the Meaning question.
 {%- endcomment -%}
 {%- assign done_count = 0 -%}
 {%- for e in page.entries -%}{%- if e.done -%}{%- assign done_count = done_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
@@ -15,7 +18,7 @@ layout: german_base
   <button type="button" class="german-bar__toggle" data-german-toggle-all aria-pressed="false">Show all</button>
 </header>
 
-<main class="german-wrap" data-german-session>
+<main class="german-wrap" data-german-session data-german-direction="word">
   <div class="german-head">
     <h1 class="german-title">{{ page.title | escape }}</h1>
     <p class="german-meta">
@@ -25,14 +28,27 @@ layout: german_base
       {%- if done_count > 0 %} <span class="german-meta__sep" aria-hidden="true">&middot;</span> {{ done_count }} done{% endif %}
       {%- if page.source.url %} <span class="german-meta__sep" aria-hidden="true">&middot;</span> <a class="german-source" href="{{ page.source.url }}" target="_blank" rel="noopener">Source <span aria-hidden="true">&nearr;</span></a>{% endif %}
     </p>
+    <div class="german-directions" role="group" aria-label="Quiz direction" data-german-directions>
+      <button type="button" data-german-direction="word" aria-pressed="true">Word &rarr; meaning</button>
+      <button type="button" data-german-direction="meaning" aria-pressed="false">Meaning &rarr; word</button>
+      <button type="button" data-german-direction="cloze" aria-pressed="false">Cloze</button>
+    </div>
   </div>
 
   <ol class="german-cards">
     {%- for entry in page.entries %}
+    {%- assign meaning = entry.meaning | default: "" | strip -%}
+    {%- capture seen_html -%}{%- if entry.seen and entry.seen != "" -%}{% include german_seen.html word=entry.word seen=entry.seen %}{%- endif -%}{%- endcapture -%}
     <li class="german-card{% if entry.done %} is-done{% endif %}" data-german-card{% if entry.done %} data-german-done="{{ entry.done | date: '%Y-%m-%d' }}"{% endif %}>
       <button type="button" class="german-card__word" data-german-card-toggle aria-expanded="false" aria-controls="german-entry-{{ forloop.index }}">
         <span class="german-card__index" aria-hidden="true">{{ forloop.index }}</span>
         <span class="german-card__headword">{% include german_word.html word=entry.word %}</span>
+        <span class="german-card__question german-card__question--meaning">{% if meaning != "" %}{{ meaning | escape }}{% else %}<em>meaning pending</em>{% endif %}</span>
+        {%- if seen_html contains "<mark>" %}
+        <span class="german-card__question german-card__question--cloze">{{ seen_html }}{% if meaning != "" %}<span class="german-card__hint">{{ meaning | escape }}</span>{% endif %}</span>
+        {%- else %}
+        <span class="german-card__question german-card__question--cloze">{% if meaning != "" %}{{ meaning | escape }}{% else %}<em>meaning pending</em>{% endif %}</span>
+        {%- endif %}
         {%- if entry.done %}
         <span class="german-card__done" title="marked done {{ entry.done | date: '%-d %b %Y' }}">done</span>
         {%- endif %}
@@ -44,8 +60,8 @@ layout: german_base
         {%- else %}
         <p class="german-card__meaning german-card__meaning--pending">meaning pending &mdash; run <code>/german</code></p>
         {%- endif %}
-        {%- if entry.seen and entry.seen != "" %}
-        <p class="german-card__seen"><span class="german-card__label">seen</span>{% include german_seen.html word=entry.word seen=entry.seen %}</p>
+        {%- if seen_html != "" %}
+        <p class="german-card__seen"><span class="german-card__label">seen</span>{{ seen_html }}</p>
         {%- endif %}
         {%- if entry.examples and entry.examples.size > 0 %}
         <ul class="german-card__examples">
@@ -61,7 +77,7 @@ layout: german_base
         <p class="german-card__note">{{ entry.note | escape }}</p>
         {%- endif %}
         {%- if entry.done %}
-        <p class="german-card__done-note">Marked done on {{ entry.done | date: '%-d %B %Y' }} &mdash; left out of the <a href="{{ '/learn/german/prompt/' | relative_url }}">prompt</a>. Undo with <code>/german-done --undo</code>.</p>
+        <p class="german-card__done-note">Done {{ entry.done | date: '%-d %B %Y' }} &mdash; not in the <a href="{{ '/learn/german/prompt/' | relative_url }}">prompt</a>. Undo: <code>/german-done --undo</code>.</p>
         {%- endif %}
       </div>
     </li>

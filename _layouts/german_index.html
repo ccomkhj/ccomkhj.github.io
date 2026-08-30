@@ -13,8 +13,7 @@ layout: german_base
 
 {%- comment -%}
   Glossary: one string per Entry "sortkey<TAB>word<TAB>date<TAB>url<TAB>title<TAB>meaning<TAB>done", sorted.
-  `done` is "1" when the Entry carries a done date, else empty (Ruby's split drops
-  trailing empty fields, so read it as f[6] == "1").
+  `done` is "1" or empty (split drops trailing empties → test f[6] == "1").
   The sort key is the Word's stem (see german_stem.html), lowercased with umlauts
   folded, so "die Prüfung" sorts under P and "sich (Dat.) etw. leisten" under L.
   A literal TAB separates fields because it sorts below every letter (so
@@ -47,7 +46,32 @@ layout: german_base
 
 <main class="german-wrap">
   <section class="german-sessions">
-    <h2 class="german-h2">Sessions</h2>
+    <div class="german-h2-row">
+      <h2 class="german-h2">Sessions</h2>
+      {%- if site.german_new_session.repo -%}
+      {%- comment -%} GitHub new-file editor: ?filename= & ?value=. url_encode gives "+" for spaces, which the editor keeps literally → %20. {%- endcomment -%}
+      {%- assign today = site.time | date: '%Y-%m-%d' -%}
+      {%- capture skeleton -%}
+---
+title: ""
+source:
+  url: 
+  type: article                          # article | video
+  date: {{ today }}                      # when you read/watched it
+entries:
+  # Capture cost: `word` + `seen` per Entry. `/german` fills the rest.
+  - word: 
+    seen: 
+    meaning:
+    examples: []
+    note:
+---
+{%- endcapture -%}
+      {%- assign branch = site.german_new_session.branch | default: "master" -%}
+      {%- assign skeleton_q = skeleton | url_encode | replace: "+", "%20" -%}
+      <a class="german-new" href="https://github.com/{{ site.german_new_session.repo }}/new/{{ branch }}/_learn_german?filename={{ today }}-.md&amp;value={{ skeleton_q }}" target="_blank" rel="noopener">+ New Session</a>
+      {%- endif %}
+    </div>
     {%- if sessions.size == 0 %}
     <p class="german-empty">No Sessions yet. Add a file to <code>_learn_german/</code>.</p>
     {%- else %}
@@ -77,11 +101,10 @@ layout: german_base
     <p class="german-empty">No Words yet.</p>
     {%- else %}
     {%- comment -%}
-      Identical Words collapse into one item: the headword (a toggle button), one
-      Session link per occurrence, a tick when any occurrence is done, then the
-      Meaning row. A Word met in several Sessions may carry several Meanings;
-      identical ones are listed once. Each item is closed via
-      german_glossary_meaning.html — at the next Word and again after the loop.
+      Identical Words collapse into one item: headword (toggle), one Session link
+      per occurrence, a tick if any occurrence is done, then the Meaning row
+      (distinct Meanings only). Items close via german_glossary_meaning.html —
+      at the next Word and after the loop.
     {%- endcomment -%}
     <ul class="german-glossary__list">
       {%- assign prev_word = "" -%}

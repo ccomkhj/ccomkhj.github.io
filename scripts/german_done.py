@@ -1,19 +1,14 @@
 #!/usr/bin/env python3
-"""Mark Entries in the German vocabulary Sessions as done.
+"""Mark Entries in `_learn_german/*.md` as done.
 
     python3 scripts/german_done.py "der Antrag, die Anträge" einreichen
     python3 scripts/german_done.py --date 2026-08-30 "MASTERED: der Antrag; einreichen"
     python3 scripts/german_done.py --undo einreichen
 
-Each argument is a Word — the full headword, its stem, or a whole `MASTERED:` line
-(items separated by `;`). Matching is by stem (see _includes/german_stem.html),
-case-insensitive, umlauts folded, so "Antrag", "antrag" and "der Antrag, die Anträge"
-all hit the same Entry. Every matching Entry across `_learn_german/*.md` gets a
-`done: YYYY-MM-DD` line appended to its block; the rest of the file stays
-byte-identical. `--undo` removes the line instead.
-
-Exit status 1 when any Word matched nothing (the site was probably rebuilt since the
-mark was staged, or the Word is misspelt) — the report says which.
+Arguments are headwords, stems, or a whole `MASTERED:` line (`;`-separated). Matching is
+by stem (as _includes/german_stem.html), case- and umlaut-insensitive. Each match gets
+`done: YYYY-MM-DD` appended to its Entry block; the rest of the file is byte-identical.
+`--undo` removes the line. Exit 1 if any Word matched nothing.
 """
 import argparse
 import datetime as dt
@@ -60,11 +55,8 @@ def parse_words(args) -> list:
 
 
 def entry_blocks(lines):
-    """Yield (start, end, indent, word) for every Entry in the frontmatter.
-
-    `end` is the index one past the Entry's last field line (comments and blank
-    lines between Entries are left to the next Entry, so a `done:` line lands
-    directly under the previous field)."""
+    """Yield (start, end, indent, word) per Entry; `end` is one past the last field line
+    (trailing comments/blanks belong to the next Entry, so `done:` lands under a field)."""
     fence = 0
     limit = len(lines)
     for i, line in enumerate(lines):

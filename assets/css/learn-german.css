@@ -221,8 +221,9 @@ code {
 
 .german-card__word {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.7rem;
+  gap: 0.35rem 0.7rem;
   width: 100%;
   min-height: 3.4rem;
   margin: 0;
@@ -382,6 +383,117 @@ code {
   font-size: 0.9rem;
 }
 
+/* Quiz direction switch — JS only */
+.german-directions {
+  display: none;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.9rem;
+}
+
+.js .german-directions {
+  display: flex;
+}
+
+.german-directions button {
+  min-height: 2.1rem;
+  padding: 0.25rem 0.8rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.german-directions button:hover {
+  border-color: var(--ink-soft);
+}
+
+.german-directions button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.german-directions button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Questions: data-german-direction picks which one replaces the headword while
+   closed; once open it drops to a muted subline and the headword returns. */
+.german-card__question {
+  display: none;
+  flex: 1 1 auto;
+  font-family: var(--font-de);
+  font-size: 1.08rem;
+  line-height: 1.45;
+}
+
+.german-card__question--meaning {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.german-card__question mark {
+  padding: 0 0.14em;
+  border-radius: 3px;
+  background: var(--mark-bg);
+  color: var(--mark-ink);
+  font-weight: 600;
+}
+
+.german-card__hint {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.js [data-german-direction="meaning"] .german-card:not(.is-open) .german-card__headword,
+.js [data-german-direction="cloze"] .german-card:not(.is-open) .german-card__headword {
+  display: none;
+}
+
+.js [data-german-direction="meaning"] .german-card__question--meaning,
+.js [data-german-direction="cloze"] .german-card__question--cloze {
+  display: block;
+}
+
+.js [data-german-direction="meaning"] .german-card.is-open .german-card__question,
+.js [data-german-direction="cloze"] .german-card.is-open .german-card__question {
+  order: 10;
+  flex: 1 1 100%;
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.js [data-german-direction="cloze"] .german-card.is-open .german-card__question mark {
+  font-weight: 600;
+}
+
+/* Cloze: the Word is a gap until the card opens */
+.js [data-german-direction="cloze"] .german-card:not(.is-open) .german-card__question--cloze mark {
+  color: transparent;
+  background: var(--line);
+  border-bottom: 2px solid var(--muted);
+  user-select: none;
+}
+
+/* Hide the answer-half duplicate of the question */
+.js [data-german-direction="meaning"] .german-card__hidden .german-card__meaning,
+.js [data-german-direction="cloze"] .german-card__hidden .german-card__seen {
+  display: none;
+}
+
 /* Done Entries: keep their place, lose their weight */
 .german-card.is-done {
   border-style: dashed;
@@ -458,6 +570,33 @@ code {
 /* Index — Sessions */
 .german-sessions {
   margin-bottom: 2.4rem;
+}
+
+.german-h2-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.german-h2-row .german-h2 {
+  margin-bottom: 0;
+}
+
+.german-new {
+  flex: none;
+  padding: 0.2rem 0.75rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.german-new:hover {
+  border-color: var(--accent);
 }
 
 .german-session-list {

@@ -29,8 +29,7 @@ Scope: `$ARGUMENTS` — Session file paths; when empty, every file in `_learn_ge
 
 ## Author-owned fields
 
-`word`, `seen` and `done` belong to the author. Never add, remove or change `done`
-(it is written by `/german-done`). Normalise `word` (add article, plural,
+`word`, `seen` and `done` belong to the author. Never touch `done`. Normalise `word` (add article, plural,
 principal parts) and correct `seen` (grammar, spelling, punctuation), keeping the
 author's wording and meaning; a `seen` that is already correct stays byte-identical.
 A missing `seen` stays missing. A filled `meaning` or `note` stays as written; an
@@ -87,9 +86,8 @@ entries:
 ---
 ```
 
-**done** — the date the learner marked the Word as learned. A done Entry is muted on
-the Session page, ticked in the Glossary, and left out of `/learn/german/prompt`. Only
-`/german-done` (`scripts/german_done.py`) writes it. Absent means still learning.
+**done** — date the learner marked the Word learned; written only by `/german-done`.
+Absent means still learning.
 
 File name `YYYY-MM-DD-<slug>.md`; the date prefix is part of the URL
 (`/learn/german/YYYY-MM-DD-<slug>/`). `source.date` is mandatory (the index sorts on

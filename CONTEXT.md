@@ -41,13 +41,17 @@ The merged A–Z index of every Word across all Sessions, each linking back to t
 _Avoid_: Dictionary, index, word list
 
 **Done**:
-The state of an Entry the learner has marked as learned, recorded as a date in `done:`. A done Entry stays on its Session page (muted) and in the Glossary (ticked) but is left out of the Prompt.
+An Entry the learner marked as learned (`done:` date). Stays on the Session page (muted) and in the Glossary (ticked); left out of the Prompt.
 _Avoid_: Complete, learned, mastered, archived
 
 **Prompt**:
-The plain-text voice-chat brief at `/learn/german/prompt` (and `prompt.txt`) that a conversation partner fetches and follows: the most recent open Words with Meaning and Seen sentence, conversation rules, and the closing `MASTERED:` line format.
+The plain-text voice-chat brief at `/learn/german/prompt(.txt)` a conversation partner fetches: newest open Words with Meaning and Seen sentence, rules, and the closing `MASTERED:` format.
 _Avoid_: Brief, script, lesson plan
 
 **Quiz mode**:
 The default reading mode of a Session in which Meaning and Examples are hidden behind a tap for active recall.
 _Avoid_: Flashcard mode, test, review mode
+
+**Direction**:
+What Quiz mode asks: *word* (produce the Meaning), *meaning* (produce the Word), or *cloze* (Seen sentence with the Word blanked). Per page, mirrored in the URL hash.
+_Avoid_: Mode, side, reverse

@@ -1,12 +1,11 @@
-/* /learn/german — the three bits of behaviour the section has.
-   Session page: Quiz mode. Cards start collapsed (Word only); tapping a card
-   reveals its answer half; one control toggles all and a counter shows how many
-   are open.
-   Index page: Glossary items start collapsed (Word + Session links); tapping one
-   reveals its Meaning.
-   Prompt page: a Copy button puts the brief on the clipboard.
-   Stateless on purpose: nothing is persisted across loads. With JavaScript off
-   the stylesheet leaves every card and every Meaning open (it keys off html.js). */
+/* /learn/german behaviour.
+   Session: Quiz mode — cards start collapsed, tap reveals, one control toggles
+   all, a counter shows how many are open; a direction switch (word / meaning /
+   cloze) sets data-german-direction on the root and mirrors it in the URL hash.
+   Index: Glossary items collapsed, tap reveals the Meaning.
+   Prompt: Copy button.
+   Stateless: nothing persists across loads. Without JS the stylesheet leaves
+   everything open (keys off html.js). */
 
 /* Shared: should a tap on `target` toggle its container? Real links keep
    behaving as links, and a text selection is left alone instead of collapsing
@@ -69,6 +68,30 @@ function germanTapShouldToggle(target) {
     });
   }
 
+  /* Direction */
+  var directionButtons = Array.prototype.slice.call(root.querySelectorAll("[data-german-direction]"));
+  var directions = directionButtons.map(function (b) { return b.getAttribute("data-german-direction"); });
+
+  function setDirection(direction, updateHash) {
+    if (directions.indexOf(direction) === -1) return;
+    root.setAttribute("data-german-direction", direction);
+    directionButtons.forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-german-direction") === direction));
+    });
+    cards.forEach(function (card) { setOpen(card, false); });
+    refreshControls();
+    if (updateHash && window.history && history.replaceState) {
+      history.replaceState(null, "", direction === "word" ? location.pathname + location.search : "#" + direction);
+    }
+  }
+
+  directionButtons.forEach(function (b) {
+    b.addEventListener("click", function () {
+      setDirection(b.getAttribute("data-german-direction"), true);
+    });
+  });
+
+  setDirection(location.hash.replace("#", "") || "word", false);
   refreshControls();
 })();
 
@@ -92,9 +115,7 @@ function germanTapShouldToggle(target) {
   });
 })();
 
-/* Prompt page — copy the brief. The button names the element to copy in
-   data-german-copy; without JavaScript it is hidden and the text is still there
-   to select by hand. */
+/* Prompt page — copy the element named in data-german-copy. */
 (function () {
   var buttons = Array.prototype.slice.call(document.querySelectorAll("[data-german-copy]"));
   if (buttons.length === 0) return;

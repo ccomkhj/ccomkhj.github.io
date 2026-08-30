@@ -29,12 +29,15 @@ collections:
   learn_german:
     output: true
     permalink: /learn/german/:name/
-# /learn/german/prompt — the voice-chat brief a conversation partner (ChatGPT etc.) fetches.
-# Rendered at build time from Entries without `done:`, newest Session first.
+# /learn/german/prompt — voice-chat brief built from Entries without `done:`.
 german_prompt:
-  words: 15          # how many open Words one prompt carries
-  minutes: 15        # intended length of the voice chat
+  words: 15          # open Words per brief
+  minutes: 15        # chat length stated in the brief
   level: "B1–B2"     # learner level stated in the brief
+# "+ New Session" link → GitHub new-file editor with a prefilled skeleton.
+german_new_session:
+  repo: "ccomkhj/ccomkhj.github.io"
+  branch: master
 
 
 

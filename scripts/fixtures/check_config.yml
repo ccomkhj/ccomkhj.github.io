@@ -1,5 +1,4 @@
-# Overrides for `just check-german`: lift the prompt cap so every open fixture Word
-# lands in /learn/german/prompt even when newer real Sessions exist.
+# `just check-german` override: lift the prompt cap so every open fixture Word reaches the prompt.
 german_prompt:
   words: 1000
   minutes: 15
