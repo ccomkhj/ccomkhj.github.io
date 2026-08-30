@@ -1,7 +1,7 @@
 ---
 name: german
 description: "Complete every incomplete Entry in the German vocabulary Sessions under _learn_german/."
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 Complete the incomplete Entries in the German vocabulary Sessions (`_learn_german/*.md`).
