@@ -52,17 +52,21 @@ layout: german_base
     {%- else %}
     <ol class="german-session-list">
       {%- for s in sessions %}
+      {%- assign n = s.entries | size -%}
+      {%- assign s_done = 0 -%}
+      {%- for e in s.entries -%}{%- if e.done -%}{%- assign s_done = s_done | plus: 1 -%}{%- endif -%}{%- endfor -%}
+      {%- assign pct = 0 -%}{%- if n > 0 -%}{%- assign pct = s_done | times: 100 | divided_by: n -%}{%- endif -%}
+      {%- assign host = s.source.url | default: "" | split: "//" | last | split: "/" | first | remove_first: "www." -%}
       <li class="german-session-item">
-        <a class="german-session-item__link" href="{{ s.url | relative_url }}">
-          <span class="german-session-item__title">{{ s.title | escape }}</span>
-          <span class="german-session-item__meta">
+        <a class="german-session-card" href="{{ s.url | relative_url }}">
+          <span class="german-session-card__top">
             <time datetime="{{ s.source.date | date: '%Y-%m-%d' }}">{{ s.source.date | date: '%-d %b %Y' }}</time>
-            <span class="german-meta__sep" aria-hidden="true">&middot;</span>{% if s.source.type %} {{ s.source.type | escape }} <span class="german-meta__sep" aria-hidden="true">&middot;</span>{% endif %}
-            {{ s.entries | size }} {% if s.entries.size == 1 %}word{% else %}words{% endif %}
-            {%- assign s_done = 0 -%}
-            {%- for e in s.entries -%}{%- if e.done -%}{%- assign s_done = s_done | plus: 1 -%}{%- endif -%}{%- endfor -%}
-            {%- if s_done > 0 %} <span class="german-meta__sep" aria-hidden="true">&middot;</span> {{ s_done }} done{% endif %}
+            {%- if s.source.type %}<span class="german-session-card__type">{{ s.source.type | escape }}</span>{% endif %}
           </span>
+          <span class="german-session-card__title">{{ s.title | escape }}</span>
+          {%- if host != "" %}<span class="german-session-card__host">{{ host | escape }}</span>{% endif %}
+          <span class="german-session-card__meta">{{ n }} {% if n == 1 %}word{% else %}words{% endif %}{% if s_done > 0 %} <span class="german-meta__sep" aria-hidden="true">&middot;</span> {{ s_done }} done{% endif %}</span>
+          <span class="german-session-card__bar" aria-hidden="true"><span style="width: {{ pct }}%"></span></span>
         </a>
       </li>
       {%- endfor %}

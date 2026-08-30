@@ -729,6 +729,244 @@ code {
 
   .german-cards,
   .german-session-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+  gap: 0.7rem;
+}
+
+.german-session-item {
+  margin: 0;
+  display: flex;
+}
+
+.german-session-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  color: inherit;
+  text-decoration: none;
+}
+
+.german-session-card:hover {
+  border-color: var(--line-strong);
+}
+
+.german-session-card__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.german-session-card__type {
+  color: var(--accent);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.german-session-card__title {
+  flex: 1 1 auto;
+  font-family: var(--font-de);
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.german-session-card__host {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.72rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.german-session-card__meta {
+  margin-top: 0.15rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.german-session-card__bar {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.german-session-card__bar > span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+/* Index — Glossary */
+.german-glossary__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.german-glossary__letter {
+  margin: 1.3rem 0 0.35rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.german-glossary__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.7rem;
+  margin: 0;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+/* The headword is a button: tapping it reveals the Meaning row below. It is
+   reset to look like text; the disclosure marker only appears under html.js. */
+.german-glossary__word {
+  flex: 1 1 12em;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-family: var(--font-de);
+  font-size: 1.05rem;
+  line-height: inherit;
+  text-align: left;
+  text-shadow: none;
+  box-shadow: none;
+  cursor: default;
+}
+
+.js .german-glossary__word {
+  cursor: pointer;
+}
+
+.js .german-glossary__item {
+  cursor: pointer;
+}
+
+.german-glossary__word:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.js .german-glossary__word::after {
+  content: "\25B8"; /* ▸ */
+  flex: none;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 0.7em;
+  transition: transform 120ms ease;
+}
+
+.js .german-glossary__item.is-open .german-glossary__word::after {
+  transform: rotate(90deg);
+}
+
+/* The answer row: full width under the headword and its links */
+.german-glossary__meaning {
+  flex: 1 1 100%;
+  margin-top: 0.15rem;
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.js .german-glossary__item:not(.is-open) .german-glossary__meaning {
+  display: none;
+}
+
+.german-glossary__meanings {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.german-glossary__meaning--pending {
+  color: var(--muted);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.german-glossary__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.55rem;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.german-glossary__links a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.german-glossary__links a:hover {
+  border-bottom-color: currentColor;
+}
+
+.german-glossary__done {
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.german-empty {
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Footer */
+.german-footer {
+  max-width: var(--measure);
+  margin: 3rem auto 0;
+  padding: 1.2rem 1rem 0;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.german-footer a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.german-footer a:hover {
+  color: var(--ink);
+}
+
+/* Wider screens: two columns of cards once there is room for them */
+@media (min-width: 62rem) {
+  :root { --measure: 62rem; }
+
+  .german-cards {
     grid-template-columns: 1fr 1fr;
   }
 }

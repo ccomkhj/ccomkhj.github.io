@@ -143,6 +143,8 @@ def main():
               "index shows Entry counts")
         check(re.search(r"\d+ open", index) is not None,
               "index shows the open-Word count")
+        check('class="german-session-card"' in index and 'german-session-card__bar' in index,
+              "index renders Sessions as cards with a done-progress bar")
         alpha_item = re.search(r'<li class="german-session-item">.*?</li>', index[index.find(ALPHA_URL) - 200:], re.S)
         check(alpha_item is not None and re.search(r"1\s+done", alpha_item.group(0)) is not None,
               "index shows the done count of a Session with a done Entry")
