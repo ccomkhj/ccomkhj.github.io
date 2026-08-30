@@ -2,10 +2,13 @@
 """Build-output check for the /learn/german section.
 
 Copies the fixture Sessions into `_learn_german/`, builds the site into a temp
-directory, removes the fixtures again, and asserts on the generated HTML.
-Run via `just check-german`.
+directory (with `scripts/fixtures/check_config.yml` lifting the prompt cap so
+fixture Words reach the prompt), removes the fixtures again, and asserts on the
+generated HTML and text. Also exercises `scripts/german_done.py` on a copy of a
+fixture. Run via `just check-german`.
 """
 import html
+import json
 import re
 import shutil
 import subprocess
@@ -15,10 +18,16 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 FIXTURES = ROOT / "scripts" / "fixtures" / "learn_german"
+CHECK_CONFIG = ROOT / "scripts" / "fixtures" / "check_config.yml"
 COLLECTION = ROOT / "_learn_german"
+
+sys.path.insert(0, str(ROOT / "scripts"))
+import german_done  # noqa: E402
 
 ALPHA_URL = "/learn/german/1999-01-01-fixture-alpha/"
 BETA_URL = "/learn/german/1999-01-02-fixture-beta/"
+PROMPT_URL = "/learn/german/prompt/"
+PROMPT_TXT = "/learn/german/prompt.txt"
 
 failures = []
 
@@ -41,6 +50,7 @@ def build(dest: Path):
             copied.append(target)
         subprocess.run(
             ["bundle", "exec", "jekyll", "build", "--strict_front_matter",
+             "--config", f"_config.yml,{CHECK_CONFIG.relative_to(ROOT)}",
              "--destination", str(dest)],
             cwd=ROOT, check=True,
         )
@@ -54,7 +64,66 @@ def read(dest: Path, rel: str) -> str:
     return path.read_text(encoding="utf-8") if path.exists() else ""
 
 
+def text_of(fragment: str) -> str:
+    return html.unescape(re.sub(r"<[^>]+>", "", fragment))
+
+
+def check_done_script():
+    """scripts/german_done.py against copies of the fixtures: insert, idempotent, undo."""
+    check(german_done.stem("der Antrag, die Anträge") == "Antrag", "stem: noun with plural")
+    check(german_done.stem("sich (Dat.) etw. leisten") == "leisten", "stem: reflexive with case marker")
+    check(german_done.stem("einreichen (reicht ein, reichte ein, hat eingereicht)") == "einreichen",
+          "stem: verb with principal parts")
+    check(german_done.stem("die Eltern (Pl.)") == "Eltern", "stem: plural-only noun")
+    check(german_done.key("Prüfung") == german_done.key("die Prüfung, die Prüfungen"),
+          "key: bare stem and full headword match")
+
+    tmp = Path(tempfile.mkdtemp(prefix="check-german-done-"))
+    try:
+        for fixture in FIXTURES.glob("*.md"):
+            shutil.copy(fixture, tmp / fixture.name)
+        beta = tmp / "1999-01-02-fixture-beta.md"
+        alpha = tmp / "1999-01-01-fixture-alpha.md"
+        beta_orig = beta.read_text(encoding="utf-8")
+        alpha_orig = alpha.read_text(encoding="utf-8")
+
+        rc = german_done.main(["--dir", str(tmp), "--date", "1999-01-04", "einreichen"])
+        check(rc == 0, "german_done: marking a known Word exits 0")
+        expected = beta_orig.replace("    examples: []\n    note:\n",
+                                     "    examples: []\n    note:\n    done: 1999-01-04\n")
+        check(beta.read_text(encoding="utf-8") == expected,
+              "german_done: appends `done:` under the Entry's last field, rest byte-identical")
+        check(alpha.read_text(encoding="utf-8") == alpha_orig,
+              "german_done: untouched Session stays byte-identical")
+
+        german_done.main(["--dir", str(tmp), "--date", "1999-01-05", "einreichen"])
+        check(beta.read_text(encoding="utf-8") == expected,
+              "german_done: marking an already-done Word changes nothing")
+
+        rc = german_done.main(["--dir", str(tmp), "--date", "1999-01-06",
+                               "MASTERED: der Antrag, die Anträge; Prüfung"])
+        check(rc == 0, "german_done: accepts a whole MASTERED: line")
+        alpha_now = alpha.read_text(encoding="utf-8")
+        check(alpha_now.count("done: 1999-01-03") == 1 and "done: 1999-01-06" in alpha_now,
+              "german_done: keeps the existing Antrag date, marks Prüfung in alpha")
+        check(beta.read_text(encoding="utf-8").count("done: 1999-01-06") == 1,
+              "german_done: marks the repeated Word Prüfung in beta too")
+
+        rc = german_done.main(["--dir", str(tmp), "Unbekanntwort"])
+        check(rc == 1, "german_done: an unmatched Word exits 1")
+
+        german_done.main(["--dir", str(tmp), "--undo", "einreichen", "Prüfung"])
+        check(beta.read_text(encoding="utf-8") == beta_orig,
+              "german_done: --undo restores beta byte-identical")
+        check(alpha.read_text(encoding="utf-8") == alpha_orig,
+              "german_done: --undo restores alpha byte-identical")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
 def main():
+    check_done_script()
+
     dest = Path(tempfile.mkdtemp(prefix="check-german-"))
     try:
         build(dest)
@@ -72,6 +141,12 @@ def main():
               "index shows Source titles")
         check(re.search(r"2\s+words", index) is not None,
               "index shows Entry counts")
+        check(re.search(r"\d+ open", index) is not None,
+              "index shows the open-Word count")
+        alpha_item = re.search(r'<li class="german-session-item">.*?</li>', index[index.find(ALPHA_URL) - 200:], re.S)
+        check(alpha_item is not None and re.search(r"1\s+done", alpha_item.group(0)) is not None,
+              "index shows the done count of a Session with a done Entry")
+        check(PROMPT_URL in index, "index links to the prompt page")
 
         glossary = re.search(
             r'<section class="german-glossary".*?</section>', index, re.S)
@@ -92,6 +167,20 @@ def main():
         links = re.findall(r'href="([^"]+)"', pruefung[0]) if pruefung else []
         check(ALPHA_URL in links and BETA_URL in links and len(links) == 2,
               "repeated Word links to both Sessions")
+        check(pruefung and "data-german-gloss-toggle" in pruefung[0],
+              "Glossary Word is a toggle (click reveals the Meaning)")
+        check(pruefung and pruefung[0].count("exam; inspection, check") == 1,
+              "Glossary item carries the Meaning once for a repeated Word")
+        antrag = [i for i in items if "Antrag" in html.unescape(i)]
+        check(antrag and "application, motion (formal request)" in antrag[0],
+              "Glossary item carries the Meaning (no-JS degradation)")
+        einreichen = [i for i in items if "einreichen" in i]
+        check(einreichen and "meaning pending" in einreichen[0],
+              "Glossary item without a Meaning shows the pending hint")
+        check(antrag and "german-glossary__done" in antrag[0],
+              "Glossary ticks a done Word")
+        check(pruefung and "german-glossary__done" not in pruefung[0],
+              "Glossary leaves an open Word unticked")
 
         # --- session page -----------------------------------------------
         session = read(dest, BETA_URL + "index.html")
@@ -123,6 +212,54 @@ def main():
         check("window-themed" not in session and "title-bar" not in session,
               "Session uses no Win98 window chrome")
 
+        # --- done state --------------------------------------------------
+        # Cards nest <li> (Examples), so split on the card opener rather than matching to </li>.
+        alpha_cards = re.split(r'(?=<li class="german-card[" ])', alpha)[1:]
+        done_cards = [c for c in alpha_cards if c.startswith('<li class="german-card is-done"')]
+        check(len(done_cards) == 1 and "Antrag" in done_cards[0],
+              "done Entry renders as a done card, open ones don't")
+        check(done_cards and 'data-german-done="1999-01-03"' in done_cards[0],
+              "done card carries its date")
+        check(done_cards and 'class="german-card__done"' in done_cards[0],
+              "done card shows a badge")
+        check(re.search(r"1\s+done", alpha) is not None, "Session meta shows the done count")
+        check("is-done" not in session, "Session without done Entries has no done cards")
+        order = [(re.search(r'german-card__index"[^>]*>(\d+)<', c) or [None, "?"])[1] for c in alpha_cards]
+        check(order == ["1", "2", "3"] and alpha_cards[0].startswith('<li class="german-card is-done"'),
+              "done card keeps its encounter-order position (Antrag stays card 1)")
+
+        # --- prompt ------------------------------------------------------
+        prompt_html = read(dest, PROMPT_URL + "index.html")
+        check(prompt_html != "", f"prompt page exists at {PROMPT_URL}")
+        check(re.search(r'<meta name="robots" content="noindex', prompt_html) is not None,
+              "prompt page carries a noindex robots meta")
+        pre = re.search(r'<pre class="german-prompt"[^>]*>(.*?)</pre>', prompt_html, re.S)
+        check(pre is not None, "prompt page wraps the brief in <pre>")
+        pre_text = text_of(pre.group(1)) if pre else ""
+        check('data-german-copy="german-prompt-text"' in prompt_html,
+              "prompt page has a Copy button")
+        check(PROMPT_TXT in prompt_html, "prompt page links to the plain-text version")
+
+        txt = read(dest, PROMPT_TXT)
+        check(txt != "", f"plain-text prompt exists at {PROMPT_TXT}")
+        check(txt.startswith("GERMAN VOICE-CHAT BRIEF"), "plain-text prompt starts with the brief header")
+        check("<" not in txt, "plain-text prompt contains no HTML")
+        check(pre_text.strip() == txt.strip(), "HTML and plain-text prompt carry the identical brief")
+        for word in ("die Prüfung, die Prüfungen", "sich (Dat.) etw. leisten",
+                     "einreichen"):
+            check(f"- {word}" in txt, f"prompt lists open Word '{word}'")
+        check("der Antrag" not in txt, "prompt leaves out the done Word")
+        check("seen in: „Das kann ich mir nicht leisten.“" in txt,
+              "prompt carries the Seen sentence")
+        check("exam; inspection, check" in txt, "prompt carries the Meaning")
+        check("MASTERED:" in txt and "REVIEW:" in txt, "prompt asks for the MASTERED/REVIEW lines")
+        check("Fixture Beta" in txt and "https://example.com/fixture-beta" in txt,
+              "prompt lists the Sources of its Words")
+        check(txt.find("Fixture Beta") < txt.find("Fixture Alpha"),
+              "prompt orders Sources newest-first")
+        check(re.search(r"\d+ most recently collected Words not yet marked done \(\d+ open in total\)", txt) is not None,
+              "prompt states how many Words it carries")
+
         # --- isolation --------------------------------------------------
         for rel, label in [
             ("/sitemap.xml", "sitemap"),
@@ -135,6 +272,7 @@ def main():
             check(content != "", f"{label} was generated")
             check("/learn/german/" not in content and "Fixture Alpha" not in content,
                   f"{label} does not reference /learn/german/")
+        check("prompt.txt" not in read(dest, "/sitemap.xml"), "sitemap omits prompt.txt")
     finally:
         shutil.rmtree(dest, ignore_errors=True)
 

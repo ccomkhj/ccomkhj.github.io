@@ -1,0 +1,44 @@
+---
+layout: german_base
+---
+{%- comment -%}
+  /learn/german/prompt — the voice-chat brief for humans to read and for a
+  conversation partner to fetch. The brief itself is _includes/german_prompt.txt
+  (also served raw at /learn/german/prompt.txt); this page wraps it in <pre>
+  with a copy button and the learner's own three-step routine underneath.
+{%- endcomment -%}
+{%- capture prompt %}{% include german_prompt.txt %}{% endcapture -%}
+{%- assign open_total = 0 -%}
+{%- for s in site.learn_german -%}{%- for e in s.entries -%}
+  {%- assign w = e.word | default: "" | strip -%}
+  {%- if w != "" -%}{%- unless e.done -%}{%- assign open_total = open_total | plus: 1 -%}{%- endunless -%}{%- endif -%}
+{%- endfor -%}{%- endfor -%}
+{%- assign limit = site.german_prompt.words | default: 15 -%}
+{%- assign shown = open_total | at_most: limit -%}
+<header class="german-bar">
+  <a class="german-bar__back" href="{{ '/learn/german/' | relative_url }}"><span aria-hidden="true">&larr;</span> Sessions</a>
+  <span class="german-bar__progress">{{ shown }} of {{ open_total }} open {% if open_total == 1 %}word{% else %}words{% endif %}</span>
+  <button type="button" class="german-bar__toggle" data-german-copy="german-prompt-text">Copy</button>
+</header>
+
+<main class="german-wrap">
+  <div class="german-head">
+    <h1 class="german-title">{{ page.title | escape }}</h1>
+    <p class="german-meta">
+      Plain text: <a class="german-source" href="{{ '/learn/german/prompt.txt' | relative_url }}">{{ '/learn/german/prompt.txt' | absolute_url }}</a>
+      <span class="german-meta__sep" aria-hidden="true">&middot;</span> rebuilt {{ site.time | date: '%-d %b %Y' }}
+    </p>
+  </div>
+
+  <pre class="german-prompt" id="german-prompt-text" tabindex="0">{{ prompt | strip | escape }}</pre>
+
+  <section class="german-howto">
+    <h2 class="german-h2">For the learner</h2>
+    <ol>
+      <li>Tell your conversation partner: <q>Read {{ '/learn/german/prompt.txt' | absolute_url }} and follow it.</q> Then switch to voice.</li>
+      <li>It ends with a <code>MASTERED:</code> line. In Claude Code run <code>/german-done "MASTERED: …"</code> (or <code>just german-done …</code>), check the diff, commit, push.</li>
+      <li>The site rebuilds without those Words; the next open Words move in, {{ limit }} at a time, newest Session first.</li>
+    </ol>
+  </section>
+  {{ content }}
+</main>

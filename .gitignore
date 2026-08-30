@@ -33,3 +33,15 @@ _asset_bundler_cache
 _site
 
 *.json
+
+# Teach skill artifacts
+/MISSION.md
+/NOTES.md
+/RESOURCES.md
+/lessons/
+/reference/
+/research/
+/learning-records/
+/assets/css/teach.css
+/assets/js/teach-quiz.js
+__pycache__/

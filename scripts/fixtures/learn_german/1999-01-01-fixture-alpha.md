@@ -12,6 +12,7 @@ entries:
       - Hast du den Antrag schon ausgefüllt?
       - Der Antrag wurde vom Ausschuss einstimmig angenommen.
     note: "Antrag stellen = to file an application; not 'anthrax'."
+    done: 1999-01-03
   - word: die Prüfung, die Prüfungen
     seen: Die Prüfung war schwerer als erwartet.
     meaning: exam; inspection, check

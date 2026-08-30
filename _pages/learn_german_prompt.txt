@@ -1,0 +1,7 @@
+---
+permalink: /learn/german/prompt.txt
+layout: null
+sitemap: false
+search: false
+---
+{% include german_prompt.txt %}

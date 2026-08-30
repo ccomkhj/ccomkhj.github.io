@@ -29,6 +29,12 @@ collections:
   learn_german:
     output: true
     permalink: /learn/german/:name/
+# /learn/german/prompt — the voice-chat brief a conversation partner (ChatGPT etc.) fetches.
+# Rendered at build time from Entries without `done:`, newest Session first.
+german_prompt:
+  words: 15          # how many open Words one prompt carries
+  minutes: 15        # intended length of the voice chat
+  level: "B1–B2"     # learner level stated in the brief
 
 
 
@@ -328,7 +334,7 @@ defaults:
       mathjax: true # keep it true only when math equation is used.
   # _learn_german — unlisted German vocabulary Sessions.
   # To publish the section later: drop sitemap/search/robots below and in
-  # _pages/learn_german.md, then add a nav entry in _data/navigation.yml.
+  # _pages/learn_german*.md, then add a nav entry in _data/navigation.yml.
   # source.date is mandatory in every Session: the index sorts on it and the build fails without it.
   - scope:
       path: ""

@@ -20,7 +20,7 @@ Scope: `$ARGUMENTS` — Session file paths; when empty, every file in `_learn_ge
    (if present), a `meaning`, exactly two `examples`, and `note` decided (filled or left
    empty).
 3. **Write back** each touched Session in place: same key order (`word`, `seen`,
-   `meaning`, `examples`, `note`), comments and untouched values byte-identical, valid
+   `meaning`, `examples`, `note`, `done`), comments and untouched values byte-identical, valid
    YAML (quote values containing `: `, `#`, or leading `-`/`[`/`{`). The body below the
    frontmatter stays as it was.
 4. **Verify** with `just check-german` (builds the site; any YAML slip fails the build).
@@ -29,7 +29,8 @@ Scope: `$ARGUMENTS` — Session file paths; when empty, every file in `_learn_ge
 
 ## Author-owned fields
 
-`word` and `seen` belong to the author. Normalise `word` (add article, plural,
+`word`, `seen` and `done` belong to the author. Never add, remove or change `done`
+(it is written by `/german-done`). Normalise `word` (add article, plural,
 principal parts) and correct `seen` (grammar, spelling, punctuation), keeping the
 author's wording and meaning; a `seen` that is already correct stays byte-identical.
 A missing `seen` stays missing. A filled `meaning` or `note` stays as written; an
@@ -82,8 +83,13 @@ entries:
     meaning:
     examples: []
     note:
+    done: 2026-08-30                          # optional; set by /german-done, never by /german
 ---
 ```
+
+**done** — the date the learner marked the Word as learned. A done Entry is muted on
+the Session page, ticked in the Glossary, and left out of `/learn/german/prompt`. Only
+`/german-done` (`scripts/german_done.py`) writes it. Absent means still learning.
 
 File name `YYYY-MM-DD-<slug>.md`; the date prefix is part of the URL
 (`/learn/german/YYYY-MM-DD-<slug>/`). `source.date` is mandatory (the index sorts on

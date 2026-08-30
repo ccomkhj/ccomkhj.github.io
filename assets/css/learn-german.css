@@ -139,6 +139,20 @@ code {
   border-color: var(--ink-soft);
 }
 
+.german-bar__link {
+  flex: none;
+  min-height: 2.2rem;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--accent);
+}
+
+.german-bar__progress a {
+  color: inherit;
+}
+
 /* Page frame */
 .german-wrap {
   width: 100%;
@@ -368,6 +382,79 @@ code {
   font-size: 0.9rem;
 }
 
+/* Done Entries: keep their place, lose their weight */
+.german-card.is-done {
+  border-style: dashed;
+  background: transparent;
+}
+
+.german-card.is-done .german-card__headword,
+.german-card.is-done .german-card__index {
+  opacity: 0.55;
+}
+
+.german-card__done {
+  flex: none;
+  align-self: center;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.german-card__done-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.german-card__done-note a {
+  color: inherit;
+}
+
+/* Prompt page */
+.german-prompt {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.german-prompt:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.german-howto {
+  margin-top: 2rem;
+}
+
+.german-howto ol {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.german-howto li + li {
+  margin-top: 0.4rem;
+}
+
+.german-howto q {
+  font-style: italic;
+}
+
 /* Index — Sessions */
 .german-sessions {
   margin-bottom: 2.4rem;
@@ -532,6 +619,12 @@ code {
 
 .german-glossary__links a:hover {
   border-bottom-color: currentColor;
+}
+
+.german-glossary__done {
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 700;
 }
 
 .german-empty {

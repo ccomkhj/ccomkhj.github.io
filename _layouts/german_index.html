@@ -9,9 +9,12 @@ layout: german_base
 
 {%- comment -%} Sessions newest-first by Source date {%- endcomment -%}
 {%- assign sessions = site.learn_german | sort: "source.date" | reverse -%}
+{%- assign done_total = 0 -%}
 
 {%- comment -%}
-  Glossary: one string per Entry "sortkey<TAB>word<TAB>date<TAB>url<TAB>title<TAB>meaning", sorted.
+  Glossary: one string per Entry "sortkey<TAB>word<TAB>date<TAB>url<TAB>title<TAB>meaning<TAB>done", sorted.
+  `done` is "1" when the Entry carries a done date, else empty (Ruby's split drops
+  trailing empty fields, so read it as f[6] == "1").
   The sort key is the Word's stem (see german_stem.html), lowercased with umlauts
   folded, so "die Prüfung" sorts under P and "sich (Dat.) etw. leisten" under L.
   A literal TAB separates fields because it sorts below every letter (so
@@ -27,15 +30,19 @@ layout: german_base
     {%- capture key %}{% include german_stem.html word=word %}{% endcapture -%}
     {%- assign key = key | downcase | replace: "ä", "a" | replace: "ö", "o" | replace: "ü", "u" | replace: "ß", "ss" -%}
     {%- assign meaning = e.meaning | default: "" | strip -%}
-    {%- capture item -%}{{ key }}{{ SEP }}{{ word }}{{ SEP }}{{ s.source.date | date: '%Y-%m-%d' }}{{ SEP }}{{ s.url }}{{ SEP }}{{ s.title }}{{ SEP }}{{ meaning }}{%- endcapture -%}
+    {%- assign done_flag = "" -%}
+    {%- if e.done -%}{%- assign done_flag = "1" -%}{%- assign done_total = done_total | plus: 1 -%}{%- endif -%}
+    {%- capture item -%}{{ key }}{{ SEP }}{{ word }}{{ SEP }}{{ s.source.date | date: '%Y-%m-%d' }}{{ SEP }}{{ s.url }}{{ SEP }}{{ s.title }}{{ SEP }}{{ meaning }}{{ SEP }}{{ done_flag }}{%- endcapture -%}
     {%- assign items = items | push: item -%}
   {%- endfor -%}
 {%- endfor -%}
 {%- assign items = items | sort -%}
 
+{%- assign open_total = items.size | minus: done_total -%}
 <header class="german-bar">
   <span class="german-bar__title">Learn German</span>
-  <span class="german-bar__progress">{{ sessions | size }} {% if sessions.size == 1 %}session{% else %}sessions{% endif %} &middot; {{ items | size }} entries</span>
+  <span class="german-bar__progress">{{ sessions | size }} {% if sessions.size == 1 %}session{% else %}sessions{% endif %} &middot; {{ items | size }} entries &middot; {{ open_total }} open</span>
+  <a class="german-bar__link" href="{{ '/learn/german/prompt/' | relative_url }}">Prompt <span aria-hidden="true">&rarr;</span></a>
 </header>
 
 <main class="german-wrap">
@@ -53,6 +60,9 @@ layout: german_base
             <time datetime="{{ s.source.date | date: '%Y-%m-%d' }}">{{ s.source.date | date: '%-d %b %Y' }}</time>
             <span class="german-meta__sep" aria-hidden="true">&middot;</span>{% if s.source.type %} {{ s.source.type | escape }} <span class="german-meta__sep" aria-hidden="true">&middot;</span>{% endif %}
             {{ s.entries | size }} {% if s.entries.size == 1 %}word{% else %}words{% endif %}
+            {%- assign s_done = 0 -%}
+            {%- for e in s.entries -%}{%- if e.done -%}{%- assign s_done = s_done | plus: 1 -%}{%- endif -%}{%- endfor -%}
+            {%- if s_done > 0 %} <span class="german-meta__sep" aria-hidden="true">&middot;</span> {{ s_done }} done{% endif %}
           </span>
         </a>
       </li>
@@ -68,37 +78,40 @@ layout: german_base
     {%- else %}
     {%- comment -%}
       Identical Words collapse into one item: the headword (a toggle button), one
-      Session link per occurrence, then the Meaning row. A Word met in several
-      Sessions may carry several Meanings; identical ones are listed once.
-      Each item is closed via german_glossary_meaning.html — at the next Word and
-      again after the loop.
+      Session link per occurrence, a tick when any occurrence is done, then the
+      Meaning row. A Word met in several Sessions may carry several Meanings;
+      identical ones are listed once. Each item is closed via
+      german_glossary_meaning.html — at the next Word and again after the loop.
     {%- endcomment -%}
     <ul class="german-glossary__list">
       {%- assign prev_word = "" -%}
       {%- assign prev_letter = "" -%}
       {%- assign gid = 0 -%}
       {%- assign meanings = "" | split: "" -%}
+      {%- assign group_done = false -%}
       {%- for item in items -%}
         {%- assign f = item | split: SEP -%}
         {%- assign word = f[1] -%}
         {%- assign letter = f[0] | slice: 0, 1 | upcase -%}
         {%- if word != prev_word -%}
-          {%- unless forloop.first %}</span>{% include german_glossary_meaning.html id=gid meanings=meanings %}</li>{% endunless %}
+          {%- unless forloop.first %}{% if group_done %}<span class="german-glossary__done" title="marked done">&#10003;</span>{% endif %}</span>{% include german_glossary_meaning.html id=gid meanings=meanings %}</li>{% endunless %}
           {%- assign gid = gid | plus: 1 -%}
           {%- assign meanings = "" | split: "" -%}
+          {%- assign group_done = false -%}
           {%- if letter != prev_letter %}
       <li class="german-glossary__letter" aria-hidden="true">{{ letter }}</li>
           {%- endif %}
       <li class="german-glossary__item" data-german-gloss><button type="button" class="german-glossary__word" data-german-gloss-toggle aria-expanded="false" aria-controls="german-gloss-{{ gid }}">{% include german_word.html word=word %}</button> <span class="german-glossary__links">
         {%- endif -%}
         <a href="{{ f[3] | relative_url }}" title="{{ f[4] | escape }}">{{ f[2] }}</a>
+        {%- if f[6] == "1" -%}{%- assign group_done = true -%}{%- endif -%}
         {%- assign m = f[5] | default: "" | strip -%}
         {%- if m != "" -%}
           {%- unless meanings contains m -%}{%- assign meanings = meanings | push: m -%}{%- endunless -%}
         {%- endif -%}
         {%- assign prev_word = word -%}
         {%- assign prev_letter = letter -%}
-      {%- endfor %}</span>{% include german_glossary_meaning.html id=gid meanings=meanings %}</li>
+      {%- endfor %}{% if group_done %}<span class="german-glossary__done" title="marked done">&#10003;</span>{% endif %}</span>{% include german_glossary_meaning.html id=gid meanings=meanings %}</li>
     </ul>
     {%- endif %}
   </section>

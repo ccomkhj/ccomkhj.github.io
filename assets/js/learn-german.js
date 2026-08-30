@@ -1,9 +1,10 @@
-/* /learn/german — the two bits of behaviour the section has.
+/* /learn/german — the three bits of behaviour the section has.
    Session page: Quiz mode. Cards start collapsed (Word only); tapping a card
    reveals its answer half; one control toggles all and a counter shows how many
    are open.
    Index page: Glossary items start collapsed (Word + Session links); tapping one
    reveals its Meaning.
+   Prompt page: a Copy button puts the brief on the clipboard.
    Stateless on purpose: nothing is persisted across loads. With JavaScript off
    the stylesheet leaves every card and every Meaning open (it keys off html.js). */
 
@@ -87,6 +88,38 @@ function germanTapShouldToggle(target) {
     item.addEventListener("click", function (event) {
       if (!germanTapShouldToggle(event.target)) return;
       setOpen(item, !item.classList.contains("is-open"));
+    });
+  });
+})();
+
+/* Prompt page — copy the brief. The button names the element to copy in
+   data-german-copy; without JavaScript it is hidden and the text is still there
+   to select by hand. */
+(function () {
+  var buttons = Array.prototype.slice.call(document.querySelectorAll("[data-german-copy]"));
+  if (buttons.length === 0) return;
+
+  buttons.forEach(function (button) {
+    var label = button.textContent;
+    button.addEventListener("click", function () {
+      var source = document.getElementById(button.getAttribute("data-german-copy"));
+      if (!source) return;
+      var text = source.textContent;
+      var done = function (ok) {
+        button.textContent = ok ? "Copied" : "Copy failed";
+        setTimeout(function () { button.textContent = label; }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+      } else {
+        var range = document.createRange();
+        range.selectNodeContents(source);
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        done(document.execCommand && document.execCommand("copy"));
+        selection.removeAllRanges();
+      }
     });
   });
 })();
