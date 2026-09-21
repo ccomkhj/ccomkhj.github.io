@@ -1,7 +1,7 @@
 ---
 layout: single
 author: Huijo
-date: 2026-08-17
+date: 2026-09-09
 tags:
   - Career
   - Mindset

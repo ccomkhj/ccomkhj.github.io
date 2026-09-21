@@ -2,6 +2,18 @@
 
 Guidance for AI agents (Claude Code, etc.) working on this Jekyll blog.
 
+## Math formatting
+
+Use single dollar signs for inline math, e.g. `$\hat{\beta}_1$` within a sentence.
+Use double dollar signs only for standalone display equations, with the delimiters
+on their own lines:
+
+```latex
+$$
+t = \frac{\hat{\beta}_1}{\operatorname{SE}(\hat{\beta}_1)}
+$$
+```
+
 ## Post tagging
 
 Posts live in `_posts/` with YAML frontmatter. The site uses **tags only** — never
