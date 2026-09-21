@@ -44,7 +44,7 @@ title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Huijo Kim"
 description              : "Huijo Kim's personal site — machine learning, computer vision, MLOps, and reflections."
-url                      : "https://ccomkhj.github.io"
+url                      : "https://huijo.xyz"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : "/assets/images/quantum_strawberry.png" # path of fallback teaser image, e.g. "/assets/images/500x300.png"
