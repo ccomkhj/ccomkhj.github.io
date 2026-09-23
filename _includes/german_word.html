@@ -4,6 +4,7 @@
   article is colour-coded by gender.
     "der Ausflug, die Ausflüge"  → [der] Ausflug  ·  , die Ausflüge
     "entfliehen (entflieht, …)"  → entfliehen     ·  (entflieht, …)
+    "etw. (Dat.) ausgesetzt"     → etw. (Dat.) ausgesetzt  (case markers stay in the lemma)
   Params: include.word
 {%- endcomment -%}
 {%- assign w = include.word | default: "" | strip -%}
@@ -14,7 +15,10 @@
 {%- else -%}
   {%- assign rest = w -%}
 {%- endif -%}
-{%- assign lemma = rest | split: "," | first | split: " (" | first | strip -%}
+{%- comment -%} mask case markers so "etw. (Dat.) ausgesetzt" doesn't split at "(Dat.)" {%- endcomment -%}
+{%- assign masked = rest | replace: " (Akk./Dat.)", "@AKKDAT@" | replace: " (Akk.)", "@AKK@" | replace: " (Dat.)", "@DAT@" -%}
+{%- assign lemma = masked | split: "," | first | split: " (" | first | strip
+  | replace: "@AKKDAT@", " (Akk./Dat.)" | replace: "@AKK@", " (Akk.)" | replace: "@DAT@", " (Dat.)" -%}
 {%- assign detail = rest | remove_first: lemma | strip -%}
 <span class="german-word__lemma">{{ lemma | escape }}</span>
 {%- comment -%} a comma binds tight to the lemma; a parenthesis takes a space {%- endcomment -%}
