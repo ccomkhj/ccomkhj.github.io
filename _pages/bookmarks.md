@@ -41,6 +41,13 @@ _Collection of worthwhile readinglist._
 * [Streaming Systems](https://www.oreilly.com/library/view/streaming-systems/9781491983867/): The best conceptual treatment of real-time data processing—event time, watermarks, correctness, and design patterns that prevent subtle failures.
 * [Data Engineering Zoomcamp (DataTalksClub)](https://github.com/DataTalksClub/data-engineering-zoomcamp): Best free, end-to-end hands-on curriculum to build real pipelines (orchestration, warehousing, analytics engineering, batch + streaming).
 
+**Software Design**
+
+- [The Pragmatic Programmer](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/): Andrew Hunt & David Thomas. Practical principles for writing maintainable software.
+- [A Philosophy of Software Design](https://web.stanford.edu/~ouster/cgi-bin/book.php): John Ousterhout. Managing complexity, designing better abstractions, and reducing technical debt.
+- [Domain-Driven Design](https://www.domainlanguage.com/ddd/): Eric Evans. Structuring software around business domains and building effective domain models.
+  - [DDD Reference (free PDF)](https://www.domainlanguage.com/ddd/reference/)
+
 **Agent**
 
 - [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents): Anthropic's practical, framework-neutral introduction to agent patterns and when to use them.
