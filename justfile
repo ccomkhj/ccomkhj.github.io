@@ -9,6 +9,10 @@ run:
 check-german:
     python3 scripts/check_german.py
 
+# Build the site and assert on the Win98 landing page output (extra config overlays optional).
+check-landing *CONFIGS:
+    python3 scripts/check_landing.py {{CONFIGS}}
+
 # Mark Words done in _learn_german/ (headwords, stems, or a whole "MASTERED: a; b" line).
 german-done +WORDS:
     python3 scripts/german_done.py {{WORDS}}

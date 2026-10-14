@@ -25,6 +25,7 @@
     "experimentation and operational optimization.</p>" +
     "<p>Interested in explainability-driven optimization, agent-based workflows, and " +
     "cross-disciplinary system design.</p></div>";
+  window.TerminalBio = BIO; /* also read by the landing page's README and Welcome windows */
 
   window.TerminalCommands = [
     {
