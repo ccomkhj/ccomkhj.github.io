@@ -2,6 +2,20 @@
 layout: default
 ---
 
+<script>
+  /* Decide before first paint whether this visit plays the boot: once per browser session,
+     never with reduced motion or a /?cmd= deep link. assets/js/win98-desktop.js runs it. */
+  (function () {
+    try {
+      var boot = !sessionStorage.getItem("booted98") &&
+        !/[?&]cmd=/.test(location.search) &&
+        !matchMedia("(prefers-reduced-motion: reduce)").matches;
+      sessionStorage.setItem("booted98", "1");
+      if (boot) document.documentElement.classList.add("booting98");
+    } catch (e) { /* storage blocked: skip the boot rather than replay it on every visit */ }
+  })();
+</script>
+
 <style>
   /* The desktop icons replace the site nav on this page */
   .layout--win98_desktop .masthead {
@@ -9,358 +23,756 @@ layout: default
   }
 
   .desktop98 {
+    --taskbar98: 30px;
     position: relative;
-    background: #008080;
-    min-height: 82vh;
-    font-family: "Pixelated MS Sans Serif", Arial, sans-serif;
+    height: 100vh;
+    height: 100dvh;
     overflow: hidden;
-    padding: 16px 16px 46px 16px; /* bottom padding clears the taskbar */
+    background: #000;
+    font-family: "Pixelated MS Sans Serif", Arial, sans-serif;
+    font-size: 11px;
+    color: #000;
+    -webkit-user-select: none;
+    user-select: none;
   }
+  .desktop98 button { border: 0; font-weight: normal; } /* custom.css borders and bolds every button */
+  .desktop98-screen { position: absolute; inset: 0; z-index: 0; background: #008080; }
+  .desktop98-wait, .desktop98-wait * { cursor: wait !important; }
+  .glyph98 { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; }
 
-  /* --- Desktop icons --- */
+  /* --- Desktop and icons --- */
+  .desktop98-desk { position: absolute; left: 0; right: 0; top: 0; bottom: var(--taskbar98); z-index: 1; }
   .desktop98-icons {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    float: left;
-    margin-right: 24px;
+    position: absolute;
+    top: 10px; left: 6px; bottom: 6px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(auto-fill, 74px);
+    grid-auto-columns: 80px;
+    gap: 8px 6px;
+    align-content: start;
+    pointer-events: none; /* empty grid cells belong to the desktop (rubber band) */
   }
   .desktop98-icon {
-    width: 84px;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 80px;
+    padding-top: 2px;
+    outline: none;
+    cursor: default;
+    color: #fff !important;
+    text-decoration: none !important;
+  }
+  .desktop98-glyph { font-size: 32px; line-height: 36px; filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, .45)); }
+  .desktop98-label {
+    max-width: 78px;
+    padding: 1px 2px;
     text-align: center;
-    text-decoration: none;
-    cursor: pointer;
+    line-height: 13px;
+    border: 1px dotted transparent;
   }
-  .desktop98-icon .icon-glyph {
-    font-size: 32px;
-    line-height: 1;
-    display: block;
-    filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.5));
+  .desktop98-icon:focus-visible .desktop98-label { border-color: #ffff80; }
+  .desktop98-icon.selected .desktop98-glyph {
+    filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, .45)) brightness(.55) sepia(1) hue-rotate(190deg) saturate(5);
   }
-  .desktop98-icon .icon-label {
-    display: inline-block;
-    margin-top: 4px;
-    padding: 1px 3px;
-    font-size: 12px;
-    color: #fff;
-    text-shadow: 1px 1px 0 #000;
+  .desktop98-icon.selected .desktop98-label { background: #000080; border-color: #ffff80; }
+  .desktop98-marquee { position: absolute; display: none; border: 1px dotted #fff; pointer-events: none; }
+  .desktop98-noscript { position: absolute; top: 16px; left: 110px; width: 280px; }
+
+  /* --- Windows --- */
+  .desktop98-windows { position: absolute; inset: 0; pointer-events: none; }
+  .window98 {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    pointer-events: auto;
   }
-  .desktop98-icon:hover .icon-label,
-  .desktop98-icon:focus .icon-label {
-    background: #000080;
-    outline: 1px dotted #ffff00;
+  .window98[hidden] { display: none; }
+  .window98:focus { outline: none; }
+  .window98 .title-bar { flex: none; cursor: default; touch-action: none; }
+  .window98 .title-bar-text { display: flex; align-items: center; gap: 4px; overflow: hidden; white-space: nowrap; }
+  .window98-body { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 6px; margin: 6px 4px 4px; }
+  .window98 .status-bar { flex: none; margin: 0; }
+  .window98 .status-bar a { color: #000; }
+  .window98-zoom {
+    position: absolute;
+    z-index: 55;
+    pointer-events: none;
+    border: 2px solid #c0c0c0;
+    background: linear-gradient(#000080, #000080) top / 100% 18px no-repeat;
+    box-shadow: 0 0 0 1px #000;
+  }
+  .field98 {
+    background: #fff;
+    box-shadow: inset -1px -1px #fff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+  }
+  .buttons98 { display: flex; justify-content: flex-end; gap: 6px; flex: none; }
+  .menubar98 { display: flex; gap: 2px; flex: none; }
+  .menubar98 span { padding: 2px 6px; }
+  .menubar98 span:hover { background: #000080; color: #fff; }
+
+  /* Explorer-style lists (My Writings, Recycle Bin) */
+  .explorer98-addr { display: flex; align-items: center; gap: 6px; flex: none; }
+  .explorer98-path { flex: 1; padding: 3px 4px; }
+  .path98 { font-family: Arial, sans-serif; } /* the pixel font has no "\" */
+  .explorer98-addr input { width: 130px; }
+  .explorer98-list {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 2px;
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  .explorer98-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 110px 86px;
+    gap: 8px;
+    padding: 2px 4px;
+    color: #000 !important;
+    text-decoration: none !important;
+    white-space: nowrap;
+  }
+  .explorer98-row[hidden] { display: none; }
+  .explorer98-row span { overflow: hidden; text-overflow: ellipsis; }
+  a.explorer98-row:hover, a.explorer98-row:focus { background: #000080; color: #fff !important; outline: none; }
+  .explorer98-head {
+    position: sticky;
+    top: -2px;
+    padding: 3px 4px;
+    background: #c0c0c0;
+    box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px #808080;
   }
 
-  /* --- MS-DOS Prompt window --- */
-  .window-dos {
-    max-width: 720px;
-    margin: 0 auto;
+  /* Welcome */
+  .welcome98-head { flex: none; padding: 14px 16px; background: linear-gradient(90deg, #000080, #1084d0 60%, #7cc4ff); color: #fff; }
+  .welcome98-title { font: 26px/1.1 "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; letter-spacing: .3px; }
+  .welcome98-title b { font-family: "Arial Black", Arial, sans-serif; }
+  .welcome98-title sup { margin-left: 2px; font: bold 15px Arial, sans-serif; color: #ffd84a; }
+  .welcome98-sub { margin-top: 4px; opacity: .9; }
+  .welcome98-main { flex: 1; min-height: 0; display: grid; grid-template-columns: 200px 1fr; gap: 10px; }
+  .welcome98-menu { display: flex; flex-direction: column; gap: 4px; }
+  .welcome98-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    color: #000 !important;
+    text-decoration: none !important;
+    outline: none;
+    cursor: default;
   }
-  .window-dos .window-body {
-    padding: 4px;
-  }
-  .window-dos .terminal-container {
-    height: 420px;
+  .welcome98-item .glyph98 { width: 24px; font-size: 20px; text-align: center; }
+  .welcome98-item.on { background: #000080; color: #fff !important; }
+  .welcome98-desc { padding: 10px 12px; overflow: auto; line-height: 1.5; }
+  .welcome98-desc h4 { margin: 0 0 6px; font-size: 13px; color: #000080; }
+  .welcome98-desc p { margin: 0 0 8px; font-size: 11px; }
+  .welcome98-desc a { color: #000080; }
+  .welcome98-caret::after { content: "\258C"; animation: blink98 1s steps(1) infinite; }
+  @keyframes blink98 { 50% { opacity: 0; } }
+  .welcome98-foot { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+
+  /* System Properties */
+  .window98 menu[role=tablist] { flex: none; margin: 0; }
+  .window98 [role=tabpanel] { flex: 1; min-height: 0; overflow: auto; }
+  .sysprops98-general { display: grid; grid-template-columns: 120px 1fr; gap: 14px; padding: 10px 6px; }
+  .sysprops98-art { padding-top: 8px; font-size: 72px; line-height: 1; text-align: center; }
+  .sysprops98-general p { margin: 0 0 12px; font-size: 11px; line-height: 1.45; }
+  .sysprops98-tree { margin: 6px; }
+  .sysprops98-meter { display: grid; grid-template-columns: 90px 1fr 40px; gap: 8px; align-items: center; margin: 10px 8px; }
+  .sysprops98-bar { height: 16px; padding: 2px; background: #fff; box-shadow: inset -1px -1px #fff, inset 1px 1px #808080; }
+  .sysprops98-bar i { display: block; height: 100%; background: repeating-linear-gradient(90deg, #000080 0 8px, transparent 8px 10px); }
+
+  /* README.TXT */
+  .notepad98 { flex: 1; min-height: 0; margin: 0; padding: 6px; resize: none; font: 13px/1.5 "Lucida Console", "Courier New", monospace; }
+
+  /* MS-DOS Prompt: the terminal engine's container, fitted into a window */
+  .window98-dos .terminal-container {
+    flex: 1;
+    width: auto;
+    height: auto;
     min-height: 0;
+    padding: 8px;
     border-radius: 0;
-    box-shadow: none;
-    border: inset 2px;
-    padding: 10px;
+    box-shadow: inset 1px 1px #808080, inset -1px -1px #fff;
+    font-size: 13px;
+    -webkit-user-select: text;
+    user-select: text;
   }
-  .window-dos .terminal-input-line {
-    display: none; /* engine flips this to flex after boot */
-    align-items: baseline;
-  }
+  .window98-dos .terminal-input-line { display: none; } /* the engine shows it after its boot text */
+  .window98-dos .terminal-input { flex: 1; width: auto; height: auto; padding: 0; background: transparent; box-shadow: none; } /* undo 98.css text field */
+  .window98-dos .terminal-line a { color: #33ff00; }
 
   /* --- Taskbar --- */
   .taskbar98 {
     position: absolute;
     left: 0; right: 0; bottom: 0;
-    height: 34px;
+    z-index: 50;
+    height: var(--taskbar98);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 2px 2px;
     background: #c0c0c0;
-    border-top: 2px solid #fff;
+    box-shadow: inset 0 1px #dfdfdf, inset 0 2px #fff;
+  }
+  .taskbar98 button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 23px;
+    min-width: 0;
+    min-height: 0;
+    padding: 0 6px;
+    font: 11px "Pixelated MS Sans Serif", Arial, sans-serif;
+  }
+  .taskbar98 .taskbar98-start { padding: 0 5px 0 4px; font-weight: bold; }
+  .taskbar98-start .glyph98 { font-size: 15px; }
+  .taskbar98 button.on {
+    box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px #808080;
+    background: repeating-conic-gradient(#c0c0c0 0 25%, #fff 0 50%) 0 0 / 2px 2px;
+    font-weight: bold;
+  }
+  .taskbar98 .taskbar98-start.on { background: #c0c0c0; }
+  .taskbar98-sep { flex: none; width: 2px; height: 22px; box-shadow: inset 1px 0 #808080, inset -1px 0 #fff; }
+  .taskbar98-tasks { flex: 1; min-width: 0; display: flex; gap: 3px; overflow: hidden; }
+  .taskbar98 .taskbar98-task { flex: 0 1 160px; min-width: 36px; justify-content: flex-start; overflow: hidden; white-space: nowrap; }
+  .taskbar98-task span:last-child { overflow: hidden; text-overflow: ellipsis; }
+  .taskbar98-tray {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 3px 4px;
-    z-index: 50;
-  }
-  .taskbar98 .start-button {
-    font-weight: bold;
-    min-width: 64px;
-    height: 26px;
-  }
-  .taskbar98 .task-item {
-    height: 26px;
-    max-width: 220px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    height: 22px;
+    padding: 0 8px;
     white-space: nowrap;
+    box-shadow: inset -1px -1px #fff, inset 1px 1px #808080;
   }
-  .taskbar98 .task-clock {
-    margin-left: auto;
-    border: 1px solid;
-    border-color: #808080 #fff #fff #808080;
-    padding: 3px 10px;
-    font-size: 12px;
-    min-width: 58px;
-    text-align: center;
-  }
+  .taskbar98 .taskbar98-crt,
+  .taskbar98 .taskbar98-crt:active { height: auto; padding: 0; background: none; box-shadow: none; }
 
   /* --- Start menu --- */
   .startmenu98 {
     position: absolute;
-    bottom: 36px;
-    left: 4px;
-    width: 220px;
-    background: #c0c0c0;
-    border: 2px solid;
-    border-color: #fff #000 #000 #fff;
-    box-shadow: 2px 2px 0 rgba(0,0,0,0.4);
-    display: none;
+    left: 2px;
+    bottom: calc(var(--taskbar98) - 3px);
     z-index: 60;
+    display: none;
+    padding: 3px;
+    background: #c0c0c0;
+    box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px #808080, inset 2px 2px #fff;
   }
-  .startmenu98.open { display: flex; }
-  .startmenu98 .startmenu-side {
-    background: linear-gradient(#000080, #1084d0);
-    color: #fff;
+  .startmenu98.open { display: flex; animation: slide98 .16s ease-out; }
+  @keyframes slide98 { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+  .startmenu98-side {
+    width: 22px;
+    padding: 8px 0;
+    background: linear-gradient(0deg, #000080, #1084d0);
+    color: #c0c0c0;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
-    font-weight: bold;
-    font-size: 16px;
-    padding: 8px 2px;
-    letter-spacing: 1px;
+    font: bold 18px Arial, sans-serif;
+    letter-spacing: .5px;
   }
-  .startmenu98 ul {
-    list-style: none;
-    margin: 0;
-    padding: 2px;
-    flex-grow: 1;
-  }
-  .startmenu98 li a {
+  .startmenu98-side b { color: #fff; font-family: "Arial Black", Arial, sans-serif; }
+  .startmenu98-list { display: flex; flex-direction: column; min-width: 200px; }
+  .startmenu98-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 8px;
-    font-size: 13px;
-    color: #000;
-    text-decoration: none;
+    gap: 10px;
+    height: 34px;
+    padding: 0 24px 0 6px;
+    color: #000 !important;
+    text-decoration: none !important;
+    outline: none;
+    cursor: default;
   }
-  .startmenu98 li a:hover {
-    background: #000080;
-    color: #fff;
-  }
-  .startmenu98 hr {
-    margin: 2px 4px;
-    border: none;
-    border-top: 1px solid #808080;
-    border-bottom: 1px solid #fff;
-  }
+  .startmenu98-item .glyph98 { width: 28px; font-size: 22px; text-align: center; }
+  .startmenu98-item:hover, .startmenu98-item:focus-visible { background: #000080; color: #fff !important; }
+  .startmenu98-hr { margin: 2px; border-top: 1px solid #808080; border-bottom: 1px solid #fff; }
 
-  /* --- Boot splash --- */
-  .boot98 {
-    position: fixed;
+  /* --- Shut Down --- */
+  .shutdown98-dim {
+    position: absolute;
     inset: 0;
-    background: #000;
-    color: #c0c0c0;
-    font-family: "Courier New", monospace;
-    font-size: 14px;
-    padding: 24px;
-    z-index: 9999;
-    cursor: pointer;
-    white-space: pre-wrap;
-    line-height: 1.5;
+    z-index: 70;
+    background: repeating-conic-gradient(rgba(0, 0, 0, .55) 0 25%, transparent 0 50%) 0 0 / 2px 2px;
   }
-  .boot98 .boot-line { display: block; opacity: 0; animation: bootline 1ms forwards; }
-  .boot98 .boot-line:nth-child(1) { animation-delay: 0ms; }
-  .boot98 .boot-line:nth-child(2) { animation-delay: 250ms; }
-  .boot98 .boot-line:nth-child(3) { animation-delay: 650ms; }
-  .boot98 .boot-line:nth-child(4) { animation-delay: 1000ms; }
-  .boot98 .boot-line:nth-child(5) { animation-delay: 1350ms; }
-  .boot98 .boot-line:nth-child(6) { animation-delay: 1650ms; }
-  @keyframes bootline { to { opacity: 1; } }
-  @media (prefers-reduced-motion: reduce) {
-    .boot98 { display: none; }
-  }
-
-  /* --- Shutdown screen --- */
-  .shutdown98 {
-    position: fixed;
+  .shutdown98-dialog { position: absolute; left: 50%; top: 45%; z-index: 71; width: 320px; transform: translate(-50%, -50%); }
+  .shutdown98-dim[hidden], .shutdown98-dialog[hidden], .shutdown98-safe[hidden] { display: none; }
+  .shutdown98-ask { display: flex; gap: 14px; padding: 8px 4px; }
+  .shutdown98-ask .glyph98 { font-size: 36px; }
+  .shutdown98-ask p { margin: 0 0 8px; }
+  .shutdown98-dialog .field-row { margin: 4px 0; }
+  .shutdown98-safe {
+    position: absolute;
     inset: 0;
-    background: #000;
-    color: #ffa500;
-    display: none;
+    z-index: 75;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    background: #000;
+    color: #ff9a1f;
+    font: bold clamp(20px, 3.4vw, 36px)/1.35 Arial, sans-serif;
     text-align: center;
-    font-family: "Courier New", monospace;
-    font-size: clamp(16px, 3vw, 28px);
-    z-index: 9999;
     cursor: pointer;
   }
-  .shutdown98.on { display: flex; }
+  .shutdown98-safe small { margin-top: 28px; font: 12px "Courier New", monospace; color: #555; }
+  .desktop98-screen.off { animation: crt-off98 .6s ease-in forwards; }
+  @keyframes crt-off98 {
+    0%   { transform: scale(1, 1); filter: brightness(1); }
+    45%  { transform: scale(1, .005); filter: brightness(3); }
+    80%  { transform: scale(.003, .005); filter: brightness(6); }
+    100% { transform: scale(0, 0); filter: brightness(6); }
+  }
 
-  /* --- Mobile --- */
+  /* --- Boot: CRT power-on, BIOS POST, splash --- */
+  .boot98 { display: none; position: absolute; inset: 0; z-index: 80; overflow: hidden; background: #000; cursor: pointer; }
+  .booting98 .boot98 { display: block; animation: failsafe98 0s 6s forwards; } /* never strand a visitor if win98-desktop.js fails */
+  @keyframes failsafe98 { to { visibility: hidden; } }
+  .boot98.out { animation: fade98 .35s ease-in forwards; }
+  @keyframes fade98 { to { opacity: 0; } }
+  .boot98-crt-on {
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    box-shadow: 0 0 60px 20px rgba(200, 255, 255, .8);
+    animation: crt-on98 .7s cubic-bezier(.2, .7, .3, 1) forwards;
+  }
+  @keyframes crt-on98 {
+    0%   { transform: scale(0, .004); opacity: 1; }
+    35%  { transform: scale(1, .004); opacity: 1; }
+    62%  { transform: scale(1, 1); opacity: .9; }
+    100% { transform: scale(1, 1); opacity: 0; }
+  }
+  .boot98-post {
+    position: absolute;
+    inset: 0;
+    display: none;
+    padding: 28px 34px;
+    font: 15px/1.5 "Courier New", Courier, monospace;
+    color: #b8b8b8;
+    text-shadow: 0 0 4px rgba(255, 255, 255, .35);
+  }
+  .boot98-post.on { display: block; }
+  .boot98-line { white-space: pre; visibility: hidden; }
+  .boot98-line.on { visibility: visible; }
+  .boot98-line.hl { color: #fff; }
+  .boot98-energy {
+    position: absolute;
+    top: 26px; right: 34px;
+    width: 150px;
+    padding: 8px 10px;
+    border: 2px solid #3fa9f5;
+    color: #3fa9f5;
+    font: italic bold 26px/1 Georgia, serif;
+    text-align: center;
+  }
+  .boot98-energy b { color: #7cff6b; font-style: normal; }
+  .boot98-energy small { display: block; margin-top: 6px; font: 10px "Courier New", monospace; color: #9cd2ff; }
+  .boot98-splash {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity .45s ease;
+    background: linear-gradient(#2f62c9 0%, #6f9be8 40%, #b9d1f6 75%, #e6eefc 100%);
+  }
+  .boot98-splash.on { opacity: 1; }
+  .boot98-clouds {
+    position: absolute;
+    inset: -10% -30%;
+    background:
+      radial-gradient(ellipse 16% 7% at 18% 28%, rgba(255, 255, 255, .95), transparent 70%),
+      radial-gradient(ellipse 22% 9% at 30% 34%, rgba(255, 255, 255, .8), transparent 70%),
+      radial-gradient(ellipse 18% 8% at 62% 22%, rgba(255, 255, 255, .9), transparent 70%),
+      radial-gradient(ellipse 26% 10% at 78% 30%, rgba(255, 255, 255, .75), transparent 70%),
+      radial-gradient(ellipse 20% 8% at 45% 66%, rgba(255, 255, 255, .85), transparent 70%),
+      radial-gradient(ellipse 28% 11% at 12% 74%, rgba(255, 255, 255, .8), transparent 70%),
+      radial-gradient(ellipse 24% 9% at 86% 70%, rgba(255, 255, 255, .85), transparent 70%);
+    filter: blur(8px);
+    animation: drift98 14s linear infinite;
+  }
+  @keyframes drift98 { to { transform: translateX(8%); } }
+  .boot98-logo {
+    position: absolute;
+    left: 50%; top: 44%;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    transform: translate(-50%, -50%);
+    animation: rise98 1.2s cubic-bezier(.2, .8, .2, 1) both;
+  }
+  @keyframes rise98 { from { transform: translate(-50%, -38%); opacity: 0; } }
+  .boot98-flag { display: grid; grid-template-columns: 44px 44px; gap: 5px; transform: perspective(300px) rotateY(-18deg) skewY(-6deg); }
+  .boot98-flag i {
+    display: block;
+    height: 40px;
+    border-top: 6px solid rgba(0, 0, 0, .18);
+    box-shadow: 3px 4px 0 rgba(0, 0, 40, .25);
+    animation: wave98 1.8s ease-in-out infinite;
+  }
+  .boot98-flag i:nth-child(1) { background: #f25022; }
+  .boot98-flag i:nth-child(2) { background: #7fba00; animation-delay: .15s; }
+  .boot98-flag i:nth-child(3) { background: #00a4ef; animation-delay: .3s; }
+  .boot98-flag i:nth-child(4) { background: #ffb900; animation-delay: .45s; }
+  @keyframes wave98 { 50% { transform: translateY(-5px) skewY(4deg); } }
+  .boot98-word { color: #fff; text-shadow: 3px 3px 0 rgba(0, 0, 60, .3); }
+  .boot98-word .name { font: bold italic 72px/1 "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; letter-spacing: -1px; }
+  .boot98-word .ver { margin-left: 6px; font: 900 italic 72px/1 "Arial Black", Arial, sans-serif; color: #ffd84a; }
+  .boot98-word .tagline { display: block; margin-top: 4px; text-align: right; font: 15px Arial, sans-serif; letter-spacing: 3px; opacity: .92; }
+  .boot98-glow {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 22px;
+    background: linear-gradient(90deg, #102a7a, #3fa9f5, #b28cff, #ff6aa2, #ffd84a, #102a7a);
+    background-size: 300% 100%;
+    animation: flow98 1.4s linear infinite;
+  }
+  @keyframes flow98 { to { background-position: -150% 0; } }
+  .boot98-skip { position: absolute; right: 16px; bottom: 34px; font: 12px "Courier New", monospace; color: rgba(255, 255, 255, .55); pointer-events: none; }
+
+  /* --- CRT overlay over the whole page --- */
+  .crt98 {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at center, transparent 62%, rgba(0, 0, 0, .42) 100%),
+      repeating-linear-gradient(0deg, rgba(0, 0, 0, .14) 0 1px, transparent 1px 3px);
+    animation: flicker98 4s infinite;
+  }
+  .desktop98.nocrt .crt98 { display: none; }
+  @keyframes flicker98 { 0%, 100% { opacity: 1; } 48% { opacity: .93; } 50% { opacity: 1; } 52% { opacity: .96; } }
+
+  /* --- Phones: icons in rows, windows full width --- */
   @media (max-width: 700px) {
     .desktop98-icons {
-      float: none;
-      flex-direction: row;
-      flex-wrap: wrap;
+      right: 6px;
+      bottom: auto;
+      grid-auto-flow: row;
+      grid-template-columns: repeat(auto-fill, 76px);
+      grid-template-rows: none;
       justify-content: center;
-      gap: 8px;
-      margin: 0 0 14px 0;
     }
-    .desktop98-icon { width: 72px; }
-    .window-dos .terminal-container { height: 320px; }
+    .desktop98-noscript { left: 16px; right: 16px; top: auto; bottom: 16px; width: auto; }
+    .boot98-post { padding: 18px; font-size: 11px; }
+    .boot98-line { white-space: pre-wrap; }
+    .boot98-energy { display: none; }
+    .boot98-flag { grid-template-columns: 28px 28px; }
+    .boot98-flag i { height: 26px; }
+    .boot98-word .name, .boot98-word .ver { font-size: 44px; }
+    .welcome98-main { grid-template-columns: 1fr; }
+    .explorer98-row { grid-template-columns: minmax(0, 1fr) 70px; }
+    .explorer98-row span:nth-child(2) { display: none; }
+    .taskbar98 .taskbar98-task { flex-basis: 90px; }
+    .explorer98-addr input, .window98-dos .terminal-input { font-size: 16px; } /* iOS zooms into smaller inputs */
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .crt98, .boot98-clouds, .boot98-glow, .boot98-flag i { animation: none; }
   }
 </style>
 
-<div id="boot98" class="boot98" hidden>
-  <span class="boot-line">ccomkhj BIOS v4.51PG, An Energy Star Ally</span>
-  <span class="boot-line">Memory Test :  65536K OK</span>
-  <span class="boot-line">Detecting IDE Primary Master ... CCOMKHJ.GITHUB.IO</span>
-  <span class="boot-line">Loading HUIJO.SYS .......... OK</span>
-  <span class="boot-line">Starting Windows 98 ...</span>
-  <span class="boot-line">_</span>
-</div>
+<div class="desktop98" id="desktop98">
+  <div class="desktop98-screen">
+    <div class="desktop98-desk">
+      <nav class="desktop98-icons" aria-label="Desktop">
+        <div class="desktop98-icon" role="button" tabindex="0" data-open="system"><span class="desktop98-glyph glyph98">🖥️</span><span class="desktop98-label">My Computer</span></div>
+        <div class="desktop98-icon" role="button" tabindex="0" data-open="writings"><span class="desktop98-glyph glyph98">📂</span><span class="desktop98-label">My Writings</span></div>
+        <div class="desktop98-icon" role="button" tabindex="0" data-open="readme"><span class="desktop98-glyph glyph98">📝</span><span class="desktop98-label">README.TXT</span></div>
+        <a class="desktop98-icon" href="{{ '/portfolio/' | relative_url }}"><span class="desktop98-glyph glyph98">💼</span><span class="desktop98-label">Portfolio</span></a>
+        <a class="desktop98-icon" href="{{ '/bookmarks/' | relative_url }}"><span class="desktop98-glyph glyph98">🌐</span><span class="desktop98-label">Bookmarks</span></a>
+        <a class="desktop98-icon" href="{{ '/tags/' | relative_url }}"><span class="desktop98-glyph glyph98">🏷️</span><span class="desktop98-label">Tags</span></a>
+        <div class="desktop98-icon" role="button" tabindex="0" data-open="dos"><span class="desktop98-glyph glyph98">⌨️</span><span class="desktop98-label">MS-DOS Prompt</span></div>
+        <div class="desktop98-icon" role="button" tabindex="0" data-open="bin"><span class="desktop98-glyph glyph98">🗑️</span><span class="desktop98-label">Recycle Bin</span></div>
+      </nav>
+      <div class="desktop98-marquee"></div>
 
-<div class="desktop98">
-  <nav class="desktop98-icons" aria-label="Desktop shortcuts">
-    <a class="desktop98-icon" href="{{ '/writings/' | relative_url }}">
-      <span class="icon-glyph">🗄️</span>
-      <span class="icon-label">Writings</span>
-    </a>
-    <a class="desktop98-icon" href="{{ '/tags/' | relative_url }}">
-      <span class="icon-glyph">📁</span>
-      <span class="icon-label">Tags</span>
-    </a>
-    <a class="desktop98-icon" href="{{ '/portfolio/' | relative_url }}">
-      <span class="icon-glyph">💼</span>
-      <span class="icon-label">Portfolio</span>
-    </a>
-    <a class="desktop98-icon" href="{{ '/bookmarks/' | relative_url }}">
-      <span class="icon-glyph">🔖</span>
-      <span class="icon-label">Bookmarks</span>
-    </a>
-    <a class="desktop98-icon" href="{{ '/about/' | relative_url }}">
-      <span class="icon-glyph">👤</span>
-      <span class="icon-label">About Me</span>
-    </a>
-  </nav>
-
-  <div class="window window-dos">
-    <div class="title-bar">
-      <div class="title-bar-text">MS-DOS Prompt</div>
-      <div class="title-bar-controls">
-        <button aria-label="Minimize"></button>
-        <button aria-label="Maximize" onclick="window.location.href='{{ '/terminal/' | relative_url }}'"></button>
-        <button aria-label="Close"></button>
-      </div>
-    </div>
-    <div class="window-body">
-      <div id="terminal-container" class="terminal-container">
-        <div id="terminal-output"></div>
-        <div id="terminal-input-line" class="terminal-input-line">
-          <span class="terminal-prompt">whoami@huijo.xyz:~$</span>
-          <input type="text" id="terminal-input" class="terminal-input"
-                 autocomplete="off" spellcheck="false" aria-label="terminal input">
-        </div>
-      </div>
       <noscript>
-        <div style="background: #fff; border: inset 2px; padding: 8px;">
-          <p>JavaScript is disabled. The essentials:</p>
-          <ul>
-            <li><a href="{{ '/writings/' | relative_url }}">writings</a></li>
-            <li><a href="{{ '/about/' | relative_url }}">about</a></li>
-            <li><a href="{{ '/portfolio/' | relative_url }}">portfolio</a></li>
-            <li><a href="{{ '/bookmarks/' | relative_url }}">bookmarks</a></li>
-          </ul>
+        <div class="window desktop98-noscript">
+          <div class="title-bar"><div class="title-bar-text">Huijo 98</div></div>
+          <div class="window-body">
+            <p>JavaScript is disabled. The essentials:</p>
+            <ul>
+              <li><a href="{{ '/writings/' | relative_url }}">writings</a></li>
+              <li><a href="{{ '/about/' | relative_url }}">about</a></li>
+              <li><a href="{{ '/portfolio/' | relative_url }}">portfolio</a></li>
+              <li><a href="{{ '/bookmarks/' | relative_url }}">bookmarks</a></li>
+            </ul>
+          </div>
         </div>
       </noscript>
-      <div class="status-bar" style="margin-top: 4px;">
-        <p class="status-bar-field">{{ site.posts | size }} post(s) indexed</p>
-        <p class="status-bar-field">try: help · ls writings · find &lt;query&gt;</p>
+
+      <div class="desktop98-windows">
+        <section class="window window98" data-window="welcome" data-w="620" data-h="400" data-center hidden aria-label="Welcome">
+          <div class="title-bar">
+            <div class="title-bar-text"><span class="glyph98">👋</span><span>Welcome</span></div>
+            <div class="title-bar-controls"><button aria-label="Minimize" data-act="min"></button><button aria-label="Maximize" data-act="max"></button><button aria-label="Close" data-act="close"></button></div>
+          </div>
+          <div class="window-body window98-body">
+            <div class="welcome98-head">
+              <div class="welcome98-title">Welcome to <b>Huijo</b><sup>98</sup></div>
+              <div class="welcome98-sub">a pile of thoughts: machine learning, startups, and reflections</div>
+            </div>
+            <div class="welcome98-main">
+              <div class="welcome98-menu">
+                <a class="welcome98-item" href="#writings" data-open="writings" data-latest
+                   data-desc="{{ site.posts | size }} posts on machine learning, forecasting, computer vision and MLOps, plus essays on mindset, growth, decisions and careers."><span class="glyph98">📚</span><span>Read my writings</span></a>
+                <!-- no data-desc: shows the first paragraph of BIO (terminal-commands.js) -->
+                <a class="welcome98-item" href="#system" data-open="system"><span class="glyph98">👤</span><span>Who is Huijo?</span></a>
+                <a class="welcome98-item" href="{{ '/portfolio/' | relative_url }}"
+                   data-desc="Agent workflows, self-improving harnesses, agentic ML, and applied systems."><span class="glyph98">💼</span><span>See what I've built</span></a>
+                <a class="welcome98-item" href="#dos" data-open="dos"
+                   data-desc="Prefer a keyboard? Try: help, ls writings, find &lt;query&gt;."><span class="glyph98">⌨️</span><span>Open MS-DOS Prompt</span></a>
+              </div>
+              <div class="welcome98-desc field98"></div>
+            </div>
+            <div class="welcome98-foot">
+              <div class="field-row"><input type="checkbox" id="welcome98-show" checked><label for="welcome98-show">Show this screen each time Huijo 98 starts</label></div>
+              <button type="button" data-act="close">Close</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="window window98" data-window="writings" data-w="660" data-h="440" hidden aria-label="My Writings">
+          <div class="title-bar">
+            <div class="title-bar-text"><span class="glyph98">📂</span><span>My Writings</span></div>
+            <div class="title-bar-controls"><button aria-label="Minimize" data-act="min"></button><button aria-label="Maximize" data-act="max"></button><button aria-label="Close" data-act="close"></button></div>
+          </div>
+          <div class="window-body window98-body">
+            <div class="menubar98"><span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Favorites</span><span>Help</span></div>
+            <div class="explorer98-addr">
+              <span>Address</span>
+              <div class="explorer98-path path98 field98"><span class="glyph98">📂</span> C:\My Writings</div>
+              <input type="text" name="find" placeholder="Find..." aria-label="Filter writings">
+            </div>
+            <div class="explorer98-list field98">
+              <div class="explorer98-row explorer98-head"><span>Name</span><span>Tag</span><span>Modified</span></div>
+              <!-- rows: assets/js/win98-desktop.js, from #desktop98-posts -->
+            </div>
+            <div class="status-bar">
+              <p class="status-bar-field explorer98-count">{{ site.posts | size }} object(s)</p>
+              <p class="status-bar-field"><a href="{{ '/writings/' | relative_url }}">Open full archive ({{ site.posts | size }})...</a></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="window window98" data-window="system" data-w="440" data-h="420" hidden aria-label="System Properties">
+          <div class="title-bar">
+            <div class="title-bar-text"><span class="glyph98">🖥️</span><span>System Properties</span></div>
+            <div class="title-bar-controls"><button aria-label="Minimize" data-act="min"></button><button aria-label="Maximize" data-act="max"></button><button aria-label="Close" data-act="close"></button></div>
+          </div>
+          <div class="window-body window98-body">
+            <menu role="tablist">
+              <li role="tab" aria-selected="true" data-tab="general"><a>General</a></li>
+              <li role="tab" data-tab="devices"><a>Device Manager</a></li>
+              <li role="tab" data-tab="performance"><a>Performance</a></li>
+            </menu>
+            <div class="window" role="tabpanel">
+              <div class="window-body">
+                <div class="sysprops98-general" data-panel="general">
+                  <div class="sysprops98-art glyph98">🖥️</div>
+                  <div>
+                    <p><b>System:</b><br>Huijo 98<br>Pile of Thoughts Edition<br>4.10.2026</p>
+                    <p><b>Registered to:</b><br>Huijo Kim<br>ML practitioner, former founder</p>
+                    <p><b>Computer:</b><br>Mechanical engineering &rarr; EV development at Hyundai Motor Group &rarr; agtech founder (0 &rarr; six-figure ARR) &rarr; ML for e-commerce<br>{{ site.posts | size }} thoughts on disk</p>
+                  </div>
+                </div>
+                <div data-panel="devices" hidden>
+                  <ul class="tree-view sysprops98-tree">
+                    <li>🖥️ HUIJO-98
+                      <ul>
+                        <li>🧠 Machine Learning<ul><li>Forecasting</li><li>Explainability-driven optimization</li></ul></li>
+                        <li>👁️ Computer Vision</li>
+                        <li>🤖 Agents &amp; workflows</li>
+                        <li>⚙️ MLOps</li>
+                        <li>🌱 Agtech (retired, fond memories)</li>
+                        <li>✍️ Essays</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                <div data-panel="performance" hidden>
+                  <div class="sysprops98-meter"><span>Curiosity</span><div class="sysprops98-bar"><i style="width: 100%"></i></div><span>100%</span></div>
+                  <div class="sysprops98-meter"><span>Coffee</span><div class="sysprops98-bar"><i style="width: 87%"></i></div><span>87%</span></div>
+                  <div class="sysprops98-meter"><span>Open tabs</span><div class="sysprops98-bar"><i style="width: 96%"></i></div><span>96%</span></div>
+                  <div class="sysprops98-meter"><span>Sleep</span><div class="sysprops98-bar"><i style="width: 41%"></i></div><span>41%</span></div>
+                  <p style="margin: 12px 8px">Your system is configured for optimal thinking.</p>
+                </div>
+              </div>
+            </div>
+            <div class="buttons98">
+              <button type="button" data-href="{{ '/about/' | relative_url }}">Read more...</button>
+              <button type="button" data-act="close">OK</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="window window98" data-window="readme" data-w="500" data-h="360" hidden aria-label="README.TXT">
+          <div class="title-bar">
+            <div class="title-bar-text"><span class="glyph98">📝</span><span>README.TXT - Notepad</span></div>
+            <div class="title-bar-controls"><button aria-label="Minimize" data-act="min"></button><button aria-label="Maximize" data-act="max"></button><button aria-label="Close" data-act="close"></button></div>
+          </div>
+          <div class="window-body window98-body">
+            <div class="menubar98"><span>File</span><span>Edit</span><span>Search</span><span>Help</span></div>
+            <!-- %BIO%: the paragraphs of BIO (terminal-commands.js), filled in by win98-desktop.js -->
+            <textarea class="notepad98" name="readme" readonly aria-label="README.TXT">HUIJO KIM
+=========
+
+%BIO%
+
+WHERE TO START
+--------------
+* Double-click My Writings for everything I've written down.
+* My Computer has the short version of me.
+* Portfolio is what I've built.
+
+Thanks for stopping by.</textarea>
+          </div>
+        </section>
+
+        <section class="window window98" data-window="bin" data-w="480" data-h="300" hidden aria-label="Recycle Bin">
+          <div class="title-bar">
+            <div class="title-bar-text"><span class="glyph98">🗑️</span><span>Recycle Bin</span></div>
+            <div class="title-bar-controls"><button aria-label="Minimize" data-act="min"></button><button aria-label="Maximize" data-act="max"></button><button aria-label="Close" data-act="close"></button></div>
+          </div>
+          <div class="window-body window98-body">
+            <div class="explorer98-list field98">
+              <div class="explorer98-row explorer98-head"><span>Name</span><span>Original location</span><span>Deleted</span></div>
+              <div class="explorer98-row"><span>📄 perfect_plan_FINAL_v7.doc</span><span class="path98">C:\Ambition</span><span>2019-03-02</span></div>
+              <div class="explorer98-row"><span>📄 startup_idea_041.txt</span><span class="path98">C:\Shower Thoughts</span><span>2021-07-14</span></div>
+              <div class="explorer98-row"><span>📄 sleep_schedule.ini</span><span class="path98">C:\Founder</span><span>2022-01-01</span></div>
+              <div class="explorer98-row"><span>📄 inbox_zero.exe</span><span class="path98">C:\Dreams</span><span>2023-05-09</span></div>
+              <div class="explorer98-row"><span>📄 read_later (2,341 tabs).url</span><span class="path98">C:\Browser</span><span>2026-10-13</span></div>
+            </div>
+            <div class="status-bar">
+              <p class="status-bar-field">5 object(s)</p>
+              <p class="status-bar-field">None of these are coming back.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="window window98 window98-dos" data-window="dos" data-w="640" data-h="420" hidden aria-label="MS-DOS Prompt">
+          <div class="title-bar">
+            <div class="title-bar-text"><span class="glyph98">⌨️</span><span>MS-DOS Prompt</span></div>
+            <div class="title-bar-controls"><button aria-label="Minimize" data-act="min"></button><button aria-label="Maximize" data-act="max"></button><button aria-label="Close" data-act="close"></button></div>
+          </div>
+          <div class="window-body window98-body">
+            <div id="terminal-container" class="terminal-container">
+              <div id="terminal-output"></div>
+              <div id="terminal-input-line" class="terminal-input-line">
+                <span class="terminal-prompt">whoami@huijo.xyz:~$</span>
+                <input type="text" id="terminal-input" class="terminal-input"
+                       autocomplete="off" spellcheck="false" aria-label="terminal input">
+              </div>
+            </div>
+            <div class="status-bar">
+              <p class="status-bar-field">{{ site.posts | size }} post(s) indexed</p>
+              <p class="status-bar-field">try: help · ls writings · find &lt;query&gt;</p>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
-  </div>
 
-  {{ content }}
+    <div class="startmenu98" role="menu" aria-label="Start">
+      <div class="startmenu98-side">Huijo<b>98</b></div>
+      <div class="startmenu98-list">
+        <a class="startmenu98-item" role="menuitem" href="#welcome" data-open="welcome"><span class="glyph98">👋</span>Welcome</a>
+        <a class="startmenu98-item" role="menuitem" href="#writings" data-open="writings"><span class="glyph98">📂</span>My Writings</a>
+        <a class="startmenu98-item" role="menuitem" href="#system" data-open="system"><span class="glyph98">🖥️</span>About this Computer</a>
+        <a class="startmenu98-item" role="menuitem" href="#readme" data-open="readme"><span class="glyph98">📝</span>README.TXT</a>
+        <a class="startmenu98-item" role="menuitem" href="{{ '/portfolio/' | relative_url }}"><span class="glyph98">💼</span>Portfolio</a>
+        <a class="startmenu98-item" role="menuitem" href="{{ '/bookmarks/' | relative_url }}"><span class="glyph98">🌐</span>Bookmarks</a>
+        <a class="startmenu98-item" role="menuitem" href="{{ '/tags/' | relative_url }}"><span class="glyph98">🏷️</span>Tags</a>
+        <a class="startmenu98-item" role="menuitem" href="#dos" data-open="dos"><span class="glyph98">⌨️</span>MS-DOS Prompt</a>
+        <div class="startmenu98-hr"></div>
+        <a class="startmenu98-item" role="menuitem" href="{{ '/feed.xml' | relative_url }}"><span class="glyph98">📡</span>RSS Feed</a>
+        <a class="startmenu98-item" role="menuitem" href="#shutdown" data-act="shutdown"><span class="glyph98">🔌</span>Shut Down...</a>
+      </div>
+    </div>
 
-  <div id="startmenu" class="startmenu98" role="menu">
-    <div class="startmenu-side">ccomkhj&nbsp;98</div>
-    <ul>
-      <li><a href="{{ '/writings/' | relative_url }}">🗄️ Writings</a></li>
-      <li><a href="{{ '/tags/' | relative_url }}">📁 Tags</a></li>
-      <li><a href="{{ '/portfolio/' | relative_url }}">💼 Portfolio</a></li>
-      <li><a href="{{ '/bookmarks/' | relative_url }}">🔖 Bookmarks</a></li>
-      <li><a href="{{ '/about/' | relative_url }}">👤 About Me</a></li>
-      <li><a href="{{ '/terminal/' | relative_url }}">🖥️ MS-DOS Prompt (Full Screen)</a></li>
-      <hr>
-      <li><a href="{{ '/feed.xml' | relative_url }}">📡 RSS Feed</a></li>
-      <li><a href="#" id="shutdown-link">🔌 Shut Down...</a></li>
-    </ul>
-  </div>
+    <div class="taskbar98">
+      <button type="button" class="taskbar98-start" aria-haspopup="menu" aria-expanded="false"><span class="glyph98">🪟</span>Start</button>
+      <div class="taskbar98-sep"></div>
+      <div class="taskbar98-tasks"></div>
+      <div class="taskbar98-tray">
+        <button type="button" class="taskbar98-crt glyph98" aria-pressed="true" title="Toggle CRT effect">📺</button>
+        <span class="glyph98" title="Volume">🔊</span>
+        <span class="taskbar98-clock">--:--</span>
+      </div>
+    </div>
 
-  <div class="taskbar98">
-    <button class="start-button" id="start-button" aria-haspopup="menu">🪟 Start</button>
-    <button class="task-item" onclick="document.getElementById('terminal-input').focus()">🖥️ MS-DOS Prompt</button>
-    <div class="task-clock" id="task-clock">--:--</div>
+    <div class="shutdown98-dim" hidden></div>
+    <div class="window shutdown98-dialog" role="dialog" aria-label="Shut Down Huijo 98" data-terminal="{{ '/terminal/' | relative_url }}" hidden>
+      <div class="title-bar">
+        <div class="title-bar-text">Shut Down Huijo 98</div>
+        <div class="title-bar-controls"><button aria-label="Close" data-act="shutdown-cancel"></button></div>
+      </div>
+      <div class="window-body">
+        <div class="shutdown98-ask">
+          <div class="glyph98">🖥️</div>
+          <div>
+            <p>What do you want the computer to do?</p>
+            <div class="field-row"><input id="shutdown98-off" type="radio" name="shutdown98" value="off" checked><label for="shutdown98-off">Shut down</label></div>
+            <div class="field-row"><input id="shutdown98-restart" type="radio" name="shutdown98" value="restart"><label for="shutdown98-restart">Restart</label></div>
+            <div class="field-row"><input id="shutdown98-dos" type="radio" name="shutdown98" value="dos"><label for="shutdown98-dos">Restart in MS-DOS mode</label></div>
+          </div>
+        </div>
+        <div class="buttons98">
+          <button type="button" data-act="shutdown-ok">OK</button>
+          <button type="button" data-act="shutdown-cancel">Cancel</button>
+          <button type="button" disabled>Help</button>
+        </div>
+      </div>
+    </div>
+    <div class="shutdown98-safe" hidden>It's now safe to turn off<br>your computer.<small>(click to power on)</small></div>
+
+    <div class="boot98" aria-hidden="true">
+      <div class="boot98-post">
+        <div class="boot98-energy"><b>★</b> energy<small>PILE OF THOUGHTS ALLY</small></div>
+        <div class="boot98-line hl">Huijo Modular BIOS v4.51PG, An Energy Star Ally</div>
+        <div class="boot98-line">Copyright (C) 1993-2026, Pile of Thoughts Software, Inc.</div>
+        <div class="boot98-line"> </div>
+        <div class="boot98-line">HK-98 Thinking Processor at 400MHz</div>
+        <div class="boot98-line hl" data-memory>Memory Test :      0K</div>
+        <div class="boot98-line"> </div>
+        <div class="boot98-line">Detecting IDE Primary Master   ... MACHINE LEARNING</div>
+        <div class="boot98-line">Detecting IDE Primary Slave    ... COMPUTER VISION</div>
+        <div class="boot98-line">Detecting IDE Secondary Master ... FOUNDER.SYS</div>
+        <div class="boot98-line">Detecting IDE Secondary Slave  ... {{ site.posts | size }} THOUGHTS</div>
+        <div class="boot98-line"> </div>
+        <div class="boot98-line">Starting Huijo 98...</div>
+      </div>
+      <div class="boot98-splash">
+        <div class="boot98-clouds"></div>
+        <div class="boot98-logo">
+          <div class="boot98-flag"><i></i><i></i><i></i><i></i></div>
+          <div class="boot98-word"><span class="name">Huijo</span><span class="ver">98</span><span class="tagline">PILE OF THOUGHTS EDITION</span></div>
+        </div>
+        <div class="boot98-glow"></div>
+      </div>
+      <div class="boot98-crt-on"></div>
+      <div class="boot98-skip">click or press any key to skip</div>
+    </div>
   </div>
+  <div class="crt98"></div>
 </div>
 
-<div id="shutdown98" class="shutdown98">It's now safe to turn off<br>your computer.</div>
+{{ content }}
+
+<script type="application/json" id="desktop98-posts">[
+  {%- for post in site.posts -%}
+  {"title": {{ post.title | jsonify | replace: "</", "<\/" }}, "url": {{ post.url | relative_url | jsonify }}, "date": {{ post.date | date: "%Y-%m-%d" | jsonify }}, "tag": {{ post.tags | first | default: "Note" | jsonify }}}{% unless forloop.last %},{% endunless %}
+  {%- endfor -%}
+]</script>
 
 <script src="{{ '/assets/js/terminal-commands.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/terminal-shell.js' | relative_url }}"></script>
-<script>
-  (function () {
-    /* Boot splash: once per browser session, skippable, skipped for reduced motion */
-    var boot = document.getElementById('boot98');
-    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    function endBoot() {
-      if (boot) { boot.remove(); boot = null; }
-      document.removeEventListener('keydown', endBoot);
-    }
-    if (!reduced && !sessionStorage.getItem('booted98')) {
-      sessionStorage.setItem('booted98', '1');
-      boot.hidden = false;
-      boot.addEventListener('click', endBoot);
-      document.addEventListener('keydown', endBoot);
-      setTimeout(endBoot, 2300);
-    } else if (boot) {
-      boot.remove();
-    }
-
-    /* Start menu */
-    var startBtn = document.getElementById('start-button');
-    var menu = document.getElementById('startmenu');
-    startBtn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      menu.classList.toggle('open');
-      startBtn.setAttribute('aria-expanded', menu.classList.contains('open'));
-    });
-    document.addEventListener('click', function (e) {
-      if (!menu.contains(e.target)) menu.classList.remove('open');
-    });
-
-    /* Shut down easter egg */
-    var shutdown = document.getElementById('shutdown98');
-    document.getElementById('shutdown-link').addEventListener('click', function (e) {
-      e.preventDefault();
-      menu.classList.remove('open');
-      shutdown.classList.add('on');
-    });
-    shutdown.addEventListener('click', function () {
-      shutdown.classList.remove('on');
-    });
-
-    /* Taskbar clock */
-    var clock = document.getElementById('task-clock');
-    function tick() {
-      var d = new Date();
-      clock.textContent = ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
-    }
-    tick();
-    setInterval(tick, 30000);
-  })();
-</script>
+<script src="{{ '/assets/js/win98-desktop.js' | relative_url }}"></script>
