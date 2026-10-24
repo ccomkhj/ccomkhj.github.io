@@ -39,6 +39,11 @@ layout: default
   .desktop98-screen { position: absolute; inset: 0; z-index: 0; background: #008080; }
   .desktop98-wait, .desktop98-wait * { cursor: wait !important; }
   .glyph98 { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; }
+  /* 98.css switches anti-aliasing off for its pixel font, but the theme's fonts (p, a, buttons,
+     monospace) render jagged without it on macOS. Keep it off only where the pixel font is used. */
+  .window98 * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  .window98 :is(.title-bar, label, [role=tab], .tree-view),
+  .window98 :is(.title-bar, label, [role=tab], .tree-view) * { -webkit-font-smoothing: none; -moz-osx-font-smoothing: auto; }
 
   /* --- Desktop and icons --- */
   .desktop98-desk { position: absolute; left: 0; right: 0; top: 0; bottom: var(--taskbar98); z-index: 1; }
@@ -170,7 +175,7 @@ layout: default
   .welcome98-item.on { background: #000080; color: #fff !important; }
   .welcome98-desc { padding: 10px 12px; overflow: auto; line-height: 1.5; }
   .welcome98-desc h4 { margin: 0 0 6px; font-size: 13px; color: #000080; }
-  .welcome98-desc p { margin: 0 0 8px; font-size: 11px; }
+  .welcome98-desc p { margin: 0 0 8px; font-size: 13px; }
   .welcome98-desc a { color: #000080; }
   .welcome98-caret::after { content: "\258C"; animation: blink98 1s steps(1) infinite; }
   @keyframes blink98 { 50% { opacity: 0; } }
@@ -181,14 +186,25 @@ layout: default
   .window98 [role=tabpanel] { flex: 1; min-height: 0; overflow: auto; }
   .sysprops98-general { display: grid; grid-template-columns: 120px 1fr; gap: 14px; padding: 10px 6px; }
   .sysprops98-art { padding-top: 8px; font-size: 72px; line-height: 1; text-align: center; }
-  .sysprops98-general p { margin: 0 0 12px; font-size: 11px; line-height: 1.45; }
+  .sysprops98-general p { margin: 0 0 12px; font-size: 13px; line-height: 1.45; }
   .sysprops98-tree { margin: 6px; }
   .sysprops98-meter { display: grid; grid-template-columns: 90px 1fr 40px; gap: 8px; align-items: center; margin: 10px 8px; }
   .sysprops98-bar { height: 16px; padding: 2px; background: #fff; box-shadow: inset -1px -1px #fff, inset 1px 1px #808080; }
   .sysprops98-bar i { display: block; height: 100%; background: repeating-linear-gradient(90deg, #000080 0 8px, transparent 8px 10px); }
 
   /* README.TXT */
-  .notepad98 { flex: 1; min-height: 0; margin: 0; padding: 6px; resize: none; font: 13px/1.5 "Lucida Console", "Courier New", monospace; }
+  textarea.notepad98 {
+    flex: 1;
+    min-height: 0;
+    margin: 0;
+    padding: 6px;
+    resize: none;
+    font: 13px/1.5 "Lucida Console", Monaco, Consolas, "Courier New", monospace;
+    color: #000;
+    background: #fff;
+    opacity: 1; /* the theme greys out every [readonly] field */
+    cursor: text;
+  }
 
   /* MS-DOS Prompt: the terminal engine's container, fitted into a window */
   .window98-dos .terminal-container {
@@ -199,12 +215,13 @@ layout: default
     padding: 8px;
     border-radius: 0;
     box-shadow: inset 1px 1px #808080, inset -1px -1px #fff;
-    font-size: 13px;
+    font: 14px/1.45 "Lucida Console", Monaco, Consolas, "Courier New", monospace;
     -webkit-user-select: text;
     user-select: text;
   }
+  .window98-dos .terminal-container::before { opacity: .35; } /* its own scanlines, on top of .crt98 */
   .window98-dos .terminal-input-line { display: none; } /* the engine shows it after its boot text */
-  .window98-dos .terminal-input { flex: 1; width: auto; height: auto; padding: 0; background: transparent; box-shadow: none; } /* undo 98.css text field */
+  .window98-dos .terminal-input { flex: 1; width: auto; height: auto; padding: 0; background: transparent; box-shadow: none; font: inherit; } /* undo 98.css text field */
   .window98-dos .terminal-line a { color: #33ff00; }
 
   /* --- Taskbar --- */
@@ -444,8 +461,8 @@ layout: default
     z-index: 9000;
     pointer-events: none;
     background:
-      radial-gradient(ellipse at center, transparent 62%, rgba(0, 0, 0, .42) 100%),
-      repeating-linear-gradient(0deg, rgba(0, 0, 0, .14) 0 1px, transparent 1px 3px);
+      radial-gradient(ellipse at center, transparent 70%, rgba(0, 0, 0, .3) 100%),
+      repeating-linear-gradient(0deg, rgba(0, 0, 0, .06) 0 1px, transparent 1px 3px); /* faint enough not to eat text */
     animation: flicker98 4s infinite;
   }
   .desktop98.nocrt .crt98 { display: none; }
@@ -563,7 +580,7 @@ layout: default
           </div>
         </section>
 
-        <section class="window window98" data-window="system" data-w="440" data-h="420" hidden aria-label="System Properties">
+        <section class="window window98" data-window="system" data-w="440" data-h="460" hidden aria-label="System Properties">
           <div class="title-bar">
             <div class="title-bar-text"><span class="glyph98">🖥️</span><span>System Properties</span></div>
             <div class="title-bar-controls"><button aria-label="Minimize" data-act="min"></button><button aria-label="Maximize" data-act="max"></button><button aria-label="Close" data-act="close"></button></div>
