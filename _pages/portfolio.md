@@ -32,7 +32,7 @@ description: "Agent systems, multi-agent workflows, agentic ML tools, and select
         <li>Dual-haul races independent Claude and Codex worktrees under the same check</li>
         <li>Pair workflows add bounded consultation, optimization, review, and test gates</li>
       </ul>
-      <a href="https://github.com/ccomkhj/skills" target="_blank" rel="noopener noreferrer">Explore the skill collection</a>
+      <a class="project-link" href="https://github.com/ccomkhj/skills" target="_blank" rel="noopener noreferrer">Explore the skill collection</a>
     </div>
     <div class="project-tags">
       <span class="project-tag">Agent Harnesses</span>
@@ -41,34 +41,34 @@ description: "Agent systems, multi-agent workflows, agentic ML tools, and select
     </div>
   </div>
 
-  <!-- Continuous Improvement Harness -->
+  <!-- Product Demo -->
   <div class="project-card project-card--half">
     <div class="project-title-bar">
-      <span>Continuous Improvement Harness</span>
-      <span class="project-status project-status--beta">Beta · v0.2.5</span>
+      <span>Product Demo</span>
+      <span class="project-status project-status--maintained">Maintained</span>
     </div>
-    <div class="project-flow" aria-label="Audit to isolated agent teams to test-driven verification to merge">
-      <span class="project-flow-step">audit</span>
+    <div class="project-flow" aria-label="One sentence to approved script to live Chrome recording to narrated video">
+      <span class="project-flow-step">sentence</span>
       <span class="project-flow-arrow" aria-hidden="true">→</span>
-      <span class="project-flow-step">agent teams</span>
+      <span class="project-flow-step">script</span>
       <span class="project-flow-arrow" aria-hidden="true">→</span>
-      <span class="project-flow-step">TDD gate</span>
+      <span class="project-flow-step">live Chrome</span>
       <span class="project-flow-arrow" aria-hidden="true">→</span>
-      <span class="project-flow-step">merge</span>
+      <span class="project-flow-step">narrated mp4</span>
     </div>
     <div class="project-content">
-      Multi-agent system that audits a codebase, finds high-value improvements, and ships only mechanically verified changes.
+      Claude Code plugin that turns a sentence about what you shipped into a narrated, subtitled demo video.
       <ul>
-        <li>High-planner dispatches scoped work to isolated, disposable worktrees</li>
-        <li>Non-LLM verifier proves red → green and re-runs the full test suite</li>
-        <li>PyPI CLI, HTML reports, and no-push/no-bulk-stage safety boundaries</li>
+        <li>Agent drives a real Chrome browser with a visible cursor, clicks, and key presses</li>
+        <li>Free local voice (Kokoro), every click lands on the word that names it, dead time cut</li>
+        <li>Post-processing in plain words: trims, speed, title card, music, subtitles, GIF</li>
       </ul>
-      <a href="https://github.com/ccomkhj/continuous-improvement-harness" target="_blank" rel="noopener noreferrer">View release and architecture</a>
+      <a class="project-link" href="https://github.com/ccomkhj/product-demo" target="_blank" rel="noopener noreferrer">Watch the sample demo</a>
     </div>
     <div class="project-tags">
-      <span class="project-tag">Multi-Agent</span>
-      <span class="project-tag">TDD</span>
-      <span class="project-tag">Agent Safety</span>
+      <span class="project-tag">Claude Code Plugin</span>
+      <span class="project-tag">Browser Agent</span>
+      <span class="project-tag">Video</span>
     </div>
   </div>
 
@@ -88,7 +88,7 @@ description: "Agent systems, multi-agent workflows, agentic ML tools, and select
         <li>Optuna keeps every round deterministic across three boosting backends</li>
         <li>Guardrailed decisions and self-contained campaign reports</li>
       </ul>
-      <a href="https://github.com/ccomkhj/agentune" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+      <a class="project-link" href="https://github.com/ccomkhj/agentune" target="_blank" rel="noopener noreferrer">View on GitHub</a>
     </div>
     <div class="project-tags">
       <span class="project-tag">Agentic ML</span>
@@ -97,47 +97,47 @@ description: "Agent systems, multi-agent workflows, agentic ML tools, and select
     </div>
   </div>
 
-  <!-- Agent Materialize -->
+  <!-- Templeton -->
   <div class="project-card project-card--third">
     <div class="project-title-bar">
-      <span>Agent Materialize</span>
+      <span>Templeton</span>
       <span class="project-status project-status--prototype">Prototype</span>
     </div>
     <div class="project-content">
-      Foundation layer for agents over Postgres — agent-curated materialized views behind a two-role access boundary.
+      Claude Code plugin that screens an index for multi-year wrecks and asks: temporary impairment or permanent break?
       <ul>
-        <li>Setup and runtime MCP servers; agents never touch base tables</li>
-        <li>Access boundary is enforced inside Postgres, not the app layer</li>
-        <li>SQL lineage, refresh history, and a static operations dashboard</li>
+        <li>Deterministic yfinance screen, then four adversarial agents per stock in parallel</li>
+        <li>Judge must clear five evidence gates before calling a decline temporary</li>
+        <li>Rubric-based confidence; dated HTML reports diffable across runs</li>
       </ul>
-      <a href="https://github.com/ccomkhj/agent_materialize" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+      <a class="project-link" href="https://github.com/ccomkhj/stock_interogation" target="_blank" rel="noopener noreferrer">View on GitHub</a>
     </div>
     <div class="project-tags">
-      <span class="project-tag">MCP</span>
-      <span class="project-tag">Postgres</span>
-      <span class="project-tag">Agent Data Layer</span>
+      <span class="project-tag">Multi-Agent</span>
+      <span class="project-tag">Adversarial Review</span>
+      <span class="project-tag">Investing</span>
     </div>
   </div>
 
-  <!-- Polarize -->
+  <!-- Jocal -->
   <div class="project-card project-card--third">
     <div class="project-title-bar">
-      <span>Polarize</span>
-      <span class="project-status project-status--prototype">Prototype</span>
+      <span>jocal</span>
+      <span class="project-status project-status--prototype">Alpha · v0.1</span>
     </div>
     <div class="project-content">
-      Agent-native CLI that discovers compute-heavy pandas operations and validates their Polars conversions.
+      Run the Pi coding agent (and Claude Code) on a local LLM on Apple Silicon, with one command.
       <ul>
-        <li>Ranks conversion targets by estimated impact using AST analysis</li>
-        <li>Checks equivalent output before benchmarking time and memory</li>
-        <li>Returns structured JSON designed for autonomous optimization loops</li>
+        <li>Starts and stops the oMLX runtime per session; no keys, MCP, or cloud config leak in</li>
+        <li>Zero outbound connections, verifiable under a loopback-only sandbox profile</li>
+        <li>~28 tok/s and 4–6 s first replies with a 4B model on a 16 GB M4</li>
       </ul>
-      <a href="https://github.com/ccomkhj/polarize" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+      <a class="project-link" href="https://github.com/ccomkhj/jocal" target="_blank" rel="noopener noreferrer">View on GitHub</a>
     </div>
     <div class="project-tags">
-      <span class="project-tag">Agent Tools</span>
-      <span class="project-tag">Pandas → Polars</span>
-      <span class="project-tag">Verification</span>
+      <span class="project-tag">Local LLM</span>
+      <span class="project-tag">Coding Agents</span>
+      <span class="project-tag">Privacy</span>
     </div>
   </div>
 </div>
@@ -183,7 +183,7 @@ description: "Agent systems, multi-agent workflows, agentic ML tools, and select
         <li>HPC/SLURM sweeps with automatic model promotion</li>
         <li>Research runner orchestrating data import through inference</li>
       </ul>
-      <a href="https://github.com/ccomkhj/cancer_detector" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+      <a class="project-link" href="https://github.com/ccomkhj/cancer_detector" target="_blank" rel="noopener noreferrer">View on GitHub</a>
     </div>
     <div class="project-tags">
       <span class="project-tag">Deep Learning</span>
@@ -205,7 +205,7 @@ description: "Agent systems, multi-agent workflows, agentic ML tools, and select
         <li>Idempotent and order-safe with partition-keyed messages</li>
         <li>Containerized with a mock webhook generator for local testing</li>
       </ul>
-      <a href="https://github.com/ccomkhj/event_inventory_kafra" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+      <a class="project-link" href="https://github.com/ccomkhj/event_inventory_kafra" target="_blank" rel="noopener noreferrer">View on GitHub</a>
     </div>
     <div class="project-tags">
       <span class="project-tag">Kafka</span>
@@ -227,7 +227,7 @@ description: "Agent systems, multi-agent workflows, agentic ML tools, and select
         <li>Trades live in CSV, targets in YAML, and git is the audit trail</li>
         <li>Streamlit dashboard with inline editing in about 500 lines of Python</li>
       </ul>
-      <a href="https://github.com/ccomkhj/finance_portfolio" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+      <a class="project-link" href="https://github.com/ccomkhj/finance_portfolio" target="_blank" rel="noopener noreferrer">View on GitHub</a>
     </div>
     <div class="project-tags">
       <span class="project-tag">Finance</span>
@@ -257,7 +257,7 @@ description: "Agent systems, multi-agent workflows, agentic ML tools, and select
     <div class="project-content">
       Research paper on advanced aerial mapping techniques using deep learning.
       <br><br>
-      <a href="https://www.arxiv.org/abs/2410.00769" target="_blank">View Paper</a>
+      <a class="project-link" href="https://www.arxiv.org/abs/2410.00769" target="_blank">View Paper</a>
     </div>
     <div class="project-tags">
       <span class="project-tag">Research</span>

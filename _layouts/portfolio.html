@@ -63,6 +63,24 @@ layout: default
     display: flex;
     flex-direction: column;
     height: 100%;
+    position: relative;
+  }
+
+  /* Stretch the card's main link over the whole card; other links stay on top */
+  .project-card .project-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .project-card a:not(.project-link) {
+    position: relative;
+    z-index: 2;
+  }
+
+  .project-card:has(.project-link):hover .project-title-bar {
+    background: #1084d0;
   }
 
   /* Card Title Bar */
