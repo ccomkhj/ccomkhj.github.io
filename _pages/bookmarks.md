@@ -1,9 +1,21 @@
 ---
-layout: bookmarks
-class: wide
+layout: desk98
 permalink: /bookmarks/
-author_profile: true
-title: bookmarks
+author_profile: false
+title: Bookmarks
+heading: h2
+view: shortcuts
+title_prefix: C:\Favorites\
+intro_label: Note
+windows:
+  - id: engineering
+    glyph: "🛠️"
+  - id: ideas--essays
+    glyph: "📰"
+  - id: strategy--growth
+    glyph: "📈"
+  - id: finance
+    glyph: "💰"
 ---
 
 _Collection of worthwhile readinglist._

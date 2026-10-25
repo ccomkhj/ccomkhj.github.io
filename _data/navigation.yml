@@ -20,7 +20,6 @@ main:
   - title: "About"
     url: /about/
     glyph: "👤"
-    window: system
   - title: "Bookmarks"
     url: /bookmarks/
     glyph: "🌐"

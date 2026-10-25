@@ -33,86 +33,19 @@ layout: default
   .desktop98 button { border: 0; font-weight: normal; } /* custom.css borders and bolds every button */
   .desktop98-screen { position: absolute; inset: 0; z-index: 0; background: #008080; }
   .desktop98-wait, .desktop98-wait * { cursor: wait !important; }
-  /* 98.css switches anti-aliasing off for its pixel font, but the theme's fonts (p, a, buttons,
-     monospace) render jagged without it on macOS. Keep it off only where the pixel font is used. */
-  .window98 * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  .window98 :is(.title-bar, label, [role=tab], .tree-view),
-  .window98 :is(.title-bar, label, [role=tab], .tree-view) * { -webkit-font-smoothing: none; -moz-osx-font-smoothing: auto; }
 
-  /* --- Desktop and icons --- */
+  /* --- Desktop and icons (icon, window and menubar look: _sass/_desktop98.scss) --- */
   .desktop98-desk { position: absolute; left: 0; right: 0; top: 0; bottom: var(--taskbar98); z-index: 1; }
-  .desktop98-icons {
-    position: absolute;
-    top: 10px; left: 6px; bottom: 6px;
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: repeat(auto-fill, 74px);
-    grid-auto-columns: 80px;
-    gap: 8px 6px;
-    align-content: start;
-    pointer-events: none; /* empty grid cells belong to the desktop (rubber band) */
-  }
-  .desktop98-icon {
-    pointer-events: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    width: 80px;
-    padding-top: 2px;
-    outline: none;
-    cursor: default;
-    color: #fff !important;
-    text-decoration: none !important;
-  }
-  .desktop98-glyph { font-size: 32px; line-height: 36px; filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, .45)); }
-  .desktop98-label {
-    max-width: 78px;
-    padding: 1px 2px;
-    text-align: center;
-    line-height: 13px;
-    border: 1px dotted transparent;
-  }
-  .desktop98-icon:focus-visible .desktop98-label { border-color: #ffff80; }
-  .desktop98-icon.selected .desktop98-glyph {
-    filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, .45)) brightness(.55) sepia(1) hue-rotate(190deg) saturate(5);
-  }
-  .desktop98-icon.selected .desktop98-label { background: #000080; border-color: #ffff80; }
   .desktop98-marquee { position: absolute; display: none; border: 1px dotted #fff; pointer-events: none; }
   .desktop98-noscript { position: absolute; top: 16px; left: 110px; width: 280px; }
 
   /* --- Windows --- */
   .desktop98-windows { position: absolute; inset: 0; pointer-events: none; }
-  .window98 {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    pointer-events: auto;
-  }
-  .window98[hidden] { display: none; }
-  .window98:focus { outline: none; }
-  .window98 .title-bar { flex: none; cursor: default; touch-action: none; }
-  .window98 .title-bar-text { display: flex; align-items: center; gap: 4px; overflow: hidden; white-space: nowrap; }
-  .window98-body { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 6px; margin: 6px 4px 4px; }
-  .window98 .status-bar { flex: none; margin: 0; }
-  .window98 .status-bar a { color: #000; }
-  .window98-zoom {
-    position: absolute;
-    z-index: 55;
-    pointer-events: none;
-    border: 2px solid #c0c0c0;
-    background: linear-gradient(#000080, #000080) top / 100% 18px no-repeat;
-    box-shadow: 0 0 0 1px #000;
-  }
   .field98 {
     background: #fff;
     box-shadow: inset -1px -1px #fff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
   }
   .buttons98 { display: flex; justify-content: flex-end; gap: 6px; flex: none; }
-  .menubar98 { display: flex; gap: 2px; flex: none; }
-  .menubar98 span { padding: 2px 6px; }
-  .menubar98 span:hover { background: #000080; color: #fff; }
 
   /* Explorer-style list (Recycle Bin) */
   .path98 { font-family: Arial, sans-serif; } /* the pixel font has no "\" */

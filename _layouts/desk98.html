@@ -1,0 +1,113 @@
+---
+layout: default
+---
+{%- comment -%}
+  An inner page as a Win98 desktop: the page's markdown is cut at each `page.heading`
+  (h2 or h3) and every section opens in its own window, next to a Properties dialog
+  for Huijo (from _data/profile.yml) and the site's desktop icons. Used by /about/ and
+  /bookmarks/. assets/js/desk98.js places the windows and makes them draggable; without
+  it (or on a narrow screen) the windows simply stack and the page reads top to bottom.
+
+  Front matter:
+    heading       h2 | h3, where the content is cut into windows
+    view          default window view: notepad | shortcuts | icons
+    title_prefix  put before each section name in its title bar (e.g. C:\Favorites\)
+    intro_label   label for the first paragraph before the first heading, shown in the Properties dialog
+    windows       per section, by heading id: glyph, title, view, glyphs (icons view, one per
+                  list item), box ([left, top, width, height] as fractions of the free desktop),
+                  dock: left (stack under the Properties dialog), pictures (title for a window
+                  holding the section's <figure>)
+{%- endcomment -%}
+{%- assign profile = site.data.profile -%}
+{%- assign marker = '<' | append: page.heading | append: ' id="' -%}
+{%- assign close = '</' | append: page.heading | append: '>' -%}
+{%- assign parts = content | split: marker -%}
+{%- assign intro = parts.first | split: '</p>' | first | strip_html | strip -%}
+{%- capture controls -%}
+<div class="title-bar-controls"><button aria-label="Minimize" data-act="close"></button><button aria-label="Maximize" data-act="max"></button><button aria-label="Close" data-act="close"></button></div>
+{%- endcapture -%}
+
+<div class="desk98" id="desk98">
+  <nav class="desktop98-icons" aria-label="Desktop">
+    <div class="desktop98-icon" role="button" tabindex="0" data-open="profile"><span class="desktop98-glyph glyph98" aria-hidden="true">📇</span><span class="desktop98-label">{{ profile.name }}</span></div>
+    {%- for link in site.data.navigation.main %}
+    {%- if link.url == page.url %}
+    <div class="desktop98-icon" role="button" tabindex="0" data-open="*"><span class="desktop98-glyph glyph98" aria-hidden="true">{{ link.glyph }}</span><span class="desktop98-label">{{ link.title }}</span></div>
+    {%- else %}
+    <a class="desktop98-icon" href="{{ link.url | relative_url }}"><span class="desktop98-glyph glyph98" aria-hidden="true">{{ link.glyph }}</span><span class="desktop98-label">{{ link.title }}</span></a>
+    {%- endif %}
+    {%- endfor %}
+    <a class="desktop98-icon" href="{{ '/terminal/' | relative_url }}"><span class="desktop98-glyph glyph98" aria-hidden="true">⌨️</span><span class="desktop98-label">MS-DOS Prompt</span></a>
+  </nav>
+
+  <h1 class="desk98-h1">{{ page.title }}</h1>
+
+  <section class="window window98 desk98-props" data-window="profile" data-dock="left" aria-label="{{ profile.name }} Properties">
+    <div class="title-bar">
+      <div class="title-bar-text"><span class="glyph98">📇</span><span>{{ profile.name }} Properties</span></div>
+      <div class="title-bar-controls"><button aria-label="Close" data-act="close"></button></div>
+    </div>
+    <div class="window-body window98-body">
+      <div class="desk98-props-head"><span class="glyph98" aria-hidden="true">👤</span><div><b>{{ profile.name }}</b><br>{{ profile.headline }}</div></div>
+      <hr class="desk98-rule">
+      <dl class="desk98-facts">
+        <dt>Title:</dt><dd>{{ profile.title }}</dd>
+        <dt>Company:</dt><dd><a href="{{ profile.company_url }}">{{ profile.company }}</a></dd>
+        <dt>Location:</dt><dd>{{ profile.location }}</dd>
+        <dt>Building:</dt><dd>{{ profile.building }}</dd>
+        {%- if intro != "" and page.intro_label %}
+        <dt>{{ page.intro_label }}:</dt><dd><i>{{ intro }}</i></dd>
+        {%- endif %}
+        <dt>Online:</dt><dd>
+          {%- for l in site.author.links %}{% if l.url %}<a href="{{ l.url }}" rel="me">{{ l.label }}</a> · {% endif %}{% endfor -%}
+          <a href="mailto:{{ site.author.email }}" rel="me">Email</a></dd>
+      </dl>
+      <div class="buttons98">
+        <a class="btn98" href="{{ '/card/' | relative_url }}">Add to Contacts</a>
+        <button type="button" class="default" data-act="close">OK</button>
+      </div>
+    </div>
+  </section>
+
+  {%- for part in parts offset: 1 %}
+  {%- assign id = part | split: '"' | first -%}
+  {%- assign head = part | split: close | first -%}
+  {%- assign name = head | split: '>' | last -%}
+  {%- assign body = part | remove_first: head | remove_first: close -%}
+  {%- assign w = page.windows | where: "id", id | first -%}
+  {%- assign view = w.view | default: page.view | default: "notepad" -%}
+  {%- assign figure = "" -%}
+  {%- if body contains '<figure' -%}
+    {%- assign before = body | split: '<figure' | first -%}
+    {%- assign figure = body | remove_first: before -%}
+    {%- assign body = before -%}
+  {%- endif %}
+  <section class="window window98 desk98-win" id="{{ id }}" data-window="{{ id }}"{% if w.dock %} data-dock="{{ w.dock }}"{% endif %}{% if w.box %} data-box="{{ w.box | join: ' ' }}"{% endif %} aria-label="{{ name | strip_html }}">
+    <div class="title-bar">
+      <div class="title-bar-text"><span class="glyph98">{{ w.glyph | default: "📁" }}</span><span>{{ w.title | default: name | prepend: page.title_prefix }}</span></div>
+      {{ controls }}
+    </div>
+    <div class="window-body window98-body">
+      <div class="menubar98" aria-hidden="true"><span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>V</u>iew</span><span><u>H</u>elp</span></div>
+      <div class="field98 desk98-pane desk98-{{ view }}"{% if w.glyphs %} data-glyphs="{{ w.glyphs | join: ' ' }}"{% endif %}>
+        <h2 class="desk98-name">{{ name }}</h2>
+        {{ body }}
+      </div>
+      <div class="status-bar"><p class="status-bar-field" data-status>{{ name | strip_html }}</p><p class="status-bar-field desk98-count" data-count></p></div>
+    </div>
+  </section>
+  {%- if figure != "" %}
+  <section class="window window98 desk98-win" data-window="{{ id }}-pictures"{% if w.pictures_box %} data-box="{{ w.pictures_box | join: ' ' }}"{% endif %} aria-label="{{ w.pictures | default: 'Pictures' }}">
+    <div class="title-bar">
+      <div class="title-bar-text"><span class="glyph98">🖼️</span><span>{{ w.pictures | default: "Pictures" }}</span></div>
+      {{ controls }}
+    </div>
+    <div class="window-body window98-body">
+      <div class="desk98-pane desk98-pictures">{{ figure }}</div>
+    </div>
+  </section>
+  {%- endif %}
+  {%- endfor %}
+</div>
+
+<script src="{{ '/assets/js/desk98.js' | relative_url }}" defer></script>

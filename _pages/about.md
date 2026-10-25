@@ -1,10 +1,28 @@
 ---
-layout: about_me
-class: wide
+layout: desk98
 permalink: /about/
-author_profile: true
-window_title: About — Polymath.exe
+author_profile: false
 title: "About"
+heading: h3
+view: notepad
+intro_label: Motto
+windows:
+  - id: core-pillars
+    glyph: "⚙️"
+    title: Control Panel - Core Pillars
+    view: icons
+    glyphs: [🚀, 🗣️, 📈, 🤖, 👁️, ⚙️, 📡]
+    dock: left
+  - id: things-i-am-proud-of
+    glyph: "📝"
+    title: proud.txt - Notepad
+    box: [0, 0, 0.5, 0.66]
+    pictures: pyconde.jpg - Imaging
+    pictures_box: [0.04, 0.69, 0.5, 0.31]
+  - id: things-i-believe
+    glyph: "📝"
+    title: believe.txt - Notepad
+    box: [0.46, 0.05, 0.54, 0.95]
 ---
 
 Hacker by day, lifelong learner by night.
