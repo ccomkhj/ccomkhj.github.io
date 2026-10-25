@@ -11,6 +11,7 @@ layout: default
   <script> registering  window.pf98Demos["<id>"] = function (el, kit) { … },
   kit = { still, every(ms, fn), later(ms, fn), rnd(a, b), pick(arr), $(sel), $$(sel) }.
   `still` is prefers-reduced-motion: the demo draws one finished frame instead of looping.
+  Flow-style demos also take the shared `.pf98-flow` stations from _portfolio98.scss.
 {%- endcomment -%}
 {%- assign intro = content | split: '</p>' | first | strip_html | strip -%}
 {%- assign live = site.data.portfolio.projects | where_exp: "p", "p.section != 'papers'" -%}

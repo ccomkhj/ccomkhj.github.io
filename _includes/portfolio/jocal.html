@@ -1,167 +1,59 @@
 {%- comment -%}
-  jocal demo: one leased session under netcut.sb. The terminal (left) runs `sandbox-exec -f netcut.sb jocal pi`:
-  jocal starts oMLX, prints its banner and sets the title, Pi works on the local 4B, the session exits and the
-  last lease stops oMLX (`jocal status` then says so). The monitor (right) shows the runtime, the lease, RAM
-  against the 10 GB memory guard, first-reply latency, tok/s, and loopback vs outbound traffic.
-  Alternates a rename task with a read that read.ts refuses over the ~20K-token cap.
+  jocal, as a picture of what it does: one command starts a local model server (oMLX) on the
+  Mac, the coding agent (Pi, or Claude Code) talks only to it over loopback, nothing goes
+  to a cloud API, and when the session exits the last lease stops the server.
 {%- endcomment -%}
-<div class="pf98-screen pf98-jocal" data-demo="jocal">
-  <div class="jo-term">
-    <div class="jo-ttl">zsh — ~/app</div>
-    <div class="jo-out"><div class="jo-lines"></div></div>
+<div class="pf98-screen pf98-flow pf98-jocal" data-demo="jocal">
+  <div class="jo-cmd"><span class="jo-ps">$</span> <span class="jo-typed"></span></div>
+  <div class="jo-stage">
+    <div class="jo-mac">
+      <div class="jo-tag">💻 your Mac</div>
+      <div class="fl-row" style="--n:2">
+        <div class="fl-n"><b>🤖</b><span>coding agent</span></div>
+        <div class="fl-n jo-llm off"><b>🧠</b><span class="jo-st">local LLM · off</span></div>
+        <i class="fl-pk"></i>
+      </div>
+    </div>
+    <div class="jo-cut" title="no route out: prompts never leave the Mac">✕</div>
+    <div class="fl-n off jo-cloud"><b>☁️</b><span>cloud API</span></div>
   </div>
-  <div class="jo-mon">
-    <div class="jo-row"><span class="jo-k">oMLX</span><span class="jo-v"><i class="jo-led"></i><b class="jo-rt">down</b></span></div>
-    <div class="jo-row"><span class="jo-k">lease</span><span class="jo-v jo-lease">none</span></div>
-    <div class="jo-row" title="bar: 16 GB; red tick: --memory-guard-gb 10"><span class="jo-k">RAM</span><span class="jo-v"><span class="jo-bar"><i class="jo-fill"></i><i class="jo-guard"></i></span><span class="jo-ram">0.0G</span></span></div>
-    <div class="jo-row"><span class="jo-k">1st reply</span><span class="jo-v jo-first">–</span></div>
-    <div class="jo-row"><span class="jo-k">speed</span><span class="jo-v jo-tps">–</span></div>
-    <div class="jo-net">netcut.sb · loopback only</div>
-    <div class="jo-row jo-lo-row"><span class="jo-k">loopback</span><span class="jo-v jo-lo">0 req</span></div>
-    <div class="jo-row"><span class="jo-k">outbound</span><span class="jo-v jo-ob">0 conn</span></div>
-  </div>
+  <div class="fl-msg"><div class="fl-l1"></div><div class="fl-l2">0 bytes sent to the cloud</div></div>
 </div>
 <style>
-  .pf98-jocal { display: flex; background: #c0c0c0; font: 10px/1.2 Arial, sans-serif; color: #000; }
-  .pf98-jocal .jo-term { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; background: #000; }
-  .pf98-jocal .jo-ttl { flex: none; height: 13px; line-height: 13px; padding: 0 4px; font: bold 10px/13px Arial, sans-serif; color: #dfdfdf; background: linear-gradient(90deg, #808080, #b5b5b5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .pf98-jocal .jo-ttl.jo-on { color: #fff; background: linear-gradient(90deg, #000080, #1084d0); }
-  .pf98-jocal .jo-out { flex: 1 1 auto; min-height: 0; overflow: hidden; padding: 2px 3px; }
-  .pf98-jocal .jo-lines { font: 10px/12px "Lucida Console", Monaco, monospace; color: #c0c0c0; white-space: pre-wrap; overflow-wrap: anywhere; }
-  .pf98-jocal .jo-l { white-space: pre; overflow: hidden; text-overflow: ellipsis; }
-  .pf98-jocal .jo-l.jo-wrap { white-space: pre-wrap; }
-  .pf98-jocal .jo-ps { color: #808080; }
-  .pf98-jocal .jo-cmd { color: #fff; }
-  .pf98-jocal .jo-ban { background: #c0c0c0; color: #000; }
-  .pf98-jocal .jo-pi { color: #00e0e0; }
-  .pf98-jocal .jo-tool { color: #ffff00; }
-  .pf98-jocal .jo-dim { color: #808080; }
-  .pf98-jocal .jo-err { color: #ff6060; }
-  .pf98-jocal .jo-ok { color: #60ff60; }
-  .pf98-jocal .jo-cur { display: inline-block; width: 6px; height: 10px; vertical-align: -1px; background: #c0c0c0; animation: pf98-jocal-blink 1s steps(1) infinite; }
-  .pf98-jocal .jo-mon { flex: none; width: 38%; min-width: 108px; max-width: 160px; padding: 3px 3px 3px 4px; display: flex; flex-direction: column; gap: 2px; overflow: hidden; }
-  .pf98-jocal .jo-row { display: flex; align-items: center; height: 13px; flex: none; }
-  .pf98-jocal .jo-k { flex: none; width: 44px; white-space: nowrap; overflow: hidden; }
-  .pf98-jocal .jo-v { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 3px; height: 13px; padding: 0 3px; background: #fff; box-shadow: var(--w98-bevel-field); font: 10px/13px "Lucida Console", Monaco, monospace; white-space: nowrap; overflow: hidden; }
-  .pf98-jocal .jo-v b { font-weight: normal; }
-  .pf98-jocal .jo-led { flex: none; width: 6px; height: 6px; border-radius: 50%; background: #808080; box-shadow: inset -1px -1px 0 rgba(0,0,0,.35); }
-  .pf98-jocal .jo-led.jo-starting, .pf98-jocal .jo-led.jo-stopping { background: #e0c000; animation: pf98-jocal-blink .5s steps(1) infinite; }
-  .pf98-jocal .jo-led.jo-up { background: #00c000; }
-  .pf98-jocal .jo-bar { position: relative; flex: 1 1 auto; height: 6px; background: #dfdfdf; box-shadow: inset 1px 1px 0 #808080; }
-  .pf98-jocal .jo-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: #000080; }
-  .pf98-jocal .jo-guard { position: absolute; left: 62.5%; top: -2px; bottom: -2px; width: 1px; background: #c00000; }
-  .pf98-jocal .jo-ram { flex: none; }
-  .pf98-jocal .jo-wait { color: #808080; }
-  .pf98-jocal .jo-net { flex: none; margin-top: 2px; padding-top: 2px; border-top: 1px solid #808080; box-shadow: inset 0 1px 0 #fff; font: bold 9.5px/12px Arial, sans-serif; color: #000080; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .pf98-jocal .jo-lo-row.jo-hit .jo-v { animation: pf98-jocal-hit .45s ease-out; }
-  .pf98-jocal .jo-ob { color: #008000; font-weight: bold; }
-  @keyframes pf98-jocal-blink { 50% { opacity: 0; } }
-  @keyframes pf98-jocal-hit { from { background: #ffff80; } to { background: #fff; } }
+  .pf98-jocal .jo-cmd { align-self: center; padding: 1px 6px; background: #000; color: #fff; font: clamp(9.5px, 3.4cqw, 13px)/1.4 "Lucida Console", Monaco, monospace; white-space: nowrap; }
+  .pf98-jocal .jo-ps { color: #55ff55; }
+  .pf98-jocal .jo-stage { display: flex; align-items: center; gap: 4px; }
+  .pf98-jocal .jo-mac { position: relative; flex: 1; min-width: 0; padding: 9px 2px 3px; border: 1px dashed #000080; }
+  .pf98-jocal .jo-tag { position: absolute; top: -.7em; left: 6px; padding: 0 3px; background: #fff; color: #000080; font-weight: bold; white-space: nowrap; }
+  .pf98-jocal .jo-cut { flex: none; color: #c00000; font: bold 14px/1 Arial, sans-serif; }
+  .pf98-jocal .jo-cloud { flex: none; width: 22%; }
+  .pf98-jocal .jo-mac .fl-pk { background: #008080; }
 </style>
 <script>
   (window.pf98Demos = window.pf98Demos || {})["jocal"] = function (el, kit) {
-    var URL = "http://127.0.0.1:8000";
-    var CMD = "sandbox-exec -f netcut.sb jocal pi";
-    var BANNER = " JOCAL · pi · 4b · prompts stay on this Mac ";
-    var out = kit.$(".jo-out"), lines = kit.$(".jo-lines"), ttl = kit.$(".jo-ttl");
-    var led = kit.$(".jo-led"), rtEl = kit.$(".jo-rt"), leaseEl = kit.$(".jo-lease");
-    var fill = kit.$(".jo-fill"), ramEl = kit.$(".jo-ram"), firstEl = kit.$(".jo-first"), tpsEl = kit.$(".jo-tps");
-    var loRow = kit.$(".jo-lo-row"), loEl = kit.$(".jo-lo");
-    var cur = document.createElement("i"); cur.className = "jo-cur";
-
-    // Two real paths through a session: Pi editing with its core tools, and read.ts refusing a file over the cap.
-    var SCENES = [
-      { prompt: "rename fetch_rows to load_rows", peak: 6.3,
-        steps: [["bash", "grep -rl fetch_rows ."], ["edit", "src/db.py"], ["edit", "src/jobs.py"], ["edit", "tests/test_db.py"]],
-        end: [["jo-ok", "Renamed fetch_rows → load_rows in 3 files."]] },
-      { prompt: "what does logs/app.log say about timeouts?", peak: 4.9,
-        steps: [["read", "logs/app.log"]],
-        end: [["jo-err", "✗ logs/app.log ~85,720 tok > read cap ~20,480"], ["jo-dim", "run: jocal summarise logs/app.log \"<question>\""]] }
-    ];
-
-    // Lines scroll off the top like a terminal's.
-    function fit() { while (lines.children.length > 1 && lines.offsetHeight > out.clientHeight) lines.removeChild(lines.firstChild); }
-    function line(parts) {
-      var d = document.createElement("div"), s, i;
-      // prompts wrap like a shell; output lines stay on one row and ellipsize in a narrow window
-      d.className = "jo-l" + (parts[0][0] === "jo-ps" || parts[0][0] === "jo-pi" ? " jo-wrap" : "");
-      for (i = 0; i < parts.length; i++) { s = document.createElement("span"); s.className = parts[i][0]; s.textContent = parts[i][1]; d.appendChild(s); }
-      d.appendChild(cur); lines.appendChild(d); fit();
-      return s;
-    }
-    function type(span, text, ms, done) {
-      var i = 0;
-      (function step() { span.textContent = text.slice(0, ++i); fit(); if (i < text.length) setTimeout(step, ms); else if (done) done(); })();
-    }
-
-    var STATES = { down: "down", starting: "starting…", up: "up :8000", stopping: "stopping…" };
-    function rt(s) { led.className = "jo-led jo-" + s; rtEl.textContent = STATES[s]; }
-    function title(t) { ttl.textContent = t || "zsh — ~/app"; ttl.className = "jo-ttl" + (t ? " jo-on" : ""); }
-    var ram = 0, ramT;
-    function setRam(v) { ram = v; fill.style.width = (v / 16 * 100) + "%"; ramEl.textContent = v.toFixed(1) + "G"; }
-    function ramTo(v, ms) {
-      clearInterval(ramT);
-      var from = ram, n = Math.max(1, Math.round(ms / 60)), i = 0;
-      ramT = setInterval(function () { setRam(from + (v - from) * (++i / n)); if (i >= n) clearInterval(ramT); }, 60);
-    }
-    var lo = 0;
-    function req() { lo++; loEl.textContent = lo + " req → :8000"; loRow.className = "jo-row jo-lo-row"; void loRow.offsetWidth; loRow.className = "jo-row jo-lo-row jo-hit"; }
+    var typed = kit.$(".jo-typed"), llm = kit.$(".jo-llm"), st = kit.$(".jo-st");
+    var pk = kit.$(".fl-pk"), l1 = kit.$(".fl-l1");
+    function at(side) { pk.style.opacity = side == null ? 0 : 1; if (side != null) pk.style.left = side ? "75%" : "25%"; }
+    function model(s) { llm.className = "fl-n jo-llm" + (s === "off" ? " off" : s === "starting" ? " on" : " ok"); st.textContent = "local LLM · " + s; }
 
     if (kit.still) {
-      var a = SCENES[0], i;
-      title("JOCAL · pi · 4b"); rt("up"); leaseEl.textContent = "pi 4b"; setRam(6.3);
-      firstEl.textContent = "4.8 s"; tpsEl.textContent = "28 tok/s"; lo = 6; loEl.textContent = "6 req → :8000";
-      line([["jo-ps", "$ "], ["jo-cmd", CMD]]);
-      line([["", "jocal: starting oMLX on " + URL]]);
-      line([["jo-ban", BANNER]]);
-      line([["jo-pi", "> "], ["jo-cmd", a.prompt]]);
-      for (i = 0; i < a.steps.length; i++) line([["jo-tool", "● " + a.steps[i][0] + " "], ["jo-dim", a.steps[i][1]]]);
-      a.end.forEach(function (e) { line([e]); });
+      typed.textContent = "jocal pi"; model("ready"); at(1);
+      l1.textContent = "> rename fetch_rows → edited 3 files";
       return;
     }
-
-    function run(n) {
-      var sc = SCENES[n % SCENES.length], t, k;
-      lines.innerHTML = ""; title(""); rt("down"); leaseEl.textContent = "none"; setRam(0);
-      firstEl.textContent = "–"; firstEl.className = "jo-v jo-first"; tpsEl.textContent = "–"; lo = 0; loEl.textContent = "0 req";
-      type(line([["jo-ps", "$ "], ["jo-cmd", ""]]), CMD, 24);
-      setTimeout(function () {   // lease first, then `up`: oMLX serve --memory-guard-gb 10, waited for on /v1/models
-        leaseEl.textContent = "pi 4b"; rt("starting"); ramTo(0.6, 600);
-        line([["", "jocal: starting oMLX on " + URL]]);
-      }, 1050);
-      setTimeout(function () { rt("up"); req(); title("JOCAL · pi · 4b"); line([["jo-ban", BANNER]]); }, 1850);
-      setTimeout(function () { type(line([["jo-pi", "> "], ["jo-cmd", ""]]), sc.prompt, 26); }, 2400);
-      t = 2400 + sc.prompt.length * 26 + 250;
-      setTimeout(function () {   // cold first reply: counted up to a 4-6 s figure
-        req(); ramTo(3.2, 1300);
-        var spin = line([["jo-dim", "⠋"]]), f = 4.2 + Math.random() * 1.4, t0 = Date.now(), fr = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏", j = 0;
-        firstEl.className = "jo-v jo-first jo-wait";
-        var w = setInterval(function () {
-          var p = Math.min(1, (Date.now() - t0) / 1300);
-          firstEl.textContent = (f * p).toFixed(1) + " s"; spin.textContent = fr.charAt(++j % fr.length);
-          if (p >= 1) { clearInterval(w); firstEl.className = "jo-v jo-first"; lines.removeChild(spin.parentNode); }
-        }, 50);
-      }, t);
-      t += 1400;
-      setTimeout(function () {
-        var tp = setInterval(function () { tpsEl.textContent = kit.rnd(27, 29).toFixed(0) + " tok/s"; }, 220);
-        ramTo(sc.peak, sc.steps.length * 450 + 400);
-        sc.steps.forEach(function (s, i) {
-          setTimeout(function () { req(); line([["jo-tool", "● " + s[0] + " "], ["jo-dim", s[1]]]); }, i * 450);
-        });
-        setTimeout(function () {
-          (function next(k) { if (k < sc.end.length) type(line([[sc.end[k][0], ""]]), sc.end[k][1], 8, function () { next(k + 1); }); })(0);
-        }, sc.steps.length * 450 + 100);
-        setTimeout(function () { clearInterval(tp); tpsEl.textContent = "28 tok/s"; }, sc.steps.length * 450 + 1300);
-      }, t);
-      t += sc.steps.length * 450 + 2300;
-      setTimeout(function () {   // harness exits: the title clears, the lease goes, and the last lease stops oMLX
-        title(""); leaseEl.textContent = "none"; rt("stopping"); ramTo(0, 600);
-      }, t);
-      setTimeout(function () { rt("down"); type(line([["jo-ps", "$ "], ["jo-cmd", ""]]), "jocal status", 40); }, t + 700);
-      setTimeout(function () { line([["", "runtime: down (" + URL + ")"]]); line([["", "leases: none"]]); }, t + 1350);
-      setTimeout(function () { run(n + 1); }, t + 3200);
-    }
-    run(0);
+    kit.every(11000, function () {
+      typed.textContent = ""; model("off"); at(null); l1.textContent = "one command:";
+      "jocal pi".split("").forEach(function (ch, i) { kit.later(300 + i * 70, function () { typed.textContent += ch; }); });
+      kit.later(1200, function () { model("starting"); l1.textContent = "starts a model server on this Mac"; });
+      kit.later(2300, function () { model("ready"); l1.textContent = "agent is wired to it, offline"; });
+      // two round trips: prompt out to the local model, answer back to the agent
+      [["> rename fetch_rows to load_rows", "edits src/db.py, src/jobs.py…"], ["> run the tests", "✓ 12 passed"]].forEach(function (q, k) {
+        var t = 3400 + k * 2200;
+        kit.later(t, function () { at(0); l1.textContent = q[0]; });
+        kit.later(t + 100, function () { at(1); });
+        kit.later(t + 1100, function () { at(0); l1.textContent = q[1]; });
+      });
+      kit.later(8200, function () { at(null); model("off"); l1.textContent = "session ends → model stops, RAM freed"; });
+    });
   };
 </script>

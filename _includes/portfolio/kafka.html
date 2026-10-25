@@ -1,157 +1,46 @@
 {%- comment -%}
-  kafka demo: Shopify inventory_levels/update webhooks hit POST /webhooks/inventory, get
-  HMAC-checked, land in topic shopify.inventory.update keyed {item}_{location}, and the
-  consumer UPSERTs inventory_levels guarded by WHERE updated_at < EXCLUDED.updated_at, so a
-  Shopify retry or a late delivery reaches Kafka but changes nothing ("INSERT 0 0").
+  kafka demo, as a flow: a Shopify inventory_levels/update webhook is HMAC-checked, lands
+  in topic shopify.inventory.update, and the consumer UPSERTs inventory_levels guarded by
+  WHERE updated_at < EXCLUDED.updated_at, so a Shopify retry reaches Postgres but changes nothing.
 {%- endcomment -%}
-<div class="pf98-screen pf98-kafka" data-demo="kafka">
-  <div class="k-wh">
-    <div class="k-l1"><span class="k-topic">⇢ inventory_levels/update</span><span class="k-tag"></span><span class="k-badge">HMAC …</span></div>
-    <div class="k-pl">waiting for webhook…</div>
+<div class="pf98-screen pf98-flow pf98-kafka" data-demo="kafka">
+  <div class="fl-row" style="--n:5">
+    <div class="fl-n"><b>🛍️</b><span>Shopify</span></div>
+    <div class="fl-n"><b>🔐</b><span>webhook</span></div>
+    <div class="fl-n"><b>🧵</b><span>Kafka</span></div>
+    <div class="fl-n"><b>⚙️</b><span>consumer</span></div>
+    <div class="fl-n"><b>🐘</b><span>Postgres</span></div>
+    <i class="fl-pk"></i>
   </div>
-  <div class="k-kl"><span class="k-tn">🧵 shopify.inventory.update · p0</span><span class="k-off">consumer @ —</span></div>
-  <div class="k-lane"></div>
-  <div class="k-guard"><span class="k-gq"><i>UPSERT WHERE</i> row.updated_at &lt; msg</span><span class="k-gr"></span></div>
-  <table class="k-tbl">
-    <thead><tr><th>item</th><th>location</th><th>avail</th><th>updated_at</th><th title="synced_at − updated_at">lag</th></tr></thead>
-    <tbody></tbody>
-  </table>
+  <div class="fl-msg"><div class="fl-l1"></div><div class="fl-l2"></div></div>
 </div>
-<style>
-  .pf98-kafka { display: flex; flex-direction: column; justify-content: space-between; gap: 2px; padding: 3px 4px; background: #fff; font: 10px/12px "Lucida Console", Monaco, monospace; color: #000; }
-  .pf98-kafka .k-wh { flex: none; padding: 1px 3px; background: #f4f4f4; box-shadow: var(--w98-bevel-field); }
-  .pf98-kafka .k-l1 { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
-  .pf98-kafka .k-topic { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-weight: bold; color: #000080; }
-  .pf98-kafka .k-tag { flex: none; color: #806000; }
-  .pf98-kafka .k-badge { flex: none; padding: 0 3px; color: #fff; background: #808080; }
-  .pf98-kafka .k-badge.k-y { background: #008000; }
-  .pf98-kafka .k-badge.k-n { background: #c00000; }
-  .pf98-kafka .k-pl { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #333; }
-  .pf98-kafka .k-pl.k-in { animation: pf98-kafka-type .35s steps(8) both; }
-  .pf98-kafka .k-pl.k-x { color: #c00000; text-decoration: line-through; }
-  .pf98-kafka .k-kl { flex: none; display: flex; justify-content: space-between; gap: 6px; white-space: nowrap; font-size: 9.5px; color: #008080; }
-  .pf98-kafka .k-tn { overflow: hidden; text-overflow: ellipsis; }
-  .pf98-kafka .k-off { flex: none; color: #000080; }
-  .pf98-kafka .k-lane { flex: none; display: flex; justify-content: flex-end; gap: 2px; height: 26px; padding: 1px; overflow: hidden; background: #c0c0c0; box-shadow: var(--w98-bevel-field); }
-  .pf98-kafka .k-cell { flex: none; padding: 0 3px; background: #fff; border-left: 4px solid #000080; font-size: 9.5px; line-height: 12px; white-space: nowrap; outline: 1px solid transparent; outline-offset: -1px; }
-  .pf98-kafka .k-cell i { display: block; font-style: normal; color: #808080; }
-  .pf98-kafka .k-cell.k-new { animation: pf98-kafka-in .3s ease-out both; }
-  .pf98-kafka .k-cell.k-cur { outline: 1px dashed #000080; background: #ffffc0; }
-  .pf98-kafka .k-cell.k-done { background: #e8e8e8; color: #606060; }
-  .pf98-kafka .k-guard { flex: none; display: flex; gap: 4px; white-space: nowrap; }
-  .pf98-kafka .k-gq { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-  .pf98-kafka .k-gq i { font-style: normal; color: #808080; }
-  .pf98-kafka .k-gr { flex: none; padding: 0 3px; }
-  .pf98-kafka .k-gr.k-y { color: #fff; background: #008000; }
-  .pf98-kafka .k-gr.k-n { color: #fff; background: #c00000; }
-  .pf98-kafka .k-gr.k-w { color: #000; background: #ffffc0; }
-  .pf98-kafka .k-tbl { flex: none; width: 100%; border-collapse: collapse; font-size: 10px; line-height: 12px; }
-  .pf98-kafka .k-tbl th { padding: 0 3px; text-align: left; font: bold 10px/12px Arial, sans-serif; background: #c0c0c0; box-shadow: var(--w98-bevel-raised); white-space: nowrap; }
-  .pf98-kafka .k-tbl td { padding: 0 3px; white-space: nowrap; border-bottom: 1px dotted #c0c0c0; }
-  .pf98-kafka .k-tbl td.k-n { text-align: right; }
-  .pf98-kafka .k-tbl td.k-old { color: #808080; }
-  .pf98-kafka .k-tbl td.k-live { color: #008000; }
-  .pf98-kafka .k-tbl tr.k-last td { background: #eef4ff; }
-  .pf98-kafka .k-tbl tr.k-fy td { animation: pf98-kafka-fy .9s ease-out; }
-  .pf98-kafka .k-tbl tr.k-fn td { animation: pf98-kafka-fn .9s ease-out; }
-  .pf98-kafka .k-tbl tr.k-last.k-fn td { background: #fbeaea; }
-  @keyframes pf98-kafka-in { from { transform: translateX(24px); opacity: 0; } }
-  @keyframes pf98-kafka-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
-  @keyframes pf98-kafka-fy { from { background: #80e080; } }
-  @keyframes pf98-kafka-fn { from { background: #f08080; } }
-  @media (prefers-reduced-motion: reduce) { .pf98-kafka * { animation: none !important; } }
-</style>
 <script>
   (window.pf98Demos = window.pf98Demos || {})["kafka"] = function (el, kit) {
-    // Mock data from mock_shopify/app/generator.py: items 600…01-05, locations 700…01 Alpha / 700…02 Beta.
-    var LOC = { Alpha: "01", Beta: "02" };
-    var KEYC = { "01Alpha": "#000080", "03Beta": "#008080", "05Alpha": "#800080" };
-    var base = 9 * 3600 + 41 * 60;
-    var offset = 1041;
-    var rows = {};
-    var tbody = kit.$("tbody");
-    [["01", "Alpha", 42], ["03", "Beta", 118], ["05", "Alpha", 7]].forEach(function (r, i) {
-      var tr = document.createElement("tr");
-      tr.innerHTML = "<td>…" + r[0] + "</td><td>" + r[1] + "</td><td class='k-n'></td><td></td><td class='k-old'>14h</td>";
-      tr.title = "last written by the daily Airflow batch pull";
-      tbody.appendChild(tr);
-      rows[r[0] + r[1]] = { tr: tr, td: tr.children, avail: r[2], t: base - 14 * 3600 - 300 * i };
-      paint(rows[r[0] + r[1]]);
+    var ns = kit.$$(".fl-n"), pk = kit.$(".fl-pk"), l1 = kit.$(".fl-l1"), l2 = kit.$(".fl-l2");
+    // A sale, a restock, then Shopify retrying the sale: same updated_at, so the upsert is a no-op.
+    var EVENTS = [
+      { what: "item #01 sold · stock 42 → 41", end: "row updated · 0.4 s after the sale" },
+      { what: "item #03 restocked · 118 → 160", end: "row updated · 0.3 s after the restock" },
+      { what: "Shopify retries item #01 · 41", dup: true, end: "already applied → ignored" }
+    ];
+    var HOP = ["webhook fired", "signature verified ✓", "queued, keyed by item", "consumer picks it up"];
+
+    function go(i, cls) {
+      ns.forEach(function (n, k) { n.className = "fl-n" + (k === i ? " " + (cls || "on") : ""); });
+      pk.style.left = (i + 0.5) / ns.length * 100 + "%";
+    }
+    function show(e, i) {
+      l1.textContent = e.what;
+      if (i < 4) { go(i); l2.textContent = HOP[i]; }
+      else { go(4, e.dup ? "no" : "ok"); l2.textContent = e.end; }
+    }
+
+    if (kit.still) { show(EVENTS[0], 4); return; }
+    var n = 0;
+    kit.every(5000, function () {
+      var e = EVENTS[n++ % EVENTS.length];
+      pk.style.transition = "none"; go(0); void pk.offsetWidth; pk.style.transition = "";
+      for (var i = 0; i <= 4; i++) (function (i) { kit.later(i * 800, function () { show(e, i); }); })(i);
     });
-    var badge = kit.$(".k-badge"), tag = kit.$(".k-tag"), pl = kit.$(".k-pl"), lane = kit.$(".k-lane");
-    var off = kit.$(".k-off"), gq = kit.$(".k-gq"), gr = kit.$(".k-gr");
-    var evs, ei = 0, ph = 0, cell, last;
-
-    function n(a, b) { return Math.round(kit.rnd(a, b)); }
-    function pad(v) { return (v < 10 ? "0" : "") + v; }
-    function hms(t) { t = ((t % 86400) + 86400) % 86400; return pad(Math.floor(t / 3600)) + ":" + pad(Math.floor(t / 60) % 60) + ":" + pad(t % 60); }
-    function paint(r) { r.td[2].textContent = r.avail; r.td[3].textContent = hms(r.t); }
-    function flash(node, cls) { node.classList.remove("k-fy", "k-fn"); void node.offsetWidth; node.classList.add(cls); }
-    function set(node, text, cls) { node.textContent = text; node.className = node.className.split(" ")[0]; void node.offsetWidth; if (cls) node.classList.add(cls); }
-
-    // One loop: two fresh updates, a forged POST, a late (older) delivery, a sale, and Shopify retrying it.
-    function build() {
-      var a = n(20, 60), sale = { item: "01", loc: "Alpha", avail: a - n(1, 3) };
-      base += 15;
-      return [
-        { item: "01", loc: "Alpha", avail: a, t: base - 14, kind: "" },
-        { item: "03", loc: "Beta", avail: n(80, 200), t: base - 13, kind: "" },
-        { item: "05", loc: "Alpha", avail: 9999, t: base - 12, kind: "forged" },
-        { item: "01", loc: "Alpha", avail: a + n(3, 9), t: base - 18, kind: "late" },
-        { item: sale.item, loc: sale.loc, avail: sale.avail, t: base - 8, kind: "" },
-        { item: sale.item, loc: sale.loc, avail: sale.avail, t: base - 8, kind: "retry" }
-      ];
-    }
-    var TAG = { "": "", forged: "☠ forged", late: "⏳ late", retry: "↻ retry" };
-
-    function step() {
-      if (!evs || ei >= evs.length) { evs = build(); ei = 0; ph = 0; }
-      var ev = evs[ei], r = rows[ev.item + ev.loc], key = "…" + ev.item + "_…" + LOC[ev.loc];
-      if (ph === 0) {
-        tag.textContent = TAG[ev.kind];
-        set(badge, "HMAC …", "");
-        set(pl, "item …" + ev.item + " @" + ev.loc + " available " + ev.avail + " updated_at " + hms(ev.t), "k-in");
-      } else if (ph === 1) {
-        if (ev.kind === "forged") { set(badge, "HMAC ✗ 401", "k-n"); pl.className = "k-pl k-x"; }
-        else set(badge, "HMAC ✓ 200", "k-y");
-      } else if (ph === 2 && ev.kind !== "forged") {
-        cell = document.createElement("div");
-        cell.className = "k-cell k-new";
-        cell.style.borderLeftColor = KEYC[ev.item + ev.loc];
-        cell.title = "key " + ev.item + "_" + ev.loc;
-        cell.innerHTML = "<i>#" + (offset++) + "</i>" + key;
-        lane.appendChild(cell);
-        while (lane.children.length > 12) lane.removeChild(lane.firstChild);
-      } else if (ph === 3) {
-        cell.classList.add("k-cur");
-        gq.innerHTML = "<i>UPSERT WHERE</i> " + hms(r.t) + " &lt; " + hms(ev.t);
-        set(gr, "?", "k-w");
-      } else if (ph === 4) {
-        cell.classList.remove("k-cur");
-        cell.classList.add("k-done");
-        off.textContent = "consumer @ #" + (offset - 1);
-        if (last) last.classList.remove("k-last");
-        (last = r.tr).classList.add("k-last");
-        if (r.t < ev.t) {
-          r.avail = ev.avail; r.t = ev.t; paint(r);
-          r.td[4].textContent = (n(2, 9) / 10).toFixed(1) + "s";
-          r.td[4].className = "k-live";
-          set(gr, "INSERT 0 1", "k-y");
-          flash(r.tr, "k-fy");
-        } else {
-          set(gr, "INSERT 0 0 · " + (r.t === ev.t ? "dup" : "stale"), "k-n");
-          flash(r.tr, "k-fn");
-        }
-      }
-      ph++;
-      if (ph > (ev.kind === "forged" ? 2 : 4)) { ei++; ph = 0; }
-    }
-
-    if (kit.still) {
-      // Finished frame: play one whole loop at once, ending on the retry being ignored.
-      do step(); while (ei < evs.length);
-      return;
-    }
-    kit.every(420, step);
   };
 </script>

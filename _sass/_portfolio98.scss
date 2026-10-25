@@ -21,6 +21,61 @@
   background: #fff;
 }
 
+/* Flow demos (kafka, finance, jocal): a row of stations with a packet travelling the track
+   behind them. Markup: .fl-row[style="--n:<stations>"] > .fl-n > b (icon) + span (label),
+   plus one i.fl-pk; a demo moves the packet by setting its `left` to a station centre. */
+.pf98-flow {
+  --ic: clamp(22px, 24cqh, 44px);
+  container-type: size;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 4px 6px;
+  font: 10px/1.25 Arial, sans-serif;
+  color: #000;
+
+  .fl-row { position: relative; display: flex; }
+  .fl-row::before {
+    content: "";
+    position: absolute;
+    left: calc(50% / var(--n));
+    right: calc(50% / var(--n));
+    top: calc(var(--ic) / 2 - 1px);
+    border-top: 2px dotted #808080;
+  }
+  .fl-n { position: relative; z-index: 1; flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .fl-n b {
+    display: grid;
+    place-items: center;
+    width: var(--ic);
+    height: var(--ic);
+    font-size: calc(var(--ic) * .55);
+    font-weight: normal;
+    background: #c0c0c0;
+    box-shadow: var(--w98-bevel-raised);
+    transition: background .2s;
+  }
+  .fl-n span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: clamp(9.5px, 3.4cqw, 13px); }
+  .fl-n.on b { background: #ffffc0; outline: 2px solid #000080; }
+  .fl-n.ok b { background: #c0ffc0; outline: 2px solid #008000; }
+  .fl-n.no b { background: #ffd0d0; outline: 2px solid #c00000; }
+  .fl-n.off { opacity: .45; }
+  .fl-pk {
+    position: absolute;
+    z-index: 0;
+    top: calc(var(--ic) / 2);
+    left: 0;
+    width: 10px;
+    height: 10px;
+    transform: translate(-50%, -50%);
+    background: #000080;
+    transition: left .5s ease-in-out, opacity .2s;
+  }
+  .fl-msg { text-align: center; font: clamp(9.5px, 3.4cqw, 13px)/1.35 "Lucida Console", Monaco, monospace; }
+  .fl-msg div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .fl-l2 { color: #606060; }
+}
+
 .pf98-cap {
   flex: none;
   margin: 0;
