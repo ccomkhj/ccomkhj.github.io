@@ -179,6 +179,7 @@ layout: default
   .window98 menu[role=tablist] { flex: none; margin: 0; }
   .window98 [role=tabpanel] { flex: 1; min-height: 0; overflow: auto; }
   .sysprops98-general { display: grid; grid-template-columns: 120px 1fr; gap: 14px; padding: 10px 6px; }
+  .sysprops98-general[hidden] { display: none; }
   .sysprops98-art { padding-top: 8px; font-size: 72px; line-height: 1; text-align: center; }
   .sysprops98-general p { margin: 0 0 12px; font-size: 13px; line-height: 1.45; }
   .sysprops98-tree { margin: 6px; }
@@ -512,20 +513,22 @@ layout: default
                   <div class="sysprops98-art glyph98">🖥️</div>
                   <div>
                     <p><b>System:</b><br>Huijo 98<br>Pile of Thoughts Edition<br>4.10.2026</p>
-                    <p><b>Registered to:</b><br>Huijo Kim<br>ML practitioner, former founder</p>
-                    <p><b>Computer:</b><br>Mechanical engineering &rarr; EV development at Hyundai Motor Group &rarr; agtech founder (0 &rarr; six-figure ARR) &rarr; ML for e-commerce<br>{{ site.posts | size }} thoughts on disk</p>
+                    {%- assign profile = site.data.profile %}
+                    <p><b>Registered to:</b><br>{{ profile.name }}<br>{{ profile.title }}, {{ profile.company }}<br>{{ profile.headline | escape }}</p>
+                    <p><b>Computer:</b><br>{% for e in profile.timeline reversed %}{{ e.org }}{% unless forloop.last %} &rarr; {% endunless %}{% endfor %}<br>{{ site.posts | size }} thoughts on disk</p>
                   </div>
                 </div>
                 <div data-panel="devices" hidden>
                   <ul class="tree-view sysprops98-tree">
                     <li>🖥️ HUIJO-98
                       <ul>
-                        <li>🧠 Machine Learning<ul><li>Forecasting</li><li>Explainability-driven optimization</li></ul></li>
-                        <li>👁️ Computer Vision</li>
-                        <li>🤖 Agents &amp; workflows</li>
-                        <li>⚙️ MLOps</li>
-                        <li>🌱 Agtech (retired, fond memories)</li>
-                        <li>✍️ Essays</li>
+                        {%- for skill in profile.skills %}
+                        {%- if skill.items %}
+                        <li><details><summary>{{ skill.glyph }} {{ skill.name }}</summary><ul>{% for item in skill.items %}<li>{{ item | escape }}</li>{% endfor %}</ul></details></li>
+                        {%- else %}
+                        <li>{{ skill.glyph }} {{ skill.name }}</li>
+                        {%- endif %}
+                        {%- endfor %}
                       </ul>
                     </li>
                   </ul>
@@ -689,6 +692,7 @@ Thanks for stopping by.</textarea>
   {%- endfor -%}
 ]</script>
 
+{% include profile-data.html %}
 <script src="{{ '/assets/js/terminal-commands.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/terminal-shell.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/win98-desktop.js' | relative_url }}"></script>

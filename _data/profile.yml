@@ -1,0 +1,97 @@
+# Who Huijo is, in one place. Read by:
+#   _includes/profile-data.html -> window.Profile -> assets/js/terminal-commands.js
+#     (whoami, neofetch, log; `bio` also fills the desktop's README.TXT and Welcome window)
+#   _layouts/win98_desktop.html  System Properties window
+#   _pages/card.md, assets/huijo.vcf  contact card
+# Front matter can't read _data: keep _config.yml (author.bio, description) and
+# _pages/card.md (description) in step by hand.
+# /about/ (_pages/about.md) is hand-written and stays out of this file.
+# Public facts only: no number that isn't already linked from /about/.
+
+name: Huijo Kim
+title: Senior Data Scientist
+company: VOIDS
+company_url: https://voids.ai
+location: Hamburg
+headline: AI engineer · ex-CTO & co-founder
+building: Agent infrastructure & data products
+since: 2016 # first engineering job; neofetch uptime
+
+previously:
+  role: Co-founder & CTO
+  company: hexafarms
+  url: https://hexafarms.com
+  note: agtech, 0→€400k ARR
+earlier: Hyundai Mobis, CV inspection for EV inverters
+
+# README.TXT and Welcome ("Who is Huijo?" shows the first paragraph only). Inline HTML allowed.
+bio:
+  - >-
+    AI engineer and former startup CTO. At <a href="https://voids.ai">VOIDS</a> in Hamburg
+    I build agent infrastructure (MCP servers, RAG), real-time inventory pipelines and
+    forecasting services for retail planning.
+  - >-
+    Before that I co-founded <a href="https://hexafarms.com">hexafarms</a> and ran engineering
+    as CTO: computer vision and yield forecasting for commercial greenhouses, from zero to
+    €400k ARR, through Techstars Berlin and a €1.3M pre-seed round.
+  - >-
+    Earlier: computer-vision inspection for EV inverters at Hyundai Mobis, an M.Sc. in Robotics
+    at RWTH Aachen, and the Korean Special Forces. I spoke at PyCon DE &amp; PyData 2026 and write
+    here about ML, agents and building companies.
+
+# `whoami`: one row per line, key padded to the longest.
+whoami:
+  - k: now
+    v: VOIDS, Hamburg · agent infra (MCP), real-time pipelines, forecasting
+  - k: was
+    v: hexafarms · co-founder & CTO · 0→€400k ARR · Techstars · €1.3M pre-seed
+  - k: was
+    v: Hyundai Mobis · CV inspection for EV inverters
+  - k: edu
+    v: M.Sc. Robotics, RWTH Aachen · best performance award
+  - k: talk
+    v: PyCon DE & PyData 2026 · agent-based HPO for gradient-boosted trees
+  - k: paper
+    v: arXiv:2410.00769 · DeepAerialMapper, HD maps from aerial imagery
+
+# `log` (newest first; the first entry is HEAD) and the System Properties career line.
+timeline:
+  - year: 2025
+    org: VOIDS
+    what: senior data scientist · agent infra, real-time inventory pipelines, forecasting
+  - year: 2021
+    org: hexafarms
+    what: co-founded, CTO · CV + yield forecasting · 0→€400k ARR, Techstars, €1.3M
+  - year: 2019
+    org: RWTH Aachen
+    what: M.Sc. Robotics, best performance award · thesis → DeepAerialMapper
+  - year: 2016
+    org: Hyundai Mobis
+    what: CV inspection and quality for EV inverters
+  - year: 2010
+    org: Special Forces
+    what: initial commit · discipline, patience
+
+# neofetch
+stack: [python, pytorch, fastapi, kafka, postgres, k8s]
+focus: [agents, data pipelines, forecasting, computer vision]
+
+# System Properties > Device Manager
+skills:
+  - name: Agents
+    glyph: "🤖"
+    items: [MCP servers, RAG, Evaluation & tracing]
+  - name: Data engineering
+    glyph: "⚙️"
+    items: [Kafka streaming, Medallion ELT, FastAPI services]
+  - name: Machine learning
+    glyph: "🧠"
+    items: [Forecasting, Gradient-boosted trees, PyTorch]
+  - name: Computer vision
+    glyph: "👁️"
+    items: [Detection & segmentation, Plant phenotyping]
+  - name: Zero to one
+    glyph: "🚀"
+    items: [Customer discovery, Hiring, Fundraising]
+  - name: Essays
+    glyph: "✍️"

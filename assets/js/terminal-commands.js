@@ -16,16 +16,25 @@
     qr:        { url: "/qr/",        blurb: "scan-to-connect QR page." }
   };
 
+  /* Who Huijo is: _data/profile.yml, via _includes/profile-data.html. */
+  var P = window.Profile || {};
+  var GREEN = "<span style='color:#33ff00'>";
+
+  function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+  function pad(s, n) { while (s.length < n) s += " "; return s; }
+  /* Stable fake commit hash for `log` (djb2, 7 hex digits). */
+  function sha(s) {
+    var h = 5381;
+    for (var i = 0; i < s.length; i++) h = (h * 33 + s.charCodeAt(i)) >>> 0;
+    return ("0000000" + h.toString(16)).slice(-7);
+  }
+
   var BIO =
     "<div style='margin-top:8px;margin-bottom:12px;color:#ccc'>" +
-    "<p>Machine learning practitioner and former founder working across predictive " +
-    "modeling, computer vision, MLOps, and autonomous systems. After mechanical " +
-    "engineering, worked on EV development at <strong>Hyundai Motor Group</strong>.</p>" +
-    "<p>Founded and scaled an <a href='https://hexafarms.com'>agtech startup</a> from " +
-    "zero to six-figure ARR, then moved into e-commerce, applying ML to large-scale " +
-    "experimentation and operational optimization.</p>" +
-    "<p>Interested in explainability-driven optimization, agent-based workflows, and " +
-    "cross-disciplinary system design.</p></div>";
+    (P.bio || []).map(function (p) { return "<p>" + p + "</p>"; }).join("") +
+    "</div>";
   window.TerminalBio = BIO; /* also read by the landing page's README and Welcome windows */
 
   window.TerminalCommands = [
@@ -104,8 +113,28 @@
       }
     },
     {
-      name: "whoami", aliases: ["bio"], desc: "print bio",
-      run: function (args, ctx) { ctx.printHTML(BIO); }
+      name: "whoami", aliases: ["bio"], desc: "who is huijo",
+      run: function (args, ctx) {
+        var rows = P.whoami || [];
+        var w = Math.max.apply(null, rows.map(function (r) { return r.k.length; }).concat(0));
+        ctx.printHTML(GREEN + esc((P.name || "").toLowerCase()) + "</span> · " +
+          esc(P.title + " @ " + P.company) + " · " + esc(P.headline));
+        rows.forEach(function (r) {
+          ctx.printHTML("  " + GREEN + pad(r.k, w) + "</span>  " + esc(r.v));
+        });
+        ctx.printHTML("  more → <a href='/about/'>/about/</a> · career → log");
+      }
+    },
+    {
+      name: "log", aliases: ["git"], desc: "career, as a git log",
+      run: function (args, ctx) {
+        if (args.trim() && !/^(log\b|--)/.test(args.trim())) { ctx.print("usage: log  (or: git log)"); return; }
+        (P.timeline || []).forEach(function (e, i) {
+          var head = i === 0 ? " <span style='color:#33ccff'>(HEAD -&gt; " + esc(e.org.toLowerCase()) + ")</span>" : "";
+          ctx.printHTML("<span style='color:#ffcc00'>" + sha(e.year + e.org) + "</span>" + head +
+            " " + e.year + " " + GREEN + esc(e.org) + "</span>: " + esc(e.what));
+        });
+      }
     },
     {
       name: "contact", desc: "show contact links",
@@ -139,11 +168,12 @@
         ].forEach(function (l) { ctx.print(l); });
         ctx.print("");
         ctx.printHTML("  <span style='color:#33ff00'>host</span>     huijo.xyz");
-        ctx.printHTML("  <span style='color:#33ff00'>role</span>     Data Scientist @ voids.ai");
-        ctx.printHTML("  <span style='color:#33ff00'>prev</span>     cofounder @ hexafarms (0→400k ARR)");
-        ctx.printHTML("  <span style='color:#33ff00'>stack</span>    python · pytorch · jax · k8s · jekyll");
-        ctx.printHTML("  <span style='color:#33ff00'>focus</span>    forecasting · CV · agents · MLOps");
-        ctx.printHTML("  <span style='color:#33ff00'>uptime</span>   shipping since 0→1");
+        var prev = P.previously || {};
+        ctx.printHTML("  <span style='color:#33ff00'>role</span>     " + esc(P.title + " @ " + P.company));
+        ctx.printHTML("  <span style='color:#33ff00'>prev</span>     " + esc(prev.role + " @ " + prev.company + " (" + prev.note + ")"));
+        ctx.printHTML("  <span style='color:#33ff00'>stack</span>    " + esc((P.stack || []).join(" · ")));
+        ctx.printHTML("  <span style='color:#33ff00'>focus</span>    " + esc((P.focus || []).join(" · ")));
+        ctx.printHTML("  <span style='color:#33ff00'>uptime</span>   shipping since " + esc(P.since));
       }
     },
     {

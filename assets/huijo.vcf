@@ -1,9 +1,14 @@
+---
+# Liquid-rendered so TITLE/ORG follow _data/profile.yml. No layout: raw vCard out.
+layout: null
+sitemap: false
+---
 BEGIN:VCARD
 VERSION:3.0
 N:Kim;Huijo;;;
 FN:Huijo Kim
-TITLE:Data Scientist
-ORG:voids
+TITLE:{{ site.data.profile.title }}
+ORG:{{ site.data.profile.company }}
 TEL;TYPE=CELL:+4915205981504
 EMAIL;TYPE=INTERNET,WORK:huijo.kim@voids.ai
 EMAIL;TYPE=INTERNET,HOME:ccomkhj@gmail.com

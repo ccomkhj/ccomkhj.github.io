@@ -2,7 +2,7 @@
 layout: splash
 permalink: /card/
 title: "Huijo Kim — Contact card"
-description: "Huijo Kim — Data Scientist at voids.ai. Building data products & agents, ex-founder."
+description: "Huijo Kim — Senior Data Scientist at VOIDS. Agent infrastructure & data products; ex-CTO & co-founder of hexafarms." # keep in step with _data/profile.yml
 classes: card98-page
 author_profile: false
 sitemap: false
@@ -11,8 +11,10 @@ noindex: true
 {%- comment -%}
   huijo.vcf as a Windows Address Book "Properties" dialog. Opened from the QR code on
   /qr/, so phone first. Styles: _sass/_card98.scss. Keep the rows in step with
-  assets/huijo.vcf, so Add to Contacts saves what the page shows.
+  assets/huijo.vcf, so Add to Contacts saves what the page shows. Role, company and
+  history come from _data/profile.yml, which the vcard reads too.
 {%- endcomment -%}
+{%- assign profile = site.data.profile -%}
 <section class="window card98" aria-labelledby="card98-name">
   {% include title-bar98.html title="📇 Huijo Kim Properties" close="/" dialog=true %}
   <div class="window-body">
@@ -27,8 +29,8 @@ noindex: true
         <img class="card98-photo" src="{{ '/assets/images/huijo_voids_profile.jpeg' | relative_url }}" alt="" width="72" height="72">
         <div class="read98">
           <h1 class="card98-name" id="card98-name">Huijo Kim</h1>
-          <p class="card98-role">Data Scientist at voids</p>
-          <p class="card98-sub">Building data products &amp; agents</p>
+          <p class="card98-role">{{ profile.title }} at {{ profile.company }}</p>
+          <p class="card98-sub">{{ profile.building | escape }}</p>
         </div>
       </div>
       <ul class="card98-list field98 read98">
@@ -43,11 +45,11 @@ noindex: true
 
     <div class="window card98-panel" role="tabpanel" id="card98-business">
       <dl class="card98-fields read98">
-        <dt>Company</dt><dd><a href="https://voids.ai" target="_blank" rel="noopener">voids</a></dd>
-        <dt>Job title</dt><dd>Data Scientist</dd>
-        <dt>Building</dt><dd>Data products &amp; agents</dd>
-        <dt>Previously</dt><dd>Cofounder, <a href="https://hexafarms.com" target="_blank" rel="noopener">hexafarms</a> (agtech)</dd>
-        <dt>Earlier</dt><dd>EV development, Hyundai Motor Group</dd>
+        <dt>Company</dt><dd><a href="{{ profile.company_url }}" target="_blank" rel="noopener">{{ profile.company }}</a></dd>
+        <dt>Job title</dt><dd>{{ profile.title }}</dd>
+        <dt>Building</dt><dd>{{ profile.building | escape }}</dd>
+        <dt>Previously</dt><dd>{{ profile.previously.role | escape }}, <a href="{{ profile.previously.url }}" target="_blank" rel="noopener">{{ profile.previously.company }}</a> ({{ profile.previously.note }})</dd>
+        <dt>Earlier</dt><dd>{{ profile.earlier }}</dd>
         <dt>More</dt><dd><a href="{{ '/about/' | relative_url }}">About me</a> · <a href="{{ '/writings/' | relative_url }}">Writings</a></dd>
       </dl>
     </div>

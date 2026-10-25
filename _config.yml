@@ -43,7 +43,7 @@ title                    : "pile of thoughts"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Huijo Kim"
-description              : "Huijo Kim's personal site — machine learning, computer vision, MLOps, and reflections."
+description              : "Huijo Kim — AI engineer and ex-startup CTO. Writing on agents, machine learning, data engineering, and building companies."
 url                      : "https://www.huijo.xyz" # must match CNAME, or canonical/sitemap/feed URLs redirect
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -129,7 +129,7 @@ analytics:
 author:
   name             : "Huijo Kim"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "How to take the next step"
+  bio              : "AI engineer · ex-CTO & co-founder. Agents, data pipelines, forecasting." # keep in step with _data/profile.yml
   # location         : "Somewhere"
   email            : "ccomkhj@gmail.com"
   links:
