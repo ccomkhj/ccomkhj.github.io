@@ -11,6 +11,7 @@
     portfolio: { url: "/portfolio/", blurb: "agent workflows, self-improving harnesses, agentic ML, and applied systems." },
     writings:  { url: "/writings/",  blurb: "100+ posts on ML, forecasting, CV, MLOps, reflections." },
     bookmarks: { url: "/bookmarks/", blurb: "curated links worth keeping." },
+    tags:      { url: "/tags/",      blurb: "writings grouped by tag." },
     card:      { url: "/card/",      blurb: "terminal-style contact card." },
     qr:        { url: "/qr/",        blurb: "scan-to-connect QR page." }
   };

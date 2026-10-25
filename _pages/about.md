@@ -3,7 +3,7 @@ layout: about_me
 class: wide
 permalink: /about/
 author_profile: true
-window_title: Polymath.exe
+window_title: About — Polymath.exe
 title: "About"
 ---
 

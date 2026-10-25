@@ -67,17 +67,22 @@ layout: default
     display: block;
     width: 100%;
   }
+
+  /* Phones: let titles wrap, drop the Tags column and the inner scroll box */
+  @media (max-width: 600px) {
+    .window-writings { margin: 10px 4px; }
+    .writings-table-container { height: auto; overflow: visible; }
+    table.writings-table th:nth-child(1) { width: 84px !important; }
+    table.writings-table th:nth-child(3),
+    table.writings-table td:nth-child(3) { display: none; }
+    table.writings-table tbody td { white-space: normal; vertical-align: top; }
+    table.writings-table tbody td:first-child { white-space: nowrap; font-size: 12px; }
+    table.writings-table tbody td a { text-decoration: underline; }
+  }
 </style>
 
 <div class="window window-writings">
-  <div class="title-bar">
-    <div class="title-bar-text">Writings Manager</div>
-    <div class="title-bar-controls">
-      <button aria-label="Minimize"></button>
-      <button aria-label="Maximize"></button>
-      <button aria-label="Close"></button>
-    </div>
-  </div>
+  {% include title-bar98.html title="Writings" %}
   <div class="window-body">
     <div class="writings-table-container">
       <table class="writings-table">
@@ -106,7 +111,7 @@ layout: default
     </div>
 
     <div style="margin-top: 10px; text-align: right;">
-      <button onclick="window.location.href='{{ '/tags/' | relative_url }}'">Group by Tags</button>
+      <a class="btn" href="{{ '/tags/' | relative_url }}">Group by Tag</a>
     </div>
     
     <div class="status-bar" style="margin-top: 5px;">

@@ -81,14 +81,7 @@ layout: default
 </style>
 
 <div class="window window-tags">
-  <div class="title-bar">
-    <div class="title-bar-text">Writings Explorer by Tags</div>
-    <div class="title-bar-controls">
-      <button aria-label="Minimize"></button>
-      <button aria-label="Maximize"></button>
-      <button aria-label="Close"></button>
-    </div>
-  </div>
+  {% include title-bar98.html title="Writings by Tag" close="/writings/" %}
   <div class="window-body">
     <p style="margin-bottom: 10px;">Browse writings by topic:</p>
     
@@ -103,7 +96,7 @@ layout: default
       {% for i in (1..tags_max) reversed %}
         {% for tag in site.tags %}
           {% if tag[1].size == i %}
-            <li>
+            <li id="{{ tag[0] | slugify }}">
               <details>
                 <summary>
                   <strong>{{ tag[0] }}</strong> ({{ i }})
@@ -126,3 +119,18 @@ layout: default
     </ul>
   </div>
 </div>
+
+<script>
+  /* Post and Writings tag links point at /tags/#<tag>: open that tag and bring it into view */
+  (function () {
+    function openTag() {
+      var li = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      var details = li && li.querySelector("details");
+      if (!details) return;
+      details.open = true;
+      li.scrollIntoView({ block: "nearest" });
+    }
+    openTag();
+    addEventListener("hashchange", openTag);
+  })();
+</script>

@@ -319,7 +319,7 @@
     store("welcome98", welcomeShow.checked ? null : "off");
   });
 
-  /* My Writings: one row per post, filtered by the Find box. */
+  /* Writings: one row per post, filtered by the Find box. */
   var writings = windowEl("writings");
   var list = writings.querySelector(".explorer98-list");
   var count = writings.querySelector(".explorer98-count");
@@ -433,12 +433,18 @@
   startButton.addEventListener("click", function (e) {
     e.stopPropagation();
     setStart(!startMenu.classList.contains("open"));
+    /* Opened from the keyboard: move focus into the menu (its items follow the button in Tab order) */
+    if (e.detail === 0 && startMenu.classList.contains("open")) startMenu.querySelector("a").focus();
+  });
+  startMenu.addEventListener("focusout", function (e) {
+    if (e.relatedTarget && !startMenu.contains(e.relatedTarget) && e.relatedTarget !== startButton) closeStart();
   });
   document.addEventListener("click", function (e) {
     if (!startMenu.contains(e.target)) closeStart();
   });
   document.addEventListener("keydown", function (e) {
     if (e.key !== "Escape") return;
+    if (startMenu.contains(document.activeElement)) startButton.focus();
     closeStart();
     if (!shutdownDialog.hidden) { dim.hidden = true; shutdownDialog.hidden = true; }
   });
@@ -446,6 +452,8 @@
   root.addEventListener("click", function (e) {
     var t = e.target.closest("[data-act],[data-open],[data-href]");
     if (!t || t.classList.contains("desktop98-icon")) return;
+    /* Ctrl/Cmd/Shift-click on a real page link opens that page in a new tab, as links do */
+    if ((e.ctrlKey || e.metaKey || e.shiftKey) && t.tagName === "A" && t.getAttribute("href").charAt(0) !== "#") return;
     var win = t.closest("[data-window]");
     var id = win && win.dataset.window;
     if (t.dataset.open) {

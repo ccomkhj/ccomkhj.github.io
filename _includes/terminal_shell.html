@@ -1,4 +1,4 @@
-<!-- Interactive terminal shell. Replaces terminal_search.html on the landing page.
+<!-- Interactive terminal shell for /terminal/.
      Commands live in assets/js/terminal-commands.js; engine in terminal-shell.js. -->
 <canvas id="math-canvas" class="math-canvas"></canvas>
 
@@ -15,10 +15,10 @@
   <div class="terminal-container">
     <p>JavaScript is disabled. The essentials:</p>
     <ul>
-      <li><a href="/about/">about</a></li>
-      <li><a href="/portfolio/">portfolio</a></li>
-      <li><a href="/writings/">writings</a></li>
-      <li><a href="/card/">contact card</a></li>
+      {%- for link in site.data.navigation.main %}
+      <li><a href="{{ link.url | relative_url }}">{{ link.title }}</a></li>
+      {%- endfor %}
+      <li><a href="{{ '/card/' | relative_url }}">Contact card</a></li>
     </ul>
   </div>
 </noscript>

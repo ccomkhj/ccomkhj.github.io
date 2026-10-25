@@ -1,0 +1,29 @@
+{%- comment -%}
+  The Start menu, shared by the desktop (`/`) and the taskbar on every other page.
+  Sections come from _data/navigation.yml. With desktop=true, items that have a desktop
+  window carry data-open (assets/js/win98-desktop.js opens the window instead of
+  navigating) and the desktop-only extras appear: Welcome, README.TXT, Shut Down.
+{%- endcomment -%}
+<nav class="startmenu98" aria-label="Start">
+  <div class="startmenu98-side" aria-hidden="true">Huijo<b>98</b></div>
+  <ul class="startmenu98-list">
+    {%- if include.desktop %}
+    <li><a class="startmenu98-item" href="{{ '/' | relative_url }}" data-open="welcome"><span class="glyph98" aria-hidden="true">👋</span>Welcome</a></li>
+    {%- else %}
+    <li><a class="startmenu98-item" href="{{ '/' | relative_url }}"><span class="glyph98" aria-hidden="true">🖥️</span>Desktop</a></li>
+    {%- endif %}
+    {%- for link in site.data.navigation.main %}
+    <li><a class="startmenu98-item" href="{{ link.url | relative_url }}"{% if include.desktop and link.window %} data-open="{{ link.window }}"{% endif %}><span class="glyph98" aria-hidden="true">{{ link.glyph }}</span>{{ link.title }}</a></li>
+    {%- endfor %}
+    <li><a class="startmenu98-item" href="{{ '/tags/' | relative_url }}"><span class="glyph98" aria-hidden="true">🏷️</span>Writings by Tag</a></li>
+    <li><a class="startmenu98-item" href="{{ '/terminal/' | relative_url }}"{% if include.desktop %} data-open="dos"{% endif %}><span class="glyph98" aria-hidden="true">⌨️</span>MS-DOS Prompt</a></li>
+    {%- if include.desktop %}
+    <li><a class="startmenu98-item" href="#readme" data-open="readme"><span class="glyph98" aria-hidden="true">📝</span>README.TXT</a></li>
+    {%- endif %}
+    <li class="startmenu98-hr" role="separator"></li>
+    <li><a class="startmenu98-item" href="{{ '/feed.xml' | relative_url }}"><span class="glyph98" aria-hidden="true">📡</span>RSS Feed</a></li>
+    {%- if include.desktop %}
+    <li><a class="startmenu98-item" href="#shutdown" data-act="shutdown"><span class="glyph98" aria-hidden="true">🔌</span>Shut Down...</a></li>
+    {%- endif %}
+  </ul>
+</nav>

@@ -5,6 +5,9 @@ Builds the site in production mode into a temp directory and asserts on the
 generated `index.html`: the post list handed to `assets/js/win98-desktop.js`
 as JSON, the pre-rendered MS-DOS window the terminal engine attaches to, the
 boot screen, the `<noscript>` fallback, and the absence of prototype code.
+Also asserts that every way into the site's sections follows `_data/navigation.yml`
+(desktop icons, Start menu, taskbar on inner pages, <noscript>), that tag links
+land on an anchor, and that repo files are not published.
 Runtime behaviour (boot, window manager) is not covered; check that in a browser.
 
 Extra Jekyll config overlays can be passed as arguments, e.g. to exclude a
@@ -23,6 +26,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 POSTS = ROOT / "_posts"
+NAVIGATION = ROOT / "_data" / "navigation.yml"
 POST_NAME = re.compile(r"\d+-\d+-\d+-.+\.md$")  # Jekyll skips files not named like this
 
 failures = []
@@ -42,6 +46,11 @@ def build(dest: Path, overlays):
          "--config", configs, "--destination", str(dest)],
         cwd=ROOT, check=True, env={**os.environ, "JEKYLL_ENV": "production"},
     )
+
+
+def nav_urls() -> list:
+    """Section URLs from _data/navigation.yml, in order (only `main:` entries carry `url:`)."""
+    return re.findall(r"^\s+url:\s*(\S+)\s*$", NAVIGATION.read_text(encoding="utf-8"), re.M)
 
 
 def post_files() -> int:
@@ -84,6 +93,14 @@ class Tree(HTMLParser):
     def with_id(self, id_):
         return [e for e in self.elements if e["attrs"].get("id") == id_]
 
+    def links_inside(self, cls):
+        """hrefs of <a> elements nested in an element carrying class `cls`."""
+        return [e["attrs"].get("href") for e in self.elements if e["tag"] == "a" and any(
+            cls in a["attrs"].get("class", "").split() for a in e["ancestors"])]
+
+    def with_class(self, tag, cls):
+        return [e for e in self.elements if e["tag"] == tag and cls in e["attrs"].get("class", "").split()]
+
     def scripts(self):
         return [e["attrs"]["src"] for e in self.elements if e["tag"] == "script" and "src" in e["attrs"]]
 
@@ -108,15 +125,22 @@ def check_desktop(page: str, tree: Tree, base: str, post_count: int):
     check('class="boot98"' in page, "the boot screen is rendered")
     check(f"... {post_count} THOUGHTS" in page, f"the POST screen counts {post_count} thoughts")
     check("sessionStorage.getItem(\"booted98\")" in page, "the boot is gated on the booted98 session key")
-    check(".layout--win98_desktop .masthead" in page, "the masthead stays hidden")
+    check("taskbar98--top" not in page, "the desktop has no top taskbar (its own taskbar is at the bottom)")
     in_start_menu = [e["attrs"].get("href") for e in tree.elements if e["tag"] == "a" and any(
         "startmenu98" in a["attrs"].get("class", "").split() for a in e["ancestors"])]
     check(f"{base}/feed.xml" in in_start_menu, "the Start menu keeps the RSS link")
     check("It's now safe to turn off" in page, "the shut-down screen is rendered")
     noscript = [e["attrs"].get("href") for e in tree.elements
                 if e["tag"] == "a" and any(a["tag"] == "noscript" for a in e["ancestors"])]
-    for section in ("writings", "about", "portfolio", "bookmarks"):
-        check(f"{base}/{section}/" in noscript, f"<noscript> links to /{section}/")
+    sections = [base + u for u in nav_urls()]
+    check(len(sections) >= 4, f"_data/navigation.yml lists the sections {sections}")
+    check(noscript == sections, f"<noscript> lists exactly the navigation.yml sections {noscript}")
+    icons = [e["attrs"].get("href") for e in tree.with_class("a", "desktop98-icon")]
+    check(icons[:len(sections)] == sections, f"desktop icons start with the sections, in order {icons}")
+    check(all(s in in_start_menu for s in sections), "the desktop Start menu links every section")
+    menus = tree.with_class("nav", "startmenu98")
+    check(len(menus) == 1 and any("taskbar98" in a["attrs"].get("class", "").split() for a in menus[0]["ancestors"]),
+          "the desktop Start menu sits inside the taskbar, right after Start (Tab reaches its items)")
     check("{{" not in page and "{%" not in page, "no raw Liquid leaks into the page")
     for leftover in ("proto-switcher", "landing-prototype", "?variant="):
         check(leftover not in page, f"no prototype leftover '{leftover}'")
@@ -146,6 +170,45 @@ def check_posts_json(page: str, dest: Path):
     check(not missing, f"every entry's url is a built page {missing[:3]}")
 
 
+def check_inner_pages(dest: Path, base: str, post_url: str):
+    """The taskbar on inner pages: same sections, same Start menu, the current section pressed."""
+    sections = [base + u for u in nav_urls()]
+    desktop_start = set(Tree((dest / "index.html").read_text(encoding="utf-8")).links_inside("startmenu98"))
+    for url, current in (("/writings/", "/writings/"), ("/tags/", "/writings/"), ("/about/", "/about/"),
+                         (post_url.removeprefix(base), "/writings/")):
+        page = built_page(dest, base + url, base)
+        if not page.exists():
+            check(False, f"{url} is built")
+            continue
+        tree = Tree(page.read_text(encoding="utf-8"))
+        bars = tree.with_class("header", "taskbar98--top")
+        check(len(bars) == 1, f"{url}: one taskbar at the top")
+        tasks = tree.links_inside("taskbar98-tasks")
+        check(tasks == sections, f"{url}: taskbar buttons are the navigation.yml sections {tasks}")
+        start = tree.links_inside("startmenu98")
+        check(f"{base}/" in start and set(start) - {f"{base}/"} <= desktop_start,
+              f"{url}: Start menu = Desktop + the desktop Start menu's pages")
+        pressed = [e["attrs"].get("href") for e in tree.elements if e["attrs"].get("aria-current") == "page"]
+        check(pressed == [base + current], f"{url}: {current} is the one pressed section {pressed}")
+
+
+def check_tag_anchors(dest: Path):
+    writings = (dest / "writings" / "index.html").read_text(encoding="utf-8")
+    tags = Tree((dest / "tags" / "index.html").read_text(encoding="utf-8"))
+    ids = {e["attrs"]["id"] for e in tags.elements if "id" in e["attrs"]}
+    targets = set(re.findall(r'href="[^"]*/tags/#([^"]+)"', writings))
+    check(bool(targets), f"/writings/ links to {len(targets)} tags on /tags/")
+    missing = sorted(targets - ids)
+    check(not missing, f"every /tags/#<tag> link has an anchor on /tags/ {missing[:3]}")
+    closes = [e["attrs"].get("href") for e in tags.with_class("a", "title-bar-close")]
+    check(len(closes) == 1 and closes[0].endswith("/writings/"), f"/tags/ window closes to /writings/ {closes}")
+
+
+def check_not_published(dest: Path):
+    for path in ("AGENTS/index.html", "CLAUDE/index.html", "AGENTS.md", "CLAUDE.md", "justfile", "run.sh"):
+        check(not (dest / path).exists(), f"repo file {path} is not published")
+
+
 def main():
     overlays = sys.argv[1:]
     dest = Path(tempfile.mkdtemp(prefix="check-landing-"))
@@ -156,6 +219,10 @@ def main():
         tree, base = Tree(page), baseurl(page)
         check_terminal_window(tree, dest, base)
         check_desktop(page, tree, base, post_files())
+        newest = json.loads(re.search(r'id="desktop98-posts">(.*?)</script>', page, re.S).group(1))[0]["url"]
+        check_inner_pages(dest, base, newest)
+        check_tag_anchors(dest)
+        check_not_published(dest)
     finally:
         shutil.rmtree(dest, ignore_errors=True)
 

@@ -59,7 +59,8 @@ article.post-reader {
     gap: 2px;
     margin-left: 0.75rem;
 
-    span {
+    span,
+    a {
       align-items: center;
       background: #c0c0c0;
       box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff,
@@ -69,6 +70,7 @@ article.post-reader {
       font: 700 11px/1 Arial, sans-serif;
       height: 18px;
       justify-content: center;
+      text-decoration: none;
       width: 20px;
     }
   }

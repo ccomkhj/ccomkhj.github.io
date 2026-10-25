@@ -10,14 +10,7 @@ layout: default
 
       <!-- 98.css Window Container -->
       <div class="window window-themed">
-      <div class="title-bar">
-        <div class="title-bar-text">{{ page.window_title | default: page.title }}</div>
-        <div class="title-bar-controls">
-          <button aria-label="Minimize"></button>
-          <button aria-label="Maximize"></button>
-          <button aria-label="Close"></button>
-        </div>
-      </div>
+      {% capture window_title %}{{ page.window_title | default: page.title }}{% endcapture %}{% include title-bar98.html title=window_title %}
       <div class="window-body">
         
         <div class="window-menubar">

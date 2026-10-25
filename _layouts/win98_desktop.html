@@ -17,11 +17,6 @@ layout: default
 </script>
 
 <style>
-  /* The desktop icons replace the site nav on this page */
-  .layout--win98_desktop .masthead {
-    display: none;
-  }
-
   .desktop98 {
     --taskbar98: 30px;
     position: relative;
@@ -38,7 +33,6 @@ layout: default
   .desktop98 button { border: 0; font-weight: normal; } /* custom.css borders and bolds every button */
   .desktop98-screen { position: absolute; inset: 0; z-index: 0; background: #008080; }
   .desktop98-wait, .desktop98-wait * { cursor: wait !important; }
-  .glyph98 { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; }
   /* 98.css switches anti-aliasing off for its pixel font, but the theme's fonts (p, a, buttons,
      monospace) render jagged without it on macOS. Keep it off only where the pixel font is used. */
   .window98 * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -120,7 +114,7 @@ layout: default
   .menubar98 span { padding: 2px 6px; }
   .menubar98 span:hover { background: #000080; color: #fff; }
 
-  /* Explorer-style lists (My Writings, Recycle Bin) */
+  /* Explorer-style lists (Writings, Recycle Bin) */
   .explorer98-addr { display: flex; align-items: center; gap: 6px; flex: none; }
   .explorer98-path { flex: 1; padding: 3px 4px; }
   .path98 { font-family: Arial, sans-serif; } /* the pixel font has no "\" */
@@ -224,93 +218,17 @@ layout: default
   .window98-dos .terminal-input { flex: 1; width: auto; height: auto; padding: 0; background: transparent; box-shadow: none; font: inherit; } /* undo 98.css text field */
   .window98-dos .terminal-line a { color: #33ff00; }
 
-  /* --- Taskbar --- */
-  .taskbar98 {
+  /* --- Taskbar and Start menu: shared look in _sass/_win98-shell.scss, docked at the bottom here --- */
+  .desktop98 .taskbar98 {
     position: absolute;
     left: 0; right: 0; bottom: 0;
     z-index: 50;
     height: var(--taskbar98);
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 3px 2px 2px;
-    background: #c0c0c0;
     box-shadow: inset 0 1px #dfdfdf, inset 0 2px #fff;
   }
-  .taskbar98 button {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    height: 23px;
-    min-width: 0;
-    min-height: 0;
-    padding: 0 6px;
-    font: 11px "Pixelated MS Sans Serif", Arial, sans-serif;
-  }
-  .taskbar98 .taskbar98-start { padding: 0 5px 0 4px; font-weight: bold; }
-  .taskbar98-start .glyph98 { font-size: 15px; }
-  .taskbar98 button.on {
-    box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px #808080;
-    background: repeating-conic-gradient(#c0c0c0 0 25%, #fff 0 50%) 0 0 / 2px 2px;
-    font-weight: bold;
-  }
-  .taskbar98 .taskbar98-start.on { background: #c0c0c0; }
-  .taskbar98-sep { flex: none; width: 2px; height: 22px; box-shadow: inset 1px 0 #808080, inset -1px 0 #fff; }
-  .taskbar98-tasks { flex: 1; min-width: 0; display: flex; gap: 3px; overflow: hidden; }
-  .taskbar98 .taskbar98-task { flex: 0 1 160px; min-width: 36px; justify-content: flex-start; overflow: hidden; white-space: nowrap; }
-  .taskbar98-task span:last-child { overflow: hidden; text-overflow: ellipsis; }
-  .taskbar98-tray {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    height: 22px;
-    padding: 0 8px;
-    white-space: nowrap;
-    box-shadow: inset -1px -1px #fff, inset 1px 1px #808080;
-  }
+  .desktop98 .startmenu98 { bottom: calc(var(--taskbar98) - 3px); }
   .taskbar98 .taskbar98-crt,
-  .taskbar98 .taskbar98-crt:active { height: auto; padding: 0; background: none; box-shadow: none; }
-
-  /* --- Start menu --- */
-  .startmenu98 {
-    position: absolute;
-    left: 2px;
-    bottom: calc(var(--taskbar98) - 3px);
-    z-index: 60;
-    display: none;
-    padding: 3px;
-    background: #c0c0c0;
-    box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px #808080, inset 2px 2px #fff;
-  }
-  .startmenu98.open { display: flex; animation: slide98 .16s ease-out; }
-  @keyframes slide98 { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
-  .startmenu98-side {
-    width: 22px;
-    padding: 8px 0;
-    background: linear-gradient(0deg, #000080, #1084d0);
-    color: #c0c0c0;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    font: bold 18px Arial, sans-serif;
-    letter-spacing: .5px;
-  }
-  .startmenu98-side b { color: #fff; font-family: "Arial Black", Arial, sans-serif; }
-  .startmenu98-list { display: flex; flex-direction: column; min-width: 200px; }
-  .startmenu98-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    height: 34px;
-    padding: 0 24px 0 6px;
-    color: #000 !important;
-    text-decoration: none !important;
-    outline: none;
-    cursor: default;
-  }
-  .startmenu98-item .glyph98 { width: 28px; font-size: 22px; text-align: center; }
-  .startmenu98-item:hover, .startmenu98-item:focus-visible { background: #000080; color: #fff !important; }
-  .startmenu98-hr { margin: 2px; border-top: 1px solid #808080; border-bottom: 1px solid #fff; }
+  .taskbar98 .taskbar98-crt:active { height: auto; min-width: 0; min-height: 0; padding: 0; background: none; box-shadow: none; }
 
   /* --- Shut Down --- */
   .shutdown98-dim {
@@ -499,15 +417,13 @@ layout: default
 <div class="desktop98" id="desktop98">
   <div class="desktop98-screen">
     <div class="desktop98-desk">
-      <nav class="desktop98-icons" aria-label="Desktop">
-        <div class="desktop98-icon" role="button" tabindex="0" data-open="system"><span class="desktop98-glyph glyph98">🖥️</span><span class="desktop98-label">My Computer</span></div>
-        <div class="desktop98-icon" role="button" tabindex="0" data-open="writings"><span class="desktop98-glyph glyph98">📂</span><span class="desktop98-label">My Writings</span></div>
-        <div class="desktop98-icon" role="button" tabindex="0" data-open="readme"><span class="desktop98-glyph glyph98">📝</span><span class="desktop98-label">README.TXT</span></div>
-        <a class="desktop98-icon" href="{{ '/portfolio/' | relative_url }}"><span class="desktop98-glyph glyph98">💼</span><span class="desktop98-label">Portfolio</span></a>
-        <a class="desktop98-icon" href="{{ '/bookmarks/' | relative_url }}"><span class="desktop98-glyph glyph98">🌐</span><span class="desktop98-label">Bookmarks</span></a>
-        <a class="desktop98-icon" href="{{ '/tags/' | relative_url }}"><span class="desktop98-glyph glyph98">🏷️</span><span class="desktop98-label">Tags</span></a>
-        <div class="desktop98-icon" role="button" tabindex="0" data-open="dos"><span class="desktop98-glyph glyph98">⌨️</span><span class="desktop98-label">MS-DOS Prompt</span></div>
-        <div class="desktop98-icon" role="button" tabindex="0" data-open="bin"><span class="desktop98-glyph glyph98">🗑️</span><span class="desktop98-label">Recycle Bin</span></div>
+      <nav id="site-nav" class="desktop98-icons" aria-label="Desktop">
+        {%- for link in site.data.navigation.main %}
+        <a class="desktop98-icon" href="{{ link.url | relative_url }}"{% if link.window %} data-open="{{ link.window }}"{% endif %}><span class="desktop98-glyph glyph98" aria-hidden="true">{{ link.glyph }}</span><span class="desktop98-label">{{ link.title }}</span></a>
+        {%- endfor %}
+        <div class="desktop98-icon" role="button" tabindex="0" data-open="readme"><span class="desktop98-glyph glyph98" aria-hidden="true">📝</span><span class="desktop98-label">README.TXT</span></div>
+        <a class="desktop98-icon" href="{{ '/terminal/' | relative_url }}" data-open="dos"><span class="desktop98-glyph glyph98" aria-hidden="true">⌨️</span><span class="desktop98-label">MS-DOS Prompt</span></a>
+        <div class="desktop98-icon" role="button" tabindex="0" data-open="bin"><span class="desktop98-glyph glyph98" aria-hidden="true">🗑️</span><span class="desktop98-label">Recycle Bin</span></div>
       </nav>
       <div class="desktop98-marquee"></div>
 
@@ -517,10 +433,9 @@ layout: default
           <div class="window-body">
             <p>JavaScript is disabled. The essentials:</p>
             <ul>
-              <li><a href="{{ '/writings/' | relative_url }}">writings</a></li>
-              <li><a href="{{ '/about/' | relative_url }}">about</a></li>
-              <li><a href="{{ '/portfolio/' | relative_url }}">portfolio</a></li>
-              <li><a href="{{ '/bookmarks/' | relative_url }}">bookmarks</a></li>
+              {%- for link in site.data.navigation.main %}
+              <li><a href="{{ link.url | relative_url }}">{{ link.title }}</a></li>
+              {%- endfor %}
             </ul>
           </div>
         </div>
@@ -539,13 +454,13 @@ layout: default
             </div>
             <div class="welcome98-main">
               <div class="welcome98-menu">
-                <a class="welcome98-item" href="#writings" data-open="writings" data-latest
+                <a class="welcome98-item" href="{{ '/writings/' | relative_url }}" data-open="writings" data-latest
                    data-desc="{{ site.posts | size }} posts on machine learning, forecasting, computer vision and MLOps, plus essays on mindset, growth, decisions and careers."><span class="glyph98">📚</span><span>Read my writings</span></a>
                 <!-- no data-desc: shows the first paragraph of BIO (terminal-commands.js) -->
-                <a class="welcome98-item" href="#system" data-open="system"><span class="glyph98">👤</span><span>Who is Huijo?</span></a>
+                <a class="welcome98-item" href="{{ '/about/' | relative_url }}" data-open="system"><span class="glyph98">👤</span><span>Who is Huijo?</span></a>
                 <a class="welcome98-item" href="{{ '/portfolio/' | relative_url }}"
                    data-desc="Agent workflows, self-improving harnesses, agentic ML, and applied systems."><span class="glyph98">💼</span><span>See what I've built</span></a>
-                <a class="welcome98-item" href="#dos" data-open="dos"
+                <a class="welcome98-item" href="{{ '/terminal/' | relative_url }}" data-open="dos"
                    data-desc="Prefer a keyboard? Try: help, ls writings, find &lt;query&gt;."><span class="glyph98">⌨️</span><span>Open MS-DOS Prompt</span></a>
               </div>
               <div class="welcome98-desc field98"></div>
@@ -557,16 +472,16 @@ layout: default
           </div>
         </section>
 
-        <section class="window window98" data-window="writings" data-w="660" data-h="440" hidden aria-label="My Writings">
+        <section class="window window98" data-window="writings" data-w="660" data-h="440" hidden aria-label="Writings">
           <div class="title-bar">
-            <div class="title-bar-text"><span class="glyph98">📂</span><span>My Writings</span></div>
+            <div class="title-bar-text"><span class="glyph98">📂</span><span>Writings</span></div>
             <div class="title-bar-controls"><button aria-label="Minimize" data-act="min"></button><button aria-label="Maximize" data-act="max"></button><button aria-label="Close" data-act="close"></button></div>
           </div>
           <div class="window-body window98-body">
             <div class="menubar98"><span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Favorites</span><span>Help</span></div>
             <div class="explorer98-addr">
               <span>Address</span>
-              <div class="explorer98-path path98 field98"><span class="glyph98">📂</span> C:\My Writings</div>
+              <div class="explorer98-path path98 field98"><span class="glyph98">📂</span> C:\Writings</div>
               <input type="text" name="find" placeholder="Find..." aria-label="Filter writings">
             </div>
             <div class="explorer98-list field98">
@@ -580,9 +495,9 @@ layout: default
           </div>
         </section>
 
-        <section class="window window98" data-window="system" data-w="440" data-h="460" hidden aria-label="System Properties">
+        <section class="window window98" data-window="system" data-w="440" data-h="460" hidden aria-label="About">
           <div class="title-bar">
-            <div class="title-bar-text"><span class="glyph98">🖥️</span><span>System Properties</span></div>
+            <div class="title-bar-text"><span class="glyph98">👤</span><span>About — System Properties</span></div>
             <div class="title-bar-controls"><button aria-label="Minimize" data-act="min"></button><button aria-label="Maximize" data-act="max"></button><button aria-label="Close" data-act="close"></button></div>
           </div>
           <div class="window-body window98-body">
@@ -646,8 +561,8 @@ layout: default
 
 WHERE TO START
 --------------
-* Double-click My Writings for everything I've written down.
-* My Computer has the short version of me.
+* Double-click Writings for everything I've written down.
+* About has the short version of me.
 * Portfolio is what I've built.
 
 Thanks for stopping by.</textarea>
@@ -698,25 +613,9 @@ Thanks for stopping by.</textarea>
       </div>
     </div>
 
-    <div class="startmenu98" role="menu" aria-label="Start">
-      <div class="startmenu98-side">Huijo<b>98</b></div>
-      <div class="startmenu98-list">
-        <a class="startmenu98-item" role="menuitem" href="#welcome" data-open="welcome"><span class="glyph98">👋</span>Welcome</a>
-        <a class="startmenu98-item" role="menuitem" href="#writings" data-open="writings"><span class="glyph98">📂</span>My Writings</a>
-        <a class="startmenu98-item" role="menuitem" href="#system" data-open="system"><span class="glyph98">🖥️</span>About this Computer</a>
-        <a class="startmenu98-item" role="menuitem" href="#readme" data-open="readme"><span class="glyph98">📝</span>README.TXT</a>
-        <a class="startmenu98-item" role="menuitem" href="{{ '/portfolio/' | relative_url }}"><span class="glyph98">💼</span>Portfolio</a>
-        <a class="startmenu98-item" role="menuitem" href="{{ '/bookmarks/' | relative_url }}"><span class="glyph98">🌐</span>Bookmarks</a>
-        <a class="startmenu98-item" role="menuitem" href="{{ '/tags/' | relative_url }}"><span class="glyph98">🏷️</span>Tags</a>
-        <a class="startmenu98-item" role="menuitem" href="#dos" data-open="dos"><span class="glyph98">⌨️</span>MS-DOS Prompt</a>
-        <div class="startmenu98-hr"></div>
-        <a class="startmenu98-item" role="menuitem" href="{{ '/feed.xml' | relative_url }}"><span class="glyph98">📡</span>RSS Feed</a>
-        <a class="startmenu98-item" role="menuitem" href="#shutdown" data-act="shutdown"><span class="glyph98">🔌</span>Shut Down...</a>
-      </div>
-    </div>
-
     <div class="taskbar98">
-      <button type="button" class="taskbar98-start" aria-haspopup="menu" aria-expanded="false"><span class="glyph98">🪟</span>Start</button>
+      <button type="button" class="taskbar98-start" aria-expanded="false"><span class="glyph98" aria-hidden="true">🪟</span>Start</button>
+      {% include start-menu98.html desktop=true %}
       <div class="taskbar98-sep"></div>
       <div class="taskbar98-tasks"></div>
       <div class="taskbar98-tray">

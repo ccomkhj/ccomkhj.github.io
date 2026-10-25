@@ -36,16 +36,17 @@ layout: default
       {% if is_post %}
         <div class="post-reader__titlebar">
           <span class="post-reader__titlebar-text">Reader — {{ page.title | markdownify | strip_html | strip_newlines }}</span>
-          <span class="post-reader__window-controls" aria-hidden="true">
-            <span>_</span><span>□</span><span>×</span>
+          <span class="post-reader__window-controls">
+            <span aria-hidden="true">_</span><span aria-hidden="true">□</span><a href="{{ '/writings/' | relative_url }}" aria-label="Close, back to Writings" title="Close">×</a>
           </span>
         </div>
         <div class="post-reader__menubar" aria-hidden="true">
           <span>File</span><span>View</span><span>Navigate</span><span>Help</span>
         </div>
-        <div class="post-reader__addressbar" aria-hidden="true">
-          <strong>Address</strong><span>{{ page.url }}</span>
-        </div>
+        <nav class="post-reader__addressbar" aria-label="Breadcrumb">
+          <strong>Address</strong>
+          <span><a href="{{ '/writings/' | relative_url }}">Writings</a>{% if page.tags.size > 0 %} / <a href="{{ '/tags/' | relative_url }}#{{ page.tags[0] | slugify }}">{{ page.tags[0] }}</a>{% endif %} / {{ page.title | markdownify | strip_html | strip_newlines }}</span>
+        </nav>
         <div class="post-reader__viewport">
           <div class="post-reader__paper">
       {% endif %}
@@ -95,28 +96,19 @@ layout: default
     {% endif %}
   </article>
 
-  {% comment %}<!-- only show related on a post page when `related: true` -->{% endcomment %}
-  {% if page.id and page.related and site.related_posts.size > 0 %}
+  {% comment %}<!-- related on a post page when `related: true`: newest posts sharing the primary tag, else the newest posts -->{% endcomment %}
+  {% if page.id and page.related %}
+    {%- assign primary_tag = page.tags | first -%}
+    {%- assign related = site.tags[primary_tag] | default: site.posts | where_exp: "post", "post.url != page.url" | sort: "date" | reverse -%}
+    {%- if related.size == 0 -%}{%- assign related = site.posts | where_exp: "post", "post.url != page.url" -%}{%- endif -%}
     <div class="page__related">
-      <h2 class="page__related-title">{{ site.data.ui-text[site.locale].related_label | default: "You May Also Enjoy" }}</h2>
+      <h2 class="page__related-title">{% if primary_tag and related.size > 0 %}More in {{ primary_tag }}{% else %}{{ site.data.ui-text[site.locale].related_label | default: "You May Also Enjoy" }}{% endif %}</h2>
       <div class="grid__wrapper">
-        {% for post in site.related_posts limit:4 %}
+        {% for post in related limit:4 %}
           {% include archive-single.html type="grid" %}
         {% endfor %}
       </div>
-    </div>
-  {% comment %}<!-- otherwise show recent posts if no related when `related: true` -->{% endcomment %}
-  {% elsif page.id and page.related %}
-    <div class="page__related">
-      <h2 class="page__related-title">{{ site.data.ui-text[site.locale].related_label | default: "You May Also Enjoy" }}</h2>
-      <div class="grid__wrapper">
-        {% for post in site.posts limit:4 %}
-          {% if post.id == page.id %}
-            {% continue %}
-          {% endif %}
-          {% include archive-single.html type="grid" %}
-        {% endfor %}
-      </div>
+      {% if primary_tag %}<p class="page__related-more"><a href="{{ '/tags/' | relative_url }}#{{ primary_tag | slugify }}">All {{ site.tags[primary_tag].size }} posts in {{ primary_tag }} →</a></p>{% endif %}
     </div>
   {% endif %}
 </div>

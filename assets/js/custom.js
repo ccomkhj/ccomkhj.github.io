@@ -54,6 +54,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }, { threshold: 0.1 });
 
+  // Taskbar Start menu (_includes/masthead.html is a <details>): close on outside click or Esc
+  const startMenu = document.querySelector('.taskbar98-startwrap');
+  if (startMenu) {
+    document.addEventListener('click', function (e) {
+      if (startMenu.open && !startMenu.contains(e.target)) startMenu.open = false;
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape' || !startMenu.open) return;
+      startMenu.open = false;
+      startMenu.querySelector('summary').focus();
+    });
+  }
+
   fadeElements.forEach(element => {
     element.style.opacity = 0;
     element.style.transition = 'opacity 0.5s ease-in-out';

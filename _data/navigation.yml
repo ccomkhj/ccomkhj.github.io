@@ -1,16 +1,27 @@
-# main links
+# The site's sections, in order. One list drives every way into them:
+# the taskbar on inner pages (_includes/masthead.html), the shared Start menu
+# (_includes/start-menu98.html), the desktop icons and <noscript> list on `/`
+# (_layouts/win98_desktop.html), and the /terminal/ <noscript> list.
+#
+#   title    one name for the page, used everywhere it is linked
+#   glyph    emoji shown on icons, Start menu and taskbar buttons
+#   window   on the desktop, open this window instead of navigating
+#   section  extra URLs that count as "in this section" (posts always count as Writings)
+#
+# Keep unlisted pages (/learn/german/, /immobilien/, /card/, /qr/) out of this list.
 main:
-  # - title: "Quick-Start Guide"
-  #   url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
-  - title: "writings"
+  - title: "Writings"
     url: /writings/
-  - title: "about"
-    url: /about/
-  - title: "bookmarks"
-    url: /bookmarks/
-  - title: "portfolio"
+    glyph: "📂"
+    window: writings
+    section: [/tags/]
+  - title: "Portfolio"
     url: /portfolio/
-  # - title: "tags"
-  #   url: /tags/
-  # - title: "Sitemap"
-  #   url: /sitemap/
+    glyph: "💼"
+  - title: "About"
+    url: /about/
+    glyph: "👤"
+    window: system
+  - title: "Bookmarks"
+    url: /bookmarks/
+    glyph: "🌐"

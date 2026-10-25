@@ -4,4 +4,4 @@ Allow: /
 Disallow: /docs/
 Disallow: /test/
 
-Sitemap: https://ccomkhj.github.io/sitemap.xml
+Sitemap: https://www.huijo.xyz/sitemap.xml
