@@ -5,6 +5,8 @@ search: false
 
 @charset "utf-8";
 
+@import "tokens"; // --w98-* custom properties, used by the partials below
+
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
 
@@ -17,3 +19,4 @@ search: false
 @import "syntax";
 @import "post-reader";
 @import "win98-shell";
+@import "card98";

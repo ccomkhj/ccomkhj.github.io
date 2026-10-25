@@ -122,27 +122,31 @@
   100% {opacity:1;}
 }
 
-/* Back to top button */
+/* Back to top button (assets/js/custom.js): a 98 button just above the taskbar */
 .back-to-top {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: calc(var(--w98-taskbar-h) + env(safe-area-inset-bottom) + 12px);
+  right: 12px;
   display: none;
-  background: #f89406;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
-  z-index: 100;
+  box-sizing: border-box;
+  width: 36px;
+  min-width: 0;
+  height: 36px;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--w98-face);
+  box-shadow: var(--w98-bevel-raised);
+  color: var(--w98-text);
+  font-size: 14px;
+  text-align: center;
+  cursor: default;
+  z-index: 40;
 }
 
-.back-to-top:hover {
-  background: #e78404;
+.back-to-top:active {
+  box-shadow: var(--w98-bevel-pressed);
 }
 
 /* Responsive adjustments */
@@ -389,13 +393,7 @@ body {
   background: transparent;
   padding-top: 1.5rem;
   padding-bottom: 2.5rem;
-}
-
-.page__footer {
-  background: #c0c0c0;
-  border: none;
-  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff,
-    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  animation: none; /* windows don't fade in; minimal-mistakes' intro fade tinted pages teal */
 }
 
 article.page .page__inner-wrap {

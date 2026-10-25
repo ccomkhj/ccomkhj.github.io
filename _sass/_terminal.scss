@@ -65,15 +65,23 @@
   margin-right: 5px;
 }
 
-.terminal-input {
+/* Two classes deep: 98.css styles input[type=text] as a white field (0,1,1), which
+   left typed text green on white */
+.terminal-input-line .terminal-input {
+  height: auto;
+  padding: 0;
   background: transparent;
   border: none;
+  box-shadow: none;
   color: #33ff00;
   font-family: 'Courier New', Courier, monospace;
   font-size: 14px;
   outline: none;
   width: 60%;
   caret-color: #33ff00;
+}
+@media (max-width: 699px) {
+  .terminal-input-line .terminal-input { font-size: 16px; } /* iOS zooms into smaller inputs */
 }
 
 .search-result-item {

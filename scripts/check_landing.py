@@ -125,7 +125,7 @@ def check_desktop(page: str, tree: Tree, base: str, post_count: int):
     check('class="boot98"' in page, "the boot screen is rendered")
     check(f"... {post_count} THOUGHTS" in page, f"the POST screen counts {post_count} thoughts")
     check("sessionStorage.getItem(\"booted98\")" in page, "the boot is gated on the booted98 session key")
-    check("taskbar98--top" not in page, "the desktop has no top taskbar (its own taskbar is at the bottom)")
+    check("taskbar98--page" not in page, "the desktop has no page taskbar (it renders its own)")
     in_start_menu = [e["attrs"].get("href") for e in tree.elements if e["tag"] == "a" and any(
         "startmenu98" in a["attrs"].get("class", "").split() for a in e["ancestors"])]
     check(f"{base}/feed.xml" in in_start_menu, "the Start menu keeps the RSS link")
@@ -175,21 +175,39 @@ def check_inner_pages(dest: Path, base: str, post_url: str):
     sections = [base + u for u in nav_urls()]
     desktop_start = set(Tree((dest / "index.html").read_text(encoding="utf-8")).links_inside("startmenu98"))
     for url, current in (("/writings/", "/writings/"), ("/tags/", "/writings/"), ("/about/", "/about/"),
-                         (post_url.removeprefix(base), "/writings/")):
+                         ("/card/", None), (post_url.removeprefix(base), "/writings/")):
         page = built_page(dest, base + url, base)
         if not page.exists():
             check(False, f"{url} is built")
             continue
         tree = Tree(page.read_text(encoding="utf-8"))
-        bars = tree.with_class("header", "taskbar98--top")
-        check(len(bars) == 1, f"{url}: one taskbar at the top")
+        bars = tree.with_class("header", "taskbar98--page")
+        check(len(bars) == 1, f"{url}: one taskbar")
+        check(not tree.with_class("div", "page__footer"), f"{url}: no minimal-mistakes footer")
         tasks = tree.links_inside("taskbar98-tasks")
         check(tasks == sections, f"{url}: taskbar buttons are the navigation.yml sections {tasks}")
         start = tree.links_inside("startmenu98")
         check(f"{base}/" in start and set(start) - {f"{base}/"} <= desktop_start,
               f"{url}: Start menu = Desktop + the desktop Start menu's pages")
         pressed = [e["attrs"].get("href") for e in tree.elements if e["attrs"].get("aria-current") == "page"]
-        check(pressed == [base + current], f"{url}: {current} is the one pressed section {pressed}")
+        want = [base + current] if current else []
+        check(pressed == want, f"{url}: {current or 'no section'} is pressed {pressed}")
+
+
+def check_card(dest: Path, base: str):
+    """/card/ is the contact card dialog: Close-only title bar, Add to Contacts saves huijo.vcf."""
+    page = dest / "card" / "index.html"
+    if not page.exists():
+        check(False, "/card/ is built")
+        return
+    tree = Tree(page.read_text(encoding="utf-8"))
+    check(len(tree.with_class("section", "card98")) == 1, "/card/ renders the contact card dialog")
+    controls = [e for e in tree.elements if any("title-bar-controls" in a["attrs"].get("class", "").split()
+                                                for a in e["ancestors"]) and e["tag"] in ("a", "button")]
+    check([e["tag"] for e in controls] == ["a"], "/card/ title bar has Close only")
+    saves = [e["attrs"].get("href") for e in tree.with_class("a", "card98-save")]
+    check(saves == [f"{base}/assets/huijo.vcf"], f"/card/ Add to Contacts links the vCard {saves}")
+    check((dest / "assets" / "huijo.vcf").exists(), "assets/huijo.vcf is built")
 
 
 def check_tag_anchors(dest: Path):
@@ -221,6 +239,7 @@ def main():
         check_desktop(page, tree, base, post_files())
         newest = json.loads(re.search(r'id="desktop98-posts">(.*?)</script>', page, re.S).group(1))[0]["url"]
         check_inner_pages(dest, base, newest)
+        check_card(dest, base)
         check_tag_anchors(dest)
         check_not_published(dest)
     finally:

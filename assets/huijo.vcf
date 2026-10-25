@@ -5,6 +5,11 @@ FN:Huijo Kim
 TITLE:Data Scientist
 ORG:voids
 TEL;TYPE=CELL:+4915205981504
-EMAIL;TYPE=WORK:huijo.kim@voids.ai
+EMAIL;TYPE=INTERNET,WORK:huijo.kim@voids.ai
+EMAIL;TYPE=INTERNET,HOME:ccomkhj@gmail.com
 URL:https://www.huijo.xyz
+item1.URL:https://www.linkedin.com/in/khj17
+item1.X-ABLabel:LinkedIn
+item2.URL:https://github.com/ccomkhj
+item2.X-ABLabel:GitHub
 END:VCARD

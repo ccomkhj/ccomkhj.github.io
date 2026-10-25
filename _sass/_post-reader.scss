@@ -16,6 +16,7 @@ article.post-reader {
   --post-paper: #fff;
   --post-soft: #f4f7fb;
   --post-formula: #f7f8fc;
+  --post-measure: 620px; /* about 70 characters of 18px body text; px because the root size varies */
   color: var(--post-ink);
   float: none;
   margin: 0 auto;
@@ -123,8 +124,27 @@ article.post-reader {
     border: 1px solid #d7dce5;
     box-shadow: 0 10px 28px rgba(30, 41, 59, 0.12);
     margin: 0 auto;
-    max-width: 1020px;
+    max-width: 960px;
     padding: clamp(1.5rem, 5vw, 4rem);
+  }
+
+  /* Prose and the header keep a reading measure; code, tables, figures and
+     custom blocks may use the paper's full width */
+  .post-reader__paper > header,
+  .post-reader__paper .page__content > :is(p, ul, ol, dl, blockquote, h2, h3, h4, h5, h6, hr) {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: var(--post-measure);
+  }
+
+  /* Two wrappers deep to beat minimal-mistakes' `.page .page__inner-wrap .page__content`
+     (float, 1em indent, 95% width), which pushed the body right of the title */
+  .page__inner-wrap .page__content,
+  .page__inner-wrap header > .page__meta {
+    float: none;
+    margin-left: 0;
+    margin-right: 0;
+    width: auto;
   }
 
   .post-reader__paper > header {
@@ -138,10 +158,10 @@ article.post-reader {
     color: #111827;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
       sans-serif;
-    font-size: clamp(2.25rem, 5.5vw, 3.6rem);
-    font-weight: 780;
-    letter-spacing: -0.055em;
-    line-height: 0.99;
+    font-size: clamp(30px, calc(22px + 1.6vw), 42px);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
     margin: 0 0 1.15rem;
     padding: 0;
     text-wrap: balance;
@@ -170,7 +190,7 @@ article.post-reader {
     float: none;
     font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
     font-size: 18px;
-    line-height: 1.78;
+    line-height: 1.65;
     margin: 0;
     overflow-wrap: break-word;
     width: 100%;

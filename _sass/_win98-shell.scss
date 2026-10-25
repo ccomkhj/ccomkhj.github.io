@@ -1,8 +1,9 @@
 /* ==========================================================================
    Win98 shell shared by the desktop (`/`, _layouts/win98_desktop.html) and every
    other page: taskbar (_includes/masthead.html), Start menu
-   (_includes/start-menu98.html) and window title bars (_includes/title-bar98.html).
-   The desktop docks its taskbar at the bottom in its own inline styles.
+   (_includes/start-menu98.html), window title bars (_includes/title-bar98.html)
+   and dialog parts (buttons, sunken fields). The taskbar docks at the bottom
+   everywhere; the desktop positions its own copy in its inline styles.
    ========================================================================== */
 
 $bevel-out98: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
@@ -65,21 +66,27 @@ $bevel-in98: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfd
   box-shadow: inset -1px -1px #fff, inset 1px 1px #808080;
 }
 
-/* Docked at the top of every page except the desktop */
-.taskbar98--top {
-  position: relative;
-  z-index: 30;
-  height: 32px;
-  padding: 3px 4px;
+/* Docked at the bottom of every page, as on the desktop. Fixed, so it stays in reach on
+   long posts; the page content keeps clear of it. */
+.taskbar98--page {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  height: calc(var(--w98-taskbar-h) + env(safe-area-inset-bottom));
+  padding: 3px 4px calc(3px + env(safe-area-inset-bottom));
   border: 0;
-  box-shadow: inset 0 -1px #0a0a0a, inset 0 -2px #808080, inset 0 1px #fff;
+  box-shadow: inset 0 1px #dfdfdf, inset 0 2px #fff;
   animation: none;
 }
-.taskbar98--top .taskbar98-start,
-.taskbar98--top .taskbar98-task { height: 24px; }
-.taskbar98--top .taskbar98-task { flex-basis: 140px; }
-.taskbar98--top .search__toggle,
-.taskbar98--top .search__toggle:active {
+.taskbar98--page ~ .initial-content { padding-bottom: calc(var(--w98-taskbar-h) + env(safe-area-inset-bottom)); }
+html { scroll-padding-bottom: calc(var(--w98-taskbar-h) + 8px); } /* anchors and focus land above the bar */
+.taskbar98--page .taskbar98-start,
+.taskbar98--page .taskbar98-task { height: 24px; }
+.taskbar98--page .taskbar98-task { flex-basis: 140px; }
+.taskbar98--page .search__toggle,
+.taskbar98--page .search__toggle:active {
   height: auto;
   min-width: 0;
   min-height: 0;
@@ -93,7 +100,7 @@ $bevel-in98: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfd
 }
 /* Phones: Start + search only; the Start menu is the site menu */
 @media (max-width: 699px) {
-  .taskbar98--top .taskbar98-tasks { visibility: hidden; }
+  .taskbar98--page .taskbar98-tasks { visibility: hidden; }
 }
 
 /* --- Start menu --- */
@@ -109,10 +116,10 @@ $bevel-in98: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfd
   font: 11px "Pixelated MS Sans Serif", Arial, sans-serif;
   text-align: left;
 }
-.startmenu98.open { display: flex; animation: slide98 .16s ease-out; } /* desktop: opens upward */
-.taskbar98-startwrap[open] .startmenu98 { display: flex; top: calc(100% - 3px); animation: drop98 .16s ease-out; }
+/* Opens upward from the bottom taskbar: .open on the desktop, <details open> elsewhere */
+.startmenu98.open { display: flex; animation: slide98 .16s ease-out; }
+.taskbar98-startwrap[open] .startmenu98 { display: flex; bottom: calc(100% - 3px); animation: slide98 .16s ease-out; }
 @keyframes slide98 { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
-@keyframes drop98 { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
 @media (prefers-reduced-motion: reduce) {
   .startmenu98.open, .taskbar98-startwrap[open] .startmenu98 { animation: none; }
 }
@@ -156,3 +163,36 @@ $bevel-in98: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfd
 }
 .title-bar-controls .title-bar-close:active { box-shadow: $bevel-in98; background-position: left 5px top 4px; }
 .title-bar-controls .title-bar-close:focus-visible { outline: 1px dotted #fff; outline-offset: 1px; }
+
+/* --- Dialog parts shared by inner pages --- */
+/* A link that looks like a 98.css button (98.css only styles <button>) */
+.btn98,
+.btn98:visited {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-sizing: border-box;
+  min-width: 75px;
+  min-height: 23px;
+  padding: 0 12px;
+  background: var(--w98-face);
+  box-shadow: var(--w98-bevel-raised);
+  color: var(--w98-text);
+  font: 11px var(--w98-font);
+  text-decoration: none;
+  -webkit-font-smoothing: none;
+  cursor: default;
+}
+.btn98:hover { color: var(--w98-text); text-decoration: none; }
+.btn98:active { box-shadow: var(--w98-bevel-pressed); }
+.btn98:focus-visible { outline: 1px dotted var(--w98-text); outline-offset: -4px; }
+/* The default button (Enter): Win98 draws a black frame around the bevel */
+.btn98--default { box-shadow: inset 0 0 0 1px var(--w98-dark), var(--w98-bevel-default); }
+.btn98--default:active { box-shadow: inset 0 0 0 1px var(--w98-dark), inset 2px 2px var(--w98-shadow); }
+/* Right-aligned button row at the foot of a dialog */
+.buttons98 { display: flex; justify-content: flex-end; gap: 6px; }
+/* White sunken field: list boxes, read-only text */
+.field98 { background: var(--w98-field); box-shadow: var(--w98-bevel-field); }
+/* Readable text inside chrome: 98.css turns anti-aliasing off for its pixel font */
+.read98 { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }

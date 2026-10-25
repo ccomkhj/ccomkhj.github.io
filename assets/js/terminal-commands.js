@@ -12,7 +12,7 @@
     writings:  { url: "/writings/",  blurb: "100+ posts on ML, forecasting, CV, MLOps, reflections." },
     bookmarks: { url: "/bookmarks/", blurb: "curated links worth keeping." },
     tags:      { url: "/tags/",      blurb: "writings grouped by tag." },
-    card:      { url: "/card/",      blurb: "terminal-style contact card." },
+    card:      { url: "/card/",      blurb: "contact card, ready to add to your phone." },
     qr:        { url: "/qr/",        blurb: "scan-to-connect QR page." }
   };
 

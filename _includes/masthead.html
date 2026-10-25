@@ -1,11 +1,12 @@
 {%- comment -%}
   Site taskbar for every page on the default layout except the desktop (`/`), which has
-  its own bottom taskbar with the same Start menu. Sections come from _data/navigation.yml.
+  its own copy with the same Start menu. Docked at the bottom like the desktop's
+  (_sass/_win98-shell.scss). Sections come from _data/navigation.yml.
   Not include_cached: the pressed button depends on the page.
 {%- endcomment -%}
 {%- assign here = page.url -%}
 {%- if page.collection == "posts" -%}{%- assign here = "/writings/" -%}{%- endif -%}
-<header id="site-nav" class="masthead taskbar98 taskbar98--top">
+<header id="site-nav" class="masthead taskbar98 taskbar98--page">
   <details class="taskbar98-startwrap">
     <summary class="taskbar98-start" aria-label="Start: site menu"><span class="glyph98" aria-hidden="true">🪟</span>Start</summary>
     {% include start-menu98.html %}
