@@ -1,0 +1,153 @@
+{%- comment -%}
+  Drone Vision — a drone pass over the HexaFarms lettuce bed (the photo is the ORB-SLAM3
+  map render). YOLOv5 boxes pop in, the drone steps along the bed via /drone1/move_cmd
+  (HexaCmd, as in tello_ros_drone's demo script), and an inspector card reads out each
+  plant: growth (from the PCL_Plants mesh volume), health class, disease forecast + action.
+  Reduced motion: the frame with the powdery-mildew alert on plant #07.
+{%- endcomment -%}
+<div class="pf98-screen pf98-drone" data-demo="drone">
+  <div class="dv-view">
+    <div class="dv-map" style="background-image:url('{{ include.p.image | default: '/img/demo_video.PNG' | relative_url }}')">
+      <svg class="dv-path" viewBox="0 0 467 205" preserveAspectRatio="none" aria-hidden="true"><polyline points="30,100 100,55 152,38 197,62 254,83 370,119 437,140 388,175 275,172 215,147 145,157 88,142 30,100"/></svg>
+    </div>
+    <div class="dv-scan"></div>
+    <div class="dv-hud dv-tl"><span><i class="dv-rec">●</i> drone1/image_raw</span></div>
+    <div class="dv-hud dv-tr"><span>YOLOv5 ×<b class="dv-n">0</b></span></div>
+    <div class="dv-alert" role="status"></div>
+    <div class="dv-hud dv-bl"><span class="dv-cmd">tello_action takeoff</span></div>
+    <div class="dv-hud dv-br"><span>SLAM kf <b class="dv-kf">38</b></span></div>
+  </div>
+  <div class="dv-card" aria-live="polite"></div>
+</div>
+<style>
+  .pf98-drone { display: flex; box-sizing: border-box; padding: 2px; background: #0b110d; color: #cfe; }
+  .pf98-drone .dv-view { position: relative; flex: 1 1 auto; min-width: 0; overflow: hidden; background: #1c1d22; }
+  .pf98-drone .dv-map { position: absolute; top: 0; left: 0; height: 100%; aspect-ratio: 467 / 205; min-width: 100%; background: center / 100% 100% no-repeat; transition: transform 1.1s ease-in-out; }
+  .pf98-drone .dv-path { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .pf98-drone .dv-path polyline { fill: none; stroke: #0f8; stroke-opacity: .45; stroke-width: 1; stroke-dasharray: 4 3; vector-effect: non-scaling-stroke; animation: pf98-drone-dash 1.2s linear infinite; }
+  .pf98-drone .dv-box { position: absolute; box-sizing: border-box; border: 1px solid rgba(0, 255, 136, .7); opacity: 0; transform: scale(1.5); transition: opacity .25s, transform .25s, border-color .25s; }
+  .pf98-drone .dv-box.on { opacity: 1; transform: none; }
+  .pf98-drone .dv-box b { display: none; position: absolute; bottom: 100%; left: -2px; padding: 0 2px; background: #0f8; color: #000; font: bold 9.5px/11px "Lucida Console", Monaco, monospace; white-space: nowrap; }
+  .pf98-drone .dv-box.sel { border: 2px solid #0f8; box-shadow: 0 0 0 1px #000, 0 0 8px #0f8; z-index: 1; }
+  .pf98-drone .dv-box.sel b { display: block; }
+  .pf98-drone .dv-box.warn { border-color: #ffb000; box-shadow: 0 0 0 1px #000, 0 0 8px #ffb000; animation: pf98-drone-warn .7s steps(2) infinite; }
+  .pf98-drone .dv-box.warn b { background: #ffb000; }
+  .pf98-drone .dv-scan { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: linear-gradient(90deg, transparent, #0f8 30%, #0f8 70%, transparent); box-shadow: 0 0 6px #0f8; opacity: .7; animation: pf98-drone-scan 2.6s linear infinite; pointer-events: none; }
+  .pf98-drone .dv-hud { position: absolute; z-index: 2; font: 9.5px/12px "Lucida Console", Monaco, monospace; color: #0f8; white-space: nowrap; }
+  .pf98-drone .dv-hud span { display: inline-block; padding: 0 3px; background: rgba(0, 0, 0, .62); }
+  .pf98-drone .dv-hud b { font-weight: normal; color: #fff; }
+  .pf98-drone .dv-tl { top: 2px; left: 2px; }
+  .pf98-drone .dv-tr { top: 2px; right: 2px; }
+  .pf98-drone .dv-bl { bottom: 2px; left: 2px; }
+  .pf98-drone .dv-br { bottom: 2px; right: 2px; }
+  .pf98-drone .dv-rec { font-style: normal; color: #f44; animation: pf98-drone-blink 1s steps(2) infinite; }
+  .pf98-drone .dv-alert { position: absolute; z-index: 2; bottom: 17px; left: 2px; padding: 1px 4px; background: #ffb000; color: #000; font: bold 9.5px/12px Arial, sans-serif; box-shadow: 1px 1px 0 #000; opacity: 0; transform: translateX(-110%); transition: opacity .3s, transform .3s; }
+  .pf98-drone .dv-alert.on { opacity: 1; transform: none; }
+  .pf98-drone .dv-card { flex: 0 0 39%; min-width: 118px; max-width: 210px; box-sizing: border-box; padding: 0 0 3px; overflow: hidden; border-left: 1px solid #253; font: 10px/12px Arial, sans-serif; }
+  .pf98-drone .dv-card > * { margin: 0 5px 2px; animation: pf98-drone-in .3s ease-out both; animation-delay: calc(var(--d, 0) * .22s); }
+  .pf98-drone .dv-hd { display: flex; justify-content: space-between; margin: 0 0 3px; padding: 1px 5px; background: #0f8; color: #000; font: bold 9.5px/13px "Lucida Console", Monaco, monospace; }
+  .pf98-drone .dv-row { display: flex; justify-content: space-between; gap: 4px; }
+  .pf98-drone .dv-row span { color: #8a9; }
+  .pf98-drone .dv-row b { color: #fff; }
+  .pf98-drone .dv-bar { height: 4px; margin-bottom: 4px; background: #223; box-shadow: inset 0 0 0 1px #354; }
+  .pf98-drone .dv-bar i { display: block; height: 100%; background: #0f8; animation: pf98-drone-grow .9s ease-out both; animation-delay: .22s; }
+  .pf98-drone .dv-c1 { color: #0f8 !important; }
+  .pf98-drone .dv-c2 { color: #ffb000 !important; }
+  .pf98-drone .dv-risk { margin-top: 3px; padding-top: 3px; border-top: 1px dotted #354; color: #cfe; }
+  .pf98-drone .dv-risk b { color: #fff; }
+  .pf98-drone .dv-act { color: #0f8; }
+  .pf98-drone .dv-src { color: #687; font: 9.5px/12px "Lucida Console", Monaco, monospace; }
+  .pf98-drone .dv-card.hot .dv-hd { background: #ffb000; }
+  .pf98-drone .dv-card.hot .dv-risk b { color: #ffb000; }
+  .pf98-drone .dv-card.hot .dv-act { color: #000; background: #ffb000; padding: 1px 3px; font-weight: bold; }
+  @keyframes pf98-drone-scan { from { top: 0; } to { top: 100%; } }
+  @keyframes pf98-drone-dash { to { stroke-dashoffset: -14; } }
+  @keyframes pf98-drone-blink { 50% { opacity: 0; } }
+  @keyframes pf98-drone-warn { 50% { border-color: #fff3; } }
+  @keyframes pf98-drone-in { from { opacity: 0; transform: translateX(6px); } }
+  @keyframes pf98-drone-grow { from { width: 0; } }
+</style>
+<script>
+  (window.pf98Demos = window.pf98Demos || {})["drone"] = function (el, kit) {
+    var IW = 467, IH = 205, M_PER_PX = 9.3 / IW;   // the bed run in hexa_drone_rc.bash: y −9.3 m
+    // lettuce heads on the photo: id, x, y, w, h (image px)
+    var plants = [
+      ["01", 5, 80, 55, 40], ["02", 75, 40, 50, 30], ["03", 65, 70, 55, 35], ["04", 60, 120, 55, 45],
+      ["05", 115, 135, 60, 45], ["06", 130, 22, 45, 35], ["07", 175, 45, 45, 35], ["08", 185, 125, 60, 45],
+      ["09", 228, 68, 52, 30], ["10", 250, 150, 50, 45], ["11", 300, 122, 45, 40], ["12", 345, 98, 50, 42],
+      ["13", 360, 152, 55, 45], ["14", 410, 118, 55, 45]
+    ];
+    var reads = {
+      "03": { c: .94, g: 72, cls: 1, dz: "Downy mildew", r: 3, act: "no action", v: 318 },
+      "07": { c: .91, g: 64, cls: 2, dz: "Powdery mildew", r: 17, act: "reduce humidity by 15% RH", v: 271, alert: 1 },
+      "10": { c: .89, g: 81, cls: 1, dz: "Tipburn", r: 5, act: "harvest window in ~6 d", v: 356 },
+      "05": { c: .87, g: 58, cls: 1, dz: "Tipburn", r: 6, act: "no action", v: 244 },
+      "12": { c: .92, g: 47, cls: 2, dz: "Tipburn", r: 12, act: "raise airflow to 0.4 m/s", v: 198 }
+    };
+    var order = ["03", "07", "10", "05", "12"];
+    var view = kit.$(".dv-view"), map = kit.$(".dv-map"), card = kit.$(".dv-card");
+    var alertEl = kit.$(".dv-alert"), cmd = kit.$(".dv-cmd"), kfEl = kit.$(".dv-kf"), nEl = kit.$(".dv-n");
+    var boxes = {}, cur = null, kf = 38, i = kit.still ? 1 : 0, pending;
+
+    plants.forEach(function (p, k) {
+      var b = document.createElement("i");
+      b.className = "dv-box";
+      b.style.left = (p[1] / IW * 100) + "%";
+      b.style.top = (p[2] / IH * 100) + "%";
+      b.style.width = (p[3] / IW * 100) + "%";
+      b.style.height = (p[4] / IH * 100) + "%";
+      b.innerHTML = "<b>#" + p[0] + (reads[p[0]] ? " " + reads[p[0]].c.toFixed(2) : "") + "</b>";
+      map.appendChild(b);
+      boxes[p[0]] = { el: b, cx: p[1] + p[3] / 2 };
+      kit.later(300 + k * 130, function () { b.classList.add("on"); nEl.textContent = k + 1; });
+    });
+
+    function pan() {
+      if (!cur) return;
+      var mw = map.offsetWidth, vw = view.offsetWidth;
+      var tx = Math.max(vw - mw, Math.min(0, vw / 2 - boxes[cur].cx / IW * mw));
+      map.style.transform = "translateX(" + Math.round(tx) + "px)";
+    }
+
+    function show(id) {
+      var r = reads[id], hot = r.alert;
+      card.className = "dv-card" + (hot ? " hot" : "");
+      card.innerHTML =
+        '<div class="dv-hd"><span>PLANT #' + id + '</span><span>' + r.c.toFixed(2) + '</span></div>' +
+        '<div class="dv-row" style="--d:1"><span>growth</span><b>' + r.g + '%</b></div>' +
+        '<div class="dv-bar" style="--d:1"><i style="width:' + r.g + '%"></i></div>' +
+        '<div class="dv-row" style="--d:2"><span>health</span><b class="dv-c' + r.cls + '">Class ' + r.cls + '</b></div>' +
+        '<div class="dv-risk" style="--d:3">' + r.dz + ' risk <b>' + r.r + '%</b> in 1 week</div>' +
+        '<div class="dv-act" style="--d:4">→ ' + r.act + '</div>' +
+        '<div class="dv-src" style="--d:5">PCL mesh ' + r.v + ' cm³</div>';
+      if (hot) {
+        boxes[id].el.classList.add("warn");
+        alertEl.textContent = "⚠ #" + id + " mildew risk " + r.r + "%";
+        pending = kit.later(1100, function () { alertEl.classList.add("on"); });
+      }
+    }
+
+    function step() {
+      var id = order[i % order.length], prev = cur;
+      i++;
+      clearTimeout(pending);
+      alertEl.classList.remove("on");
+      if (prev) boxes[prev].el.classList.remove("sel", "warn");
+      cur = id;
+      boxes[id].el.classList.add("sel", "on");
+      pan();
+      var d = prev ? (boxes[id].cx - boxes[prev].cx) * M_PER_PX : 0;
+      if (prev) cmd.textContent = "move_cmd y " + (d >= 0 ? "+" : "") + d.toFixed(2) + "m";
+      kfEl.textContent = kf += 1 + Math.floor(kit.rnd(0, 3));
+      card.innerHTML = "";
+      kit.later(prev ? 900 : 0, function () { if (cur === id) show(id); });
+    }
+
+    if (kit.still) {
+      kit.$(".dv-scan").style.display = "none";
+      cmd.textContent = "move_cmd y +0.88m";
+    }
+    kit.every(4200, step);
+    window.addEventListener("resize", pan);
+  };
+</script>

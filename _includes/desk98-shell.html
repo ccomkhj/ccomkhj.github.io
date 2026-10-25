@@ -1,0 +1,47 @@
+{%- comment -%}
+  The Win98 desktop every inner page shares: the site's desktop icons, the page's <h1> (screen
+  readers only) and the Properties dialog for Huijo (from _data/profile.yml), docked left.
+  Used by _layouts/desk98.html and _layouts/portfolio.html.
+    intro_label, intro   an extra row in the dialog, e.g. Motto: <the page's first paragraph>
+{%- endcomment -%}
+{%- assign profile = site.data.profile -%}
+<nav class="desktop98-icons" aria-label="Desktop">
+  <div class="desktop98-icon" role="button" tabindex="0" data-open="profile"><span class="desktop98-glyph glyph98" aria-hidden="true">📇</span><span class="desktop98-label">{{ profile.name }}</span></div>
+  {%- for link in site.data.navigation.main %}
+  {%- if link.url == page.url %}
+  <div class="desktop98-icon" role="button" tabindex="0" data-open="*"><span class="desktop98-glyph glyph98" aria-hidden="true">{{ link.glyph }}</span><span class="desktop98-label">{{ link.title }}</span></div>
+  {%- else %}
+  <a class="desktop98-icon" href="{{ link.url | relative_url }}"><span class="desktop98-glyph glyph98" aria-hidden="true">{{ link.glyph }}</span><span class="desktop98-label">{{ link.title }}</span></a>
+  {%- endif %}
+  {%- endfor %}
+  <a class="desktop98-icon" href="{{ '/terminal/' | relative_url }}"><span class="desktop98-glyph glyph98" aria-hidden="true">⌨️</span><span class="desktop98-label">MS-DOS Prompt</span></a>
+</nav>
+
+<h1 class="desk98-h1">{{ page.title }}</h1>
+
+<section class="window window98 desk98-props" data-window="profile" data-dock="left" aria-label="{{ profile.name }} Properties">
+  <div class="title-bar">
+    <div class="title-bar-text"><span class="glyph98">📇</span><span>{{ profile.name }} Properties</span></div>
+    <div class="title-bar-controls"><button aria-label="Close" data-act="close"></button></div>
+  </div>
+  <div class="window-body window98-body">
+    <div class="desk98-props-head"><span class="glyph98" aria-hidden="true">👤</span><div><b>{{ profile.name }}</b><br>{{ profile.headline }}</div></div>
+    <hr class="desk98-rule">
+    <dl class="desk98-facts">
+      <dt>Title:</dt><dd>{{ profile.title }}</dd>
+      <dt>Company:</dt><dd><a href="{{ profile.company_url }}">{{ profile.company }}</a></dd>
+      <dt>Location:</dt><dd>{{ profile.location }}</dd>
+      <dt>Building:</dt><dd>{{ profile.building }}</dd>
+      {%- if include.intro != "" and include.intro_label %}
+      <dt>{{ include.intro_label }}:</dt><dd><i>{{ include.intro }}</i></dd>
+      {%- endif %}
+      <dt>Online:</dt><dd>
+        {%- for l in site.author.links %}{% if l.url %}<a href="{{ l.url }}" rel="me">{{ l.label }}</a> · {% endif %}{% endfor -%}
+        <a href="mailto:{{ site.author.email }}" rel="me">Email</a></dd>
+    </dl>
+    <div class="buttons98">
+      <a class="btn98" href="{{ '/card/' | relative_url }}">Add to Contacts</a>
+      <button type="button" class="default" data-act="close">OK</button>
+    </div>
+  </div>
+</section>

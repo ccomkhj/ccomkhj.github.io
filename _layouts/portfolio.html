@@ -1,254 +1,80 @@
 ---
 layout: default
 ---
+{%- comment -%}
+  /portfolio/ as a Win98 desktop of running programs: every project in _data/portfolio.yml
+  is a window playing a small, repo-accurate demo of itself (_includes/portfolio/<id>.html),
+  laid out 3×3 next to the Properties dialog and a Publications window docked left.
+  The page's first paragraph becomes the dialog's `intro_label` row.
 
-<style>
-  /* Base 98.css-like styles for the portfolio layout */
-  .window-portfolio {
-    max-width: 100%;
-    margin: 20px auto;
-    font-family: "Pixelated MS Sans Serif", Arial;
-  }
-  
-  .window-portfolio .window-body {
-    padding: 15px;
-  }
+  Each demo include holds one `.pf98-screen.pf98-<id>` root, a <style> scoped to it and a
+  <script> registering  window.pf98Demos["<id>"] = function (el, kit) { … },
+  kit = { still, every(ms, fn), later(ms, fn), rnd(a, b), pick(arr), $(sel), $$(sel) }.
+  `still` is prefers-reduced-motion: the demo draws one finished frame instead of looping.
+{%- endcomment -%}
+{%- assign intro = content | split: '</p>' | first | strip_html | strip -%}
+{%- assign live = site.data.portfolio.projects | where_exp: "p", "p.section != 'papers'" -%}
+{%- assign papers = site.data.portfolio.projects | where: "section", "papers" -%}
+{%- assign boxes = "0 0 .328 .325|.336 0 .328 .325|.672 0 .328 .325|0 .3375 .328 .325|.336 .3375 .328 .325|.672 .3375 .328 .325|0 .675 .328 .325|.336 .675 .328 .325|.672 .675 .328 .325" | split: "|" -%}
 
-  .portfolio-intro {
-    background: #fff;
-    box-shadow: inset -1px -1px #fff, inset 1px 1px #808080,
-      inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
-    font-size: 13px;
-    line-height: 1.5;
-    margin-bottom: 24px;
-    padding: 12px 14px;
-    text-align: center;
-  }
+<div class="desk98 portfolio98" id="desk98">
+  {% include desk98-shell.html intro=intro intro_label=page.intro_label %}
 
-  .portfolio-intro strong {
-    color: #000080;
-  }
-
-  /* Grid Layout for Projects */
-  .projects-grid {
-    display: grid;
-    gap: 15px;
-    margin-top: 15px;
-    margin-bottom: 28px;
-  }
-
-  .projects-grid--agent {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-
-  .projects-grid--agent .project-card--half {
-    grid-column: span 6;
-  }
-
-  .projects-grid--agent .project-card--third {
-    grid-column: span 4;
-  }
-
-  .projects-grid--applied,
-  .projects-grid--publications {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  /* Project Card Styling - mimicking a window or fieldset */
-  .project-card {
-    background: #c0c0c0;
-    box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff,
-      inset -2px -2px #808080, inset 2px 2px #dfdfdf;
-    padding: 3px;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    position: relative;
-  }
-
-  /* Stretch the card's main link over the whole card; other links stay on top */
-  .project-card .project-link::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-  }
-
-  .project-card a:not(.project-link) {
-    position: relative;
-    z-index: 2;
-  }
-
-  .project-card:has(.project-link):hover .project-title-bar {
-    background: #1084d0;
-  }
-
-  /* Card Title Bar */
-  .project-title-bar {
-    background: #000080;
-    color: #fff;
-    padding: 3px 5px;
-    font-weight: bold;
-    font-size: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 5px;
-    gap: 8px;
-  }
-
-  .project-status {
-    background: #c0c0c0;
-    box-shadow: inset -1px -1px #808080, inset 1px 1px #fff;
-    color: #000;
-    flex: 0 0 auto;
-    font-size: 10px;
-    font-weight: normal;
-    line-height: 1.2;
-    padding: 2px 5px;
-    white-space: nowrap;
-  }
-
-  .project-status--maintained {
-    background: #c0ffc0;
-  }
-
-  .project-status--beta {
-    background: #ffffc0;
-  }
-
-  .project-status--prototype {
-    background: #dfdfdf;
-  }
-
-  /* Card Content */
-  .project-content {
-    flex-grow: 1;
-    padding: 10px;
-    font-size: 13px;
-    line-height: 1.4;
-  }
-  
-  .project-image {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border: 2px inset #dfdfdf;
-    background: #fff;
-    margin-bottom: 10px;
-    display: block;
-  }
-
-  .project-content ul {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding-left: 20px;
-  }
-
-  .project-flow {
-    align-items: center;
-    background: #fff;
-    box-shadow: inset -1px -1px #fff, inset 1px 1px #808080,
-      inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
-    display: flex;
-    flex-wrap: wrap;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px;
-    gap: 5px;
-    justify-content: center;
-    margin: 5px 8px 2px;
-    min-height: 52px;
-    padding: 9px;
-  }
-
-  .project-flow-step {
-    background: #c0c0c0;
-    box-shadow: inset -1px -1px #808080, inset 1px 1px #fff;
-    padding: 3px 6px;
-  }
-
-  .project-flow-arrow {
-    color: #000080;
-    font-weight: bold;
-  }
-
-  .project-tags {
-    margin-top: auto;
-    padding: 8px 5px 5px;
-    border-top: 1px solid #808080;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-
-  .project-tag {
-    font-size: 11px;
-    background: #fff;
-    border: 1px solid #808080;
-    padding: 2px 5px;
-    box-shadow: inset 1px 1px #000;
-  }
-  
-  /* Section headers within the portfolio content */
-  h2 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 25px;
-    margin-bottom: 10px;
-    color: #000080;
-    border-bottom: 2px solid #000080;
-  }
-
-  a {
-    color: #000080;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-
-  @media (max-width: 900px) {
-    .projects-grid--agent .project-card--half,
-    .projects-grid--agent .project-card--third {
-      grid-column: span 6;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .portfolio-intro {
-      text-align: left;
-    }
-
-    .projects-grid--agent,
-    .projects-grid--applied,
-    .projects-grid--publications {
-      grid-template-columns: 1fr;
-    }
-
-    .projects-grid--agent .project-card--half,
-    .projects-grid--agent .project-card--third {
-      grid-column: 1;
-    }
-
-    .project-title-bar {
-      align-items: flex-start;
-    }
-  }
-
-</style>
-
-<div id="main" role="main">
-  {% include sidebar.html %}
-
-  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <div class="window window-portfolio">
-      {% include title-bar98.html title="Portfolio" %}
-      <div class="window-body">
-        <div class="portfolio-intro">
-          <strong>I build agent systems</strong> that plan, use tools, verify their work, and operate safely around code and data. Below are those systems, followed by selected ML, data, and research work.
-        </div>
-        
-        {{ content }}
+  <section class="window window98 pf98-papers-win" data-window="papers" data-dock="left" aria-label="Publications">
+    <div class="title-bar">
+      <div class="title-bar-text"><span class="glyph98">📚</span><span>Publications</span></div>
+      <div class="title-bar-controls"><button aria-label="Close" data-act="close"></button></div>
+    </div>
+    <div class="window-body window98-body">
+      <div class="pf98-papers">
+        {%- for p in papers %}
+        <div><span class="glyph98" aria-hidden="true">{{ p.glyph }}</span><b>{% if p.url %}<a href="{{ p.url }}" target="_blank" rel="noopener">{{ p.name }}</a>{% else %}{{ p.name }}{% endif %}</b><span>{{ p.summary }} <i>{{ p.status }}</i></span></div>
+        {%- endfor %}
       </div>
     </div>
-  </article>
+  </section>
+
+  {%- for p in live %}
+  <section class="window window98 pf98-win" id="{{ p.id }}" data-window="{{ p.id }}" data-box="{{ boxes[forloop.index0] }}" aria-label="{{ p.name }}">
+    <div class="title-bar">
+      <div class="title-bar-text"><span class="glyph98">{{ p.glyph }}</span><span>{{ p.name }}</span></div>
+      <div class="title-bar-controls"><button aria-label="Minimize" data-act="close"></button><button aria-label="Maximize" data-act="max"></button><button aria-label="Close" data-act="close"></button></div>
+    </div>
+    <div class="window-body window98-body">
+      <div class="pf98-demo" aria-hidden="true">
+        {%- capture demo %}portfolio/{{ p.id }}.html{% endcapture %}
+        {% include {{ demo }} p=p %}
+      </div>
+      <p class="pf98-cap">{{ p.summary }}</p>
+      <div class="status-bar">
+        <p class="status-bar-field">{{ p.status }}</p>
+        <p class="status-bar-field">{{ p.tags | join: ' · ' }}</p>
+        {%- if p.url %}<p class="status-bar-field"><a href="{{ p.url }}" target="_blank" rel="noopener">{{ p.link | default: 'Open' }} ↗</a></p>{% endif %}
+      </div>
+    </div>
+  </section>
+  {%- endfor %}
 </div>
+
+<script src="{{ '/assets/js/desk98.js' | relative_url }}" defer></script>
+<script>
+  /* After desk98.js has sized the windows (deferred scripts run before DOMContentLoaded),
+     start every demo with its own kit. */
+  document.addEventListener("DOMContentLoaded", function () {
+    var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.querySelectorAll(".portfolio98 [data-demo]").forEach(function (el) {
+      var run = (window.pf98Demos || {})[el.dataset.demo];
+      if (!run) return;
+      var kit = {
+        still: still,
+        every: function (ms, fn) { fn(); if (!still) setInterval(fn, ms); },
+        later: function (ms, fn) { return setTimeout(fn, still ? 0 : ms); },
+        rnd: function (a, b) { return a + Math.random() * (b - a); },
+        pick: function (a) { return a[Math.floor(Math.random() * a.length)]; },
+        $: function (s) { return el.querySelector(s); },
+        $$: function (s) { return Array.prototype.slice.call(el.querySelectorAll(s)); }
+      };
+      try { run(el, kit); } catch (e) { console.error("portfolio demo " + el.dataset.demo, e); }
+    });
+  });
+</script>

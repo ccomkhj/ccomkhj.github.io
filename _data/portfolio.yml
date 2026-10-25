@@ -1,0 +1,113 @@
+# /portfolio/ — one window per project (_layouts/portfolio.html). Agent Systems and
+# Applied ML & Data each get a live demo, _includes/portfolio/<id>.html; Publications are
+# listed in a window docked under the Properties dialog. section: agents | applied | papers.
+
+projects:
+  - id: skills
+    section: agents
+    name: Agent Workflows & Skills
+    glyph: "🔁"
+    status: Maintained
+    url: "https://github.com/ccomkhj/skills"
+    link: Explore the skill collection
+    summary: Versioned agent workflows for long-horizon execution, multi-model review, measured optimization, and agent-tool hygiene.
+    tags: [Agent Harnesses, Multi-Agent, Claude + Codex]
+
+  - id: product-demo
+    section: agents
+    name: Product Demo
+    glyph: "🎬"
+    status: Maintained
+    url: "https://github.com/ccomkhj/product-demo"
+    link: Watch the sample demo
+    summary: Claude Code plugin that turns a sentence about what you shipped into a narrated, subtitled demo video.
+    tags: [Claude Code Plugin, Browser Agent, Video]
+
+  - id: agentune
+    section: agents
+    name: Agentune
+    glyph: "🎛️"
+    status: Maintained
+    url: "https://github.com/ccomkhj/agentune"
+    link: View on GitHub
+    summary: Agent-driven hyperparameter optimization with Optuna — Claude Code adapts the search strategy round-by-round.
+    tags: [Agentic ML, MCP, Optuna]
+
+  - id: templeton
+    section: agents
+    name: Templeton
+    glyph: "📉"
+    status: Prototype
+    url: "https://github.com/ccomkhj/stock_interogation"
+    link: View on GitHub
+    summary: "Claude Code plugin that screens an index for multi-year wrecks and asks: temporary impairment or permanent break?"
+    tags: [Multi-Agent, Adversarial Review, Investing]
+
+  - id: jocal
+    section: agents
+    name: jocal
+    glyph: "🔒"
+    status: Alpha · v0.1
+    url: "https://github.com/ccomkhj/jocal"
+    link: View on GitHub
+    summary: Run the Pi coding agent (and Claude Code) on a local LLM on Apple Silicon, with one command.
+    tags: [Local LLM, Coding Agents, Privacy]
+
+  - id: drone
+    section: applied
+    name: Drone Vision
+    glyph: "🚁"
+    image: /img/demo_video.PNG
+    status: Field system
+    url: "https://youtu.be/AqAXgcsjH5k"
+    link: Watch the demo video
+    summary: Integrated drone vision system with trajectory planning, object detection, and visual SLAM.
+    tags: [Computer Vision, ROS2, SLAM]
+
+  - id: cancer
+    section: applied
+    name: Cancer Detector
+    glyph: "🩻"
+    status: Research system
+    url: "https://github.com/ccomkhj/cancer_detector"
+    link: View on GitHub
+    summary: End-to-end pipeline for multi-class segmentation and classification on prostate MRI data.
+    tags: [Deep Learning, Medical Imaging, MRI Segmentation]
+
+  - id: kafka
+    section: applied
+    name: Event Inventory
+    glyph: "📦"
+    status: Systems demo
+    url: "https://github.com/ccomkhj/event_inventory_kafra"
+    link: View on GitHub
+    summary: Event-driven inventory sync replacing daily batch pulls with near-real-time Shopify webhook updates.
+    tags: [Kafka, Event-Driven, Shopify]
+
+  - id: finance
+    section: applied
+    name: Finance Portfolio
+    glyph: "💶"
+    status: Maintained
+    url: "https://github.com/ccomkhj/finance_portfolio"
+    link: View on GitHub
+    summary: Local-first net-worth tracker for EU investors — plain-text data, CLI, and Streamlit dashboard; no broker login.
+    tags: [Finance, CLI, Streamlit]
+
+  - id: thesis
+    section: papers
+    name: Master Thesis
+    glyph: "🎓"
+    status: RWTH Aachen
+    summary: Deep Learning-Based Semiautomatic Generation of HD maps from Aerial Imagery.
+    tags: [Deep Learning, HD Maps, Aerial Imagery]
+
+  - id: deep-aerial-mapper
+    section: papers
+    name: Deep Aerial Mapper
+    glyph: "🛰️"
+    status: arXiv 2410.00769
+    url: "https://www.arxiv.org/abs/2410.00769"
+    link: View paper
+    summary: Research paper on advanced aerial mapping techniques using deep learning.
+    tags: [Research, Computer Vision, arXiv]

@@ -1,0 +1,206 @@
+{%- comment -%}
+  Cancer Detector demo (cancer_detector). Left: a procedural axial prostate slice cycling the
+  7 input channels (T2 x5 context slices, ADC, CALC high-b), then the promoted checkpoint's
+  prostate/target prediction with the 0.40 -> 0.50 threshold sweep. Right: the real
+  stack-depth-grid sweep (stack_depth x threshold), top-1 promotion by dice_target, and
+  downstream-top1 (seg inference train/val/test -> resnet101 classification sweep).
+{%- endcomment -%}
+<div class="pf98-screen pf98-cancer" data-demo="cancer">
+  <div class="cx-row">
+    <div class="cx-mri">
+      <canvas width="160" height="160"></canvas>
+      <span class="cx-tag"></span>
+      <span class="cx-foot"></span>
+    </div>
+    <div class="cx-log"><div class="cx-hd"></div><div class="cx-body"></div></div>
+  </div>
+  <div class="cx-ban">&#9888; Suspicious lesion regions on slices 11&ndash;13 at target threshold 0.50. Assistive &mdash; not a diagnostic conclusion.</div>
+</div>
+<style>
+  .pf98-cancer .cx-row { position: absolute; inset: 0; display: flex; }
+  .pf98-cancer .cx-mri { position: relative; flex: none; height: 100%; aspect-ratio: 1 / 1; max-width: 50%; background: #000; overflow: hidden; }
+  .pf98-cancer canvas { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .pf98-cancer .cx-tag { position: absolute; left: 2px; top: 2px; padding: 0 3px; font: 10px/12px "Lucida Console", Monaco, monospace; color: #fff; background: rgba(0, 0, 0, .6); white-space: nowrap; }
+  .pf98-cancer .cx-foot { position: absolute; left: 2px; bottom: 2px; padding: 0 3px; font: 9.5px/12px "Lucida Console", Monaco, monospace; color: #ddd; background: rgba(0, 0, 0, .6); white-space: nowrap; }
+  .pf98-cancer .cx-ch { display: inline-block; width: 5px; height: 7px; margin-left: 1px; vertical-align: -1px; background: #333; }
+  .pf98-cancer .cx-ch.on { background: #0ff; }
+  .pf98-cancer .cx-sw { display: inline-block; width: 7px; height: 7px; margin: 0 2px 0 3px; vertical-align: -1px; }
+  .pf98-cancer .cx-log { flex: 1; min-width: 0; display: flex; flex-direction: column; background: #fff; overflow: hidden; }
+  .pf98-cancer .cx-hd { flex: none; padding: 1px 4px; background: #c0c0c0; box-shadow: inset -1px -1px #808080, inset 1px 1px #fff; font: bold 10px/12px Arial, sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pf98-cancer .cx-body { padding: 2px 3px; font: 10px/12px "Lucida Console", Monaco, monospace; color: #000; white-space: pre; overflow: hidden; }
+  .pf98-cancer .cx-dim { color: #808080; }
+  .pf98-cancer .cx-r { padding: 0 1px; }
+  .pf98-cancer .cx-r.best { background: #000080; color: #fff; }
+  .pf98-cancer .cx-ok { color: #008000; }
+  .pf98-cancer .cx-bar { display: inline-block; width: 36px; height: 7px; vertical-align: 0; background: #fff; box-shadow: inset 1px 1px #808080, inset -1px -1px #dfdfdf; }
+  .pf98-cancer .cx-bar i { display: block; height: 100%; background: #000080; }
+  .pf98-cancer .cx-bar.done i { background: #008080; }
+  .pf98-cancer .best .cx-bar i { background: #ff0; }
+  .pf98-cancer .cx-hi { background: #000080; color: #fff; }
+  .pf98-cancer .cx-hi .cx-bar i { background: #ff0; }
+  .pf98-cancer .cx-ban { position: absolute; left: 0; right: 0; bottom: 0; display: none; padding: 1px 4px 2px; background: #ffffe1; border-top: 1px solid #000; font: 10px/12px Arial, sans-serif; color: #000; }
+  .pf98-cancer .cx-ban.on { display: block; }
+</style>
+<script>
+  (window.pf98Demos = window.pf98Demos || {})["cancer"] = function (el, kit) {
+    var cv = kit.$("canvas"), ctx = cv.getContext("2d");
+    var W = cv.width, H = cv.height, N = W * H;
+    var tag = kit.$(".cx-tag"), foot = kit.$(".cx-foot"), ban = kit.$(".cx-ban");
+    var hd = kit.$(".cx-hd"), body = kit.$(".cx-body");
+    var MOD = [new Float32Array(N), new Float32Array(N), new Float32Array(N)]; // t2, adc, calc
+    var P = new Float32Array(N), PROS = new Uint8Array(N), EDGE = new Uint8Array(N);
+
+    // ---- procedural axial slice: [T2, ADC, CALC high-b] intensity per tissue ----
+    var LV = {
+      fat: [.74, .14, .05], mus: [.26, .36, .12], cortex: [.06, .06, .03], marrow: [.6, .2, .06],
+      wall: [.3, .32, .2], lumen: [.06, .1, .02], cap: [.34, .45, .12], pz: [.8, .72, .2],
+      tz: [.44, .52, .24], les: [.27, .16, .95]
+    };
+    var NOISE = [.07, .07, .1];
+    var seed = 20260308;
+    function rand() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    function ell(u, v, cx, cy, rx, ry) { var a = (u - cx) / rx, b = (v - cy) / ry; return Math.sqrt(a * a + b * b); }
+    function soft(d, e) { var s = (1 - d) / e + .5; return s < 0 ? 0 : s > 1 ? 1 : s; }
+
+    (function build() {
+      var val = [0, 0, 0];
+      function paint(lv, m) { for (var k = 0; k < 3; k++) val[k] += (lv[k] - val[k]) * m; }
+      for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+        var i = y * W + x, u = (x + .5) / W * 2 - 1, v = (y + .5) / H * 2 - 1, s, k;
+        val[0] = .02; val[1] = .02; val[2] = .03;
+        paint(LV.fat, soft(ell(u, v, 0, .08, 1.25, .98), .06));
+        for (s = -1; s <= 1; s += 2) {
+          paint(LV.mus, soft(ell(u, v, s * .6, .02, .13, .3), .25));      // obturator internus
+          paint(LV.mus, soft(ell(u, v, s * .3, .36, .08, .22), .3));      // levator ani
+          paint(LV.mus, soft(ell(u, v, s * .74, .86, .44, .3), .2));      // gluteus
+          paint(LV.cortex, soft(ell(u, v, s * 1.0, -.12, .2, .24), .1));  // femoral head
+          paint(LV.marrow, soft(ell(u, v, s * 1.0, -.12, .16, .2), .15));
+          paint(LV.cortex, soft(ell(u, v, s * .44, -.52, .27, .06), .2)); // pubic rami + symphysis
+          paint(LV.marrow, soft(ell(u, v, s * .44, -.52, .22, .03), .3));
+          paint(LV.cortex, soft(ell(u, v, s * .12, -.6, .13, .08), .15));
+          paint(LV.marrow, soft(ell(u, v, s * .12, -.6, .09, .045), .25));
+        }
+        paint(LV.wall, soft(ell(u, v, 0, .46, .19, .12), .15));          // rectum
+        paint(LV.lumen, soft(ell(u, v, 0, .47, .09, .05), .3));
+        var dp = ell(u, v, 0, 0, .36, .28);                               // gland + capsule
+        paint(LV.cap, soft(dp, .08));
+        paint(LV.pz, soft(dp / .92, .1));
+        var tex = Math.sin(u * 41) * Math.sin(v * 37 + u * 9);            // nodular transition zone
+        paint([LV.tz[0] + tex * .08, LV.tz[1] + tex * .03, LV.tz[2]], soft(ell(u, v, 0, -.07, .25, .17), .2));
+        paint(LV.cap, soft(ell(u, v, 0, -.25, .17, .06), .35));          // anterior stroma
+        var dl = ell(u, v, -.17, .15, .09, .07) * (1 + .13 * Math.sin(3 * Math.atan2(v - .15, u + .17) + 1));
+        paint(LV.les, soft(dl, .35));                                    // PZ lesion: dark T2/ADC, bright CALC
+        for (k = 0; k < 3; k++) {
+          var g = val[k] * (.93 + .1 * v - .06 * u * u) + (rand() - .5) * 2 * NOISE[k]; // coil falloff
+          MOD[k][i] = g < 0 ? -g * .5 : g > 1 ? 1 : g;
+        }
+        PROS[i] = dp < 1 ? 1 : 0;
+        var dfp = ell(u, v, .12, -.04, .08, .06);                        // weak TZ false positive
+        P[i] = dp < 1.05 ? .92 * Math.exp(-dl * dl) + .47 * Math.exp(-.5 * dfp * dfp) : 0;
+      }
+      for (var j = W; j < N - W; j++) {
+        if (PROS[j] && !(PROS[j - 1] && PROS[j + 1] && PROS[j - W] && PROS[j + W])) EDGE[j] = 1;
+      }
+    })();
+
+    var img = ctx.createImageData(W, H), px = img.data;
+    function draw(ma, mb, a, ov) {
+      var A = MOD[ma], B = MOD[mb], rev = ov ? Math.floor(ov.rev * H) : -1;
+      for (var i = 0, j = 0; i < N; i++, j += 4) {
+        var g = (A[i] * (1 - a) + B[i] * a) * 255, r = g, gg = g, b = g;
+        if (ov) {
+          var y = (i / W) | 0;
+          if (y < rev) {
+            if (P[i] >= ov.thr) {
+              var f = Math.min(1, (P[i] - ov.thr) / (1 - ov.thr) * 1.8);
+              r = r * .35 + 255 * .65; gg = gg * .35 + (40 + 215 * f) * .65; b = b * .35 + 20 * .65;
+            }
+            if (EDGE[i]) { r = 70; gg = 255; b = 90; }
+          } else if (y === rev) { r = 0; gg = 255; b = 255; }
+        }
+        px[j] = r; px[j + 1] = gg; px[j + 2] = b; px[j + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+    }
+
+    // ---- sweep: mri/config/sweep/segmentation/stack_depth_grid.yaml (3 x 2 matrix, 20 epochs) ----
+    var RUNS = [
+      { sd: 3, thr: ".40", dice: .312, dur: 18 }, { sd: 3, thr: ".50", dice: .297, dur: 17 },
+      { sd: 5, thr: ".40", dice: .403, dur: 22 }, { sd: 5, thr: ".50", dice: .371, dur: 20 },
+      { sd: 7, thr: ".40", dice: .356, dur: 24 }, { sd: 7, thr: ".50", dice: .349, dur: 21 }
+    ];
+    var BEST = 2;
+    var CLS = [["0 no target", .05], ["1 PI-RADS≤2", .09], ["2 PI-RADS 3", .18], ["3 PI-RADS 4", .57], ["4 PI-RADS 5", .11]];
+    var MODTAG = ["ch0-4 T2 z±2", "ch5 ADC", "ch6 CALC hi-b"];
+    var L = 130;
+
+    function bar(frac, cls) {
+      return '<span class="cx-bar' + (cls ? " " + cls : "") + '"><i style="width:' + Math.round(Math.max(0, Math.min(1, frac)) * 100) + '%"></i></span>';
+    }
+    function chans(on) {
+      var h = "in";
+      for (var c = 0; c < 7; c++) h += '<i class="cx-ch' + (on(c) ? " on" : "") + '"></i>';
+      return h + " 7ch";
+    }
+
+    function sweepView(t) {
+      hd.textContent = "stack-depth-grid · sbatch ×6";
+      var h = '<div class="cx-dim">run sd thr  dice_target</div>', promoted = t >= 42;
+      for (var n = 0; n < RUNS.length; n++) {
+        var R = RUNS[n], st = 3 + n * 3, end = st + R.dur, cls = "cx-r", s;
+        if (t < n) { h += "<div> </div>"; continue; }
+        if (t < st) { s = '<span class="cx-dim">PENDING</span>'; cls += " cx-dim"; }
+        else if (t < end) { var ep = Math.floor((t - st) / R.dur * 20); s = bar(ep / 20) + " ep" + (ep < 10 ? "0" : "") + ep; }
+        else s = bar(R.dice * 2.2, "done") + " " + R.dice.toFixed(3);
+        if (promoted) cls += n === BEST ? " best" : " cx-dim";
+        h += '<div class="' + cls + '">' + (promoted && n === BEST ? "★" : " ") + "00" + n + " s" + R.sd + " " + R.thr + " " + s + "</div>";
+      }
+      if (promoted) h += '<div>→ top1 by val dice_target</div>';
+      body.innerHTML = h;
+    }
+
+    function downstreamView(t) {
+      hd.textContent = "downstream-top1 · promoted -002";
+      var h = "<div>seg infer → seg_pred_dir</div><div> ", sp = ["train", "val", "test"];
+      for (var n = 0; n < 3; n++) h += sp[n] + (t >= 60 + n * 3 ? '<span class="cx-ok">✓</span> ' : '<span class="cx-dim">…</span> ');
+      h += "</div>";
+      if (t >= 70) {
+        h += "<div>cls sweep ×6 · resnet101</div>";
+        var g = Math.min(1, (t - 72) / 12);
+        for (var c = 0; c < CLS.length; c++) {
+          var hi = c === 3 && t >= 86;
+          h += '<div class="cx-r' + (hi ? " cx-hi" : "") + '">' + CLS[c][0] + " " + bar(CLS[c][1] * 1.6 * g) + " " + (g >= 1 ? CLS[c][1].toFixed(2).slice(1) : "") + "</div>";
+        }
+      }
+      body.innerHTML = h;
+    }
+
+    function render(t, still) {
+      // left pane
+      if (t < 42) {
+        var seg = Math.floor(t / 12) % 3, nxt = (seg + 1) % 3, fade = t % 12 >= 10 && t < 34 ? (t % 12 - 9) / 3 : 0;
+        if (t >= 36) { seg = 0; nxt = 0; fade = 0; }
+        draw(seg, nxt, fade, null);
+        tag.textContent = MODTAG[seg];
+        foot.innerHTML = chans(function (c) { return seg === 0 ? c < 5 : c === seg + 4; });
+      } else if (t < 56) {
+        draw(0, 0, 0, null);
+        tag.textContent = "ckpt -002 → infer";
+        foot.innerHTML = chans(function () { return true; });
+      } else {
+        var rev = Math.min(1, (t - 56) / 14), thr = t < 80 ? .4 : Math.min(.5, .4 + (t - 80) * .0125);
+        draw(0, 0, 0, { rev: rev, thr: thr });
+        tag.textContent = "pred thr " + thr.toFixed(2);
+        foot.innerHTML = '<i class="cx-sw" style="background:#46ff5a"></i>prostate<i class="cx-sw" style="background:#ff6014"></i>target';
+      }
+      // right pane
+      if (still || t < 56) sweepView(t);
+      else downstreamView(t);
+      ban.className = "cx-ban" + (t >= 92 && t < 127 ? " on" : "");
+    }
+
+    if (kit.still) { render(110, true); return; }
+    var t = 0;
+    kit.every(100, function () { render(t, false); t = (t + 1) % L; });
+  };
+</script>

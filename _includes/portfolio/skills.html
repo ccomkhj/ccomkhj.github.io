@@ -1,0 +1,184 @@
+{%- comment -%}
+  skills demo — one /long-haul run: explore/exploit rounds against a ratcheting
+  incumbent (p95 of bench/price.py, goal <= 40ms), straight from long-haul's
+  README, haul-loop SKILL.md and the PROGRESS.log template.
+{%- endcomment -%}
+<div class="pf98-screen pf98-skills" data-demo="skills">
+  <div class="pf98-skills-hd">
+    <span data-ph="spec">haul-spec</span><i>›</i><span data-ph="goal">haul-goal</span><i>›</i><span data-ph="loop">haul-loop <em class="pf98-skills-rn"></em></span><i>›</i><span data-ph="ship">haul-ship</span>
+  </div>
+  <div class="pf98-skills-chart">
+    <div class="pf98-skills-top">
+      <span class="pf98-skills-mode">/long-haul</span>
+      <span class="pf98-skills-stall">stall <b>○</b><b>○</b></span>
+    </div>
+    <div class="pf98-skills-plot">
+      <div class="pf98-skills-goal"><span>goal ≤40ms</span></div>
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><g class="pf98-skills-att"></g><polyline class="pf98-skills-inc" points=""></polyline></svg>
+      <div class="pf98-skills-dots"></div>
+    </div>
+  </div>
+  <div class="pf98-skills-log"><div class="pf98-skills-l1"></div><div class="pf98-skills-l2"></div></div>
+</div>
+<style>
+  .pf98-skills { display: flex; flex-direction: column; background: #fff; }
+  .pf98-skills-hd { flex: none; display: flex; align-items: center; gap: 2px; padding: 2px 3px; background: #c0c0c0; border-bottom: 1px solid #808080; font: 10px/1.3 Arial, sans-serif; white-space: nowrap; overflow: hidden; }
+  .pf98-skills-hd span { padding: 0 3px; color: #808080; }
+  .pf98-skills-hd span.done { color: #000; }
+  .pf98-skills-hd span.done::after { content: " ✓"; color: #008000; }
+  .pf98-skills-hd span.on { background: #000080; color: #fff; }
+  .pf98-skills-hd i { font-style: normal; color: #808080; }
+  .pf98-skills-hd em { font-style: normal; }
+  .pf98-skills-chart { position: relative; flex: 1; min-height: 60px; }
+  .pf98-skills-top { position: absolute; top: 2px; left: 4px; right: 4px; display: flex; justify-content: space-between; font: bold 9.5px/1.2 Arial, sans-serif; z-index: 2; }
+  .pf98-skills-mode { padding: 0 3px; color: #000080; }
+  .pf98-skills-mode.exploit { background: #000080; color: #fff; }
+  .pf98-skills-mode.explore { background: #800080; color: #fff; }
+  .pf98-skills-stall { color: #444; }
+  .pf98-skills-stall b { margin-left: 1px; }
+  .pf98-skills-stall b.on { color: #c00000; }
+  .pf98-skills-plot { position: absolute; top: 17px; bottom: 13px; left: 14px; right: 12px; }
+  .pf98-skills-plot svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .pf98-skills-inc { fill: none; stroke: #008000; stroke-width: 2.5; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+  .pf98-skills-att path { fill: none; stroke-width: 1.2; stroke-dasharray: 3 2; vector-effect: non-scaling-stroke; animation: pf98-skills-fade .3s ease-out both; }
+  .pf98-skills-att path.exploit { stroke: #000080; }
+  .pf98-skills-att path.explore { stroke: #800080; stroke-width: 1.5; }
+  .pf98-skills-att path.lost { opacity: .3; }
+  .pf98-skills-goal { position: absolute; left: -4px; right: -4px; top: 79%; border-top: 1px dashed #008080; }
+  .pf98-skills-goal span { position: absolute; right: 0; top: 1px; font: 9.5px/1 Arial, sans-serif; color: #008080; background: rgba(255,255,255,.8); }
+  .pf98-skills-goal.met { border-top-color: #008000; border-top-style: solid; }
+  .pf98-skills-goal.met span { color: #008000; font-weight: bold; }
+  .pf98-skills-dots > * { position: absolute; transform: translate(-50%, -50%); }
+  .pf98-skills-dot { width: 7px; height: 7px; border-radius: 50%; background: #000080; border: 1px solid #fff; box-shadow: 0 0 0 1px #000080; animation: pf98-skills-pop .25s ease-out both; }
+  .pf98-skills-dot.base { background: #808080; box-shadow: 0 0 0 1px #808080; }
+  .pf98-skills-dot.explore { background: #800080; box-shadow: 0 0 0 1px #800080; border-radius: 1px; }
+  .pf98-skills-dot.measuring { background: #fff; animation: pf98-skills-blink .3s steps(2) infinite; }
+  .pf98-skills-dot.won { background: #008000; box-shadow: 0 0 0 1px #008000, 0 0 0 3px rgba(0,128,0,.25); }
+  .pf98-skills-dot.lost { background: #c00000; box-shadow: 0 0 0 1px #c00000; opacity: .45; }
+  .pf98-skills-dot b { position: absolute; top: 6px; left: 6px; font: 9.5px/1 Arial, sans-serif; color: #000; white-space: nowrap; }
+  .pf98-skills-dot.lost b { color: #c00000; }
+  .pf98-skills-x { font: bold 10px/1 Arial, sans-serif; color: #c00000; animation: pf98-skills-pop .25s ease-out both; white-space: nowrap; }
+  .pf98-skills-x.lost { opacity: .5; }
+  .pf98-skills-rl { top: auto !important; bottom: -12px; transform: translateX(-50%) !important; font: 9.5px/1 Arial, sans-serif; color: #a0a0a0; }
+  .pf98-skills-rl.cur { color: #000; font-weight: bold; }
+  .pf98-skills-log { flex: none; background: #000; color: #c0c0c0; padding: 2px 4px; font: 10px/1.3 "Lucida Console", Monaco, monospace; }
+  .pf98-skills-log div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pf98-skills-l1 { color: #fff; }
+  .pf98-skills-l1 span { display: inline-block; animation: pf98-skills-type .35s steps(24) both; }
+  .pf98-skills-l1 span::after { content: "▌"; color: #0f0; animation: pf98-skills-blink 1s steps(2) infinite; }
+  .pf98-skills-l2 { color: #7fd17f; }
+  .pf98-skills.is-still *, .pf98-skills.is-still *::after { animation: none !important; }
+  @keyframes pf98-skills-pop { from { opacity: 0; scale: .2; } to { opacity: 1; scale: 1; } }
+  @keyframes pf98-skills-fade { from { opacity: 0; } }
+  @keyframes pf98-skills-blink { 50% { opacity: .2; } }
+  @keyframes pf98-skills-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+</style>
+<script>
+  (window.pf98Demos = window.pf98Demos || {})["skills"] = function (el, kit) {
+    // p95 (ms) -> top %, round index (0 = BASE) -> left %
+    var X = function (i) { return i * 12.5; };
+    var Y = function (ms) { return (49.5 - ms) / 12 * 100; };
+    var SVGNS = "http://www.w3.org/2000/svg";
+    var hd = kit.$$(".pf98-skills-hd span"), rn = kit.$(".pf98-skills-rn");
+    var mode = kit.$(".pf98-skills-mode"), stall = kit.$$(".pf98-skills-stall b");
+    var goal = kit.$(".pf98-skills-goal"), dots = kit.$(".pf98-skills-dots");
+    var att = kit.$(".pf98-skills-att"), inc = kit.$(".pf98-skills-inc");
+    var l1 = kit.$(".pf98-skills-l1"), l2 = kit.$(".pf98-skills-l2");
+    var pts, best, st;
+    if (kit.still) el.className += " is-still";
+
+    // The run mirrors long-haul's own PROGRESS.log example (48 -> 46ms, then the
+    // hoist that broke test_rounding), plus a STALL_CAP-forced explore off BASE.
+    var R = [
+      { m: "exploit", ms: 46, win: true, git: "git merge --ff-only longhaul/attempt-r1", log: "[Loop1] memoized lookup 48->46ms (kept)" },
+      { m: "exploit", ms: null, git: "git worktree remove --force · discarded", log: "[Loop2] hoist regressed · discarded · stall 1" },
+      { m: "exploit", ms: 46, git: "46 not < 46 · incumbent untouched", log: "[Loop3] no-progress · stall 2 = cap -> explore" },
+      { m: "explore", ms: 41, win: true, git: "git reset --hard longhaul/attempt-r4", log: "[Loop4] vectorized pricing 46->41ms (kept)" },
+      { m: "exploit", ms: 39, win: true, git: "git merge --ff-only longhaul/attempt-r5", log: "[Loop5] 41->39ms ≤ 40 · STATUS: GOAL-MET" }
+    ];
+
+    function say(a, b) {
+      l1.innerHTML = "";
+      var s = document.createElement("span"); s.textContent = a; l1.appendChild(s);
+      if (b != null) l2.textContent = b;
+    }
+    function phase(p) {
+      var seen = false;
+      for (var i = 0; i < hd.length; i++) {
+        var on = hd[i].getAttribute("data-ph") === p;
+        hd[i].className = on ? "on" : (seen ? "" : "done");
+        if (on) seen = true;
+      }
+    }
+    function setStall(n) {
+      for (var i = 0; i < stall.length; i++) { stall[i].className = i < n ? "on" : ""; stall[i].textContent = i < n ? "●" : "○"; }
+    }
+    function setMode(m) { mode.className = "pf98-skills-mode " + (m || ""); mode.textContent = m === "explore" ? "EXPLORE ← BASE" : m === "exploit" ? "EXPLOIT ← incumbent" : "/long-haul"; }
+    function node(cls, i, ms, html) {
+      var d = document.createElement("i");
+      d.className = cls; d.style.left = X(i) + "%"; d.style.top = Y(ms) + "%";
+      if (html != null) d.innerHTML = html;
+      dots.appendChild(d); return d;
+    }
+    function draw() { inc.setAttribute("points", pts.map(function (p) { return p[0] + "," + p[1]; }).join(" ")); }
+    function labels(c) {
+      var ls = kit.$$(".pf98-skills-rl");
+      for (var i = 0; i < ls.length; i++) ls[i].className = "pf98-skills-rl" + (i === c ? " cur" : "");
+    }
+
+    function reset() {
+      dots.innerHTML = ""; att.innerHTML = "";
+      for (var i = 0; i <= 8; i++) node("pf98-skills-rl", i, 0, i ? "R" + i : "BASE");
+      node("pf98-skills-dot base", 0, 48, "<b>48</b>");
+      best = 48; st = 0; pts = [[X(0), Y(48)]]; draw();
+      goal.className = "pf98-skills-goal"; rn.textContent = "";
+      setStall(0); setMode(null); phase("spec");
+      say('/long-haul "make bench/price.py faster"', "haul-spec -> .longhaul/SPEC.md · toolbox: /tdd");
+    }
+
+    function round(n, t) {
+      var r = R[n - 1], dot, path;
+      steps.push([t, function () {
+        var from = r.m === "explore" ? [X(0), Y(48)] : [X(n - 1), Y(best)];
+        phase("loop"); rn.textContent = "R" + n; labels(n); setMode(r.m);
+        say("git worktree add … attempt-r" + n + " " + (r.m === "explore" ? "BASE" : "incumbent"));
+        if (r.ms == null) return;
+        path = document.createElementNS(SVGNS, "path");
+        var to = [X(n), Y(r.ms)];
+        path.setAttribute("d", r.m === "explore"
+          ? "M" + from + " Q" + X(n / 2) + ",104 " + to   // a separate lineage, forked off BASE
+          : "M" + from + " L" + to);
+        path.setAttribute("class", r.m);
+        att.appendChild(path);
+        dot = node("pf98-skills-dot measuring" + (r.m === "explore" ? " explore" : ""), n, r.ms, "<b>…</b>");
+      }]);
+      steps.push([t + 550, function () {
+        say(r.ms == null ? "check.sh -> test_rounding FAILED" : ".longhaul/check.sh -> p95=" + r.ms + "ms");
+        if (r.ms == null) dot = node("pf98-skills-x", n, 49.5, "✗ red");
+        else { dot.innerHTML = "<b>" + r.ms + "</b>"; dot.className = dot.className.replace(" measuring", ""); }
+      }]);
+      steps.push([t + 1100, function () {
+        if (r.win) {
+          pts.push([X(n), Y(best)], [X(n), Y(r.ms)]); best = r.ms; draw();
+          dot.className += " won"; setStall(st = 0);
+          say(r.git, r.log);
+        } else {
+          dot.className += " lost"; if (path) path.setAttribute("class", r.m + " lost");
+          pts.push([X(n), Y(best)]); draw();
+          setStall(++st);
+          say(r.git, r.log);
+        }
+        if (n === 5) goal.className = "pf98-skills-goal met";
+      }]);
+    }
+
+    var steps = [[0, reset]];
+    steps.push([800, function () { phase("goal"); say("/goal p95 ≤ 40ms, tests green, ≤ 8 rounds", "GATE approve_goal ✓ (you ran /goal)"); }]);
+    for (var n = 1; n <= 5; n++) round(n, 1700 + (n - 1) * 1700);
+    steps.push([10400, function () { phase("ship"); setMode(null); labels(-1); say("[Done] goal met after Loop5", "haul-ship: SUMMARY.md 48->39ms · PR opened"); }]);
+
+    kit.every(13200, function () {
+      for (var i = 0; i < steps.length; i++) kit.later(steps[i][0], steps[i][1]);
+    });
+  };
+</script>

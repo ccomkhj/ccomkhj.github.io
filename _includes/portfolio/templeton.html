@@ -1,0 +1,248 @@
+{%- comment -%}
+  templeton — one /templeton:hunt, replayed. The deterministic screen ranks an index by CAGR
+  and cuts at the -20%/yr hard-hit bar; each deep-dived ticker gets the four real panel seats
+  in parallel, then the judge records the five gates on TEMPORARY and returns a verdict with
+  rubric confidence. Two illustrative runs alternate: one with the rare TEMPORARY, one with
+  none (the usual answer). Tickers and figures are fictional.
+{%- endcomment -%}
+<div class="pf98-screen pf98-templeton" data-demo="templeton" title="Illustrative run: fictional tickers, not investment advice">
+  <div class="tp">
+    <div class="tp-cmd"><b class="tp-ps">&gt;</b> <span class="tp-cmdtxt"></span><span class="tp-caret">_</span></div>
+    <div class="tp-main">
+      <div class="tp-scr">
+        <div class="tp-scrhd"><span class="tp-idx"></span> CAGR</div>
+        <ol class="tp-list"></ol>
+      </div>
+      <div class="tp-pan">
+        <div class="tp-row"><span class="tp-name">forensic-accountant</span><span class="tp-st"></span><span class="tp-cf"></span></div>
+        <div class="tp-row"><span class="tp-name">moat-analyst</span><span class="tp-st"></span><span class="tp-cf"></span></div>
+        <div class="tp-row"><span class="tp-name">short-seller</span><span class="tp-st"></span><span class="tp-cf"></span></div>
+        <div class="tp-row"><span class="tp-name">contrarian</span><span class="tp-st"></span><span class="tp-cf"></span></div>
+        <div class="tp-gates" title="All five must hold before the judge may say TEMPORARY">
+          <b class="tp-jl">judge</b>
+          <span class="tp-g"><i>·</i>accountant_survives</span>
+          <span class="tp-g"><i>·</i>moat_intact</span>
+          <span class="tp-g"><i>·</i>catalyst_named</span>
+          <span class="tp-g"><i>·</i>bear_case_answered</span>
+          <span class="tp-g"><i>·</i>margin_of_safety</span>
+        </div>
+        <div class="tp-stamp"><b></b><span class="tp-vc"></span><span class="tp-badge">accountant veto</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .pf98-templeton { background: #fff; container-type: size; }
+  .pf98-templeton .tp { position: absolute; inset: 0; box-sizing: border-box; display: flex; flex-direction: column; gap: 3px; padding: 3px 4px; color: #000; font: 10px/1.25 "Lucida Console", Monaco, monospace; font-size: clamp(9.5px, min(3.1cqw, 7cqh), 13px); }
+  .pf98-templeton .tp-cmd { flex: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-bottom: 2px; border-bottom: 1px solid #c0c0c0; }
+  .pf98-templeton .tp-ps { color: #008080; }
+  .pf98-templeton .tp-caret { animation: pf98-templeton-blink 1s steps(1) infinite; }
+  .pf98-templeton .tp-main { flex: 1; min-height: 0; display: flex; gap: 5px; }
+
+  /* the screen: a ListView of the worst performers, worst first */
+  .pf98-templeton .tp-scr { flex: none; width: 31%; min-width: 0; display: flex; flex-direction: column; padding: 1px; box-shadow: var(--w98-bevel-field); }
+  .pf98-templeton .tp-scrhd { padding: 0 3px; background: #c0c0c0; font: bold .92em/1.3 Arial, sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pf98-templeton .tp-list { margin: 1px 0 0; padding: 0; list-style: none; }
+  .pf98-templeton .tp-list li { position: relative; display: flex; padding: clamp(0px, .6cqh - .5px, 3px) 2px; white-space: nowrap; }
+  .pf98-templeton .tp-list li > span, .pf98-templeton .tp-list li > b { position: relative; }
+  .pf98-templeton .tp-list .tp-off { visibility: hidden; }
+  .pf98-templeton .tp-bar { position: absolute; left: 0; top: 1px; bottom: 1px; width: 0; background: #f6caca; transition: width .45s ease-out; }
+  .pf98-templeton .tp-tk { flex: 1; overflow: hidden; }
+  .pf98-templeton .tp-v { width: 1.4ch; margin-left: 2px; text-align: right; }
+  .pf98-templeton .tp-list .nop, .pf98-templeton .tp-list .near { color: #808080; }
+  .pf98-templeton .tp-list .near .tp-bar { background: #e6e6e6; }
+  .pf98-templeton .tp-list .cur { background: #000080; color: #fff; }
+  .pf98-templeton .tp-list .cur .tp-bar { background: #2a2aa8; }
+  .pf98-templeton .tp-list .tp-thr { display: block; margin: 1px 0; border-top: 1px dashed #b00000; color: #b00000; font: 9.5px/1.1 Arial, sans-serif; text-align: right; }
+
+  /* the panel: four seats, then the judge */
+  .pf98-templeton .tp-pan { position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; gap: clamp(1px, 1.5cqh - 1px, 6px); }
+  .pf98-templeton .tp-row { display: flex; align-items: baseline; gap: 4px; white-space: nowrap; }
+  .pf98-templeton .tp-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-family: Arial, sans-serif; font-size: 1.04em; }
+  .pf98-templeton .tp-row.flag .tp-name::after { content: " \2691"; color: #b00000; }
+  .pf98-templeton .tp-st { width: 9.2ch; font-weight: bold; }
+  .pf98-templeton .tp-cf { width: 3.6ch; color: #808080; }
+  .pf98-templeton .tp-row.busy .tp-st { color: #808080; font-weight: normal; font-style: italic; animation: pf98-templeton-pulse .7s ease-in-out infinite alternate; }
+  .pf98-templeton .tp-row.done .tp-st { animation: pf98-templeton-in .25s ease-out; }
+  .pf98-templeton .s-SURVIVES .tp-st, .pf98-templeton .s-TEMPORARY .tp-st { color: #007000; }
+  .pf98-templeton .s-DIES .tp-st, .pf98-templeton .s-PERMANENT .tp-st { color: #b00000; }
+  .pf98-templeton .tp-gates { display: flex; flex-wrap: wrap; gap: 0 .6em; margin-top: 2px; padding-top: 2px; border-top: 1px solid #c0c0c0; font: .98em/1.25 Arial, sans-serif; }
+  .pf98-templeton .tp-jl { color: #000080; }
+  .pf98-templeton .tp-g { white-space: nowrap; }
+  .pf98-templeton .tp-g i { display: inline-block; width: 1.05em; font-style: normal; font-weight: bold; color: #808080; }
+  .pf98-templeton .tp-g.ok i { color: #007000; }
+  .pf98-templeton .tp-g.no { color: #808080; }
+  .pf98-templeton .tp-g.no i { color: #b00000; }
+  .pf98-templeton .tp-g.ok i, .pf98-templeton .tp-g.no i { animation: pf98-templeton-in .2s ease-out; }
+  /* the verdict lands like a rubber stamp across the panel */
+  /* it lands over the seat names (static, already read) so the stances + confidence stay visible */
+  .pf98-templeton .tp-stamp { position: absolute; left: 0; top: 8%; max-width: calc(100% - 14ch); box-sizing: border-box; visibility: hidden; display: flex; flex-direction: column; align-items: center; gap: 1px; padding: .15em .4em .25em; border: 3px double; background: rgba(255, 255, 255, .88); transform: rotate(-6deg); pointer-events: none; }
+  .pf98-templeton .tp-stamp b { font-size: 1.25em; letter-spacing: .04em; }
+  .pf98-templeton .tp-stamp.on { visibility: visible; animation: pf98-templeton-stamp .3s ease-out; }
+  .pf98-templeton .v-TEMPORARY { color: #007000; }
+  .pf98-templeton .v-PERMANENT { color: #b00000; }
+  .pf98-templeton .v-UNCLEAR { color: #7a6400; }
+  .pf98-templeton .tp-vc { font: .98em Arial, sans-serif; color: #000; }
+  .pf98-templeton .tp-badge { display: none; padding: 0 3px; border: 1px solid #000; background: #ffffe1; color: #000; font: .92em Arial, sans-serif; }
+  .pf98-templeton .tp-badge.on { display: inline-block; }
+
+  @keyframes pf98-templeton-blink { 50% { opacity: 0; } }
+  @keyframes pf98-templeton-pulse { from { opacity: 1; } to { opacity: .35; } }
+  @keyframes pf98-templeton-in { from { opacity: 0; transform: translateY(-3px); } }
+  @keyframes pf98-templeton-stamp { from { opacity: 0; transform: rotate(-16deg) scale(1.9); } }
+</style>
+<script>
+  (window.pf98Demos = window.pf98Demos || {})["templeton"] = function (el, kit) {
+    // Two illustrative hunts. seats: [stance, confidence] for forensic-accountant,
+    // moat-analyst, short-seller, contrarian. flag = the steelman that conceded against its
+    // brief. gates follow the schema order: accountant_survives, moat_intact, catalyst_named,
+    // bear_case_answered, margin_of_safety.
+    var RUNS = [
+      {
+        cmd: "/templeton:hunt 5y, analyze the 3 worst", idx: "sp500 · 5y",
+        cost: "4 hard hits · 3 × (4+1) = 15 agents",
+        list: [["SNKN", -41.2], ["HLLW", -33.8], ["DRFT", -27.5], ["LAGR", -21.3], null, ["MEH", -18.6], ["OKAY", -9.1]],
+        deep: [
+          { tk: "SNKN", seats: [["DIES", "high"], ["TEMPORARY", "med"], ["PERMANENT", "high"], ["TEMPORARY", "med"]],
+            gates: [0, 1, 0, 0, 0], v: "PERMANENT", c: "high", veto: true,
+            note: "DIES → veto: good business, fatal balance sheet" },
+          { tk: "HLLW", seats: [["SURVIVES", "med"], ["TEMPORARY", "med"], ["TEMPORARY", "med"], ["TEMPORARY", "med"]],
+            flag: 2, gates: [1, 1, 1, 1, 0], v: "UNCLEAR", c: "medium",
+            note: "only margin_of_safety ✗ → re-run after a fall" },
+          { tk: "DRFT", seats: [["SURVIVES", "high"], ["TEMPORARY", "med"], ["PERMANENT", "med"], ["TEMPORARY", "high"]],
+            gates: [1, 1, 1, 1, 1], v: "TEMPORARY", c: "medium",
+            note: "5/5 gates · conf ≤ min(moat, contrarian)" }
+        ],
+        end: "1 of 3 TEMPORARY — a finding, not a buy signal"
+      },
+      {
+        cmd: "/templeton:hunt nasdaq, 3 years, 3 worst", idx: "ndx100 · 3y",
+        cost: "3 hard hits · 3 × (4+1) = 15 agents",
+        list: [["FADE", -38.0], ["SAGG", -29.4], ["GLUM", -24.6], null, ["SOSO", -17.2], ["MEH", -12.5], ["DULL", -8.4]],
+        deep: [
+          { tk: "FADE", seats: [["SURVIVES", "high"], ["PERMANENT", "high"], ["PERMANENT", "high"], ["PERMANENT", "med"]],
+            flag: 3, gates: [1, 0, 0, 0, 0], v: "PERMANENT", c: "high",
+            note: "contrarian concedes vs its brief · unanimous" },
+          { tk: "SAGG", seats: [["SURVIVES", "low"], ["TEMPORARY", "low"], ["PERMANENT", "med"], ["TEMPORARY", "med"]],
+            gates: [1, 1, 0, 0, 0], v: "UNCLEAR", c: "low",
+            note: "cheap ≠ catalyst: no recovery mechanism named" },
+          { tk: "GLUM", seats: [["SURVIVES", "med"], ["TEMPORARY", "med"], ["PERMANENT", "high"], ["TEMPORARY", "med"]],
+            gates: [1, 1, 1, 0, 0], v: "UNCLEAR", c: "medium",
+            note: "bear case outweighed, not answered → UNCLEAR" }
+        ],
+        end: "0 of 3 TEMPORARY — the usual, honest answer"
+      }
+    ];
+    var HINT = ["solvency…", "moat…", "bear case…", "bull case…"];
+    var LETTER = { TEMPORARY: "T", PERMANENT: "P", UNCLEAR: "U" };
+
+    var cmd = kit.$(".tp-cmdtxt"), idx = kit.$(".tp-idx"), list = kit.$(".tp-list");
+    var seats = kit.$$(".tp-row"), gates = kit.$$(".tp-g");
+    var stamp = kit.$(".tp-stamp"), stampV = kit.$(".tp-stamp b"), vc = kit.$(".tp-vc"), badge = kit.$(".tp-badge");
+
+    function at(ms, fn) { setTimeout(fn, ms); }
+    function say(t) { cmd.textContent = t; }
+    function pct(x) { return "−" + Math.abs(x).toFixed(1) + "%"; }
+    function pad(n) { return (n < 10 ? "0" : "") + n; }
+    function li(tk) { return list.querySelector('[data-tk="' + tk + '"]'); }
+
+    function buildList(run) {
+      var deep = run.deep.map(function (d) { return d.tk; }), h = "";
+      run.list.forEach(function (r) {
+        if (!r) { h += '<li class="tp-thr tp-off">−20%/yr bar</li>'; return; }
+        var hard = r[1] <= -20, panel = deep.indexOf(r[0]) >= 0;
+        var kind = !hard ? "near" : panel ? "hard" : "nop";
+        var tip = !hard ? "near-miss: listed in the report, not sent to the panel"
+          : panel ? "hard hit: CAGR ≤ −20%/yr, deep-dived" : "hard hit beyond the deep-dive K: no panel";
+        h += '<li class="' + kind + ' tp-off" data-tk="' + r[0] + '" title="' + tip + '">' +
+          '<i class="tp-bar" data-w="' + Math.min(100, -r[1] / 45 * 100).toFixed(0) + '%"></i>' +
+          '<span class="tp-tk">' + r[0] + '</span><span>' + pct(r[1]) + '</span>' +
+          '<b class="tp-v">' + (kind === "nop" ? "–" : "") + '</b></li>';
+      });
+      list.innerHTML = h;
+      idx.textContent = run.idx;
+    }
+    function reveal(row) {
+      row.classList.remove("tp-off");
+      var bar = row.querySelector(".tp-bar");
+      if (bar) at(kit.still ? 0 : 20, function () { bar.style.width = bar.getAttribute("data-w"); });
+    }
+    function resetPanel() {
+      seats.forEach(function (s) {
+        s.className = "tp-row"; s.title = "";
+        s.querySelector(".tp-st").textContent = ""; s.querySelector(".tp-cf").textContent = "";
+      });
+      gates.forEach(function (g) { g.className = "tp-g"; g.firstChild.textContent = "·"; });
+      stamp.className = "tp-stamp"; stampV.textContent = ""; vc.textContent = ""; badge.className = "tp-badge";
+    }
+    function startStock(d, run) {
+      resetPanel();
+      kit.$$(".tp-list .cur").forEach(function (r) { r.classList.remove("cur"); });
+      li(d.tk).classList.add("cur");
+      var cagr = run.list.filter(function (r) { return r && r[0] === d.tk; })[0][1];
+      say(d.tk + " " + pct(cagr) + "/yr · 4 seats in parallel, ticker only");
+      seats.forEach(function (s, i) { s.className = "tp-row busy"; s.querySelector(".tp-st").textContent = HINT[i]; });
+    }
+    function seat(d, i) {
+      var s = seats[i];
+      s.className = "tp-row done s-" + d.seats[i][0] + (d.flag === i ? " flag" : "");
+      s.title = d.flag === i ? "steelman conceded against its own brief" : "";
+      s.querySelector(".tp-st").textContent = d.seats[i][0];
+      s.querySelector(".tp-cf").textContent = d.seats[i][1];
+    }
+    function gate(d, g) {
+      gates[g].className = "tp-g " + (d.gates[g] ? "ok" : "no");
+      gates[g].firstChild.textContent = d.gates[g] ? "✓" : "✗";
+    }
+    function verdict(d) {
+      stampV.textContent = d.v;
+      stamp.className = "tp-stamp v-" + d.v;
+      void stamp.offsetWidth;
+      stamp.className += " on";
+      vc.textContent = d.c + " confidence";
+      badge.className = "tp-badge" + (d.veto ? " on" : "");
+      var v = li(d.tk).querySelector(".tp-v");
+      v.textContent = LETTER[d.v]; v.className = "tp-v v-" + d.v;
+      say(d.note);
+    }
+    function today() {
+      var t = new Date();
+      return t.getFullYear() + "-" + pad(t.getMonth() + 1) + "-" + pad(t.getDate());
+    }
+
+    if (kit.still) {
+      var r0 = RUNS[0], d0 = r0.deep[1];
+      buildList(r0);
+      kit.$$(".tp-list li").forEach(reveal);
+      r0.deep.forEach(verdict);
+      startStock(d0, r0);
+      [0, 1, 2, 3].forEach(function (i) { seat(d0, i); });
+      [0, 1, 2, 3, 4].forEach(function (g) { gate(d0, g); });
+      verdict(d0);
+      return;
+    }
+
+    function play(n) {
+      var run = RUNS[n % RUNS.length], t, i;
+      resetPanel(); buildList(run); say("");
+      for (i = 0; i <= run.cmd.length; i++) (function (k) { at(k * 22, function () { say(run.cmd.slice(0, k)); }); })(i);
+      t = run.cmd.length * 22 + 250;
+      kit.$$(".tp-list li").forEach(function (row, k) { at(t + k * 90, function () { reveal(row); }); });
+      t += run.list.length * 90 + 200;
+      at(t, function () { say(run.cost); });
+      t += 950;
+      run.deep.forEach(function (d) {
+        at(t, function () { startStock(d, run); });
+        // the four seats are independent, so they land in whatever order they finish
+        [0, 1, 2, 3].forEach(function (i) { at(t + kit.rnd(350, 1250), function () { seat(d, i); }); });
+        [0, 1, 2, 3, 4].forEach(function (g) { at(t + 1450 + g * 150, function () { gate(d, g); }); });
+        at(t + 2250, function () { verdict(d); });
+        t += 3150;
+      });
+      at(t, function () { say("→ reports/" + today() + "-hunt.html · verdicts.json"); });
+      at(t + 1400, function () { say(run.end); });
+      at(t + 3000, function () { play(n + 1); });
+    }
+    play(0);
+  };
+</script>

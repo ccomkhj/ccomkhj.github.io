@@ -1,0 +1,329 @@
+{%- comment -%}
+  product-demo demo: record-then-edit. One sentence becomes an approved script, tts.py
+  voices it first (audio/reports.wav), the agent records raw.mp4 with a magenta sync
+  flash, beats and long frozen stretches between MCP calls, then compose.py drops the
+  frozen frames (mpdecimate) and holds each action until the voice reaches its `at`
+  phrase, so every click lands on the word that names it. Out: <slug>.mp4, .srt,
+  transcript.md in demos/<slug>/.
+{%- endcomment -%}
+<div class="pf98-screen pf98-product-demo" data-demo="product-demo">
+  <div class="pd-hd"><span class="pd-st"></span><span class="pd-path">demos/csv-export/</span></div>
+  <div class="pd-pv">
+    <div class="pd-app">
+      <div class="pd-nav"><i>Home</i><i class="pd-rep">Reports</i><i>Billing</i></div>
+      <div class="pd-main">
+        <div class="pd-bar"><b class="pd-ttl">Home</b><span class="pd-dd">This month ▾</span><span class="pd-btn">Export CSV</span></div>
+        <div class="pd-rows"><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+    <div class="pd-card">
+      <div class="pd-c1">demo.json · scene "reports"</div>
+      <div>"Open Reports, pick last month, hit Export CSV."</div>
+      <div class="pd-c3">✓ script approved → tts.py → audio/reports.wav</div>
+    </div>
+    <div class="pd-flash"></div>
+    <div class="pd-tag"></div>
+    <div class="pd-toast">⬇ reports-2026-09.csv</div>
+    <div class="pd-sub"><span></span></div>
+    <div class="pd-face" title="presenter bubble">🙂</div>
+    <div class="pd-rip"></div>
+    <svg class="pd-cur" viewBox="0 0 28 28" aria-hidden="true"><path d="M4 2 L4 23 L9.5 17.8 L13.3 26 L17 24.4 L13.3 16.4 L21 16.4 Z" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="round"/></svg>
+  </div>
+  <div class="pd-tl">
+    <span class="pd-lb pd-r1 pd-lraw">raw</span><div class="pd-trk pd-r1 pd-raw"><div class="pd-mask"></div></div><span class="pd-len pd-r1 pd-nraw">41.2s</span>
+    <span class="pd-lb pd-r2">voice</span><div class="pd-trk pd-r2 pd-wav"></div><span class="pd-len pd-r2">7.4s</span>
+    <span class="pd-lb pd-r3">at</span><div class="pd-trk pd-r3 pd-chips"><b>Reports</b><b>last month</b><b>Export CSV</b></div>
+    <div class="pd-phc"><i class="pd-ph"></i></div>
+  </div>
+</div>
+<style>
+  .pf98-product-demo { display: flex; flex-direction: column; gap: 2px; padding: 2px 3px 3px; background: #fff; font: 9.5px/12px "Lucida Console", Monaco, monospace; color: #000; }
+  .pf98-product-demo .pd-hd { flex: none; display: flex; gap: 6px; white-space: nowrap; line-height: 13px; }
+  .pf98-product-demo .pd-st { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; color: #000080; font-weight: bold; }
+  .pf98-product-demo .pd-st .pd-ty { display: inline-block; overflow: hidden; vertical-align: bottom; }
+  .pf98-product-demo .pd-st.pd-rec { color: #c00000; }
+  .pf98-product-demo .pd-st.pd-ok { color: #006000; }
+  .pf98-product-demo .pd-path { flex: 0 1000 auto; min-width: 0; margin-left: auto; overflow: hidden; text-overflow: ellipsis; color: #808080; }
+  .pf98-product-demo .pd-path.pd-off { display: none; }
+
+  /* the recorded web app */
+  .pf98-product-demo .pd-pv { position: relative; flex: 1; min-height: 0; overflow: hidden; border: 1px solid #808080; background: #fff; font: 9.5px/12px Arial, sans-serif; }
+  .pf98-product-demo .pd-app { display: flex; height: 100%; }
+  .pf98-product-demo .pd-nav { flex: 0 0 24%; padding-top: 3px; background: #e4e4ee; }
+  .pf98-product-demo .pd-nav i { display: block; padding: 1px 4px; font-style: normal; color: #333; }
+  .pf98-product-demo .pd-app.pd-on .pd-rep { background: #000080; color: #fff; }
+  .pf98-product-demo .pd-main { flex: 1; min-width: 0; padding: 3px 4px; }
+  .pf98-product-demo .pd-bar { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+  .pf98-product-demo .pd-ttl { flex: 1; min-width: 0; font-size: 10.5px; }
+  .pf98-product-demo .pd-dd, .pf98-product-demo .pd-btn { visibility: hidden; padding: 0 3px; border: 1px solid #808080; }
+  .pf98-product-demo .pd-btn { border-color: #005050; background: #008080; color: #fff; }
+  .pf98-product-demo .pd-app.pd-on .pd-dd, .pf98-product-demo .pd-app.pd-on .pd-btn { visibility: visible; }
+  .pf98-product-demo .pd-dd.pd-hit, .pf98-product-demo .pd-btn.pd-hit { box-shadow: 0 0 0 1px #ffd400; }
+  .pf98-product-demo .pd-rows i { display: block; height: 5px; margin-top: 5px; background: #e6e6e6; }
+  .pf98-product-demo .pd-app.pd-on .pd-rows i { background: #cfe3e3; }
+  .pf98-product-demo .pd-rows i:nth-child(2) { width: 82%; }
+  .pf98-product-demo .pd-rows i:nth-child(3) { width: 91%; }
+  .pf98-product-demo .pd-rows i:nth-child(4) { width: 64%; }
+
+  /* overlays: script card, sync flash, agent tag, toast, burned-in subtitle, presenter */
+  .pf98-product-demo .pd-card { position: absolute; left: 6px; right: 6px; top: 4px; padding: 2px 4px; background: #ffffe1; border: 1px solid #000; transition: opacity .25s; }
+  .pf98-product-demo .pd-card div { overflow: hidden; text-overflow: ellipsis; }
+  .pf98-product-demo .pd-c1 { font: 9.5px/12px "Lucida Console", Monaco, monospace; color: #000080; }
+  .pf98-product-demo .pd-c3 { color: #006000; white-space: nowrap; }
+  .pf98-product-demo .pd-card.pd-off { opacity: 0; }
+  .pf98-product-demo .pd-flash { position: absolute; inset: 0; background: #ff00ff; opacity: 0; }
+  .pf98-product-demo .pd-flash.pd-on { opacity: 1; }
+  .pf98-product-demo .pd-tag { position: absolute; right: 3px; top: 3px; padding: 0 3px; background: #ffffe1; border: 1px solid #000; font: 9.5px/12px "Lucida Console", Monaco, monospace; white-space: nowrap; display: none; }
+  .pf98-product-demo .pd-tag.pd-on { display: block; }
+  .pf98-product-demo .pd-toast { position: absolute; right: 3px; top: 18px; padding: 0 3px; background: #fff; border: 1px solid #008080; color: #005050; white-space: nowrap; display: none; }
+  .pf98-product-demo .pd-toast.pd-on { display: block; }
+  .pf98-product-demo .pd-sub { position: absolute; left: 20px; right: 2px; bottom: 3px; text-align: center; line-height: 13px; }
+  .pf98-product-demo .pd-sub span { padding: 1px 4px; background: rgba(0, 0, 0, .8); color: #fff; font-size: 10px; }
+  .pf98-product-demo .pd-sub span:empty { display: none; }
+  .pf98-product-demo .pd-sub b { font-weight: normal; }
+  .pf98-product-demo .pd-sub b.pd-on { color: #ffd400; }
+  .pf98-product-demo .pd-face { position: absolute; left: 3px; bottom: 2px; width: 15px; height: 15px; border-radius: 50%; background: #ffe7b8; font-size: 10px; line-height: 15px; text-align: center; opacity: 0; }
+  .pf98-product-demo .pd-face.pd-on { opacity: 1; }
+  .pf98-product-demo .pd-face.pd-talk { animation: pf98-product-demo-halo .5s ease-in-out infinite alternate; }
+  @keyframes pf98-product-demo-halo { from { box-shadow: 0 0 0 1px #008080; } to { box-shadow: 0 0 0 3px rgba(0, 128, 128, .45); } }
+  .pf98-product-demo .pd-cur { position: absolute; left: 60%; top: 70%; width: 13px; height: 13px; margin: -1px 0 0 -2px; transition: left .26s ease-out, top .26s ease-out; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .4)); }
+  .pf98-product-demo .pd-rip { position: absolute; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; border: 2px solid rgba(255, 59, 48, .95); background: rgba(255, 59, 48, .35); opacity: 0; box-sizing: border-box; }
+  .pf98-product-demo .pd-rip.pd-go { animation: pf98-product-demo-rip .7s ease-out; }
+  .pf98-product-demo .pd-rip.pd-st1 { opacity: 1; }
+  @keyframes pf98-product-demo-rip { from { transform: scale(.4); opacity: 1; } to { transform: scale(2.3); opacity: 0; } }
+
+  /* timeline: raw take vs narration, then compose */
+  .pf98-product-demo .pd-tl { flex: none; position: relative; display: grid; grid-template-columns: auto 1fr auto; column-gap: 3px; row-gap: 2px; align-items: center; }
+  .pf98-product-demo .pd-lb { grid-column: 1; color: #808080; }
+  .pf98-product-demo .pd-r1 { grid-row: 1; }
+  .pf98-product-demo .pd-r2 { grid-row: 2; }
+  .pf98-product-demo .pd-r3 { grid-row: 3; }
+  .pf98-product-demo .pd-len { grid-column: 3; min-width: 5ch; text-align: right; color: #000080; }
+  .pf98-product-demo .pd-trk { grid-column: 2; position: relative; height: 11px; }
+  .pf98-product-demo .pd-raw { background: #f0f0f0; box-shadow: inset 0 0 0 1px #c0c0c0; overflow: hidden; }
+  .pf98-product-demo .pd-sg { position: absolute; top: 0; bottom: 0; overflow: hidden; white-space: nowrap; font: 9.5px/11px Arial, sans-serif; text-align: center; transition: left .9s ease-in-out, width .9s ease-in-out, opacity .9s; }
+  .pf98-product-demo .pd-sync { background: #ff00ff; }
+  .pf98-product-demo .pd-mo { background: #008080; border-left: 2px solid #000080; }
+  .pf98-product-demo .pd-fz { color: #555; background: repeating-linear-gradient(135deg, #d4d4d4 0 3px, #ececec 3px 6px); }
+  .pf98-product-demo .pd-hold, .pf98-product-demo .pd-pad { color: #555; background: #dcdcdc; box-shadow: inset -1px 0 #fff; }
+  .pf98-product-demo .pd-mask { position: absolute; top: 0; bottom: 0; right: 0; width: 100%; background: #f0f0f0; border-left: 1px solid #c00000; box-sizing: border-box; z-index: 1; }
+  .pf98-product-demo .pd-wav { height: 10px; display: flex; align-items: center; }
+  .pf98-product-demo .pd-wav i { flex: 1; margin-right: 1px; background: #008080; transform: scaleY(0); transition: transform .2s; }
+  .pf98-product-demo .pd-wav.pd-in i { transform: none; }
+  .pf98-product-demo .pd-chips { height: 12px; }
+  .pf98-product-demo .pd-chips b { position: absolute; top: 0; padding: 0 2px; border: 1px solid #808080; font: 9.5px/10px Arial, sans-serif; white-space: nowrap; background: #fff; opacity: 0; transition: opacity .3s; }
+  .pf98-product-demo .pd-chips.pd-in b { opacity: 1; }
+  .pf98-product-demo .pd-chips b.pd-on { background: #000080; border-color: #000080; color: #fff; }
+  .pf98-product-demo .pd-chips b:nth-child(1) { left: 30%; }
+  .pf98-product-demo .pd-chips b:nth-child(2) { left: 52%; }
+  .pf98-product-demo .pd-chips b:nth-child(3) { left: 75%; }
+  .pf98-product-demo .pd-phc { grid-column: 2; grid-row: 1 / 4; position: relative; align-self: stretch; pointer-events: none; }
+  .pf98-product-demo .pd-ph { position: absolute; top: -1px; bottom: -1px; left: 0; width: 1px; background: #ff0000; visibility: hidden; z-index: 2; }
+  .pf98-product-demo .pd-ph.pd-on { visibility: visible; }
+  .pf98-product-demo.pd-still * { transition: none !important; animation: none !important; }
+</style>
+<script>
+  (window.pf98Demos = window.pf98Demos || {})["product-demo"] = function (el, kit) {
+    var $ = function (s) { return el.querySelector(s); };
+    var st = $(".pd-st"), path = $(".pd-path"), pv = $(".pd-pv"), app = $(".pd-app");
+    var card = $(".pd-card"), flash = $(".pd-flash"), tag = $(".pd-tag"), toast = $(".pd-toast");
+    var sub = $(".pd-sub span"), face = $(".pd-face"), cur = $(".pd-cur"), rip = $(".pd-rip");
+    var ttl = $(".pd-ttl"), dd = $(".pd-dd"), btn = $(".pd-btn"), navRep = $(".pd-rep");
+    var raw = $(".pd-raw"), mask = $(".pd-mask"), wav = $(".pd-wav"), chipsBox = $(".pd-chips");
+    var chips = chipsBox.querySelectorAll("b"), ph = $(".pd-ph"), lraw = $(".pd-lraw"), nraw = $(".pd-nraw");
+    var PROMPT = "/product-demo:run We shipped CSV export on Reports";
+    var CUE1 = "Last month's numbers. No copy-paste.";
+    var CUE2 = "Open <b>Reports</b>, pick <b>last month</b>, hit <b>Export CSV</b>.";
+    var CUE3 = "One file, zero spreadsheets harmed.";
+    var DONE = "✓ demos/csv-export/: .mp4 .srt transcript.md";
+
+    // raw = where each part sits in the take; fit = where compose puts it (percent of track)
+    var SEGS = [
+      { k: "sync", raw: [0, 3], fit: [0, 0] },
+      { k: "hold", raw: [3, 0], fit: [0, 30], t: "hold" },
+      { k: "mo", raw: [3, 8], fit: [30, 8] },
+      { k: "fz", raw: [11, 25], fit: [38, 0], t: "frozen" },
+      { k: "hold", raw: [36, 0], fit: [38, 14] },
+      { k: "mo", raw: [36, 8], fit: [52, 8] },
+      { k: "fz", raw: [44, 26], fit: [60, 0], t: "frozen" },
+      { k: "hold", raw: [70, 0], fit: [60, 15] },
+      { k: "mo", raw: [70, 8], fit: [75, 8] },
+      { k: "fz", raw: [78, 22], fit: [83, 0], t: "frozen" },
+      { k: "pad", raw: [100, 0], fit: [83, 17], t: "pad" }
+    ];
+    var segEls = [];
+    for (var i = 0; i < SEGS.length; i++) {
+      var s = document.createElement("div");
+      s.className = "pd-sg pd-" + SEGS[i].k;
+      s.textContent = SEGS[i].t || "";
+      raw.insertBefore(s, mask);
+      segEls.push(s);
+    }
+    var bars = "";
+    for (i = 0; i < 64; i++) {
+      var h = 20 + Math.round(80 * Math.abs(Math.sin(i * 1.7) * Math.cos(i * 0.6)));
+      bars += '<i style="height:' + h + '%;transition-delay:' + i * 9 + 'ms"></i>';
+    }
+    wav.innerHTML = bars;
+
+    function snap(node, prop, val) {
+      node.style.transition = "none";
+      node.style[prop] = val;
+      void node.offsetWidth;
+      node.style.transition = "";
+    }
+    function on(node, yes) { node.classList.toggle("pd-on", !!yes); }
+    function lay(mode, still) {
+      for (var j = 0; j < SEGS.length; j++) {
+        var p = SEGS[j][mode], n = segEls[j];
+        if (still) n.style.transition = "none";
+        n.style.left = p[0] + "%";
+        n.style.width = p[1] + "%";
+        n.style.opacity = p[1] ? 1 : 0;
+        if (still) { void n.offsetWidth; n.style.transition = ""; }
+      }
+    }
+    function stage(text, cls, typeMs) {
+      st.className = "pd-st" + (cls ? " " + cls : "");
+      if (!typeMs || kit.still) { st.textContent = text; return; }
+      st.innerHTML = '<span class="pd-ty"></span>';
+      var ty = st.firstChild;
+      ty.textContent = text;
+      {
+        ty.style.width = "0";
+        void ty.offsetWidth;
+        ty.style.transition = "width " + typeMs + "ms steps(" + text.length + ")";
+        ty.style.width = text.length + "ch";
+      }
+    }
+    function centre(t) {
+      var a = pv.getBoundingClientRect(), b = t.getBoundingClientRect();
+      if (!a.width) return t === navRep ? ["12%", "34%"] : t === dd ? ["70%", "14%"] : ["88%", "14%"];
+      return [b.left - a.left + b.width / 2, b.top - a.top + b.height / 2];
+    }
+    function px(v) { return typeof v === "number" ? v + "px" : v; }
+    function point(t) {
+      var c = centre(t);
+      cur.style.left = px(c[0]);
+      cur.style.top = px(c[1]);
+    }
+    function click(t) {
+      var c = centre(t);
+      rip.style.left = px(c[0]);
+      rip.style.top = px(c[1]);
+      rip.classList.remove("pd-go");
+      void rip.offsetWidth;
+      rip.classList.add("pd-go");
+      if (t === navRep) { on(app, 1); ttl.textContent = "Reports"; }
+      if (t === dd) { dd.textContent = "Last month ▾"; dd.classList.add("pd-hit"); }
+      if (t === btn) { btn.classList.add("pd-hit"); on(toast, 1); }
+    }
+    // the action: cursor glides to the target, then clicks
+    function act(t) {
+      point(t);
+      kit.later(280, function () { click(t); });
+    }
+    function resetApp() {
+      on(app, 0); ttl.textContent = "Home"; dd.textContent = "This month ▾";
+      dd.classList.remove("pd-hit"); btn.classList.remove("pd-hit"); on(toast, 0);
+      snap(cur, "left", "60%"); snap(cur, "top", "70%");
+      rip.classList.remove("pd-go", "pd-st1");
+    }
+    function setTag(text) { tag.textContent = text; on(tag, text); }
+
+    function cycle() {
+      // 0: the sentence, the approved script, narration audio first
+      resetApp();
+      stage(PROMPT, "", 900);
+      path.classList.add("pd-off");
+      card.classList.remove("pd-off");
+      sub.innerHTML = ""; on(face, 0); face.classList.remove("pd-talk"); setTag("");
+      lay("raw", true);
+      snap(mask, "width", "100%");
+      mask.style.visibility = "";
+      lraw.textContent = "raw"; nraw.textContent = "";
+      wav.classList.remove("pd-in"); chipsBox.classList.remove("pd-in");
+      for (var j = 0; j < chips.length; j++) on(chips[j], 0);
+      on(ph, 0); snap(ph, "left", "0%");
+      kit.later(500, function () { wav.classList.add("pd-in"); });
+      kit.later(1000, function () { chipsBox.classList.add("pd-in"); });
+
+      // 1: record raw.mp4: sync flash, actions with long frozen gaps between MCP calls
+      kit.later(1500, function () {
+        card.classList.add("pd-off");
+        path.classList.remove("pd-off");
+        stage("● REC raw.mp4 + timeline.jsonl", "pd-rec");
+        mask.style.transition = "width 3200ms linear";
+        mask.style.width = "0%";
+        nraw.textContent = "41.2s";
+        on(flash, 1); setTag("__demo.sync()");
+        kit.later(110, function () { on(flash, 0); setTag("● click"); act(navRep); });
+        kit.later(352, function () { setTag("⏸ take_snapshot"); });
+        kit.later(1152, function () { setTag("● click"); act(dd); });
+        kit.later(1408, function () { setTag("⏸ mark.py beat"); });
+        kit.later(2240, function () { setTag("● click"); act(btn); });
+        kit.later(2496, function () { setTag("⏸ screencast_stop"); });
+      });
+
+      // 2: compose drops the frozen frames and holds each action until its at phrase
+      kit.later(4700, function () {
+        setTag("");
+        stage("⚙ compose.py: drop frozen, fit");
+        mask.style.visibility = "hidden";
+        lay("fit");
+        kit.later(900, function () { lraw.textContent = "cut"; nraw.textContent = "7.4s"; });
+      });
+
+      // 3: play the result: every click lands on the word that names it
+      kit.later(5900, function () {
+        resetApp();
+        stage("▶ csv-export.mp4  0:07.4");
+        on(ph, 1);
+        ph.style.transition = "left 4000ms linear";
+        ph.style.left = "100%";
+        sub.textContent = CUE1;
+        on(face, 1); face.classList.add("pd-talk");
+        var subBs;
+        kit.later(1000, function () { sub.innerHTML = CUE2; subBs = sub.querySelectorAll("b"); });
+        var at = [[1200, navRep], [2080, dd], [3000, btn]];
+        at.forEach(function (a, k) {
+          kit.later(a[0], function () { on(chips[k], 1); if (subBs) on(subBs[k], 1); act(a[1]); });
+        });
+        kit.later(3520, function () { sub.textContent = CUE3; });
+      });
+
+      // 4: the outputs in demos/<slug>/
+      kit.later(9900, function () {
+        face.classList.remove("pd-talk");
+        path.classList.add("pd-off");
+        stage(DONE, "pd-ok");
+      });
+    }
+
+    function finalFrame() {
+      el.classList.add("pd-still");
+      stage(DONE, "pd-ok");
+      path.classList.add("pd-off");
+      card.classList.add("pd-off");
+      lay("fit", true);
+      mask.style.visibility = "hidden";
+      lraw.textContent = "cut"; nraw.textContent = "7.4s";
+      wav.classList.add("pd-in"); chipsBox.classList.add("pd-in");
+      for (var j = 0; j < chips.length; j++) on(chips[j], 1);
+      on(ph, 1); ph.style.left = "80%";
+      on(app, 1); ttl.textContent = "Reports"; dd.textContent = "Last month ▾";
+      btn.classList.add("pd-hit"); on(toast, 1);
+      sub.innerHTML = CUE2;
+      var bs = sub.querySelectorAll("b");
+      for (j = 0; j < bs.length; j++) on(bs[j], 1);
+      on(face, 1);
+      point(btn);
+      var c = centre(btn);
+      rip.style.left = px(c[0]); rip.style.top = px(c[1]);
+      rip.classList.add("pd-st1");
+    }
+
+    if (kit.still) finalFrame();
+    else kit.every(10900, cycle);
+  };
+</script>

@@ -1,0 +1,254 @@
+{%- comment -%}
+  Agentune live window: the README's store_sales / XGBoost campaign replayed.
+  Top: round FSM state + best rmse. Middle: four of the nine XGBoost params —
+  Optuna trials land in each range, red tick = best value, right = importance.
+  Bottom: Claude Code's MCP calls (run_next_round → get_round_summary →
+  submit_action_proposal), incl. the narrow_search and the cooldown rejection.
+{%- endcomment -%}
+<div class="pf98-screen pf98-agentune" data-demo="agentune">
+  <div class="agt-hd"><b class="agt-rd">R1/6</b><span class="agt-st">PROPOSED</span><span class="agt-best">rmse —</span></div>
+  <div class="agt-space"></div>
+  <div class="agt-log"></div>
+</div>
+<style>
+  .pf98-agentune { display: flex; flex-direction: column; padding: 2px; background: #fff; font: 9.5px/1.25 "Lucida Console", Monaco, monospace; color: #000; }
+  .pf98-agentune .agt-hd { flex: none; display: flex; align-items: center; gap: 4px; padding: 1px 3px; background: #c0c0c0; border-bottom: 1px solid #808080; white-space: nowrap; }
+  .pf98-agentune .agt-rd { color: #000080; }
+  .pf98-agentune .agt-st { padding: 0 3px; color: #fff; background: #808080; }
+  .pf98-agentune .agt-st[data-s="RUNNING"] { background: #000080; }
+  .pf98-agentune .agt-st[data-s="SUMMARIZING"] { background: #008080; }
+  .pf98-agentune .agt-st[data-s="AWAITING_AGENT"] { background: #800080; }
+  .pf98-agentune .agt-st[data-s="RESOLVED"],
+  .pf98-agentune .agt-st[data-s="COMPLETED"] { background: #008000; }
+  .pf98-agentune .agt-best { margin-left: auto; overflow: hidden; text-overflow: ellipsis; }
+  .pf98-agentune .agt-best em { font-style: normal; color: #008000; }
+  .pf98-agentune .agt-space { flex: none; padding: 2px 3px 3px; }
+  .pf98-agentune .agt-row { display: flex; align-items: center; gap: 4px; height: 12px; }
+  .pf98-agentune .agt-nm { flex: none; width: 13ch; overflow: hidden; }
+  .pf98-agentune .agt-tr { position: relative; flex: 1; height: 8px; background: #eee; box-shadow: inset 1px 1px #808080, inset -1px -1px #dfdfdf; }
+  .pf98-agentune .agt-rg { position: absolute; top: 0; bottom: 0; background: rgba(0, 128, 128, .2); border: solid #008080; border-width: 0 1px; box-sizing: border-box; transition: left .8s, width .8s; }
+  .pf98-agentune .agt-rg.agt-edge { border-right: 2px solid #d00000; animation: pf98-agentune-blink .4s steps(2) 3; }
+  .pf98-agentune .agt-gh { position: absolute; top: -1px; bottom: -1px; border: 1px dashed #800000; opacity: 0; transition: opacity .3s; }
+  .pf98-agentune .agt-gh.on { opacity: 1; }
+  .pf98-agentune .agt-gh.no { opacity: 0; background: rgba(208, 0, 0, .25); transition: opacity 1s .3s; }
+  .pf98-agentune .agt-dt { position: absolute; width: 3px; height: 3px; margin-left: -1px; background: #000080; }
+  .pf98-agentune .agt-dt.old { opacity: .25; }
+  .pf98-agentune .agt-bm { position: absolute; top: -2px; bottom: -2px; width: 2px; margin-left: -1px; background: #d00000; opacity: 0; transition: left .4s; }
+  .pf98-agentune .agt-imp { flex: none; position: relative; width: 30px; height: 10px; text-align: right; background: #fff; box-shadow: inset 1px 1px #808080; }
+  .pf98-agentune .agt-imp i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: #9fd4d4; transition: width .5s; }
+  .pf98-agentune .agt-imp b { position: relative; font-weight: normal; padding-right: 1px; }
+  .pf98-agentune .agt-log { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; padding: 1px 3px 2px; background: #000; color: #c0c0c0; }
+  .pf98-agentune .agt-ln { flex: none; line-height: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: pf98-agentune-in .25s; }
+  .pf98-agentune .agt-ln i { font-style: normal; color: #55ffff; }
+  .pf98-agentune .agt-ln u { text-decoration: none; color: #808080; }
+  .pf98-agentune .agt-ln q { quotes: none; color: #555; }
+  .pf98-agentune .agt-ln.cmd { color: #fff; }
+  .pf98-agentune .agt-ln.think { color: #ffff55; }
+  .pf98-agentune .agt-ln.ok { color: #55ff55; }
+  .pf98-agentune .agt-ln.no { color: #ff5555; }
+  .pf98-agentune .agt-ln.fin { color: #fff; }
+  @keyframes pf98-agentune-in { from { opacity: 0; } }
+  @keyframes pf98-agentune-blink { 50% { border-right-color: transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    .pf98-agentune *, .pf98-agentune *::before { transition: none !important; animation: none !important; }
+  }
+</style>
+<script>
+  (window.pf98Demos = window.pf98Demos || {})["agentune"] = function (el, kit) {
+    // Four of XGBoost's nine default params (backends/xgboost.py). dlo/dhi = drawn axis.
+    var P = [
+      { n: "learning_rate", lo: 0.001, hi: 1, log: true, dlo: 0.001, dhi: 1 },
+      { n: "n_estimators", lo: 50, hi: 500, dlo: 50, dhi: 800 },
+      { n: "max_depth", lo: 1, hi: 15, dlo: 1, dhi: 15 },
+      { n: "subsample", lo: 0.5, hi: 1, dlo: 0.5, dhi: 1 }
+    ];
+    // README "Example: Store Sales (XGBoost, RMSE, 40 trials/round)"; best/imp illustrative.
+    var R = [
+      { best: [0.06, 410, 6, 0.84], imp: [52, 18, 14, 6], score: "205.79", d: "" },
+      { best: [0.05, 430, 6, 0.82], imp: [49, 21, 13, 7], score: "205.78", d: "-0.01" },
+      { best: [0.045, 478, 7, 0.81], imp: [24, 31, 22, 9], score: "205.42", d: "-0.36" },
+      { best: [0.048, 497, 7, 0.8], imp: [22, 38, 19, 8], score: "205.32", d: "-0.10" },
+      { best: [0.047, 499, 7, 0.8], imp: [21, 39, 19, 8], score: "205.24", d: "-0.08" },
+      { best: [0.047, 499, 7, 0.8], imp: [21, 39, 19, 8], score: "205.24", d: "0.00" }
+    ];
+    var space = kit.$(".agt-space"), log = kit.$(".agt-log");
+    var rd = kit.$(".agt-rd"), st = kit.$(".agt-st"), best = kit.$(".agt-best");
+    var rows = [], cur = [];
+
+    function x(p, v) {
+      var f = p.log ? (Math.log(v) - Math.log(p.dlo)) / (Math.log(p.dhi) - Math.log(p.dlo)) : (v - p.dlo) / (p.dhi - p.dlo);
+      return Math.max(0, Math.min(100, f * 100));
+    }
+    function div(cls, parent) {
+      var d = document.createElement("div");
+      d.className = cls;
+      if (parent) parent.appendChild(d);
+      return d;
+    }
+    P.forEach(function (p) {
+      var row = div("agt-row", space);
+      div("agt-nm", row).textContent = p.n;
+      var tr = div("agt-tr", row);
+      var imp = div("agt-imp", row);
+      imp.innerHTML = "<i></i><b></b>";
+      rows.push({ tr: tr, rg: div("agt-rg", tr), gh: div("agt-gh", tr), bm: div("agt-bm", tr), bar: imp.firstChild, pct: imp.lastChild });
+    });
+
+    function setRange(i, lo, hi) {
+      var p = P[i], a = x(p, lo), b = x(p, hi);
+      cur[i] = [lo, hi];
+      rows[i].rg.style.left = a + "%";
+      rows[i].rg.style.width = (b - a) + "%";
+    }
+    function setState(s, extra) {
+      st.setAttribute("data-s", s);
+      st.textContent = s + (extra ? " " + extra : "");
+    }
+    function say(html, cls) {
+      var d = div("agt-ln " + (cls || ""), log);
+      d.innerHTML = html;
+      // keep only whole lines that fit, so the top line is never half-clipped
+      var cap = log.clientHeight ? Math.max(1, Math.floor((log.clientHeight - 3) / 11)) : 16;
+      while (log.children.length > cap) log.removeChild(log.firstChild);
+      return d;
+    }
+    function tool(name, rest) {
+      return say("<i>&#9656; " + name + "</i>" + (rest ? " " + rest : ""));
+    }
+    function sprinkle(r, k, n) {
+      // TPE: random start-up trials first, then concentrates around the incumbent.
+      var focus = Math.min(0.8, k / n);
+      rows.forEach(function (row, i) {
+        var p = P[i], a = x(p, cur[i][0]), b = x(p, cur[i][1]), c = x(p, R[r].best[i]), v;
+        v = Math.random() < focus ? c + (Math.random() + Math.random() - 1) * (b - a) * 0.18 : kit.rnd(a, b);
+        var d = div("agt-dt", row.tr);
+        d.style.left = Math.max(a, Math.min(b, v)) + "%";
+        d.style.top = Math.floor(kit.rnd(0, 5)) + "px";
+      });
+    }
+    function newStudy(fresh) {
+      kit.$$(".agt-dt").forEach(function (d) {
+        if (fresh || d.className.indexOf("old") > -1) d.parentNode.removeChild(d);
+        else d.className += " old";
+      });
+    }
+    function read(r) {
+      rows.forEach(function (row, i) {
+        row.bm.style.opacity = 1;
+        row.bm.style.left = x(P[i], R[r].best[i]) + "%";
+        row.bar.style.width = Math.min(100, R[r].imp[i] / 55 * 100) + "%";
+        row.pct.textContent = R[r].imp[i] + "%";
+      });
+      best.innerHTML = "rmse " + R[r].score + (R[r].d ? " <em>" + R[r].d + "</em>" : "");
+    }
+
+    // Timeline: step(ms, fn) queues fn at the current time, then advances it.
+    var T = [], t = 0;
+    function step(ms, fn) { T.push([t, fn]); t += ms; }
+
+    // quiet rounds skip the get_round_summary line (bars still update) to keep the loop short.
+    function runRound(r, quiet, fresh) {
+      var line, n = quiet ? 5 : 8;
+      step(150, function () {
+        rd.textContent = "R" + (r + 1) + "/6";
+        setState("PROPOSED");
+        newStudy(fresh);
+        line = tool("run_next_round", "<u>&#8230;</u>");
+      });
+      for (var k = 1; k <= n; k++) (function (k) {
+        step(quiet ? 60 : 80, function () {
+          setState("RUNNING", Math.round(40 * k / n) + "/40");
+          sprinkle(r, k, n);
+          sprinkle(r, k, n);
+        });
+      })(k);
+      step(quiet ? 120 : 200, function () { setState("SUMMARIZING"); });
+      step(quiet ? 250 : 300, function () {
+        setState(r === 5 ? "COMPLETED" : "AWAITING_AGENT");
+        line.lastChild.innerHTML = r === 5 ? "&#8594; COMPLETED (max_rounds)" : "&#8594; AWAITING_AGENT";
+        if (quiet) read(r);
+      });
+      if (quiet) return;
+      step(550, function () {
+        read(r);
+        tool("get_round_summary", R[r].score + " plateau:" + (r === 1 ? "yes" : "no") + " test:<q>&#9618;&#9618;&#9618;</q>");
+        if (r === 3) rows[1].rg.className += " agt-edge";
+      });
+    }
+    function decide(think, action, ok) {
+      if (think) step(700, function () { say("&#10043; " + think, "think"); });
+      step(400, function () { tool("submit_action_proposal", action + (ok ? " <span style=\"color:#55ff55\">&#10003;</span>" : "")); });
+    }
+    function resolve() { step(150, function () { setState("RESOLVED"); }); }
+
+    function reset() {
+      newStudy(true);
+      log.innerHTML = "";
+      P.forEach(function (p, i) {
+        setRange(i, p.lo, p.hi);
+        rows[i].bm.style.opacity = 0;
+        rows[i].bar.style.width = 0;
+        rows[i].pct.textContent = "";
+        rows[i].rg.className = "agt-rg";
+        rows[i].gh.className = "agt-gh";
+      });
+      best.innerHTML = "rmse &#8212;";
+      say("$ agentune init store-sales --backend xgboost --dataset store_sales --trials-per-round 40 --max-rounds 6", "cmd");
+    }
+
+    step(400, reset);
+    // R1: lr dominates, still improving.
+    runRound(0, false, true);
+    decide("", "continue", true);
+    resolve();
+    // R2: plateau + dominant param -> narrow lr and n_estimators (new Optuna study).
+    runRound(1, false, false);
+    decide("plateau + learning_rate 49% &#8594; narrow lr, n_est", "narrow_search", false);
+    step(800, function () {
+      say("&#10003; accepted &#8594; study store-sales_round_3", "ok");
+      setState("RESOLVED");
+      setRange(0, 0.02, 0.2);
+      setRange(1, 250, 500);
+    });
+    // R3: importance redistributes inside the tighter space.
+    runRound(2, true, true);
+    decide("", "continue", true);
+    resolve();
+    // R4: n_estimators pinned at the 500 bound -> widen, but the cooldown guardrail refuses.
+    runRound(3, false, false);
+    decide("n_estimators best 497 = upper bound &#8594; widen", "widen_search", false);
+    step(800, function () {
+      var g = rows[1].gh, a = x(P[1], 250);
+      g.style.left = a + "%";
+      g.style.width = (100 - a) + "%";
+      g.className = "agt-gh on";
+    });
+    step(500, function () {
+      say("&#10007; Cooldown violation: narrow_search 1 round(s) ago", "no");
+      rows[1].gh.className = "agt-gh no";
+    });
+    decide("", "continue", true);
+    resolve();
+    // R5, R6: converge; max_rounds hits, test score is revealed only in the report.
+    runRound(4, true, false);
+    decide("", "continue", true);
+    resolve();
+    runRound(5, true, false);
+    step(2600, function () {
+      setState("COMPLETED");
+      rows[1].rg.className = "agt-rg";
+      say("&#128196; reports/store-sales-report.html &#183; test 207.44", "fin");
+    });
+
+    if (kit.still) {
+      T.forEach(function (s) { s[1](); });
+      return;
+    }
+    var SPEED = 0.75; // ~13 s loop instead of ~17.5 s
+    function play() {
+      T.forEach(function (s) { setTimeout(s[1], s[0] * SPEED); });
+      setTimeout(play, t * SPEED);
+    }
+    play();
+  };
+</script>
