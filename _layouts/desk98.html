@@ -10,8 +10,10 @@ layout: default
 
   Front matter:
     heading       h2 | h3, where the content is cut into windows
-    view          default window view: notepad | shortcuts | icons
-    title_prefix  put before each section name in its title bar (e.g. C:\Favorites\)
+    view          default window view: notepad | icons, or explorer: every section becomes a
+                  folder of one Explorer window instead (folder tree left, link list right)
+    title_prefix  put before each section name in its title bar (e.g. C:\Favorites\);
+                  in the explorer view, the root of the address bar
     intro_label   label for the first paragraph before the first heading, shown in the Properties dialog
     windows       per section, by heading id: glyph, title, view, glyphs (icons view, one per
                   list item), box ([left, top, width, height] as fractions of the free desktop),
@@ -69,6 +71,41 @@ layout: default
     </div>
   </section>
 
+  {%- if page.view == "explorer" %}
+  {%- assign root_name = page.title_prefix | split: "\" | last | default: page.title %}
+  <section class="window window98 desk98-win desk98-explorer" data-window="explorer" data-box="0 0 1 1" data-root="{{ page.title_prefix | default: page.title }}" aria-label="{{ page.title }}">
+    <div class="title-bar">
+      <div class="title-bar-text"><span class="glyph98">⭐</span><span>{{ root_name }} - Internet Explorer</span></div>
+      {{ controls }}
+    </div>
+    <div class="window-body window98-body">
+      <div class="menubar98" aria-hidden="true"><span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>V</u>iew</span><span>F<u>a</u>vorites</span><span><u>H</u>elp</span></div>
+      <div class="desk98-xbar">
+        <span>Address</span>
+        <div class="desk98-xaddr"><span class="glyph98" aria-hidden="true">⭐</span><span data-addr>{{ page.title_prefix | default: page.title }}</span></div>
+        <input type="search" placeholder="Search {{ root_name | downcase }}…  ( / )" aria-label="Search {{ root_name | downcase }}" hidden>
+      </div>
+      <div class="desk98-xmain">
+        <nav class="desk98-xtree" aria-label="Folders" hidden></nav>
+        <div class="desk98-xlist">
+          {%- for part in parts offset: 1 %}
+          {%- assign id = part | split: '"' | first -%}
+          {%- assign head = part | split: close | first -%}
+          {%- assign name = head | split: '>' | last -%}
+          {%- assign body = part | remove_first: head | remove_first: close -%}
+          {%- assign w = page.windows | where: "id", id | first %}
+          <section class="desk98-folder" id="{{ id }}" data-glyph="{{ w.glyph | default: '📁' }}">
+            <h2>{{ name }}</h2>
+            {{ body }}
+          </section>
+          {%- endfor %}
+          <p class="desk98-xempty" hidden>No shortcuts match.</p>
+        </div>
+      </div>
+      <div class="status-bar"><p class="status-bar-field desk98-count" data-count></p><p class="status-bar-field" data-status></p><p class="status-bar-field desk98-zone">🌐 Internet zone</p></div>
+    </div>
+  </section>
+  {%- else %}
   {%- for part in parts offset: 1 %}
   {%- assign id = part | split: '"' | first -%}
   {%- assign head = part | split: close | first -%}
@@ -108,6 +145,7 @@ layout: default
   </section>
   {%- endif %}
   {%- endfor %}
+  {%- endif %}
 </div>
 
 <script src="{{ '/assets/js/desk98.js' | relative_url }}" defer></script>

@@ -1,5 +1,5 @@
 /* Inner-page desktops (_layouts/desk98.html, /about/ and /bookmarks/): turns section lists
-   into icon views, places the windows, and lets them be focused, dragged, maximized, closed
+   into icon views or an Explorer, places the windows, and lets them be focused, dragged, maximized, closed
    and reopened from the desktop icons, as on the landing desktop. win98-desktop.js also runs
    the boot, taskbar and Start menu there, so it stays separate. Below 900px the windows stay
    stacked the way the layout renders them and only the icon views and close/reopen apply. */
@@ -34,15 +34,16 @@
     return {
       title: title.replace(/:$/, ""),
       href: lead ? a.getAttribute("href") : null,
+      desc: lead ? text.slice(title.length).replace(/^\s*:\s*/, "") : "",
       tip: text,
       kids: sub ? Array.prototype.map.call(sub.children, readItem) : []
     };
   }
 
   function tile(item, glyph) {
-    var t = document.createElement(item.href ? "a" : "div");
-    t.className = "desk98-tile" + (item.href ? " desk98-tile--link" : "");
-    if (item.href) t.href = item.href; else t.tabIndex = 0;
+    var t = document.createElement("div");
+    t.className = "desk98-tile";
+    t.tabIndex = 0;
     t.dataset.tip = item.tip;
     t.title = item.tip;
     var g = document.createElement("span");
@@ -56,23 +57,16 @@
     return t;
   }
 
-  /* Bookmarks: every item and sub-item a shortcut. Pillars: one control-panel icon per item. */
-  root.querySelectorAll(".desk98-shortcuts, .desk98-icons").forEach(function (pane) {
+  /* Pillars: one control-panel icon per item. */
+  root.querySelectorAll(".desk98-icons").forEach(function (pane) {
     var glyphs = (pane.dataset.glyphs || "").split(" ").filter(Boolean);
     var n = 0;
     pane.querySelectorAll(":scope > ul").forEach(function (ul) {
       var grid = document.createElement("div");
       grid.className = "desk98-tiles";
       Array.prototype.forEach.call(ul.children, function (li) {
-        var item = readItem(li);
-        if (pane.classList.contains("desk98-icons")) {
-          grid.appendChild(tile(item, glyphs[n] || "⭐"));
-          n++;
-          return;
-        }
-        grid.appendChild(tile(item, item.href ? "🌐" : "📄"));
+        grid.appendChild(tile(readItem(li), glyphs[n] || "⭐"));
         n++;
-        item.kids.forEach(function (kid) { grid.appendChild(tile(kid, kid.href ? "🔗" : "📝")); n++; });
       });
       ul.replaceWith(grid);
     });
@@ -87,9 +81,9 @@
     if (field) field.textContent = n + " object(s)";
   }
 
-  /* The status bar describes the icon under the pointer or focus, as Explorer does. */
+  /* The status bar describes the icon or shortcut under the pointer or focus, as Explorer does. */
   function describe(e) {
-    var t = e.target.closest && e.target.closest(".desk98-tile");
+    var t = e.target.closest && e.target.closest(".desk98-tile, .desk98-row[href]");
     var win = e.target.closest && e.target.closest(".window98");
     var field = win && win.querySelector("[data-status]");
     if (!field) return;
@@ -98,6 +92,165 @@
   }
   root.addEventListener("mouseover", describe);
   root.addEventListener("focusin", describe);
+
+  /* ================= explorer view ================= */
+
+  /* Bookmarks: every section a folder, every bold line in it a subfolder. The tree lists them,
+     the list shows each shortcut with its description, and the address bar follows the list. */
+  var KINDS = [
+    [/\.pdf($|[?#])/i, "📄", "PDF"],
+    [/youtube\.com|youtu\.be/, "📺", "Video"],
+    [/github\.com/, "💾", "Repo"],
+    [/^\//, "📝", "Post"]
+  ];
+  function kind(href) {
+    for (var i = 0; i < KINDS.length; i++) if (KINDS[i][0].test(href)) return KINDS[i];
+    return [null, "🌐", "Web"];
+  }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
+
+  function row(item, kid) {
+    var k = item.href ? kind(item.href) : [null, "📝", ""];
+    var r = el(item.href ? "a" : "div", "desk98-row" + (kid ? " desk98-row--kid" : "") + (item.href ? "" : " desk98-row--note"));
+    r.dataset.q = (item.tip + " " + (item.href || "")).toLowerCase();
+    r.append(el("span", "desk98-row-glyph glyph98", kid ? "↳" : k[1]));
+    var main = el("span", "desk98-row-main");
+    main.append(el("span", "desk98-row-title", item.title));
+    if (item.desc) main.append(el("span", "desk98-row-desc", item.desc));
+    r.append(main);
+    if (!item.href) return r;
+    r.href = item.href;
+    r.dataset.tip = r.href;
+    var host = r.host === location.host ? "" : r.hostname.replace(/^www\./, "");
+    if (host) { r.target = "_blank"; r.rel = "noopener"; }
+    var meta = el("span", "desk98-row-meta");
+    meta.append(el("em", null, k[2]), el("span", null, host));
+    r.append(meta);
+    return r;
+  }
+
+  var jumps = [];
+  root.querySelectorAll(".desk98-explorer").forEach(function (win) {
+    var list = win.querySelector(".desk98-xlist");
+    var tree = win.querySelector(".desk98-xtree");
+    var search = win.querySelector('input[type="search"]');
+    var addr = win.querySelector("[data-addr]");
+    var empty = list.querySelector(".desk98-xempty");
+    var base = win.dataset.root.replace(/\\$/, "");
+    var stops = [], folders = 0, subfolders = 0;
+
+    function node(depth, glyph, label, target) {
+      var b = el("button", "desk98-node desk98-node--" + depth);
+      b.type = "button";
+      b.dataset.to = target;
+      b.append(el("span", "glyph98", glyph), el("span", "desk98-node-label", label), el("span", "desk98-node-n"));
+      tree.append(b);
+      return b;
+    }
+    /* A list position the tree and address bar can point at: a folder or a subfolder. */
+    function stop(target, path, n) {
+      target.dataset.path = path;
+      stops.push({ el: target, node: n });
+    }
+    var rootNode = node(0, "⭐", base.split("\\").pop(), "");
+
+    list.querySelectorAll(".desk98-folder").forEach(function (folder) {
+      folders++;
+      var h2 = folder.querySelector("h2");
+      var name = h2.textContent.trim();
+      var groups = [], group = null;
+      Array.prototype.forEach.call(folder.children, function (c) {
+        if (c.tagName === "P" && c.querySelector("strong")) {
+          group = { name: c.textContent.trim(), items: [] };
+          groups.push(group);
+        } else if (c.tagName === "UL") {
+          if (!group) groups.push(group = { name: null, items: [] });
+          Array.prototype.forEach.call(c.children, function (li) { group.items.push(readItem(li)); });
+        }
+      });
+
+      var head = el("div", "desk98-xhead");
+      var title = el("div");
+      title.append(h2, el("small"));
+      head.append(el("span", "glyph98", folder.dataset.glyph), title);
+      folder.replaceChildren(head, el("div", "desk98-xrule"));
+      stop(folder, name, node(1, folder.dataset.glyph, name, folder.id));
+
+      groups.forEach(function (g) {
+        var box = el("div", "desk98-xgroup");
+        box.append(el("h3", null, g.name || name));
+        g.items.forEach(function (item) {
+          box.append(row(item, false));
+          item.kids.forEach(function (kid) { box.append(row(kid, true)); });
+        });
+        folder.append(box);
+        if (!g.name) return;
+        subfolders++;
+        box.id = folder.id + "--" + slug(g.name);
+        stop(box, name + "\\" + g.name, node(2, "📁", g.name, box.id));
+      });
+    });
+
+    /* Counts in the tree, headers and status bar, for what the search leaves showing. */
+    function shown(box) { return box.querySelectorAll("a.desk98-row:not([hidden])").length; }
+    function tally() {
+      stops.forEach(function (s) { s.node.lastChild.textContent = shown(s.el); });
+      list.querySelectorAll(".desk98-folder").forEach(function (f) { f.querySelector("small").textContent = shown(f) + " shortcuts"; });
+      list.querySelectorAll(".desk98-xgroup").forEach(function (g) { g.firstChild.dataset.n = shown(g); });
+      var all = shown(list);
+      rootNode.lastChild.textContent = all;
+      count(list, all);
+      return all;
+    }
+    tally();
+    win.querySelector("[data-status]").textContent = folders + " folders, " + subfolders + " subfolders";
+    tree.hidden = false;
+    search.hidden = false;
+
+    function select(target) {
+      tree.querySelectorAll(".desk98-node").forEach(function (b) { b.classList.toggle("selected", b.dataset.to === target); });
+    }
+    function jump(id) {
+      var t = id && document.getElementById(id);
+      if (id && (!t || !list.contains(t))) return;
+      root.scrollTop = 0;
+      list.scrollTo({ top: t ? t.offsetTop : 0, behavior: reduced || !id ? "auto" : "smooth" });
+      if (!live() && t) t.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+      select(id);
+    }
+    select("");
+    addr.textContent = base;
+    jumps.push(jump);
+    tree.addEventListener("click", function (e) {
+      var b = e.target.closest(".desk98-node");
+      if (b) jump(b.dataset.to);
+    });
+    list.addEventListener("scroll", function () {
+      var y = list.scrollTop + 24, cur = null;
+      stops.forEach(function (s) { if (!s.el.hidden && s.el.offsetTop <= y) cur = s; });
+      addr.textContent = base + (cur ? "\\" + cur.el.dataset.path : "");
+      select(cur ? cur.el.id : "");
+    }, { passive: true });
+
+    search.addEventListener("input", function () {
+      var q = search.value.trim().toLowerCase();
+      list.querySelectorAll(".desk98-row").forEach(function (r) { r.hidden = !!q && r.dataset.q.indexOf(q) < 0; });
+      list.querySelectorAll(".desk98-xgroup, .desk98-folder").forEach(function (g) { g.hidden = !g.querySelector(".desk98-row:not([hidden])"); });
+      empty.hidden = tally() > 0;
+      list.scrollTop = 0;
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "/" || win.hidden || e.target.closest("input, textarea, select, [contenteditable]")) return;
+      e.preventDefault();
+      search.focus();
+    });
+  });
 
   /* ================= placement ================= */
 
@@ -290,7 +443,9 @@
       s.top = Math.max(6, Math.min(parseFloat(s.top), H - h - 6)) + "px";
     });
   });
-  /* A #section link brings that window to the front. */
-  var hashed = location.hash && byId(decodeURIComponent(location.hash.slice(1)));
+  /* A #section link brings that window to the front, or scrolls the Explorer to that folder. */
+  var hash = location.hash && decodeURIComponent(location.hash.slice(1));
+  var hashed = hash && byId(hash);
   if (hashed) open(hashed.dataset.window);
+  else if (hash) jumps.forEach(function (jump) { jump(hash); });
 })();
