@@ -1,0 +1,54 @@
+# Tag vocabulary as readers see it on /writings/: groups and tags appear in this order in the
+# folder tree, each with an icon and a one-line description. Keep in sync with AGENTS.md.
+# A post tag missing here still shows up, filed under Other with a plain folder icon.
+- group: Tech
+  icon: 💻
+  blurb: Machine learning, agents, engineering how-tos, math
+  tags:
+    - name: Machine Learning
+      icon: 🧠
+      desc: Modeling, forecasting, paper reviews, model internals
+    - name: Computer Vision
+      icon: 👁️
+      desc: Stereo, ViT vs CNN, detection metrics
+    - name: Agents
+      icon: 🤖
+      desc: LLM agents, RAG, MCP, context engineering, evals
+    - name: Engineering
+      icon: 🛠️
+      desc: Python, k8s, SSH, DNS, auth, tooling how-tos
+    - name: Math
+      icon: 📐
+      desc: p-values, intervals, distributions, Hilbert spaces
+    - name: Science
+      icon: 🔭
+      desc: Natural science beyond math and ML
+- group: Essays
+  icon: ✍️
+  blurb: Mindset, growth, decisions, career, society
+  tags:
+    - name: Mindset
+      icon: 🧘
+      desc: Psychology, emotions, self-knowledge, well-being
+    - name: Growth
+      icon: 🌱
+      desc: Habits, learning, productivity, language study
+    - name: Decision-Making
+      icon: ⚖️
+      desc: Choices, judgment, argumentation
+    - name: Career
+      icon: 💼
+      desc: Leadership, startups, founder life, job search
+    - name: Society
+      icon: 🏛️
+      desc: Social systems, inequality, generational change
+- group: Other
+  icon: 📦
+  blurb: Business thinking and book notes
+  tags:
+    - name: Business
+      icon: 📈
+      desc: Entrepreneurship, strategy, hiring, teams
+    - name: Reading
+      icon: 📚
+      desc: Book notes and book-driven essays

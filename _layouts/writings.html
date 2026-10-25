@@ -1,0 +1,359 @@
+---
+layout: default
+---
+{%- comment -%}
+  /writings/ as a Win98 Explorer: topic tree → file list → Notepad preview with a Read button.
+  Groups, icons and blurbs come from _data/tags.yml. The file list is server-rendered so it
+  works without JS and for crawlers; the script then takes over from the JSON below.
+  Folders deep-link by hash: /writings/#growth, /writings/#tech, /writings/#2025.
+{%- endcomment -%}
+<style>
+  .wr { max-width: 1240px; margin: 18px auto; }
+  .wr .window-body { margin: 3px; }
+  .wr a { text-decoration: none; }
+  .wr-bar { display: flex; align-items: stretch; gap: 2px; padding: 2px; box-shadow: inset -1px -1px #808080, inset 1px 1px #fff; margin-bottom: 3px; flex-wrap: wrap; }
+  .wr-big { min-width: 64px !important; height: 50px; padding: 2px 6px !important; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; box-shadow: none !important; background: transparent; font-size: 11px; }
+  .wr-big:hover:not(:disabled) { box-shadow: inset -1px -1px #808080, inset 1px 1px #fff !important; }
+  .wr-big:active:not(:disabled) { box-shadow: inset 1px 1px #808080, inset -1px -1px #fff !important; }
+  .wr-big:disabled { opacity: .45; }
+  .wr-big i { font-style: normal; font-size: 20px; line-height: 1; }
+  .wr-bar .sep { width: 2px; margin: 3px 4px; box-shadow: inset 1px 0 #808080, inset -1px 0 #fff; }
+  .wr-search { margin-left: auto; display: flex; align-items: center; gap: 6px; padding: 0 6px; }
+  .wr-search input { width: 240px; height: 24px; font-size: 13px; }
+  .wr-addr { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+  .wr-addr div { flex: 1; background: #fff; padding: 3px 6px; box-shadow: inset -1px -1px #fff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .wr-main { display: grid; grid-template-columns: 240px minmax(0, 1fr) minmax(0, 1.05fr); gap: 3px; height: calc(100vh - 300px); min-height: 460px; }
+  .wr-sunk { background: #fff; box-shadow: inset -1px -1px #fff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a; overflow-y: auto; padding: 4px; min-height: 0; }
+
+  .wr-tree { font-size: 12px; }
+  .wr-node { display: flex; align-items: center; gap: 5px; padding: 2px 4px; color: #000; white-space: nowrap; user-select: none; }
+  .wr-node .lbl { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+  .wr-node .n { color: #808080; font-size: 11px; }
+  .wr-node:hover .lbl { text-decoration: underline; color: #000080; }
+  .wr-node.sel .lbl { background: #000080; color: #fff; text-decoration: none; padding: 0 2px; outline: 1px dotted #ff0; }
+  .wr-node .tw { width: 9px; height: 9px; border: 1px solid #808080; font-size: 9px; line-height: 7px; text-align: center; background: #fff; flex: none; }
+  .wr-node .tw.none { border-color: transparent; background: none; }
+
+  .wr-list { padding: 0; display: flex; flex-direction: column; }
+  .wr-banner { display: flex; gap: 10px; align-items: center; padding: 10px 12px; background: linear-gradient(135deg, #fff 40%, #c8d8f8); border-bottom: 1px solid #c0c0c0; }
+  .wr-banner .ico { font-size: 38px; line-height: 1; }
+  .wr-banner div { flex: 1; }
+  .wr-banner h3 { margin: 0; font: bold 18px/1.1 Arial, sans-serif; color: #000; }
+  .wr-banner p { margin: 2px 0 0; font: 12px Arial, sans-serif; color: #444; }
+  .wr-banner .hr { height: 3px; margin-top: 5px; background: linear-gradient(90deg, #000080, #1084d0 60%, transparent); }
+  .wr-sortrow { display: flex; justify-content: space-between; align-items: center; padding: 4px 8px; font-size: 11px; color: #444; border-bottom: 1px solid #e0e0e0; }
+  .wr-sortrow label { display: flex; align-items: center; gap: 6px; margin: 0; font-size: 11px; color: #444; }
+  .wr-files { overflow-y: auto; flex: 1; }
+  .wr-file { display: grid; grid-template-columns: 30px 1fr; gap: 6px; padding: 6px 8px; cursor: pointer; border-bottom: 1px dotted #d0d0d0; font-family: Arial, sans-serif; }
+  .wr-file .ic { font-size: 22px; line-height: 1; padding-top: 1px; }
+  .wr-file .t { display: block; font-size: 13.5px; font-weight: bold; color: #000; line-height: 1.25; }
+  .wr-file .m { font-size: 11px; color: #666; margin-top: 2px; }
+  .wr-file:hover .t { color: #000080; text-decoration: underline; }
+  .wr-file.sel { background: #000080; }
+  .wr-file.sel .t, .wr-file.sel .m { color: #fff; text-decoration: none; }
+  .wr-file .more { display: none; }
+  .wr mark { background: #ffff80; color: #000; }
+  .wr-file.sel mark { background: #ff0; }
+  .wr-empty { padding: 30px 14px; color: #444; font: 13px/1.5 Arial, sans-serif; text-align: center; }
+
+  .wr-note { display: flex; flex-direction: column; min-height: 0; margin: 0; }
+  .wr-note .title-bar { flex: none; }
+  .wr-menu { display: flex; gap: 12px; padding: 2px 6px; font-size: 12px; flex: none; }
+  .wr-menu span::first-letter { text-decoration: underline; }
+  .wr-paper { flex: 1; margin: 0 3px; font: 14px/1.5 "JetBrains Mono", "Courier New", monospace; white-space: pre-wrap; word-break: break-word; padding: 10px 12px; color: #000; -webkit-font-smoothing: antialiased; }
+  .wr-paper .k { color: #000080; font-weight: bold; }
+  .wr-paper .h { font-weight: bold; font-size: 16px; }
+  .wr-cursor { display: inline-block; width: 2px; height: 1.1em; background: #000; vertical-align: -3px; animation: wr-blink 1s steps(1) infinite; }
+  @keyframes wr-blink { 50% { opacity: 0; } }
+  .wr-actions { display: flex; gap: 8px; align-items: center; padding: 8px 6px 6px; flex: none; }
+  /* 98.css only styles <button>; Read is a real link so it can open in a new tab */
+  .wr-btn { display: inline-flex; align-items: center; justify-content: center; gap: 4px; min-height: 23px; padding: 0 12px; background: silver; color: #000 !important; box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px #808080, inset 2px 2px #dfdfdf; }
+  .wr-btn:active { box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px #808080; }
+  .wr-read { min-width: 170px; height: 34px; font-weight: bold; font-size: 13px; outline: 1px solid #000; outline-offset: -1px; }
+  .wr-hint { font-size: 11px; color: #444; margin-left: auto; }
+  .wr .status-bar-field { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .wr-busy, .wr-busy * { cursor: progress !important; }
+
+  /* Phones: one column, page scrolls instead of the list; the selected row unfolds in place
+     with its summary and Read button, standing in for the Notepad */
+  @media (max-width: 900px) {
+    .wr { margin: 6px 2px; }
+    .wr-main { grid-template-columns: 1fr; height: auto; min-height: 0; }
+    .wr-tree { max-height: 200px; }
+    .wr-files { overflow: visible; }
+    .wr-note, .wr-addr, #wr-where { display: none; }
+    .wr-file .more { display: block; }
+    .wr-file .more p { margin: 8px 0; font-size: 13px; line-height: 1.45; color: #fff; }
+    .wr-file .more .wr-read { width: 100%; }
+    .wr-search { margin-left: 0; width: 100%; padding: 4px 6px; }
+    .wr-search input { flex: 1; width: auto; font-size: 16px; }
+    .wr-big span { display: none; }
+    .wr-big { height: 36px; min-width: 40px !important; }
+  }
+</style>
+<noscript><style>.wr-bar, .wr-addr, .wr-tree, .wr-note, .wr-sortrow { display: none; } .wr-main { display: block; height: auto; } .wr-files { overflow: visible; }</style></noscript>
+
+<div class="window wr" id="wr">
+  {% include title-bar98.html title="📂 Writings - Huijo's Computer" %}
+  <div class="window-body">
+    <div class="wr-bar">
+      <button type="button" class="wr-big" data-h="back" title="Go back" disabled><i>⬅️</i><span>Back</span></button>
+      <button type="button" class="wr-big" data-h="up" title="Up one folder" disabled><i>⤴️</i><span>Up</span></button>
+      <span class="sep"></span>
+      <button type="button" class="wr-big" data-h="newest" title="Newest writing"><i>⚡</i><span>Newest</span></button>
+      <button type="button" class="wr-big" data-h="random" title="Pick one for me"><i>🎲</i><span>Surprise me</span></button>
+      <label class="wr-search">🔍 <input id="wr-q" type="search" placeholder="Search all writings…" aria-label="Search all writings" autocomplete="off"></label>
+    </div>
+    <div class="wr-addr"><span>Address</span><div id="wr-addr">🖥️ C:\Writings</div></div>
+    <div class="wr-main">
+      <nav class="wr-sunk wr-tree" id="wr-tree" aria-label="Topics"></nav>
+      <div class="wr-sunk wr-list">
+        <div class="wr-banner" id="wr-banner"><span class="ico">🖥️</span><div><h3>All writings</h3><p>Tech notes and essays</p><div class="hr"></div></div></div>
+        <div class="wr-sortrow"><span id="wr-n">{{ site.posts | size }} writings</span><label>Sort by <select id="wr-sort"><option value="d|-1">Newest first</option><option value="d|1">Oldest first</option><option value="t|1">Title A–Z</option><option value="min|1">Quick reads first</option><option value="min|-1">Long reads first</option></select></label></div>
+        <div class="wr-files" id="wr-files">
+          {%- for post in site.posts %}
+          <div class="wr-file"><span class="ic">📄</span><div><a class="t" href="{{ post.url | relative_url }}">{{ post.title }}</a><div class="m">{{ post.date | date: "%b %-d, %Y" }} · {{ post.tags | join: ", " }}</div></div></div>
+          {%- endfor %}
+        </div>
+      </div>
+      <div class="window wr-note">
+        <div class="title-bar"><div class="title-bar-text" id="wr-ntitle">Untitled - Notepad</div><div class="title-bar-controls"><button aria-label="Minimize" tabindex="-1" aria-hidden="true"></button><button aria-label="Maximize" tabindex="-1" aria-hidden="true"></button><button aria-label="Close preview" data-h="closenote"></button></div></div>
+        <div class="wr-menu" aria-hidden="true"><span>File</span><span>Edit</span><span>Search</span><span>Help</span></div>
+        <div class="wr-sunk wr-paper" id="wr-paper"></div>
+        <div class="wr-actions" id="wr-actions"></div>
+      </div>
+    </div>
+    <div class="status-bar">
+      <p class="status-bar-field" id="wr-count">{{ site.posts | size }} object(s)</p>
+      <p class="status-bar-field" id="wr-where">Writings</p>
+      <p class="status-bar-field" id="wr-log">C:\&gt; ready</p>
+    </div>
+  </div>
+</div>
+
+<script id="wr-data" type="application/json">
+{"topics": {{ site.data.tags | jsonify }}, "posts": [{%- for post in site.posts -%}
+  {%- assign ex = post.excerpt | strip_html | strip_newlines | strip -%}
+  {%- if ex == "" or ex == "TBD" -%}{%- assign ex = post.content | strip_html | strip_newlines | truncatewords: 40 -%}{%- endif -%}
+  {"t": {{ post.title | jsonify }}, "u": {{ post.url | relative_url | jsonify }}, "d": "{{ post.date | date: '%Y-%m-%d' }}", "tags": {{ post.tags | jsonify }}, "x": {{ ex | truncate: 260 | jsonify }}, "w": {{ post.content | number_of_words }}}{% unless forloop.last %},{% endunless %}
+{%- endfor -%}]}
+</script>
+<script>
+(function () {
+  var data = JSON.parse(document.getElementById("wr-data").textContent);
+  var $ = function (id) { return document.getElementById(id); };
+  var narrow = window.matchMedia("(max-width: 900px)");
+  var still = window.matchMedia("(prefers-reduced-motion: reduce)");
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function fmtDate(d) { return new Date(d + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }); }
+  function hl(s, q) {
+    s = esc(s);
+    return q ? s.replace(new RegExp("(" + esc(q).replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig"), "<mark>$1</mark>") : s;
+  }
+
+  /* Topics: tags missing from _data/tags.yml land in Other */
+  var groups = data.topics, tagInfo = {};
+  var other = groups.find(function (g) { return g.group === "Other"; });
+  if (!other) groups.push(other = { group: "Other", icon: "📦", blurb: "Everything else", tags: [] });
+  groups.forEach(function (g) { g.tags.forEach(function (t) { tagInfo[t.name] = { group: g.group, icon: t.icon }; }); });
+
+  var posts = data.posts, count = {}, dec = document.createElement("textarea");
+  posts.forEach(function (p) {
+    dec.innerHTML = p.x; p.x = dec.value; /* strip_html leaves entities like &gt; */
+    p.y = p.d.slice(0, 4);
+    p.min = Math.max(1, Math.round(p.w / 200));
+    p.file = decodeURIComponent(p.u.replace(/\/$/, "").split("/").pop()) + ".md";
+    p.tags.forEach(function (t) {
+      count[t] = (count[t] || 0) + 1;
+      if (!tagInfo[t]) { other.tags.push({ name: t }); tagInfo[t] = { group: "Other" }; }
+    });
+    var first = tagInfo[p.tags[0]] || { group: "Other" };
+    p.group = first.group;
+    p.icon = first.icon || "📄";
+  });
+  var years = Array.from(new Set(posts.map(function (p) { return p.y; }))).sort().reverse();
+
+  /* Folders: "all" | "g:<group>" | "t:<tag>" | "years" | "y:<year>" */
+  var folders = [{ key: "all", label: "All writings", n: posts.length, depth: 0, icon: "🖥️", desc: "Tech notes and essays since " + years[years.length - 1], path: [] }];
+  groups.forEach(function (g) {
+    var n = posts.filter(function (p) { return p.group === g.group; }).length;
+    if (!n) return;
+    folders.push({ key: "g:" + g.group, label: g.group, n: n, depth: 1, icon: g.icon, desc: g.blurb, path: [g.group], kids: true });
+    g.tags.forEach(function (t) {
+      if (count[t.name]) folders.push({ key: "t:" + t.name, label: t.name, n: count[t.name], depth: 2, icon: t.icon || "📁", desc: t.desc || "", path: [g.group, t.name], parent: "g:" + g.group });
+    });
+  });
+  folders.push({ key: "years", label: "By year", n: posts.length, depth: 0, icon: "🗓️", desc: "Every writing, newest first", path: ["By year"], kids: true });
+  years.forEach(function (y) {
+    folders.push({ key: "y:" + y, label: y, n: posts.filter(function (p) { return p.y === y; }).length, depth: 1, icon: "📅", desc: "Everything written in " + y, path: ["By year", y], parent: "years" });
+  });
+  var F = {}, bySlug = {};
+  folders.forEach(function (f) {
+    f.parent = f.parent || (f.key === "all" ? null : "all");
+    f.slug = f.key === "all" ? "" : f.label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    F[f.key] = f; bySlug[f.slug] = f;
+  });
+
+  var st = { folder: "all", q: "", sort: "d", dir: -1, sel: null, rows: [], back: [], open: { years: 0 } };
+  groups.forEach(function (g) { st.open["g:" + g.group] = 1; });
+
+  function inFolder(p, key) {
+    var k = key.slice(0, 2), v = key.slice(2);
+    if (k === "g:") return p.group === v;
+    if (k === "t:") return p.tags.indexOf(v) >= 0;
+    if (k === "y:") return p.y === v;
+    return true;
+  }
+  function rows() {
+    var q = st.q.toLowerCase();
+    return posts.filter(function (p) {
+      return q ? (p.t + " " + p.tags.join(" ") + " " + p.x).toLowerCase().indexOf(q) >= 0 : inFolder(p, st.folder);
+    }).sort(function (a, b) {
+      var x = st.sort === "t" ? a.t.toLowerCase() : a[st.sort], y = st.sort === "t" ? b.t.toLowerCase() : b[st.sort];
+      return (x > y ? 1 : x < y ? -1 : 0) * st.dir;
+    });
+  }
+  function byUrl(u) { return posts.find(function (p) { return p.u === u; }); }
+
+  function tree() {
+    var hideUnder = null;
+    $("wr-tree").innerHTML = folders.map(function (f) {
+      if (f.depth === 0 || f.kids) hideUnder = null;
+      if (hideUnder !== null && f.depth > hideUnder) return "";
+      if (f.kids && !st.open[f.key]) hideUnder = f.depth;
+      return '<a class="wr-node' + (f.key === st.folder ? " sel" : "") + '" href="#' + f.slug + '" data-key="' + esc(f.key) + '" style="padding-left:' + (4 + f.depth * 16) + 'px">' +
+        '<span class="tw' + (f.kids ? '" data-tw="' + esc(f.key) + '">' + (st.open[f.key] ? "−" : "+") : ' none">') + "</span><span>" + f.icon + '</span><span class="lbl">' + esc(f.label) + '</span><span class="n">' + f.n + "</span></a>";
+    }).join("");
+  }
+  function list() {
+    st.rows = rows();
+    var f = F[st.folder];
+    $("wr-banner").innerHTML = st.q
+      ? '<span class="ico">🔍</span><div><h3>Search results</h3><p>Writings containing “' + esc(st.q) + '” in any folder</p><div class="hr"></div></div>'
+      : '<span class="ico">' + f.icon + "</span><div><h3>" + esc(f.label) + "</h3><p>" + esc(f.desc) + '</p><div class="hr"></div></div>';
+    $("wr-n").textContent = st.rows.length + " writing" + (st.rows.length === 1 ? "" : "s");
+    $("wr-files").innerHTML = st.rows.map(function (p) {
+      var sel = p.u === st.sel, u = esc(p.u);
+      return '<div class="wr-file' + (sel ? " sel" : "") + '" data-u="' + u + '"><span class="ic">' + p.icon + '</span><div><a class="t" href="' + u + '">' + hl(p.t, st.q) + '</a><div class="m">' + fmtDate(p.d) + " · " + p.min + " min read · " + esc(p.tags.join(", ")) + "</div>" +
+        (sel ? '<div class="more"><p>' + esc(p.x) + '</p><a class="wr-btn wr-read" href="' + u + '">📖 Read full post</a></div>' : "") + "</div></div>";
+    }).join("") || '<div class="wr-empty">No writings match “' + esc(st.q) + '”.<br>Try a shorter word.</div>';
+    $("wr-sort").value = st.sort + "|" + st.dir;
+    $("wr-addr").textContent = st.q ? "🔍 Search: " + st.q : f.icon + " C:\\Writings" + f.path.map(function (s) { return "\\" + s; }).join("");
+    $("wr-count").textContent = st.rows.length + " object(s)";
+    $("wr-where").textContent = st.q ? "Search" : ["Writings"].concat(f.path).join(" › ");
+    document.querySelector('[data-h="back"]').disabled = !st.back.length;
+    document.querySelector('[data-h="up"]').disabled = st.folder === "all" && !st.q;
+  }
+  /* typewriter: parts = [[className, text], ...] */
+  function typeOut(el, parts) {
+    clearInterval(el._typer);
+    var total = parts.reduce(function (a, b) { return a + b[1].length; }, 0), shown = still.matches ? total : 0;
+    function draw() {
+      var left = shown, html = "";
+      parts.forEach(function (pt) { var s = pt[1].slice(0, Math.max(0, left)); left -= pt[1].length; if (s) html += '<span class="' + pt[0] + '">' + esc(s) + "</span>"; });
+      el.innerHTML = html + (shown < total ? '<span class="wr-cursor"></span>' : "");
+    }
+    draw();
+    if (shown < total) el._typer = setInterval(function () { shown = Math.min(total, shown + 10); draw(); if (shown >= total) clearInterval(el._typer); }, 16);
+  }
+  function note() {
+    var p = st.sel && byUrl(st.sel);
+    if (!p) {
+      clearInterval($("wr-paper")._typer);
+      $("wr-ntitle").textContent = "Untitled - Notepad";
+      $("wr-paper").innerHTML = '<div class="wr-empty">📄<br>Pick a writing from the list<br>and its summary opens here.</div>';
+      $("wr-actions").innerHTML = "";
+      return;
+    }
+    $("wr-ntitle").textContent = p.file + " - Notepad";
+    typeOut($("wr-paper"), [["h", p.t + "\n"], ["", "─".repeat(Math.min(40, p.t.length)) + "\n"], ["k", "Date:   "], ["", fmtDate(p.d) + "\n"],
+      ["k", "Topics: "], ["", p.tags.join(", ") + "\n"], ["k", "Length: "], ["", p.min + " min read\n\n"], ["", p.x]]);
+    $("wr-actions").innerHTML = '<a class="wr-btn wr-read" href="' + esc(p.u) + '">📖 Read full post</a><button type="button" data-copy>🔗 Copy link</button><span class="wr-hint">or double-click it in the list</span>';
+  }
+  function log(msg) {
+    var w = $("wr");
+    w.classList.add("wr-busy"); setTimeout(function () { w.classList.remove("wr-busy"); }, 180);
+    $("wr-log").textContent = "C:\\> " + msg;
+  }
+  function go(key, noHistory) {
+    if (!noHistory && key !== st.folder) st.back.push(st.folder);
+    st.folder = key; st.q = ""; $("wr-q").value = "";
+    if (F[key].parent) st.open[F[key].parent] = 1;
+    history.replaceState(null, "", F[key].slug ? "#" + F[key].slug : location.pathname + location.search);
+    tree(); list();
+    if (!st.rows.some(function (p) { return p.u === st.sel; })) { st.sel = st.rows[0] && st.rows[0].u; list(); note(); }
+    $("wr-files").scrollTop = 0;
+    log("dir " + F[key].label + " — " + st.rows.length + " file(s) in 0.0" + (2 + st.rows.length % 7) + "s");
+  }
+  function rowEl(u) { return document.querySelector('#wr-files [data-u="' + CSS.escape(u) + '"]'); }
+  function select(u, scroll) {
+    /* on phones the selected row unfolds; keep the tapped row still while the old one folds */
+    var was = narrow.matches && rowEl(u), before = was ? was.getBoundingClientRect().top : null;
+    st.sel = u; list(); note();
+    var el = rowEl(u);
+    if (el && before !== null) window.scrollBy(0, el.getBoundingClientRect().top - before);
+    if (el && scroll) el.scrollIntoView({ block: "nearest" });
+    log("type " + byUrl(u).file);
+  }
+  function open() { if (st.sel) location.href = st.sel; }
+  function modified(e) { return e.metaKey || e.ctrlKey || e.shiftKey || e.altKey; }
+
+  $("wr").addEventListener("click", function (e) {
+    var t;
+    if ((t = e.target.closest("[data-tw]"))) { e.preventDefault(); st.open[t.dataset.tw] = !st.open[t.dataset.tw]; tree(); return; }
+    if ((t = e.target.closest("[data-key]"))) { if (!modified(e)) { e.preventDefault(); go(t.dataset.key); } return; }
+    if (e.target.closest(".more")) return; /* summary text and its Read link on phones */
+    if ((t = e.target.closest("[data-u]"))) {
+      if (modified(e)) return;
+      /* first click previews; clicking the title of the previewed one opens it */
+      if (t.dataset.u === st.sel && e.target.closest("a")) return;
+      e.preventDefault(); select(t.dataset.u);
+      return;
+    }
+    if ((t = e.target.closest("[data-copy]"))) {
+      var done = function (msg) { return function () { t.textContent = msg; }; };
+      if (navigator.clipboard) navigator.clipboard.writeText(location.origin + st.sel).then(done("✓ Copied"), done("Copy failed"));
+      return;
+    }
+    if ((t = e.target.closest("[data-h]"))) {
+      var h = t.dataset.h;
+      if (h === "back" && st.back.length) go(st.back.pop(), true);
+      if (h === "up") { if (st.q) go(st.folder, true); else if (F[st.folder].parent) go(F[st.folder].parent); }
+      if (h === "newest") { st.sort = "d"; st.dir = -1; go("all"); select(posts[0].u, true); }
+      if (h === "random") { var pool = st.rows.length ? st.rows : posts; select(pool[Math.floor(Math.random() * pool.length)].u, true); }
+      if (h === "closenote") { st.sel = null; list(); note(); }
+    }
+  });
+  $("wr-files").addEventListener("dblclick", function (e) { if (e.target.closest("[data-u]")) open(); });
+  $("wr-sort").addEventListener("change", function (e) { var v = e.target.value.split("|"); st.sort = v[0]; st.dir = +v[1]; list(); });
+  $("wr-q").addEventListener("input", function (e) {
+    st.q = e.target.value.trim(); list();
+    if (st.q && st.rows[0] && !st.rows.some(function (p) { return p.u === st.sel; })) { st.sel = st.rows[0].u; list(); note(); }
+  });
+  $("wr-q").addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { go(st.folder, true); e.target.blur(); }
+    if (e.key === "Enter") open();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey || e.target.matches("input, textarea, select, [contenteditable]")) return;
+    var d = { ArrowDown: 1, ArrowUp: -1 }[e.key];
+    if (d && !narrow.matches) {
+      e.preventDefault();
+      var i = st.rows.findIndex(function (p) { return p.u === st.sel; }), np = st.rows[i < 0 ? 0 : i + d];
+      if (np) select(np.u, true);
+    }
+    else if (e.key === "Enter" && !e.target.closest("a, button")) open();
+    else if (e.key === "Backspace") { e.preventDefault(); if (st.back.length) go(st.back.pop(), true); }
+    else if (e.key.length === 1 && e.key !== " ") $("wr-q").focus();
+  });
+  function fromHash(noHistory) {
+    var f = bySlug[decodeURIComponent(location.hash.slice(1))];
+    if (f && f.slug && f.key !== st.folder) go(f.key, noHistory);
+  }
+  window.addEventListener("hashchange", function () { fromHash(false); });
+
+  st.sel = posts[0] && posts[0].u;
+  tree(); list(); note();
+  fromHash(true);
+})();
+</script>

@@ -21,8 +21,8 @@ Posts live in `_posts/` with YAML frontmatter. The site uses **tags only** — n
 adding a category silently changes the post's URL and breaks inbound links).
 
 Every post must carry **1–3 tags from the controlled vocabulary below, primary tag
-first**. Do not invent new tags; if no tag fits, add the new tag to this file in the
-same change and say so.
+first**. Do not invent new tags; if no tag fits, add the new tag to this file and to
+`_data/tags.yml` in the same change and say so.
 
 ### Tag vocabulary
 
@@ -79,4 +79,6 @@ split (as was done for Philosophy); if a new topic accumulates 3+ posts under a
 loose fit, propose a new tag — in both cases update this file in the same commit.
 
 Tag pages are generated dynamically (`_layouts/tags_tree.html` iterates
-`site.tags`), so no layout changes are needed when tags change.
+`site.tags`), so no layout changes are needed when tags change. The /writings/
+explorer groups tags by `_data/tags.yml` (group, icon, one-line blurb); keep it in
+step with the vocabulary above when tags are added, renamed, or retired.

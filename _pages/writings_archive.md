@@ -1,7 +1,7 @@
 ---
 # title: "Writings"
 permalink: /writings/
-layout: writings_table
+layout: writings
 author_profile: true
 # collection: posts
 # entries_layout: list
