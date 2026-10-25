@@ -22,7 +22,7 @@ previously:
   company: hexafarms
   url: https://hexafarms.com
   note: agtech, 0→€400k ARR
-earlier: Hyundai Mobis, CV inspection for EV inverters
+earlier: Hyundai Mobis, Engineering Operation and Supply Chain for EV inverters
 
 # README.TXT and Welcome ("Who is Huijo?" shows the first paragraph only). Inline HTML allowed.
 bio:
@@ -35,7 +35,7 @@ bio:
     as CTO: computer vision and yield forecasting for commercial greenhouses, from zero to
     €400k ARR, through Techstars Berlin and a €1.3M pre-seed round.
   - >-
-    Earlier: computer-vision inspection for EV inverters at Hyundai Mobis, an M.Sc. in Robotics
+    Earlier: Engineering Operation and Supply Chain for EV inverters at Hyundai Mobis, an M.Sc. in Robotics
     at RWTH Aachen, and the Korean Special Forces. I spoke at PyCon DE &amp; PyData 2026 and write
     here about ML, agents and building companies.
 
@@ -46,7 +46,7 @@ whoami:
   - k: was
     v: hexafarms · co-founder & CTO · 0→€400k ARR · Techstars · €1.3M pre-seed
   - k: was
-    v: Hyundai Mobis · CV inspection for EV inverters
+    v: Hyundai Mobis · Engineering Operation and Supply Chain for EV inverters
   - k: edu
     v: M.Sc. Robotics, RWTH Aachen · best performance award
   - k: talk
@@ -67,7 +67,7 @@ timeline:
     what: M.Sc. Robotics, best performance award · thesis → DeepAerialMapper
   - year: 2016
     org: Hyundai Mobis
-    what: CV inspection and quality for EV inverters
+    what: Engineering Operation and Supply Chain for EV inverters
   - year: 2010
     org: Special Forces
     what: initial commit · discipline, patience

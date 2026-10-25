@@ -319,33 +319,6 @@
     store("welcome98", welcomeShow.checked ? null : "off");
   });
 
-  /* Writings: one row per post, filtered by the Find box. */
-  var writings = windowEl("writings");
-  var list = writings.querySelector(".explorer98-list");
-  var count = writings.querySelector(".explorer98-count");
-  var rows = posts.map(function (post) {
-    var row = document.createElement("a");
-    row.className = "explorer98-row";
-    row.href = post.url;
-    row.dataset.q = (post.title + " " + post.tag).toLowerCase();
-    ["📄 " + post.title, post.tag, post.date].forEach(function (text) {
-      var cell = document.createElement("span");
-      cell.textContent = text;
-      row.appendChild(cell);
-    });
-    list.appendChild(row);
-    return row;
-  });
-  writings.querySelector("input").addEventListener("input", function (e) {
-    var q = e.target.value.trim().toLowerCase(), shown = 0;
-    rows.forEach(function (row) {
-      var hit = !q || row.dataset.q.indexOf(q) !== -1;
-      row.hidden = !hit;
-      if (hit) shown++;
-    });
-    count.textContent = shown + " object(s)";
-  });
-
   /* System Properties tabs */
   var system = windowEl("system");
   var tabs = Array.prototype.slice.call(system.querySelectorAll("[role=tab]"));

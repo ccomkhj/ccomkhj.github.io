@@ -13,7 +13,6 @@ main:
   - title: "Writings"
     url: /writings/
     glyph: "📂"
-    window: writings
     section: [/tags/]
   - title: "Portfolio"
     url: /portfolio/

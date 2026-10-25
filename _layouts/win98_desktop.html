@@ -114,11 +114,8 @@ layout: default
   .menubar98 span { padding: 2px 6px; }
   .menubar98 span:hover { background: #000080; color: #fff; }
 
-  /* Explorer-style lists (Writings, Recycle Bin) */
-  .explorer98-addr { display: flex; align-items: center; gap: 6px; flex: none; }
-  .explorer98-path { flex: 1; padding: 3px 4px; }
+  /* Explorer-style list (Recycle Bin) */
   .path98 { font-family: Arial, sans-serif; } /* the pixel font has no "\" */
-  .explorer98-addr input { width: 130px; }
   .explorer98-list {
     flex: 1;
     min-height: 0;
@@ -408,7 +405,7 @@ layout: default
     .explorer98-row { grid-template-columns: minmax(0, 1fr) 70px; }
     .explorer98-row span:nth-child(2) { display: none; }
     .taskbar98 .taskbar98-task { flex-basis: 90px; }
-    .explorer98-addr input, .window98-dos .terminal-input { font-size: 16px; } /* iOS zooms into smaller inputs */
+    .window98-dos .terminal-input { font-size: 16px; } /* iOS zooms into smaller inputs */
   }
   @media (prefers-reduced-motion: reduce) {
     .crt98, .boot98-clouds, .boot98-glow, .boot98-flag i { animation: none; }
@@ -455,7 +452,7 @@ layout: default
             </div>
             <div class="welcome98-main">
               <div class="welcome98-menu">
-                <a class="welcome98-item" href="{{ '/writings/' | relative_url }}" data-open="writings" data-latest
+                <a class="welcome98-item" href="{{ '/writings/' | relative_url }}" data-latest
                    data-desc="{{ site.posts | size }} posts on machine learning, forecasting, computer vision and MLOps, plus essays on mindset, growth, decisions and careers."><span class="glyph98">📚</span><span>Read my writings</span></a>
                 <!-- no data-desc: shows the first paragraph of BIO (terminal-commands.js) -->
                 <a class="welcome98-item" href="{{ '/about/' | relative_url }}" data-open="system"><span class="glyph98">👤</span><span>Who is Huijo?</span></a>
@@ -469,29 +466,6 @@ layout: default
             <div class="welcome98-foot">
               <div class="field-row"><input type="checkbox" id="welcome98-show" checked><label for="welcome98-show">Show this screen each time Huijo 98 starts</label></div>
               <button type="button" data-act="close">Close</button>
-            </div>
-          </div>
-        </section>
-
-        <section class="window window98" data-window="writings" data-w="660" data-h="440" hidden aria-label="Writings">
-          <div class="title-bar">
-            <div class="title-bar-text"><span class="glyph98">📂</span><span>Writings</span></div>
-            <div class="title-bar-controls"><button aria-label="Minimize" data-act="min"></button><button aria-label="Maximize" data-act="max"></button><button aria-label="Close" data-act="close"></button></div>
-          </div>
-          <div class="window-body window98-body">
-            <div class="menubar98"><span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Favorites</span><span>Help</span></div>
-            <div class="explorer98-addr">
-              <span>Address</span>
-              <div class="explorer98-path path98 field98"><span class="glyph98">📂</span> C:\Writings</div>
-              <input type="text" name="find" placeholder="Find..." aria-label="Filter writings">
-            </div>
-            <div class="explorer98-list field98">
-              <div class="explorer98-row explorer98-head"><span>Name</span><span>Tag</span><span>Modified</span></div>
-              <!-- rows: assets/js/win98-desktop.js, from #desktop98-posts -->
-            </div>
-            <div class="status-bar">
-              <p class="status-bar-field explorer98-count">{{ site.posts | size }} object(s)</p>
-              <p class="status-bar-field"><a href="{{ '/writings/' | relative_url }}">Open full archive ({{ site.posts | size }})...</a></p>
             </div>
           </div>
         </section>
@@ -687,7 +661,7 @@ Thanks for stopping by.</textarea>
 {{ content }}
 
 <script type="application/json" id="desktop98-posts">[
-  {%- for post in site.posts -%}
+  {%- for post in site.posts limit: 1 -%}
   {"title": {{ post.title | jsonify | replace: "</", "<\/" }}, "url": {{ post.url | relative_url | jsonify }}, "date": {{ post.date | date: "%Y-%m-%d" | jsonify }}, "tag": {{ post.tags | first | default: "Note" | jsonify }}}{% unless forloop.last %},{% endunless %}
   {%- endfor -%}
 ]</script>
