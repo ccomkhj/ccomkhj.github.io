@@ -8,6 +8,7 @@ tags:
   - Society
 title:  "How brain changes"
 
+ai_researched: false
 ---
 
 Brain's depth has become shallow.

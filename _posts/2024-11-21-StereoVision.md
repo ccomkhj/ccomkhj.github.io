@@ -11,6 +11,7 @@ header:
 #   image: /img/raft.png
   teaser: /img/raft.png
 
+ai_researched: false
 ---
 
 # Building a DIY Depth Camera  

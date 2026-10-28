@@ -10,6 +10,7 @@ classes: wide
 title: "Understanding XGBoost: A Deep Dive into the Mathematics and From-Scratch Implementation"
 excerpt: "Deriving XGBoost from first principles — objective function, structural and weight regularization, exact greedy split-finding — plus a from-scratch Python implementation that depends only on the standard library."
 
+ai_researched: true
 ---
 
 > **Note:** This post is initially composed with deep research and finalized by me.

@@ -8,6 +8,7 @@ tags:
 classes: wide  
 title: "How to review code in data science"  
 
+ai_researched: false
 ---
 
 Code review in software engineering is an essential part of the development process. It helps ensure code quality, facilitates knowledge sharing, and promotes best practices among team members.

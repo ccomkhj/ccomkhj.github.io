@@ -5,6 +5,7 @@ title:  "Paper Review - Deep Learning is Not All You Need"
 date: 2022-11-23
 tags:
     - Machine Learning
+ai_researched: false
 ---
 
 There is one rule of thumb in Deep Learning research.

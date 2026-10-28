@@ -5,6 +5,7 @@ title:  "Retrorepsective Self Analysis myself"
 date: 2023-03-22
 tags:
   - Mindset
+ai_researched: false
 ---
 
 There are often multiple versions of me to folks.

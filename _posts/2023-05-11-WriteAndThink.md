@@ -6,6 +6,7 @@ date: 2023-05-11
 tags:
   - Growth
 title:  "Relation between Writing and Thinking"
+ai_researched: false
 ---
 
 It is the age of generative AI.

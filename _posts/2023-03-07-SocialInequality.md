@@ -5,6 +5,7 @@ title:  "Social Inequality"
 date: 2023-03-07
 tags:
   - Society
+ai_researched: false
 ---
 
 In the current economic system, inequality is one of the hottest potatoes.

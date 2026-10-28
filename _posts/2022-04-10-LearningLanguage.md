@@ -5,6 +5,7 @@ title:  "Learning Language"
 date: 2022-04-10
 tags:
   - Growth
+ai_researched: false
 ---
 
 # My lesson in learning new languages

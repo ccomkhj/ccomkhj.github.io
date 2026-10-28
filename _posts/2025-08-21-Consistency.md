@@ -9,6 +9,7 @@ classes: wide
 title: "Consistency vs The Power of Knowing When to Walk Away"
 excerpt: "Two startup truisms collide: 'consistency wins' vs 'know when to quit.' What survivorship bias hides about both, and how I've come to read the difference."
 
+ai_researched: false
 ---
 
 There are two counter arguing saying.

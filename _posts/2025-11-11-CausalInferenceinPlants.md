@@ -7,6 +7,7 @@ tags:
 classes: wide  
 title: "Causal Inference in Plants"
 excerpt: "Adding causal inference (DoWhy + a hand-drawn DAG) on top of a LightGBM yield model so a greenhouse simulator can answer 'what happens if we raise temperature 2°C?' instead of just predicting tomorrow's yield."
+ai_researched: false
 ---
 
 I have built a yield forecasting model using LightGBM.

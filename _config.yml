@@ -52,6 +52,9 @@ logo                     : "/assets/images/H_logo.png" # path of logo image to d
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
+# Disclosure shown on every post with `ai_researched: true` unless the post sets its own
+# `ai_research_note`. Defined once here; see AGENTS.md "Provenance and Featured".
+ai_research_default_note : "The core ideas and editorial direction are mine. I used AI iteratively to research the topic and produce most of the explanations and supporting details."
 comments:
   provider               : # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "giscus", "custom"
   disqus:

@@ -6,6 +6,7 @@ tags:
   - Growth
 classes: wide
 title:  Second Thought On Productivity
+ai_researched: false
 ---
 
 Productivity for me doesn't mean more works get done.

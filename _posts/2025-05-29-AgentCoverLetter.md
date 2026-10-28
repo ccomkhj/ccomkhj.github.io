@@ -9,6 +9,7 @@ tags:
 classes: wide  
 title: "Job Applications with AI: My Cover Letter Generation Agent"  
 
+ai_researched: false
 ---
 
 ## The Problem

@@ -7,6 +7,7 @@ tags:
 classes: wide
 title: "Designing a RAG retrieval system: from ingestion to grounded generation"
 excerpt: "How to trace evidence through dense search, BM25, fusion, filtering, reranking, context construction, and evaluation."
+ai_researched: true
 ---
 
 I used to explain RAG as documents, a vector database, and an LLM. That is enough for a diagram, but it does not help much when an answer is wrong.

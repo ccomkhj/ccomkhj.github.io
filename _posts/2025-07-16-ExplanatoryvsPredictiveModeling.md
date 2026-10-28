@@ -9,6 +9,8 @@ tags:
 classes: wide  
 title: "Explanatory vs. Predictive Modeling: A Guide for the Machine Learning Engineer"  
 
+ai_researched: true
+ai_research_note: "This post summarizes Galit Shmueli's paper 'To Explain or to Predict?'. I chose the topic and edited the result, but most of the text was produced with AI deep research."
 ---
 
 > **Note:** This post is mainly written with deep research.

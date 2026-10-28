@@ -6,6 +6,7 @@ tags:
   - Mindset
 classes: wide
 title:  What makes difference in Business tip and travel
+ai_researched: false
 ---
 
 I am writing this blog in the train to Velno, Holland.

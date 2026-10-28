@@ -7,6 +7,7 @@ tags:
 classes: wide
 title: "Continuous Discovery Habits"
 excerpt: "Continuous Discovery Habits"
+ai_researched: false
 ---
 
 Everything in your backlog is a "bet" whether we do discovery or not.

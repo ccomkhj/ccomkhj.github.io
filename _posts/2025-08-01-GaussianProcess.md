@@ -9,6 +9,7 @@ tags:
 classes: wide  
 title: "The Linear Gaussian State Model: Dynamic Systems"
 
+ai_researched: true
 ---
 
 > **Note:** This post is initially composed with deep research and finalized by me.

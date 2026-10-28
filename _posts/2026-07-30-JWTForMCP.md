@@ -8,6 +8,7 @@ tags:
 classes: wide
 title: "What's inside that token? JWT explained with a boarding pass"
 excerpt: "I built an OAuth 2.0 server with Keycloak for our MCP setup. Here is what a JWT actually carries — issuer, audience, roles — and how we pack our own facts into it: environment, customer, and fine-grained permissions."
+ai_researched: true
 ---
 
 I recently built an OAuth 2.0 server using [Keycloak](https://www.keycloak.org/) so that our MCP (Model Context Protocol) tools can check *who* is calling them and *what* that caller is allowed to do. The heart of that system is a small piece of text called a **JWT** (JSON Web Token, pronounced "jot").

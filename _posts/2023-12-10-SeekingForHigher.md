@@ -6,6 +6,7 @@ tags:
   - Mindset
 classes: wide
 title:  Seeking for Higher
+ai_researched: false
 ---
 
 Basically people seek for higher.

@@ -1,4 +1,6 @@
 set shell := ["sh", "-eu", "-c"]
+# production builds (the check-* recipes) need the repo named; git remotes only count in development
+export PAGES_REPO_NWO := env_var_or_default("PAGES_REPO_NWO", "ccomkhj/ccomkhj.github.io")
 
 run:
     gem install bundler -v 4.0.2
@@ -16,3 +18,15 @@ check-landing *CONFIGS:
 # Mark Words done in _learn_german/ (headwords, stems, or a whole "MASTERED: a; b" line).
 german-done +WORDS:
     python3 scripts/german_done.py {{WORDS}}
+
+# Validate post front matter: ai_researched, ai_research_note, featured, featured_rank (CI runs this).
+check-posts:
+    ruby scripts/check_post_metadata.rb
+
+# Build with fixture posts and assert on Featured picks, provenance badges and disclosures.
+check-writings:
+    python3 scripts/check_writings.py
+
+# Drive /writings/, / and a post in Chromium (needs Playwright; not run in CI). Screenshots optional.
+check-browser SHOTS="":
+    dir="$(mktemp -d)"; trap 'rm -rf "$dir"' EXIT; python3 scripts/check_writings.py --keep "$dir"; node scripts/check_writings_browser.js "$dir" {{SHOTS}}

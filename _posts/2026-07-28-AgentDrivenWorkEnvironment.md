@@ -9,6 +9,7 @@ title: "My tips for improving an agent-driven work environment"
 excerpt: "Three limits decide how much you get out of coding agents: how many diffs you can verify, how much context you feed them, and how much attention each loop costs you."
 header:
   teaser: /img/agentenv-teaser.png
+ai_researched: false
 ---
 
 I ran a session on this at my team's AI lunch. Here's the summary.

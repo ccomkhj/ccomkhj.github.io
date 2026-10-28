@@ -8,6 +8,7 @@ tags:
 classes: wide
 title: "Attention has four matrices, not three"
 excerpt: "Q, K, V, and the output projection the name leaves out. What each weight does to the same input, and why the differences between them decide what an inference server has to cache."
+ai_researched: true
 ---
 
 In 2022 I wrote a paper review of *Attention Is All You Need*. Rereading it, I find one sentence carrying the whole explanation:

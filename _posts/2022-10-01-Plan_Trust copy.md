@@ -5,6 +5,7 @@ title:  "AI service"
 date: 2022-10-01
 tags:
     - Machine Learning
+ai_researched: false
 ---
 
 As a CTO of AI-first-company, my first approach to solve problems was AI.

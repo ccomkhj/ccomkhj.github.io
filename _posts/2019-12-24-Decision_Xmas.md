@@ -5,6 +5,7 @@ title:  "Decision on X-mas eve"
 date: 2019-12-24
 tags:
   - Growth
+ai_researched: false
 ---
 
 It has been quite a long time to journal on this page.

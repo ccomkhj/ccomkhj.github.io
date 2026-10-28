@@ -1,0 +1,2 @@
+# `just check-writings` overlay: publish the future-dated fixture so it is the Latest post.
+future: true

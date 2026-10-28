@@ -7,6 +7,7 @@ tags:
 classes: wide
 title: "Keycloak Components: Roles, Scopes, Client Scopes, and Audience"
 excerpt: "A simple explanation of how Keycloak controls access from an app to an SSH MCP server."
+ai_researched: true
 ---
 
 An app wants to call an MCP server that provides SSH tools. For example, a user asks the app to read a log file on a remote machine.

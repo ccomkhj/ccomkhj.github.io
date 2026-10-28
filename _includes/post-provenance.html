@@ -1,0 +1,17 @@
+{%- comment -%}
+  Post reader, under the title and date: badges plus the AI-research disclosure
+  (_includes/ai-research-note.html) or, for a legacy post, the Unclassified notice.
+  `ai_researched: false` renders nothing unless the post is Featured.
+{%- endcomment -%}
+{%- if page.featured == true or page.ai_researched == true or page.ai_researched == nil -%}
+<aside class="post-provenance{% if page.ai_researched == nil %} post-provenance--quiet{% endif %}" aria-label="How this post was made">
+  <p class="post-provenance__badges">{% include post-badges.html post=page %}</p>
+  {%- if page.ai_researched == true %}
+  {%- capture note %}{% include ai-research-note.html post=page %}{% endcapture %}
+  <p class="post-provenance__note">{{ note | escape }}</p>
+  <p class="post-provenance__fine">This describes how the post was made, not how far its details were independently verified.</p>
+  {%- elsif page.ai_researched == nil %}
+  <p class="post-provenance__note">Research provenance has not yet been classified for this older post.</p>
+  {%- endif %}
+</aside>
+{%- endif -%}

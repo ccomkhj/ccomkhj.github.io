@@ -6,6 +6,7 @@ tags:
    - Machine Learning
 classes: wide
 title: Conformal Prediction
+ai_researched: true
 ---
 
 ## The Concept of Conformal Prediction

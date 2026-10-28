@@ -8,6 +8,7 @@ tags:
 classes: wide  
 title: "Evaluate agents"
 excerpt: "Notes on the parts of an agent worth evaluating — routers, skills, and paths — and the methods (LLM-as-judge, code checks, human feedback) that scale to each."
+ai_researched: false
 ---
 
 Parts of an Agent You need to Evaluate

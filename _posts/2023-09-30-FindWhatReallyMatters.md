@@ -6,6 +6,7 @@ tags:
    - Machine Learning
 classes: wide
 title:  Find out What really matters
+ai_researched: false
 ---
 
 In business, life, and friendships, we often look at what causes good and bad outcomes. When I was researching ways to make model performance better, I tried to understand the key features that help improve the model. Some people refer to this as Explainable AI (EXA), but I think of it as a basic approach in life.

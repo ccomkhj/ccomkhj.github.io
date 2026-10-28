@@ -5,8 +5,12 @@ layout: default
   /writings/ as a Win98 Explorer: topic tree → file list → Notepad preview with a Read button.
   Groups, icons and blurbs come from _data/tags.yml. The file list is server-rendered so it
   works without JS and for crawlers; the script then takes over from the JSON below.
-  Folders deep-link by hash: /writings/#growth, /writings/#tech, /writings/#2025.
+  Folders deep-link by hash: /writings/#growth, /writings/#tech, /writings/#2025, /writings/#featured.
+  Featured (manual, by `featured_rank`) and research provenance (`ai_researched`) come from post
+  front matter; see AGENTS.md "Provenance and Featured". Folder, provenance filter and search
+  narrow the list together.
 {%- endcomment -%}
+{%- assign featured_posts = site.posts | where: "featured", true | sort: "featured_rank" -%}
 <style>
   .wr { max-width: 1240px; margin: 18px auto; }
   .wr .window-body { margin: 3px; }
@@ -41,8 +45,19 @@ layout: default
   .wr-banner h3 { margin: 0; font: bold 18px/1.1 Arial, sans-serif; color: #000; }
   .wr-banner p { margin: 2px 0 0; font: 12px Arial, sans-serif; color: #444; }
   .wr-banner .hr { height: 3px; margin-top: 5px; background: linear-gradient(90deg, #000080, #1084d0 60%, transparent); }
-  .wr-sortrow { display: flex; justify-content: space-between; align-items: center; padding: 4px 8px; font-size: 11px; color: #444; border-bottom: 1px solid #e0e0e0; }
+  .wr-sortrow { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 12px; padding: 4px 8px; font-size: 11px; color: #444; border-bottom: 1px solid #e0e0e0; }
   .wr-sortrow label { display: flex; align-items: center; gap: 6px; margin: 0; font-size: 11px; color: #444; }
+  .wr-ctl { display: flex; flex-wrap: wrap; gap: 4px 12px; }
+  .wr-shelf { padding: 6px 10px 8px; border-bottom: 1px solid #c0c0c0; font-family: Arial, sans-serif; }
+  .wr-shelf[hidden], .wr-shelf-extra { display: none; }
+  .wr-shelf h4 { margin: 0 0 3px; font: bold 12px Arial, sans-serif; color: #000; }
+  .wr-shelf ol { margin: 0; padding-left: 22px; font-size: 13px; line-height: 1.4; }
+  .wr-shelf li { margin: 3px 0; }
+  .wr-shelf li a { color: #000080; font-weight: bold; }
+  .wr-shelf li a:hover, .wr-shelf-all:hover { text-decoration: underline; }
+  .wr-shelf-all { display: inline-block; margin-top: 3px; font-size: 12px; color: #000080; }
+  .wr-file .m .badges98 { margin-left: 2px; }
+  .wr-shelf .badges98 { margin-left: 6px; }
   .wr-files { overflow-y: auto; flex: 1; }
   .wr-file { display: grid; grid-template-columns: 30px 1fr; gap: 6px; padding: 6px 8px; cursor: pointer; border-bottom: 1px dotted #d0d0d0; font-family: Arial, sans-serif; }
   .wr-file .ic { font-size: 22px; line-height: 1; padding-top: 1px; }
@@ -55,6 +70,10 @@ layout: default
   .wr mark { background: #ffff80; color: #000; }
   .wr-file.sel mark { background: #ff0; }
   .wr-empty { padding: 30px 14px; color: #444; font: 13px/1.5 Arial, sans-serif; text-align: center; }
+  .wr-empty b { display: block; color: #000; }
+  .wr-empty button { margin: 10px 4px 0; }
+  .wr a:focus-visible, .wr button:focus-visible, .wr select:focus-visible, .wr input:focus-visible { outline: 1px dotted #000; outline-offset: 1px; }
+  .wr-file.sel a:focus-visible { outline-color: #fff; }
 
   .wr-note { display: flex; flex-direction: column; min-height: 0; margin: 0; }
   .wr-note .title-bar { flex: none; }
@@ -84,6 +103,7 @@ layout: default
     .wr-note, .wr-addr, #wr-where { display: none; }
     .wr-file .more { display: block; }
     .wr-file .more p { margin: 8px 0; font-size: 13px; line-height: 1.45; color: #fff; }
+    .wr-file .more .wr-more-note { font-style: italic; }
     .wr-file .more .wr-read { width: 100%; }
     .wr-search { margin-left: 0; width: 100%; padding: 4px 6px; }
     .wr-search input { flex: 1; width: auto; font-size: 16px; }
@@ -91,7 +111,7 @@ layout: default
     .wr-big { height: 36px; min-width: 40px !important; }
   }
 </style>
-<noscript><style>.wr-bar, .wr-addr, .wr-tree, .wr-note, .wr-sortrow { display: none; } .wr-main { display: block; height: auto; } .wr-files { overflow: visible; }</style></noscript>
+<noscript><style>.wr-bar, .wr-addr, .wr-tree, .wr-note, .wr-sortrow, .wr-shelf-all { display: none; } .wr-main { display: block; height: auto; } .wr-files { overflow: visible; } .wr-shelf-extra { display: list-item; }</style></noscript>
 
 <div class="window wr" id="wr">
   {% include title-bar98.html title="📂 Writings - Huijo's Computer" %}
@@ -109,10 +129,21 @@ layout: default
       <nav class="wr-sunk wr-tree" id="wr-tree" aria-label="Topics"></nav>
       <div class="wr-sunk wr-list">
         <div class="wr-banner" id="wr-banner"><span class="ico">🖥️</span><div><h3>All writings</h3><p>Tech notes and essays</p><div class="hr"></div></div></div>
-        <div class="wr-sortrow"><span id="wr-n">{{ site.posts | size }} writings</span><label>Sort by <select id="wr-sort"><option value="d|-1">Newest first</option><option value="d|1">Oldest first</option><option value="t|1">Title A–Z</option><option value="min|1">Quick reads first</option><option value="min|-1">Long reads first</option></select></label></div>
+        {%- if featured_posts.size > 0 %}
+        <section class="wr-shelf" id="featured" aria-labelledby="wr-shelf-h">
+          <h4 id="wr-shelf-h">⭐ Featured picks</h4>
+          <ol>
+            {%- for post in featured_posts %}
+            <li{% if forloop.index > 3 %} class="wr-shelf-extra"{% endif %}><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>{% include post-badges.html post=post featured=false %}</li>
+            {%- endfor %}
+          </ol>
+          <a class="wr-shelf-all" href="#featured" data-key="featured">See all {{ featured_posts.size }} Featured →</a>
+        </section>
+        {%- endif %}
+        <div class="wr-sortrow"><span id="wr-n">{{ site.posts | size }} writings</span><span class="wr-ctl"><label>Provenance <select id="wr-ai" autocomplete="off"><option value="all">All provenance</option><option value="ai">AI-researched</option><option value="not_ai">Not AI-researched</option><option value="unknown">Unclassified</option></select></label><label>Sort by <select id="wr-sort" autocomplete="off"><option value="d|-1">Newest first</option><option value="d|1">Oldest first</option><option value="t|1">Title A–Z</option><option value="min|1">Quick reads first</option><option value="min|-1">Long reads first</option></select></label></span></div>
         <div class="wr-files" id="wr-files">
           {%- for post in site.posts %}
-          <div class="wr-file"><span class="ic">📄</span><div><a class="t" href="{{ post.url | relative_url }}">{{ post.title }}</a><div class="m">{{ post.date | date: "%b %-d, %Y" }} · {{ post.tags | join: ", " }}</div></div></div>
+          <div class="wr-file"><span class="ic">📄</span><div><a class="t" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a><div class="m">{{ post.date | date: "%b %-d, %Y" }} · {{ post.tags | join: ", " }}{% include post-badges.html post=post %}</div></div></div>
           {%- endfor %}
         </div>
       </div>
@@ -128,15 +159,23 @@ layout: default
       <p class="status-bar-field" id="wr-where">Writings</p>
       <p class="status-bar-field" id="wr-log">C:\&gt; ready</p>
     </div>
+    <p class="screen-reader-text" id="wr-live" role="status"></p>
   </div>
 </div>
 
-<script id="wr-data" type="application/json">
+{%- comment -%} ai: true | false | null (unclassified); f: Featured; rank: featured_rank or null;
+  note: the effective AI-research disclosure or null. Every "<" is written as \u003c so no
+  title or note can end the script element. {%- endcomment -%}
+{%- capture wr_json -%}
 {"topics": {{ site.data.tags | jsonify }}, "posts": [{%- for post in site.posts -%}
   {%- assign ex = post.excerpt | strip_html | strip_newlines | strip -%}
   {%- if ex == "" or ex == "TBD" -%}{%- assign ex = post.content | strip_html | strip_newlines | truncatewords: 40 -%}{%- endif -%}
-  {"t": {{ post.title | jsonify }}, "u": {{ post.url | relative_url | jsonify }}, "d": "{{ post.date | date: '%Y-%m-%d' }}", "tags": {{ post.tags | jsonify }}, "x": {{ ex | truncate: 260 | jsonify }}, "w": {{ post.content | number_of_words }}}{% unless forloop.last %},{% endunless %}
+  {%- capture note -%}{%- if post.ai_researched == true -%}{% include ai-research-note.html post=post %}{%- endif -%}{%- endcapture -%}
+  {"t": {{ post.title | jsonify }}, "u": {{ post.url | relative_url | jsonify }}, "d": "{{ post.date | date: '%Y-%m-%d' }}", "tags": {{ post.tags | jsonify }}, "x": {{ ex | truncate: 260 | jsonify }}, "w": {{ post.content | number_of_words }}, "ai": {% if post.ai_researched == true %}true{% elsif post.ai_researched == false %}false{% else %}null{% endif %}, "f": {% if post.featured == true %}true{% else %}false{% endif %}, "rank": {% if post.featured == true %}{{ post.featured_rank | jsonify }}{% else %}null{% endif %}, "note": {% if note == "" %}null{% else %}{{ note | jsonify }}{% endif %}}{% unless forloop.last %},{% endunless %}
 {%- endfor -%}]}
+{%- endcapture %}
+<script id="wr-data" type="application/json">
+{{ wr_json | replace: "<", "\u003c" }}
 </script>
 <script>
 (function () {
@@ -157,6 +196,7 @@ layout: default
   if (!other) groups.push(other = { group: "Other", icon: "📦", blurb: "Everything else", tags: [] });
   groups.forEach(function (g) { g.tags.forEach(function (t) { tagInfo[t.name] = { group: g.group, icon: t.icon }; }); });
 
+  var shelf = document.querySelector(".wr-shelf");
   var posts = data.posts, count = {}, dec = document.createElement("textarea");
   posts.forEach(function (p) {
     dec.innerHTML = p.x; p.x = dec.value; /* strip_html leaves entities like &gt; */
@@ -172,9 +212,29 @@ layout: default
     p.icon = first.icon || "📄";
   });
   var years = Array.from(new Set(posts.map(function (p) { return p.y; }))).sort().reverse();
+  var nFeatured = posts.filter(function (p) { return p.f; }).length;
 
-  /* Folders: "all" | "g:<group>" | "t:<tag>" | "years" | "y:<year>" */
+  /* Research provenance, as filtered and labelled. "Not AI-researched" is ai: false, never a
+     claim that every word is human-written, so it gets no badge. */
+  var AI = {
+    all: { label: "All provenance", test: function () { return true; } },
+    ai: { label: "AI-researched", test: function (p) { return p.ai === true; } },
+    not_ai: { label: "Not AI-researched", test: function (p) { return p.ai === false; } },
+    unknown: { label: "Unclassified", test: function (p) { return p.ai === null; } }
+  };
+  function labels(p) {
+    return [p.f && "Featured", p.ai === true ? "AI-researched" : p.ai === null && "Unclassified"].filter(Boolean);
+  }
+  /* same words and classes as _includes/post-badges.html */
+  function badges(p) {
+    var cls = { Featured: " badge98--featured", Unclassified: " badge98--quiet" };
+    var b = labels(p).map(function (l) { return '<span class="badge98' + (cls[l] || "") + '">' + l + "</span>"; }).join(" ");
+    return b && ' <span class="badges98">' + b + "</span>";
+  }
+
+  /* Folders: "all" | "featured" | "g:<group>" | "t:<tag>" | "years" | "y:<year>" */
   var folders = [{ key: "all", label: "All writings", n: posts.length, depth: 0, icon: "🖥️", desc: "Tech notes and essays since " + years[years.length - 1], path: [] }];
+  if (nFeatured) folders.push({ key: "featured", label: "Featured", n: nFeatured, depth: 0, icon: "⭐", desc: "Picked by hand: where I'd start reading", path: ["Featured"] });
   groups.forEach(function (g) {
     var n = posts.filter(function (p) { return p.group === g.group; }).length;
     if (!n) return;
@@ -194,20 +254,22 @@ layout: default
     F[f.key] = f; bySlug[f.slug] = f;
   });
 
-  var st = { folder: "all", q: "", sort: "d", dir: -1, sel: null, rows: [], back: [], open: { years: 0 } };
+  var st = { folder: "all", q: "", ai: "all", sort: "d", dir: -1, sel: null, rows: [], back: [], open: { years: 0 } };
   groups.forEach(function (g) { st.open["g:" + g.group] = 1; });
 
   function inFolder(p, key) {
+    if (key === "featured") return p.f;
     var k = key.slice(0, 2), v = key.slice(2);
     if (k === "g:") return p.group === v;
     if (k === "t:") return p.tags.indexOf(v) >= 0;
     if (k === "y:") return p.y === v;
     return true;
   }
+  /* folder, provenance and search narrow together: search stays inside the open folder */
   function rows() {
-    var q = st.q.toLowerCase();
+    var q = st.q.toLowerCase(), prov = AI[st.ai].test;
     return posts.filter(function (p) {
-      return q ? (p.t + " " + p.tags.join(" ") + " " + p.x).toLowerCase().indexOf(q) >= 0 : inFolder(p, st.folder);
+      return inFolder(p, st.folder) && prov(p) && (!q || (p.t + " " + p.tags.join(" ") + " " + p.x).toLowerCase().indexOf(q) >= 0);
     }).sort(function (a, b) {
       var x = st.sort === "t" ? a.t.toLowerCase() : a[st.sort], y = st.sort === "t" ? b.t.toLowerCase() : b[st.sort];
       return (x > y ? 1 : x < y ? -1 : 0) * st.dir;
@@ -221,28 +283,54 @@ layout: default
       if (f.depth === 0 || f.kids) hideUnder = null;
       if (hideUnder !== null && f.depth > hideUnder) return "";
       if (f.kids && !st.open[f.key]) hideUnder = f.depth;
-      return '<a class="wr-node' + (f.key === st.folder ? " sel" : "") + '" href="#' + f.slug + '" data-key="' + esc(f.key) + '" style="padding-left:' + (4 + f.depth * 16) + 'px">' +
+      var on = f.key === st.folder;
+      return '<a class="wr-node' + (on ? " sel" : "") + '"' + (on ? ' aria-current="true"' : "") + ' href="#' + f.slug + '" data-key="' + esc(f.key) + '" style="padding-left:' + (4 + f.depth * 16) + 'px">' +
         '<span class="tw' + (f.kids ? '" data-tw="' + esc(f.key) + '">' + (st.open[f.key] ? "−" : "+") : ' none">') + "</span><span>" + f.icon + '</span><span class="lbl">' + esc(f.label) + '</span><span class="n">' + f.n + "</span></a>";
     }).join("");
   }
+  /* what search covers: the open folder ("By year" holds everything) */
+  function scope() { return st.folder === "all" || st.folder === "years" ? "all writings" : F[st.folder].label; }
+  function empty() {
+    var why = (st.ai !== "all" ? " is " + AI[st.ai].label : "") + (st.q ? (st.ai !== "all" ? " and" : "") + " contains “" + st.q + "”" : "");
+    return '<div class="wr-empty"><b>No matching writings</b>' + esc("Nothing in " + scope() + why + ".") + "<br>" +
+      (st.ai !== "all" ? '<button type="button" data-h="clearai">Clear provenance filter</button>' : "") +
+      (st.q ? '<button type="button" data-h="clearq">Clear search</button>' : "") + "</div>";
+  }
   function list() {
     st.rows = rows();
-    var f = F[st.folder];
+    var f = F[st.folder], n = st.rows.length;
     $("wr-banner").innerHTML = st.q
-      ? '<span class="ico">🔍</span><div><h3>Search results</h3><p>Writings containing “' + esc(st.q) + '” in any folder</p><div class="hr"></div></div>'
+      ? '<span class="ico">🔍</span><div><h3>Search results</h3><p>Writings containing “' + esc(st.q) + "” in " + esc(scope()) + '</p><div class="hr"></div></div>'
       : '<span class="ico">' + f.icon + "</span><div><h3>" + esc(f.label) + "</h3><p>" + esc(f.desc) + '</p><div class="hr"></div></div>';
-    $("wr-n").textContent = st.rows.length + " writing" + (st.rows.length === 1 ? "" : "s");
+    if (shelf) shelf.hidden = st.folder !== "all" || !!st.q;
+    $("wr-n").textContent = n + " writing" + (n === 1 ? "" : "s") + (st.ai !== "all" ? " · " + AI[st.ai].label : "");
     $("wr-files").innerHTML = st.rows.map(function (p) {
       var sel = p.u === st.sel, u = esc(p.u);
-      return '<div class="wr-file' + (sel ? " sel" : "") + '" data-u="' + u + '"><span class="ic">' + p.icon + '</span><div><a class="t" href="' + u + '">' + hl(p.t, st.q) + '</a><div class="m">' + fmtDate(p.d) + " · " + p.min + " min read · " + esc(p.tags.join(", ")) + "</div>" +
-        (sel ? '<div class="more"><p>' + esc(p.x) + '</p><a class="wr-btn wr-read" href="' + u + '">📖 Read full post</a></div>' : "") + "</div></div>";
-    }).join("") || '<div class="wr-empty">No writings match “' + esc(st.q) + '”.<br>Try a shorter word.</div>';
+      return '<div class="wr-file' + (sel ? " sel" : "") + '" data-u="' + u + '"><span class="ic">' + p.icon + '</span><div><a class="t" href="' + u + '">' + hl(p.t, st.q) + '</a><div class="m">' + fmtDate(p.d) + " · " + p.min + " min read · " + esc(p.tags.join(", ")) + badges(p) + "</div>" +
+        (sel ? '<div class="more">' + (p.ai === true ? '<p class="wr-more-note">AI-researched: ' + esc(p.note) + "</p>" : "") + "<p>" + esc(p.x) + '</p><a class="wr-btn wr-read" href="' + u + '">📖 Read full post</a></div>' : "") + "</div></div>";
+    }).join("") || empty();
     $("wr-sort").value = st.sort + "|" + st.dir;
-    $("wr-addr").textContent = st.q ? "🔍 Search: " + st.q : f.icon + " C:\\Writings" + f.path.map(function (s) { return "\\" + s; }).join("");
-    $("wr-count").textContent = st.rows.length + " object(s)";
-    $("wr-where").textContent = st.q ? "Search" : ["Writings"].concat(f.path).join(" › ");
+    $("wr-ai").value = st.ai;
+    $("wr-q").placeholder = "Search " + scope() + "…";
+    $("wr-q").setAttribute("aria-label", "Search " + scope());
+    $("wr-addr").textContent = st.q ? "🔍 Search: " + st.q + " in " + scope() : f.icon + " C:\\Writings" + f.path.map(function (s) { return "\\" + s; }).join("");
+    $("wr-count").textContent = n + " object(s)";
+    $("wr-where").textContent = st.q ? "Search in " + scope() : ["Writings"].concat(f.path).join(" › ");
     document.querySelector('[data-h="back"]').disabled = !st.back.length;
     document.querySelector('[data-h="up"]').disabled = st.folder === "all" && !st.q;
+    document.querySelector('[data-h="random"]').disabled = !n;
+  }
+  /* After the folder, filter or search changed: keep the preview if its writing is still
+     listed, else preview the first one (or nothing), and tell screen readers the new count. */
+  var liveTimer;
+  function refresh() {
+    list();
+    if (!st.rows.some(function (p) { return p.u === st.sel; })) { st.sel = st.rows[0] ? st.rows[0].u : null; list(); note(); }
+    clearTimeout(liveTimer);
+    liveTimer = setTimeout(function () {
+      $("wr-live").textContent = st.rows.length + " writing" + (st.rows.length === 1 ? "" : "s") + " in " + scope() +
+        (st.ai !== "all" ? ", " + AI[st.ai].label : "") + (st.q ? ", matching “" + st.q + "”" : "");
+    }, 700);
   }
   /* typewriter: parts = [[className, text], ...] */
   function typeOut(el, parts) {
@@ -266,8 +354,11 @@ layout: default
       return;
     }
     $("wr-ntitle").textContent = p.file + " - Notepad";
-    typeOut($("wr-paper"), [["h", p.t + "\n"], ["", "─".repeat(Math.min(40, p.t.length)) + "\n"], ["k", "Date:   "], ["", fmtDate(p.d) + "\n"],
-      ["k", "Topics: "], ["", p.tags.join(", ") + "\n"], ["k", "Length: "], ["", p.min + " min read\n\n"], ["", p.x]]);
+    var parts = [["h", p.t + "\n"], ["", "─".repeat(Math.min(40, p.t.length)) + "\n"], ["k", "Date:   "], ["", fmtDate(p.d) + "\n"],
+      ["k", "Topics: "], ["", p.tags.join(", ") + "\n"], ["k", "Length: "], ["", p.min + " min read\n"]];
+    if (labels(p).length) parts.push(["k", "Labels: "], ["", labels(p).join(" · ") + "\n"]);
+    if (p.ai === true) parts.push(["k", "Note:   "], ["", p.note + "\n"]);
+    typeOut($("wr-paper"), parts.concat([["", "\n" + p.x]]));
     $("wr-actions").innerHTML = '<a class="wr-btn wr-read" href="' + esc(p.u) + '">📖 Read full post</a><button type="button" data-copy>🔗 Copy link</button><span class="wr-hint">or double-click it in the list</span>';
   }
   function log(msg) {
@@ -280,8 +371,7 @@ layout: default
     st.folder = key; st.q = ""; $("wr-q").value = "";
     if (F[key].parent) st.open[F[key].parent] = 1;
     history.replaceState(null, "", F[key].slug ? "#" + F[key].slug : location.pathname + location.search);
-    tree(); list();
-    if (!st.rows.some(function (p) { return p.u === st.sel; })) { st.sel = st.rows[0] && st.rows[0].u; list(); note(); }
+    tree(); refresh();
     $("wr-files").scrollTop = 0;
     log("dir " + F[key].label + " — " + st.rows.length + " file(s) in 0.0" + (2 + st.rows.length % 7) + "s");
   }
@@ -296,6 +386,11 @@ layout: default
     log("type " + byUrl(u).file);
   }
   function open() { if (st.sel) location.href = st.sel; }
+  function setAi(v) {
+    st.ai = AI[v] ? v : "all";
+    refresh();
+    log("filter " + AI[st.ai].label + " — " + st.rows.length + " file(s)");
+  }
   function modified(e) { return e.metaKey || e.ctrlKey || e.shiftKey || e.altKey; }
 
   $("wr").addEventListener("click", function (e) {
@@ -319,17 +414,17 @@ layout: default
       var h = t.dataset.h;
       if (h === "back" && st.back.length) go(st.back.pop(), true);
       if (h === "up") { if (st.q) go(st.folder, true); else if (F[st.folder].parent) go(F[st.folder].parent); }
-      if (h === "newest") { st.sort = "d"; st.dir = -1; go("all"); select(posts[0].u, true); }
-      if (h === "random") { var pool = st.rows.length ? st.rows : posts; select(pool[Math.floor(Math.random() * pool.length)].u, true); }
+      if (h === "newest") { st.sort = "d"; st.dir = -1; go("all"); if (st.rows[0]) select(st.rows[0].u, true); }
+      if (h === "random" && st.rows.length) select(st.rows[Math.floor(Math.random() * st.rows.length)].u, true);
       if (h === "closenote") { st.sel = null; list(); note(); }
+      if (h === "clearai") { setAi("all"); $("wr-ai").focus(); }
+      if (h === "clearq") { st.q = ""; $("wr-q").value = ""; refresh(); $("wr-q").focus(); }
     }
   });
   $("wr-files").addEventListener("dblclick", function (e) { if (e.target.closest("[data-u]")) open(); });
   $("wr-sort").addEventListener("change", function (e) { var v = e.target.value.split("|"); st.sort = v[0]; st.dir = +v[1]; list(); });
-  $("wr-q").addEventListener("input", function (e) {
-    st.q = e.target.value.trim(); list();
-    if (st.q && st.rows[0] && !st.rows.some(function (p) { return p.u === st.sel; })) { st.sel = st.rows[0].u; list(); note(); }
-  });
+  $("wr-ai").addEventListener("change", function (e) { setAi(e.target.value); });
+  $("wr-q").addEventListener("input", function (e) { st.q = e.target.value.trim(); refresh(); });
   $("wr-q").addEventListener("keydown", function (e) {
     if (e.key === "Escape") { go(st.folder, true); e.target.blur(); }
     if (e.key === "Enter") open();

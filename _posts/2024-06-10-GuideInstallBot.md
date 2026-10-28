@@ -6,6 +6,7 @@ tags:
   - Engineering
 classes: wide
 title:  Guide to install and run Termin bot
+ai_researched: false
 ---
 # Simplifying the Berlin Visa Appointment Process with Automation
 

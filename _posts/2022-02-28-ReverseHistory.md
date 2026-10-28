@@ -5,6 +5,7 @@ classes: wide
 title:  "거꾸로읽는 세계사"
 tags:
   - Reading
+ai_researched: false
 ---
 
 ## 1. 프랑스 드레퓌르 대위 사건

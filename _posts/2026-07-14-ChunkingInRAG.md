@@ -7,6 +7,7 @@ tags:
 classes: wide
 title: "Chunking in RAG: why 512 tokens is not a strategy"
 excerpt: "Chunking involves four separate decisions: which units exist, how search represents them, what context the LLM receives, and how the whole policy is tested."
+ai_researched: true
 ---
 
 I used to set `chunk_size=512`, add some overlap, and move on. It felt like plumbing.

@@ -1,0 +1,25 @@
+# Grandfathered posts: published before research provenance was tracked (2026-10-28) and not
+# yet classified. They render as "Unclassified" and may omit `ai_researched`. Every post NOT
+# listed here must set `ai_researched: true` or `false` (scripts/check_post_metadata.rb).
+# This is only a validation exception, not a classification: once a post gets
+# `ai_researched`, delete its line. Never add new posts here.
+2023-06-14-PythonClassMethod.md
+2023-09-17-ArtofHiring.md
+2024-07-17-Statistics1.md
+2024-08-11-Limitation_autoregresiveLLM.md
+2024-11-10-PlantBiologyStatistics.md
+2024-11-23-GNNinTS.md
+2024-12-12-LawOfHumanNature.md
+2025-02-08-RelativeTheory.md
+2025-02-10-DistillationandMoE.md
+2025-02-11-BeyondmAP.md
+2025-02-12-DDP.md
+2025-02-15-BuildATeam.md
+2025-02-16-Focus.md
+2025-02-23-PredictiveModelingandHawking .md
+2025-07-07-HierachicalForecasting.md
+2025-07-10-Interval.md
+2025-08-18-StatisticalModelML.md
+2025-11-2-k8s.md
+2025-11-20-RoleOfExperienceInAI.md
+2026-08-12-VariationOfMHA.md

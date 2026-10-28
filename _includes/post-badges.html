@@ -1,0 +1,19 @@
+{%- comment -%}
+  Text badges for a post: Featured (manual pick), AI-researched (`ai_researched: true`) and
+  Unclassified (legacy post without `ai_researched`). `ai_researched: false` gets no badge:
+  no badge is not a claim that every word is human-written. Rendered nothing when no badge
+  applies. The /writings/ script and the Welcome window spell the same words in JS.
+  Usage: {% include post-badges.html post=post %}; `featured=false` drops the Featured badge
+  inside lists that are already all Featured.
+{%- endcomment -%}
+{%- assign p = include.post -%}
+{%- assign show_featured = false -%}
+{%- if p.featured == true and include.featured != false -%}{%- assign show_featured = true -%}{%- endif -%}
+{%- if show_featured or p.ai_researched == true or p.ai_researched == nil -%}
+<span class="badges98">
+  {%- if show_featured %} <span class="badge98 badge98--featured">Featured</span>{% endif -%}
+  {%- if p.ai_researched == true %} <span class="badge98">AI-researched</span>
+  {%- elsif p.ai_researched == nil %} <span class="badge98 badge98--quiet">Unclassified</span>
+  {%- endif -%}
+</span>
+{%- endif -%}

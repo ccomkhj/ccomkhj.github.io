@@ -5,6 +5,7 @@ title:  "Paper Review - Attential Is All You Need"
 date: 2022-11-23
 tags:
     - Machine Learning
+ai_researched: false
 ---
 
 As a machine learning engineer, it's fun to know the history of machine learning.

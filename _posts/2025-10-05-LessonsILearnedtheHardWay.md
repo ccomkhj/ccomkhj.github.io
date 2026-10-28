@@ -7,7 +7,10 @@ tags:
   - Business
 classes: wide  
 title: "From Founder to Leader: Lessons I Learned the Hard Way"
-excerpt: "Five leadership habits I would practice differently if I co-founded another startup tomorrow — drawn from running an early-stage team without prior management experience."
+excerpt: "Five leadership and five management practices I would apply differently if I co-founded another startup tomorrow, drawn from leadership books and my own mistakes running an early-stage team."
+ai_researched: false
+featured: true
+featured_rank: 30
 ---
 
 When I first co-founded my startup, I had no formal experience in leadership. I built a team from scratch — sourcing every early hire through LinkedIn, conducting interviews myself, and making offers based on conviction and chemistry. It was a crash course in leadership, and while we achieved a lot, looking back, there’s so much I would do differently today.

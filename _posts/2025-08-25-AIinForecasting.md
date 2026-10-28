@@ -8,6 +8,7 @@ classes: wide
 title: "Role of AI&ML in forecasting"
 excerpt: "Why deep learning usually loses to simpler statistical models in time-series forecasting, and how to handle the gap honestly when investors only want to hear about AI."
 
+ai_researched: false
 ---
 
 
