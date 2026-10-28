@@ -8,6 +8,8 @@ classes: wide
 title: "Causal Inference in Plants"
 excerpt: "Adding causal inference (DoWhy + a hand-drawn DAG) on top of a LightGBM yield model so a greenhouse simulator can answer 'what happens if we raise temperature 2°C?' instead of just predicting tomorrow's yield."
 ai_researched: false
+featured: true
+featured_rank: 40
 ---
 
 I have built a yield forecasting model using LightGBM.
@@ -15,18 +17,18 @@ It was working surprisingly well, way more accurate than agriculture experts who
 
 It predicts strawberry and tomato yields based on growing conditions like temperature, light, CO₂, and humidity.  
 The model performs well in forecasting, but I realized it only learns **correlations**, not **causal relationships**.  
-So even if it predicts yield accurately, it can not explain what will actually happen **if the farm operator changes** temperature or light in a real greenhouse for the period of time.
+So even if it predicts yield accurately, it cannot explain what will actually happen **if the farm operator changes** temperature or light in a real greenhouse over a period of time.
 
-To go beyond prediction, I started building a **simulation system** that recommends growing conditions due to customer demands.
-As the farm can truly reduce the energy cost per kg of production by knowing the impact of the grow condition.
+To go beyond prediction, I started building a **simulation system** that recommends growing conditions to meet customer demand.
+Knowing the impact of each growing condition lets a farm reduce its energy cost per kg of produce.
 For that, I needed **causal inference** — a way to estimate how much yield changes when I intervene on variables (like raising temperature by +2°C).
-Imagine how much heating 2°C more for 10 ha facility will cost.
+Imagine what it costs to heat a 10 ha facility 2°C warmer.
 
 ## 1. Setting up causal modeling
 
 I began by drawing a simple **causal graph (DAG)** that represents how different factors affect yield:
 - Temperature and light directly influence yield.
-- CO₂, humidity (VPD), irrigation, temperature, and cultivar affect yield (so they’re confounders).
+- CO₂, humidity (VPD), irrigation, and cultivar also affect yield. Where they also influence the temperature or light the farm runs, they are confounders and must be adjusted for.
 - Some variables, like energy usage, are side effects and should not be adjusted for.
 
 This step helped me define what needs to be controlled to get valid causal effects.
@@ -36,7 +38,7 @@ This step helped me define what needs to be controlled to get valid causal effec
 I used **DoWhy**, a causal inference library, to wrap around my LightGBM model.  
 DoWhy helps connect the model to causal concepts:
 
-1. **Model** — define the DAG fully based on plant science. This is where I had to be an plant scientist.
+1. **Model** — define the DAG fully based on plant science. This is where I had to be a plant scientist.
 2. **Identify** — find which variables to adjust for (backdoor criterion).  
 3. **Estimate** — use LightGBM as the outcome and treatment model.  
 4. **Refute** — test how stable and believable the effect is.
@@ -55,7 +57,7 @@ I tested this with:
 - **Sensitivity tests** — check how strong a hidden confounder must be to change conclusions.  
   → Effects were robust unless confounding was extreme.  
 
-These tests gave me confidence that the model captures real causal influence, not just correlation noise.
+Refuters cannot prove that the DAG is right; they test the estimate given the DAG. But they gave me confidence that the effect is not an artifact of noise or of one particular data split.
 
 ## 4. Results and next steps
 

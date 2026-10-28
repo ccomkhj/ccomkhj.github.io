@@ -7,15 +7,15 @@ tags:
   - Business
 classes: wide  
 title: "From Founder to Leader: Lessons I Learned the Hard Way"
-excerpt: "Five leadership and five management practices I would apply differently if I co-founded another startup tomorrow, drawn from leadership books and my own mistakes running an early-stage team."
+excerpt: "The ten practices in Wickman and Boer's How to Be a Great Boss, five for leading and five for managing, and where I fell short of each while running an early-stage startup team."
 ai_researched: false
 featured: true
-featured_rank: 30
+featured_rank: 50
 ---
 
 When I first co-founded my startup, I had no formal experience in leadership. I built a team from scratch — sourcing every early hire through LinkedIn, conducting interviews myself, and making offers based on conviction and chemistry. It was a crash course in leadership, and while we achieved a lot, looking back, there’s so much I would do differently today.
 
-Great bosses aren’t born overnight – they’re shaped by the habits they practice every day. After reflecting on both my own experience and lessons from leadership books, I’ve come to believe in five core practices that truly define great leaders when they’re applied consistently.
+Great bosses aren’t born overnight – they’re shaped by the habits they practice every day. The framework that best matched my own mistakes is the one in Gino Wickman and René Boer’s *How to Be a Great Boss*: five leadership practices and five management practices. I use its ten practices as headings below, each with what I did and what I would do differently.
 
 ### 1. Give Clear Direction
 

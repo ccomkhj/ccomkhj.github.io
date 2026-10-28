@@ -11,8 +11,6 @@ title: "My Expert Forecasts Got Crushed by a Dumb Algorithm"
 
 ai_researched: true
 excerpt: "Simple baselines such as the naive and seasonal naive forecast can beat models built on expert judgment. Why that happens, the cognitive biases behind it, and the hybrid forecasting process I use instead."
-featured: true
-featured_rank: 40
 ---
 
 I have to admit something humbling. After spending months building what I thought were **good forecasting models** *(MAPE less than 15%)*, I ran a check against the simplest possible approach: a **naive forecast** *(moving average)*. The result? My expert judgment, backed by complex models and deep domain knowledge, was consistently less accurate. 🤦‍♂️
