@@ -1,15 +1,41 @@
 {%- comment -%}
-  "Keep reading" at the foot of a post, on the reader paper: the newest posts sharing the
-  primary tag (else the newest posts) as text cards. Title, date, read time and excerpt carry
-  each card, so no post depends on a teaser image. Tag icons come from _data/tags.yml.
+  "Keep reading" at the foot of a post, on the reader paper: up to four posts sharing the most
+  tags with this one, newest first among equals. The primary tag weighs more than all the
+  others together, so posts in it always come first; with no tag in common, the newest posts.
+  Text cards (title, badges, date, read time, excerpt), so no post depends on a teaser image.
+  Tag icons come from _data/tags.yml.
 {%- endcomment -%}
 {%- assign primary_tag = page.tags | first -%}
-{%- assign same_tag = true -%}
-{%- assign related = site.tags[primary_tag] | default: site.posts | where_exp: "post", "post.url != page.url" | sort: "date" | reverse -%}
-{%- if primary_tag == nil or related.size == 0 -%}
-  {%- assign same_tag = false -%}
-  {%- assign related = site.posts | where_exp: "post", "post.url != page.url" -%}
+{%- assign primary_weight = page.tags.size -%}
+{%- comment -%} rank keys "<score>-<9999 - position>-<position>": site.posts is newest first {%- endcomment -%}
+{%- assign ranked = "" -%}
+{%- for post in site.posts -%}
+  {%- if post.url == page.url -%}{%- continue -%}{%- endif -%}
+  {%- assign score = 0 -%}
+  {%- for tag in page.tags -%}
+    {%- if post.tags contains tag -%}
+      {%- if forloop.first -%}{%- assign score = score | plus: primary_weight -%}{%- else -%}{%- assign score = score | plus: 1 -%}{%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if score > 0 -%}
+    {%- assign order = 9999 | minus: forloop.index0 -%}
+    {%- capture ranked -%}{{ ranked }}{{ score | prepend: "00" | slice: -2, 2 }}-{{ order }}-{{ forloop.index0 }};{%- endcapture -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign matched = true -%}
+{%- if ranked == "" -%}
+  {%- assign matched = false -%}
+  {%- for post in site.posts limit:5 -%}
+    {%- if post.url == page.url -%}{%- continue -%}{%- endif -%}
+    {%- assign order = 9999 | minus: forloop.index0 -%}
+    {%- capture ranked -%}{{ ranked }}00-{{ order }}-{{ forloop.index0 }};{%- endcapture -%}
+  {%- endfor -%}
 {%- endif -%}
+{%- assign keys = ranked | split: ";" | sort | reverse -%}
+{%- assign last_shown = keys[3] | default: keys.last -%}
+{%- assign last_score = last_shown | split: "-" | first | plus: 0 -%}
+{%- assign same_tag = false -%}
+{%- if matched and last_score >= primary_weight -%}{%- assign same_tag = true -%}{%- endif -%}
 {%- assign tag_icon = "" -%}
 {%- for group in site.data.tags -%}
   {%- assign hit = group.tags | where: "name", primary_tag | first -%}
@@ -17,32 +43,37 @@
 {%- endfor -%}
 {%- assign words_per_minute = site.words_per_minute | default: 200 -%}
 {%- assign half_minute = words_per_minute | divided_by: 2 -%}
-{%- if related.size > 0 -%}
+{%- if keys.size > 0 -%}
 <section class="post-related" aria-labelledby="post-related-title">
   <p class="post-related__eyebrow">Keep reading</p>
   <h2 class="post-related__title" id="post-related-title">
     {%- if same_tag -%}
       {%- if tag_icon != "" %}<span aria-hidden="true">{{ tag_icon }}</span> {% endif -%}
       More in {{ primary_tag }}
+    {%- elsif matched -%}
+      Related writings
     {%- else -%}
       {{ site.data.ui-text[site.locale].related_label | default: "You May Also Enjoy" }}
     {%- endif -%}
   </h2>
   <ol class="post-related__list">
-    {%- for post in related limit:4 %}
+    {%- for key in keys limit:4 %}
+      {%- assign position = key | split: "-" | last | plus: 0 -%}
+      {%- assign post = site.posts[position] -%}
       {%- assign minutes = post.content | strip_html | number_of_words | plus: half_minute | divided_by: words_per_minute | at_least: 1 -%}
       {%- assign ex = post.excerpt | strip_html | strip_newlines | strip -%}
       {%- if ex == "" or ex == "TBD" -%}{%- assign ex = post.content | strip_html | strip_newlines | strip -%}{%- endif %}
     <li class="post-related__item">
-      <h3 class="post-related__name"><a href="{{ post.url | relative_url }}">{{ post.title | markdownify | remove: "<p>" | remove: "</p>" | strip }}</a></h3>
-      <p class="post-related__meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time> · {{ minutes }} min read</p>
+      <h3 class="post-related__name"><a href="{{ post.url | relative_url }}">{{ post.title | markdownify | strip_html | strip }}</a></h3>
+      <p class="post-related__meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time> · {{ minutes }} min read{% unless same_tag %} · {{ post.tags | join: ", " }}{% endunless %}</p>
+      {%- include post-badges.html post=post %}
       {%- if ex != "" %}
       <p class="post-related__excerpt">{{ ex | truncatewords: 36 }}</p>
       {%- endif %}
     </li>
     {%- endfor %}
   </ol>
-  {%- if same_tag %}
+  {%- if primary_tag and site.tags[primary_tag].size > 1 %}
   <a class="post-related__all" href="{{ '/writings/' | relative_url }}#{{ primary_tag | slugify }}">📂 All {{ site.tags[primary_tag].size }} posts in {{ primary_tag }}</a>
   {%- endif %}
 </section>

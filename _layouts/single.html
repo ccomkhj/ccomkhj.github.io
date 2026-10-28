@@ -45,7 +45,7 @@ layout: default
         </div>
         <nav class="post-reader__addressbar" aria-label="Breadcrumb">
           <strong>Address</strong>
-          <span><a href="{{ '/writings/' | relative_url }}">Writings</a>{% if page.tags.size > 0 %} / <a href="{{ '/tags/' | relative_url }}#{{ page.tags[0] | slugify }}">{{ page.tags[0] }}</a>{% endif %} / {{ page.title | markdownify | strip_html | strip_newlines }}</span>
+          <span><a href="{{ '/writings/' | relative_url }}">Writings</a>{% if page.tags.size > 0 %} / <a href="{{ '/writings/' | relative_url }}#{{ page.tags[0] | slugify }}">{{ page.tags[0] }}</a>{% endif %} / {{ page.title | markdownify | strip_html | strip_newlines }}</span>
         </nav>
         <div class="post-reader__viewport">
           <div class="post-reader__paper">

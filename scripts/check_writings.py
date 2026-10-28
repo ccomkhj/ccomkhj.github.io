@@ -322,13 +322,13 @@ def check_articles(dest: Path, posts, base, note_for_default):
     by_url, cards = {p["u"]: p for p in posts}, 0
     for p in list(by_prefix.values()) + posts[:5]:
         page = article(dest, base, p["u"])
-        related = page[page.find('class="page__related"'):]
-        for item in re.split(r'<div class="grid__item">', related)[1:]:
-            href = re.search(r'<a href="([^"]+)" rel="permalink">', item)
+        related = page[page.find('class="post-related"'):]
+        for item in re.split(r'<li class="post-related__item">', related)[1:]:
+            href = re.search(r'class="post-related__name"><a href="([^"]+)">', item)
             if not href or href.group(1) not in by_url:
                 continue
             cards += 1
-            if badge_words(item.split("</article>")[0]) != labels(by_url[href.group(1)]):
+            if badge_words(item.split("</li>")[0]) != labels(by_url[href.group(1)]):
                 check(False, f"related card {href.group(1)} on {p['u']} has badges {badge_words(item)}")
     check(cards > 0, f"related-post cards carry the index's badges ({cards} cards checked)")
 

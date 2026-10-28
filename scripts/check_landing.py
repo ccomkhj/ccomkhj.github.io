@@ -7,8 +7,8 @@ as JSON, the pre-rendered MS-DOS window the terminal engine attaches to, the
 boot screen, the `<noscript>` fallback, and the absence of prototype code.
 Featured picks and provenance are covered by `scripts/check_writings.py`.
 Also asserts that every way into the site's sections follows `_data/navigation.yml`
-(desktop icons, Start menu, taskbar on inner pages, <noscript>), that tag links
-land on an anchor, and that repo files are not published.
+(desktop icons, Start menu, taskbar on inner pages, <noscript>), that a post's
+tag links open a /writings/ folder, and that repo files are not published.
 Runtime behaviour (boot, window manager) is not covered; check that in a browser.
 
 Extra Jekyll config overlays can be passed as arguments, e.g. to exclude a
@@ -214,15 +214,24 @@ def check_card(dest: Path, base: str):
     check((dest / "assets" / "huijo.vcf").exists(), "assets/huijo.vcf is built")
 
 
+def folder_slug(label: str) -> str:
+    """The hash the /writings/ Explorer gives a tag's folder (`f.slug` in _layouts/writings.html)."""
+    return re.sub(r"^-|-$", "", re.sub(r"[^a-z0-9]+", "-", label.lower()))
+
+
 def check_tag_anchors(dest: Path, base: str, post_url: str):
-    """Posts link their tags to /tags/#<tag> (address bar, "All N posts in <tag>")."""
+    """Posts link their tags to /writings/#<tag> (address bar, Tags, "All N posts in <tag>"),
+    each a folder the Explorer opens; the old /tags/#<tag> page still opens its tags."""
     post = built_page(dest, post_url, base).read_text(encoding="utf-8")
+    writings = (dest / "writings" / "index.html").read_text(encoding="utf-8")
+    data = re.search(r'id="wr-data"[^>]*>(.*?)</script>', writings, re.S)
+    folders = {folder_slug(t) for p in json.loads(data.group(1))["posts"] for t in p["tags"]} if data else set()
+    targets = set(re.findall(r'href="[^"]*/writings/#([^"]+)"', post))
+    check(bool(targets), f"{post_url} links to {len(targets)} tag folder(s) on /writings/")
+    missing = sorted(targets - folders)
+    check(not missing, f"every /writings/#<tag> link is a tag folder in the Explorer {missing[:3]}")
+    check(not re.search(r'href="[^"]*/tags/#', post), f"{post_url} no longer links tags to /tags/")
     tags = Tree((dest / "tags" / "index.html").read_text(encoding="utf-8"))
-    ids = {e["attrs"]["id"] for e in tags.elements if "id" in e["attrs"]}
-    targets = set(re.findall(r'href="[^"]*/tags/#([^"]+)"', post))
-    check(bool(targets), f"{post_url} links to {len(targets)} tag(s) on /tags/")
-    missing = sorted(targets - ids)
-    check(not missing, f"every /tags/#<tag> link has an anchor on /tags/ {missing[:3]}")
     closes = [e["attrs"].get("href") for e in tags.with_class("a", "title-bar-close")]
     check(len(closes) == 1 and closes[0].endswith("/writings/"), f"/tags/ window closes to /writings/ {closes}")
 

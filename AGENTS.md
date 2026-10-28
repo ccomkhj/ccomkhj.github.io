@@ -82,7 +82,10 @@ loose fit, propose a new tag — in both cases update this file in the same comm
 Tag pages are generated dynamically (`_layouts/tags_tree.html` iterates
 `site.tags`), so no layout changes are needed when tags change. The /writings/
 explorer groups tags by `_data/tags.yml` (group, icon, one-line blurb); keep it in
-step with the vocabulary above when tags are added, renamed, or retired.
+step with the vocabulary above when tags are added, renamed, or retired. A post's tag
+links (address bar, Tags, "All N posts in <tag>") open the tag's Explorer folder at
+`/writings/#<tag-slug>`; its "Keep reading" cards rank other posts by shared tags,
+primary tag first, so tag order matters there too.
 
 ## Provenance and Featured
 

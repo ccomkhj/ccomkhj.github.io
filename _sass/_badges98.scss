@@ -33,8 +33,10 @@
   font-weight: normal;
 }
 
-/* related-post cards (_includes/archive-single.html) */
-.archive__item > .badges98 {
+/* archive cards (_includes/archive-single.html) and the post reader's Keep reading cards
+   (_includes/post-related.html) */
+.archive__item > .badges98,
+.post-related__item > .badges98 {
   display: flex;
   margin: 0 0 0.5em;
 }

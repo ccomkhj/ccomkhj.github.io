@@ -697,6 +697,17 @@ article.post-reader {
 
   .page__share {
     border-top-color: var(--post-line);
+
+    /* minimal-mistakes hides the labels on phones and leaves the Font Awesome icons, which
+       showed as empty buttons when the icon font did not load */
+    .btn span {
+      clip: auto;
+      height: auto;
+      margin: 0;
+      overflow: visible;
+      position: static;
+      width: auto;
+    }
   }
 
   /* Keep reading (_includes/post-related.html): text cards on the paper, no teaser images */
