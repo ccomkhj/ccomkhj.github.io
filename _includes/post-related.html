@@ -1,0 +1,49 @@
+{%- comment -%}
+  "Keep reading" at the foot of a post, on the reader paper: the newest posts sharing the
+  primary tag (else the newest posts) as text cards. Title, date, read time and excerpt carry
+  each card, so no post depends on a teaser image. Tag icons come from _data/tags.yml.
+{%- endcomment -%}
+{%- assign primary_tag = page.tags | first -%}
+{%- assign same_tag = true -%}
+{%- assign related = site.tags[primary_tag] | default: site.posts | where_exp: "post", "post.url != page.url" | sort: "date" | reverse -%}
+{%- if primary_tag == nil or related.size == 0 -%}
+  {%- assign same_tag = false -%}
+  {%- assign related = site.posts | where_exp: "post", "post.url != page.url" -%}
+{%- endif -%}
+{%- assign tag_icon = "" -%}
+{%- for group in site.data.tags -%}
+  {%- assign hit = group.tags | where: "name", primary_tag | first -%}
+  {%- if hit.icon -%}{%- assign tag_icon = hit.icon -%}{%- endif -%}
+{%- endfor -%}
+{%- assign words_per_minute = site.words_per_minute | default: 200 -%}
+{%- assign half_minute = words_per_minute | divided_by: 2 -%}
+{%- if related.size > 0 -%}
+<section class="post-related" aria-labelledby="post-related-title">
+  <p class="post-related__eyebrow">Keep reading</p>
+  <h2 class="post-related__title" id="post-related-title">
+    {%- if same_tag -%}
+      {%- if tag_icon != "" %}<span aria-hidden="true">{{ tag_icon }}</span> {% endif -%}
+      More in {{ primary_tag }}
+    {%- else -%}
+      {{ site.data.ui-text[site.locale].related_label | default: "You May Also Enjoy" }}
+    {%- endif -%}
+  </h2>
+  <ol class="post-related__list">
+    {%- for post in related limit:4 %}
+      {%- assign minutes = post.content | strip_html | number_of_words | plus: half_minute | divided_by: words_per_minute | at_least: 1 -%}
+      {%- assign ex = post.excerpt | strip_html | strip_newlines | strip -%}
+      {%- if ex == "" or ex == "TBD" -%}{%- assign ex = post.content | strip_html | strip_newlines | strip -%}{%- endif %}
+    <li class="post-related__item">
+      <h3 class="post-related__name"><a href="{{ post.url | relative_url }}">{{ post.title | markdownify | remove: "<p>" | remove: "</p>" | strip }}</a></h3>
+      <p class="post-related__meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time> · {{ minutes }} min read</p>
+      {%- if ex != "" %}
+      <p class="post-related__excerpt">{{ ex | truncatewords: 36 }}</p>
+      {%- endif %}
+    </li>
+    {%- endfor %}
+  </ol>
+  {%- if same_tag %}
+  <a class="post-related__all" href="{{ '/writings/' | relative_url }}#{{ primary_tag | slugify }}">📂 All {{ site.tags[primary_tag].size }} posts in {{ primary_tag }}</a>
+  {%- endif %}
+</section>
+{%- endif -%}

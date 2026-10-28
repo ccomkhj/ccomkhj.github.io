@@ -84,6 +84,8 @@ layout: default
 
       {% if page.share %}{% include social-share.html %}{% endif %}
 
+      {% if is_post and page.related %}{% include post-related.html %}{% endif %}
+
       {% include post_pagination.html %}
 
       {% if is_post %}
@@ -96,20 +98,4 @@ layout: default
       {% include comments.html %}
     {% endif %}
   </article>
-
-  {% comment %}<!-- related on a post page when `related: true`: newest posts sharing the primary tag, else the newest posts -->{% endcomment %}
-  {% if page.id and page.related %}
-    {%- assign primary_tag = page.tags | first -%}
-    {%- assign related = site.tags[primary_tag] | default: site.posts | where_exp: "post", "post.url != page.url" | sort: "date" | reverse -%}
-    {%- if related.size == 0 -%}{%- assign related = site.posts | where_exp: "post", "post.url != page.url" -%}{%- endif -%}
-    <div class="page__related">
-      <h2 class="page__related-title">{% if primary_tag and related.size > 0 %}More in {{ primary_tag }}{% else %}{{ site.data.ui-text[site.locale].related_label | default: "You May Also Enjoy" }}{% endif %}</h2>
-      <div class="grid__wrapper">
-        {% for post in related limit:4 %}
-          {% include archive-single.html type="grid" %}
-        {% endfor %}
-      </div>
-      {% if primary_tag %}<p class="page__related-more"><a href="{{ '/tags/' | relative_url }}#{{ primary_tag | slugify }}">All {{ site.tags[primary_tag].size }} posts in {{ primary_tag }} →</a></p>{% endif %}
-    </div>
-  {% endif %}
 </div>

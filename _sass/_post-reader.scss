@@ -138,9 +138,12 @@ article.post-reader {
   }
 
   /* Two wrappers deep to beat minimal-mistakes' `.page .page__inner-wrap .page__content`
-     (float, 1em indent, 95% width), which pushed the body right of the title */
+     (float, 1em indent, 95% width), which pushed the body right of the title, and the
+     tags and share blocks right of everything below them */
   .page__inner-wrap .page__content,
-  .page__inner-wrap header > .page__meta {
+  .page__inner-wrap header > .page__meta,
+  .page__inner-wrap footer.page__meta,
+  .page__inner-wrap .page__share {
     float: none;
     margin-left: 0;
     margin-right: 0;
@@ -696,6 +699,198 @@ article.post-reader {
     border-top-color: var(--post-line);
   }
 
+  /* Keep reading (_includes/post-related.html): text cards on the paper, no teaser images */
+  .post-related {
+    border-top: 1px solid var(--post-line);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+      sans-serif;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+  }
+
+  .post-related__eyebrow {
+    color: var(--post-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.35rem;
+    text-transform: uppercase;
+  }
+
+  .post-related__title {
+    color: #111827;
+    font-family: inherit;
+    font-size: clamp(1.4rem, 3vw, 1.65rem);
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin: 0 0 1.25rem;
+    text-wrap: balance;
+  }
+
+  .post-related__list {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .post-related__item {
+    background: var(--post-paper);
+    border: 1px solid var(--post-line);
+    border-top: 3px solid var(--post-accent-dark);
+    margin: 0;
+    padding: 1rem 1.15rem 1.15rem;
+    position: relative;
+    transition: border-color 0.12s, box-shadow 0.12s;
+
+    &:hover,
+    &:focus-within {
+      border-color: var(--post-accent);
+      box-shadow: 0 6px 18px rgba(30, 41, 59, 0.1);
+    }
+  }
+
+  .post-related__name {
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    margin: 0 0 0.35rem;
+    text-wrap: pretty;
+
+    a,
+    a:visited {
+      color: #111827;
+      text-decoration: none;
+    }
+
+    /* the whole card clicks through; the title stays the link's name */
+    a::after {
+      content: "";
+      inset: 0;
+      position: absolute;
+    }
+
+    a:focus-visible {
+      outline: none;
+    }
+  }
+
+  .post-related__item:hover .post-related__name a,
+  .post-related__name a:focus-visible {
+    color: var(--post-accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.14em;
+  }
+
+  .post-related__item:has(a:focus-visible) {
+    outline: 2px solid var(--post-accent);
+    outline-offset: 2px;
+  }
+
+  .post-related__meta {
+    color: var(--post-muted);
+    font-size: 0.75rem;
+    margin: 0 0 0.6rem;
+  }
+
+  .post-related__excerpt {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    color: #354052;
+    display: -webkit-box;
+    font-size: 0.86rem;
+    line-height: 1.5;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  /* Win98 button, like the share buttons above */
+  .post-related__all,
+  .post-related__all:visited {
+    background: #c0c0c0;
+    box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff,
+      inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+    color: #111;
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-top: 1.25rem;
+    padding: 0.55rem 1rem;
+    text-decoration: none;
+  }
+
+  .post-related__all:active {
+    box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a,
+      inset -2px -2px #dfdfdf, inset 2px 2px #808080;
+  }
+
+  /* Previous / Next (_includes/post_pagination.html): the titles, not just the words */
+  .pagination {
+    border-top: 1px solid var(--post-line);
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+  }
+
+  .pagination--pager {
+    border: 1px solid var(--post-line);
+    border-radius: 0;
+    color: var(--post-ink);
+    display: flex;
+    flex-direction: column;
+    float: none;
+    font-size: 1rem;
+    font-weight: 400;
+    gap: 0.3rem;
+    margin: 0;
+    padding: 0.9rem 1.1rem;
+    text-align: left;
+    width: auto;
+
+    &:last-child {
+      align-items: flex-end;
+      margin-left: 0;
+      text-align: right;
+    }
+
+    &:hover {
+      background: var(--post-soft);
+      border-color: var(--post-accent);
+      color: var(--post-ink);
+
+      .pagination__title {
+        color: var(--post-accent);
+      }
+    }
+
+    &.disabled {
+      visibility: hidden;
+    }
+  }
+
+  .pagination__label {
+    color: var(--post-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .pagination__title {
+    color: #111827;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
   .toc {
     background: var(--post-soft);
     border: 1px solid var(--post-line);
@@ -735,6 +930,19 @@ article.post-reader {
 
     .post-reader__paper > header {
       margin-bottom: 2rem;
+    }
+
+    .pagination {
+      grid-template-columns: 1fr;
+    }
+
+    .pagination--pager:last-child {
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .pagination--pager.disabled {
+      display: none;
     }
 
     .page__title {
@@ -789,6 +997,7 @@ article.post-reader {
     .post-reader__menubar,
     .post-reader__addressbar,
     .page__share,
+    .post-related,
     .pagination {
       display: none;
     }
