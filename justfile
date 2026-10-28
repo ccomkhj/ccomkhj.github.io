@@ -23,3 +23,10 @@ german-done +WORDS:
 check-posts:
     ruby scripts/check_post_metadata.rb
 
+# Build with fixture posts and assert on Featured picks, provenance badges and disclosures.
+check-writings:
+    python3 scripts/check_writings.py
+
+# Drive /writings/, / and a post in Chromium (needs Playwright; not run in CI). Screenshots optional.
+check-browser SHOTS="":
+    dir="$(mktemp -d)"; trap 'rm -rf "$dir"' EXIT; python3 scripts/check_writings.py --keep "$dir"; node scripts/check_writings_browser.js "$dir" {{SHOTS}}

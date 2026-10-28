@@ -142,8 +142,8 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": {{ page.title | jsonify }},
-    "description": {{ seo_description | jsonify }},
+    "headline": {{ page.title | jsonify | replace: "<", "\u003c" }},
+    "description": {{ seo_description | jsonify | replace: "<", "\u003c" }},
     "url": {{ canonical_url | jsonify }},
     "datePublished": "{{ page.date | date_to_xmlschema }}",
     {% if page.last_modified_at %}"dateModified": "{{ page.last_modified_at | date_to_xmlschema }}",{% endif %}

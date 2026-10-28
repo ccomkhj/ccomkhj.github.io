@@ -27,3 +27,8 @@ jobs:
       - name: Build site
         run: bundle exec jekyll build --strict_front_matter --trace
 
+      - name: Check landing page
+        run: python3 scripts/check_landing.py
+
+      - name: Check Featured writing and provenance
+        run: python3 scripts/check_writings.py

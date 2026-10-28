@@ -24,6 +24,8 @@
   var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   var coarse = matchMedia("(pointer: coarse)").matches;
   var posts = JSON.parse(document.getElementById("desktop98-posts").textContent);
+  var featuredData = document.getElementById("desktop98-featured");
+  var featured = JSON.parse(featuredData.textContent); /* top three by featured_rank */
   var bio = bioParagraphs();
   /* Read now: terminal-shell.js strips ?cmd= from the URL at DOMContentLoaded. */
   var bioRequested = new URLSearchParams(location.search).get("cmd") === "cat_bio";
@@ -279,15 +281,47 @@
     return p;
   }
 
+  /* Featured picks above Latest; Latest stays independent of curation. Real links, built
+     with textContent, so no title can inject markup. */
+  function featuredPicks() {
+    var box = document.createDocumentFragment();
+    box.appendChild(para("Featured picks", "welcome98-label"));
+    var ol = document.createElement("ol");
+    featured.forEach(function (post) {
+      var li = document.createElement("li"), a = document.createElement("a");
+      a.href = post.url;
+      a.textContent = post.title;
+      li.appendChild(a);
+      if (post.ai) { /* same words as _includes/post-badges.html */
+        var badges = li.appendChild(document.createElement("span"));
+        badges.className = "badges98";
+        var badge = badges.appendChild(document.createElement("span"));
+        badge.className = "badge98";
+        badge.textContent = "AI-researched";
+      }
+      ol.appendChild(li);
+    });
+    box.appendChild(ol);
+    var all = document.createElement("a");
+    all.href = featuredData.dataset.all;
+    all.textContent = "See all " + featuredData.dataset.total + " Featured →";
+    box.appendChild(para()).appendChild(all);
+    return box;
+  }
+
   function showWelcomeItem(i) {
     var item = welcomeItems[i];
     var text = item.dataset.desc || bio[0] || "";
-    welcomeItems.forEach(function (el) { el.classList.toggle("on", el === item); });
+    welcomeItems.forEach(function (el) {
+      el.classList.toggle("on", el === item);
+      el.tabIndex = el === item ? 0 : -1; /* one Tab stop; arrows move between items */
+    });
     welcomeDesc.textContent = "";
     var h = document.createElement("h4");
     h.textContent = item.children[0].textContent + " " + item.children[1].textContent;
     var typed = para("", "welcome98-caret");
     welcomeDesc.append(h, typed);
+    if (item.hasAttribute("data-latest") && featured.length) welcomeDesc.appendChild(featuredPicks());
     if (item.hasAttribute("data-latest") && posts.length) {
       var latest = document.createElement("a");
       latest.href = posts[0].url;
@@ -298,7 +332,7 @@
     }
     var hint = document.createElement("i");
     hint.textContent = coarse ? "Tap to open. Icons on the desktop open with a tap."
-                              : "Click to open. Icons on the desktop open with a double-click.";
+                              : "Click to open, or use ↑ ↓ and Enter. Icons on the desktop open with a double-click.";
     welcomeDesc.appendChild(para()).appendChild(hint);
 
     clearInterval(typing);
@@ -310,9 +344,18 @@
       if (n >= text.length) clearInterval(typing);
     }, 16);
   }
+  /* The menu is one Tab stop (arrow keys pick an item), so Tab goes on into the links of the
+     shown description, e.g. the Featured picks, instead of to the next item. */
   welcomeItems.forEach(function (item, i) {
     item.addEventListener("mouseenter", function () { showWelcomeItem(i); });
     item.addEventListener("focus", function () { showWelcomeItem(i); });
+    item.addEventListener("keydown", function (e) {
+      var n = welcomeItems.length;
+      var to = { ArrowDown: (i + 1) % n, ArrowUp: (i + n - 1) % n, Home: 0, End: n - 1 }[e.key];
+      if (to === undefined) return;
+      e.preventDefault();
+      welcomeItems[to].focus();
+    });
   });
   welcomeShow.checked = stored("welcome98") !== "off";
   welcomeShow.addEventListener("change", function () {

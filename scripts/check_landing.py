@@ -2,9 +2,10 @@
 """Build-output check for the Win98 landing page (`/`, `_layouts/win98_desktop.html`).
 
 Builds the site in production mode into a temp directory and asserts on the
-generated `index.html`: the post list handed to `assets/js/win98-desktop.js`
+generated `index.html`: the Latest post handed to `assets/js/win98-desktop.js`
 as JSON, the pre-rendered MS-DOS window the terminal engine attaches to, the
 boot screen, the `<noscript>` fallback, and the absence of prototype code.
+Featured picks and provenance are covered by `scripts/check_writings.py`.
 Also asserts that every way into the site's sections follows `_data/navigation.yml`
 (desktop icons, Start menu, taskbar on inner pages, <noscript>), that tag links
 land on an anchor, and that repo files are not published.
@@ -130,11 +131,12 @@ def check_desktop(page: str, tree: Tree, base: str, post_count: int):
         "startmenu98" in a["attrs"].get("class", "").split() for a in e["ancestors"])]
     check(f"{base}/feed.xml" in in_start_menu, "the Start menu keeps the RSS link")
     check("It's now safe to turn off" in page, "the shut-down screen is rendered")
-    noscript = [e["attrs"].get("href") for e in tree.elements
-                if e["tag"] == "a" and any(a["tag"] == "noscript" for a in e["ancestors"])]
+    noscript = [e["attrs"].get("href") for e in tree.elements if e["tag"] == "a" and any(
+        a["tag"] == "noscript" for a in e["ancestors"]) and any(
+        "desktop98-noscript-nav" in a["attrs"].get("class", "").split() for a in e["ancestors"])]
     sections = [base + u for u in nav_urls()]
     check(len(sections) >= 4, f"_data/navigation.yml lists the sections {sections}")
-    check(noscript == sections, f"<noscript> lists exactly the navigation.yml sections {noscript}")
+    check(noscript == sections, f"the <noscript> section list is exactly the navigation.yml sections {noscript}")
     icons = [e["attrs"].get("href") for e in tree.with_class("a", "desktop98-icon")]
     check(icons[:len(sections)] == sections, f"desktop icons start with the sections, in order {icons}")
     check(all(s in in_start_menu for s in sections), "the desktop Start menu links every section")
@@ -148,23 +150,25 @@ def check_desktop(page: str, tree: Tree, base: str, post_count: int):
 
 
 def check_posts_json(page: str, dest: Path):
+    """The Welcome window's Latest link: the newest post only (the Writings index has them all)."""
     m = re.search(r'<script type="application/json" id="desktop98-posts">(.*?)</script>', page, re.S)
-    check(m is not None, "index.html carries the post list as a JSON script")
+    check(m is not None, "index.html carries the latest post as a JSON script")
     if not m:
         return
     try:
         posts = json.loads(m.group(1))
     except json.JSONDecodeError as err:
-        check(False, f"post list is valid JSON ({err})")
+        check(False, f"latest post is valid JSON ({err})")
         return
-    on_disk = post_files()
-    check(len(posts) == on_disk, f"post list has one entry per post in _posts/ ({len(posts)} vs {on_disk})")
+    check(len(posts) == 1, f"the list holds just the latest post ({len(posts)})")
     check(all(set(p) == {"title", "url", "date", "tag"} for p in posts),
           "every entry has exactly title, url, date and tag")
     check(all(p["title"] and p["tag"] for p in posts), "no entry has an empty title or tag")
-    dates = [p["date"] for p in posts]
-    check(all(re.fullmatch(r"\d{4}-\d{2}-\d{2}", d) for d in dates), "dates are YYYY-MM-DD")
-    check(dates == sorted(dates, reverse=True), "entries are newest first")
+    check(all(re.fullmatch(r"\d{4}-\d{2}-\d{2}", p["date"]) for p in posts), "dates are YYYY-MM-DD")
+    writings = (dest / "writings" / "index.html").read_text(encoding="utf-8")
+    index = re.search(r'<script id="wr-data" type="application/json">(.*?)</script>', writings, re.S)
+    newest = json.loads(index.group(1))["posts"][0]["u"] if index else None
+    check(posts[:1] and posts[0]["url"] == newest, f"it is the newest post on /writings/ ({newest})")
     base = baseurl(page)
     missing = [p["url"] for p in posts if not built_page(dest, p["url"], base).exists()]
     check(not missing, f"every entry's url is a built page {missing[:3]}")
@@ -210,12 +214,13 @@ def check_card(dest: Path, base: str):
     check((dest / "assets" / "huijo.vcf").exists(), "assets/huijo.vcf is built")
 
 
-def check_tag_anchors(dest: Path):
-    writings = (dest / "writings" / "index.html").read_text(encoding="utf-8")
+def check_tag_anchors(dest: Path, base: str, post_url: str):
+    """Posts link their tags to /tags/#<tag> (address bar, "All N posts in <tag>")."""
+    post = built_page(dest, post_url, base).read_text(encoding="utf-8")
     tags = Tree((dest / "tags" / "index.html").read_text(encoding="utf-8"))
     ids = {e["attrs"]["id"] for e in tags.elements if "id" in e["attrs"]}
-    targets = set(re.findall(r'href="[^"]*/tags/#([^"]+)"', writings))
-    check(bool(targets), f"/writings/ links to {len(targets)} tags on /tags/")
+    targets = set(re.findall(r'href="[^"]*/tags/#([^"]+)"', post))
+    check(bool(targets), f"{post_url} links to {len(targets)} tag(s) on /tags/")
     missing = sorted(targets - ids)
     check(not missing, f"every /tags/#<tag> link has an anchor on /tags/ {missing[:3]}")
     closes = [e["attrs"].get("href") for e in tags.with_class("a", "title-bar-close")]
@@ -240,7 +245,7 @@ def main():
         newest = json.loads(re.search(r'id="desktop98-posts">(.*?)</script>', page, re.S).group(1))[0]["url"]
         check_inner_pages(dest, base, newest)
         check_card(dest, base)
-        check_tag_anchors(dest)
+        check_tag_anchors(dest, base, newest)
         check_not_published(dest)
     finally:
         shutil.rmtree(dest, ignore_errors=True)

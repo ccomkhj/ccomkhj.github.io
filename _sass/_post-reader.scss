@@ -184,6 +184,38 @@ article.post-reader {
     width: 100%;
   }
 
+  /* Badges and AI-research disclosure under the date (_includes/post-provenance.html) */
+  .post-provenance {
+    margin: 1rem 0 0;
+    padding: 0.7rem 0.85rem;
+    border-left: 3px solid var(--post-accent-dark);
+    background: var(--post-soft);
+    color: var(--post-ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+      sans-serif;
+    font-size: 0.85rem;
+    line-height: 1.5;
+
+    p {
+      margin: 0;
+    }
+
+    p + p {
+      margin-top: 0.35rem;
+    }
+  }
+
+  .post-provenance--quiet {
+    border-left-color: var(--post-line);
+    background: transparent;
+    color: var(--post-muted);
+  }
+
+  .post-provenance__fine {
+    color: var(--post-muted);
+    font-size: 0.78rem;
+  }
+
   .page__content {
     clear: both;
     color: var(--post-ink);
