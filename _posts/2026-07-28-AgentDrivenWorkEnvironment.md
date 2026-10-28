@@ -10,6 +10,8 @@ excerpt: "Three limits decide how much you get out of coding agents: how many di
 header:
   teaser: /img/agentenv-teaser.png
 ai_researched: false
+featured: true
+featured_rank: 10
 ---
 
 I ran a session on this at my team's AI lunch. Here's the summary.
@@ -18,12 +20,12 @@ I ran a session on this at my team's AI lunch. Here's the summary.
 
 How many agents are you running right now?
 
-One day, I had 3 quite complex linear tickets.
-I created three worktrees and start running agent sessions.
-Some data issue was reported, so I added one more agent to analyze and debug the problem.
-Some model traininig was requested, so I added another agent session.
-Switching among multiple sessions is not free. You can tell it's just switching tab, however, your brain can't switch that fast.
-It's not only draining, but also quality of your decision plumet.
+One day, I had three fairly complex Linear tickets.
+I created three worktrees and started an agent session in each.
+Then a data issue was reported, so I added one more agent to analyze and debug it.
+Then someone asked for a model to be trained, so I added another session.
+Switching among sessions is not free. It looks like switching tabs, but your brain can't switch that fast.
+It is draining, and the quality of your decisions plummets.
 
 ### Agents scale. Your review capacity does not.
 
@@ -35,7 +37,7 @@ So the ceiling is not a number I can give you. Run as many as you can verify. If
 
 Part of that ceiling is a tooling problem. A terminal or a VS Code window is built for one session at a time. Once you go past a couple of agents, switching between them costs more than the work does, and you start approving out of navigation fatigue. A tool that shows parallel sessions at a glance genuinely raises the number you can verify. It will not make you a better reviewer, but it gives you back the time you were spending on managing.
 
-There are couple of solutions, but [Superset](http://superset.sh) is my favorite. I love their minimal setup.
+There are a couple of options, but [Superset](http://superset.sh) is my favorite. I love their minimal setup.
 
 ## One session, until auto-compact?
 

@@ -8,8 +8,6 @@ classes: wide
 title: "What Claude Code taught me about compaction"
 excerpt: "Claude Code clears old tool output, summarizes the decisions that remain, and reloads working state. That suggests a practical compact strategy for long coding sessions."
 ai_researched: true
-featured: true
-featured_rank: 20
 ---
 
 During a technical discussion, someone asked me:

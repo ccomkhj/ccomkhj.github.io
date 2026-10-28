@@ -6,21 +6,22 @@ date: 2024-11-21
 tags:  
    - Computer Vision
 classes: wide  
-title: Stereo Vision
+title: "Building a DIY Depth Camera"
+excerpt: "I built a stereo depth camera from an off-the-shelf lens, a CAD-designed case and my own calibration checker, then tried recent stereo-matching models on my images. Newer models that report beating RAFT-Stereo and GMStereo did not do consistently better on my data."
 header:
 #   image: /img/raft.png
   teaser: /img/raft.png
 
 ai_researched: false
+featured: true
+featured_rank: 60
 ---
 
-# Building a DIY Depth Camera  
-
-Past days, I worked on a side project to construct a DIY depth camera. Starting with an off-the-shelf lens, I calculated the baseline based on its focal length, minimal distance (MinZ), and pixel size. The [Nerian Calculator](https://en.nerian.alliedvision.com/support/calculator/) was a fantastic starting resource for this.  
+I recently worked on a side project to construct a DIY depth camera. Starting with an off-the-shelf lens, I calculated the baseline based on its focal length, minimal distance (MinZ), and pixel size. The [Nerian Calculator](https://en.nerian.alliedvision.com/support/calculator/) was a fantastic starting resource for this.  
 
 Thanks to my previous experience in electric car engineering and design, creating a CAD model for the camera case felt like second nature.  
 
-![DIY Stereo Camera Case](..\img\dyi_stereo.jpg)  
+![DIY Stereo Camera Case](/img/dyi_stereo.jpg)  
 
 ---
 
@@ -56,7 +57,7 @@ Once the calibration is complete, you're ready to compute depth. These days, we 
 
 ## Advancing Stereo Matching Through Deep Learning  
 
-Stereo vision has undergone tremendous transformation with advancements in deep learning. (Former) standard algorithm, such as [SGBM](https://docs.opencv.org/3.4/d2/d85/classcv_1_1StereoSGBM.html), [BM](https://docs.opencv.org/3.4/d9/dba/classcv_1_1StereoBM.html), became considerably outdated, because it is really sensitive to calibration. It costs my time a lot because it's the theories that school teaches, and I could gain from computer vision communities.
+Stereo vision has undergone tremendous transformation with advancements in deep learning. The former standard algorithms, such as [SGBM](https://docs.opencv.org/3.4/d2/d85/classcv_1_1StereoSGBM.html) and [BM](https://docs.opencv.org/3.4/d9/dba/classcv_1_1StereoBM.html), have become considerably outdated, partly because they are very sensitive to calibration. They cost me a lot of time: they are the theory school teaches, while the newer methods came from the computer vision community.
 
 New architectural paradigms are reshaping stereo matching and disparity estimation, with three leading approaches standing out:  
 
@@ -64,7 +65,7 @@ New architectural paradigms are reshaping stereo matching and disparity estimati
 2. **RAFT-Inspired Iterative Optimization**  
 3. **Transformer-Based Architectures**  
 
-Each paradigm offers distinct advantages and efficiency trade-offs, pushing the boundaries of accuracy and computational performance. Below are some elaboration how stereo matching researches have evolved over the last 4 years.
+Each paradigm offers distinct advantages and efficiency trade-offs, pushing the boundaries of accuracy and computational performance. Below is how stereo matching research has evolved over the last four years.
 
 ---
 
@@ -124,4 +125,4 @@ There have been numerous papers claiming higher performance scores compared to f
 
 Public datasets, which researchers commonly use for training and evaluation, often differ significantly from real-world datasets. As a result, models optimized for these public datasets struggle with generalization in practical applications. This highlights that **the generality of a model's architecture is a critical factor**, and it cannot simply be assessed through the metrics reported in academic papers. Real-world testing is essential to truly evaluate a model's robustness and adaptability.  
 
-![Depth from Stereo Matching](..\img\raft.png)  
+![Depth from Stereo Matching](/img/raft.png)  
