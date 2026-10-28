@@ -1,0 +1,40 @@
+/* Text badges for Featured and research provenance: _includes/post-badges.html, the
+   /writings/ Explorer and the Welcome window. The words carry the meaning; the light
+   fills keep them readable on white paper and on navy selected rows alike. */
+.badges98 {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  vertical-align: 1px;
+}
+
+.badge98 {
+  display: inline-block;
+  padding: 0 4px;
+  border: 1px solid #000080;
+  background: #fff;
+  color: #000080;
+  font: bold 11px/15px Arial, Helvetica, sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.badge98--featured {
+  border-color: #000;
+  background: #ffffe1; /* the Win98 tooltip yellow */
+  color: #000;
+}
+
+.badge98--quiet {
+  border: 1px dashed #808080;
+  background: #f0f0f0;
+  color: #444;
+  font-weight: normal;
+}
+
+/* related-post cards (_includes/archive-single.html) */
+.archive__item > .badges98 {
+  display: flex;
+  margin: 0 0 0.5em;
+}

@@ -1,0 +1,7 @@
+{%- comment -%}
+  The effective AI-research disclosure of a post, as plain unescaped text: its own
+  `ai_research_note`, else `ai_research_default_note` from _config.yml. Only meaningful for
+  `ai_researched: true`. Callers escape (`| escape` in HTML, `| jsonify` in JSON).
+  Usage: {% capture note %}{% include ai-research-note.html post=post %}{% endcapture %}
+{%- endcomment -%}
+{{- include.post.ai_research_note | default: site.ai_research_default_note | strip -}}
