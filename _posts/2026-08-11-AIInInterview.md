@@ -8,6 +8,7 @@ tags:
 classes: wide
 title: "AI is everywhere, even in interview"
 excerpt: "It is expected to use AI in the technical interview, but it is even used when not allowed."
+ai_researched: false
 ---
 
 In our everyday life, use of AI has become the new normal.

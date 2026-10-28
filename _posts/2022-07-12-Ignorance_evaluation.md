@@ -5,6 +5,7 @@ title:  "Relation of Ignorance and Evaluation"
 date: 2022-07-12
 tags:
   - Decision-Making
+ai_researched: false
 ---
 
 ## It is not necessarily bad, even if you couldn't understand it.

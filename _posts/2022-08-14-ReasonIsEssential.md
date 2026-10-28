@@ -5,6 +5,7 @@ title:  "Reason is essential"
 date: 2022-08-14
 tags:
   - Mindset
+ai_researched: false
 ---
 
 ## Any Lame Excuse is helpful because of "Because justification"

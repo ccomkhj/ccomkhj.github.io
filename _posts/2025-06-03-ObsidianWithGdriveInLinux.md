@@ -8,6 +8,7 @@ tags:
 classes: wide  
 title: "How to Use Obsidian using Gdrive as Valut in Linux"  
 
+ai_researched: false
 ---
 
 To use obsidian across multi platform and multi device without using subscription, G-Drive is a good solution as DB.

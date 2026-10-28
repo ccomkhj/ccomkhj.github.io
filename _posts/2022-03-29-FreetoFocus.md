@@ -5,6 +5,7 @@ title:  "Free to Focus"
 date: 2022-03-29
 tags:
     - Business
+ai_researched: false
 ---
 
 ## Know what to do

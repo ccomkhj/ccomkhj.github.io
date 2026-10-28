@@ -6,6 +6,7 @@ tags:
   - Mindset
 classes: wide
 title:  Get Rid Of Emotion
+ai_researched: false
 ---
 
 

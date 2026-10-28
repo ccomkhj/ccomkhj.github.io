@@ -6,6 +6,7 @@ tags:
   - Growth
 classes: wide
 title:  Exponential Achievement
+ai_researched: false
 ---
 
 In the era of the flood of information, we have faced and partially experienced how one can achieve a lot.

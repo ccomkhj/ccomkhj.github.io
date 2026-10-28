@@ -6,6 +6,7 @@ tags:
   - Engineering
 classes: wide
 title: Data Science in Elixir
+ai_researched: false
 ---
 
 ## Transitioning from Python to Elixir in Data Science

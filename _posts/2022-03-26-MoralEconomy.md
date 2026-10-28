@@ -6,6 +6,7 @@ date: 2022-03-26
 tags:
   - Business
   - Society
+ai_researched: false
 ---
 
 시장경제의 아래에서는 모든 상호간의 거래가 수요와 공급의 적정점에서 이루어지므로, 누군가 피해를 보지 않는다면 성공적이라 할 수 있다. <br>

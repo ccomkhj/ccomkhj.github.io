@@ -6,6 +6,7 @@ date: 2022-03-30
 tags:
   - Career
   - Mindset
+ai_researched: false
 ---
 
 # What matters in life?

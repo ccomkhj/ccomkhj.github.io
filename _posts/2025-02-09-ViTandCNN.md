@@ -6,6 +6,7 @@ tags:
    - Computer Vision
 classes: wide
 title: "ViT vs CNN: A Technical Deep Dive for High-Resolution Vision Tasks"
+ai_researched: true
 ---
 
 **This isn’t just theory—it’s battle-tested.**  

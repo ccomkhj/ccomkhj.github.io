@@ -8,6 +8,7 @@ tags:
 classes: wide  
 title: "Real experiment over job search"
 
+ai_researched: false
 ---
 # My 3-Week Job Search Journey: A Data-Driven Reflection
 

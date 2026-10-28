@@ -8,6 +8,7 @@ tags:
 classes: wide
 title: "Customer Interviews: Notes from The Mom Test"
 excerpt: "Interviewing customers again, from hexafarms to VOIDS, with more experience, preparation, and structure."
+ai_researched: false
 ---
 
 I used to interview growers, wholesalers, and farm entrepreneurs when I was a co-founder of hexafarms. Now, as I lead a new project through discovery at VOIDS, I'm interviewing customers again, with more experience, preparation, and structure.

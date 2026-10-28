@@ -8,6 +8,9 @@ tags:
 classes: wide
 title: "Is V2 actually better? Paired testing for LLM releases"
 excerpt: "How I'd check whether a new prompt really beats production, using 200 pass/fail questions, a paired standard error, and McNemar's test."
+ai_researched: true
+featured: true
+featured_rank: 10
 ---
 
 Say we run a RAG chatbot for an online pharmacy. V1 is in production. V2 only changes the system prompt. A few colleagues tried V2 by hand, and they think the answers are better.

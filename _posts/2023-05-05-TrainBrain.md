@@ -7,6 +7,7 @@ tags:
   - Mindset
   - Reading
 title:  "Train Brain first"
+ai_researched: false
 ---
 
 Syllogism (A is B and B is C. then A is C) sounds obvious but often people don't realize it.

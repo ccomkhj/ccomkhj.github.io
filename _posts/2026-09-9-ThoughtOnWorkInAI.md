@@ -8,6 +8,7 @@ tags:
 classes: wide
 title: "My Thought about the work in the era of AI"
 excerpt: "TBD"
+ai_researched: false
 ---
 
 Many companies look for FDEs.

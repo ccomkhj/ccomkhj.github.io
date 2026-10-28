@@ -5,6 +5,7 @@ title:  "What makes mind differ"
 date: 2023-01-30
 tags:
   - Mindset
+ai_researched: false
 ---
 
 Your mind decides whether what you are doing now makes you happy or stressed.

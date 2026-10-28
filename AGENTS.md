@@ -60,10 +60,11 @@ first**. Do not invent new tags; if no tag fits, add the new tag to this file an
 tags:
   - Primary Tag
   - Secondary Tag
+ai_researched: false
 ```
 
 Block style, two-space indent, exact capitalization as listed above
-(`Machine Learning`, not `machine-learning`).
+(`Machine Learning`, not `machine-learning`). `ai_researched` is covered below.
 
 ### Retired tags — do not use
 
@@ -82,3 +83,38 @@ Tag pages are generated dynamically (`_layouts/tags_tree.html` iterates
 `site.tags`), so no layout changes are needed when tags change. The /writings/
 explorer groups tags by `_data/tags.yml` (group, icon, one-line blurb); keep it in
 step with the vocabulary above when tags are added, renamed, or retired.
+
+## Provenance and Featured
+
+Two independent editorial dimensions in post front matter. Neither is a tag or a category,
+and neither measures the other: an AI-researched post can be Featured, and an unfeatured
+note is not "low quality".
+
+| Key | Values | Rule |
+|---|---|---|
+| `ai_researched` | `true` / `false` (unquoted) | **Required on every new post.** `true` when AI substantially did the research, source synthesis, or drafting of the technical explanation, even if Huijo chose the ideas and steered. `false` when Huijo supplied the investigation, experience, evidence, or reasoning and AI at most critiqued, edited, formatted, or polished. |
+| `ai_research_note` | string | Optional, only with `ai_researched: true`. Replaces the site-wide disclosure (`ai_research_default_note` in `_config.yml`) when that wording would be inaccurate for this post. Never claim testing or verification that did not happen. |
+| `featured` | `true` | Optional; Huijo's manual recommendation. Missing means not Featured. |
+| `featured_rank` | positive integer | Required with `featured: true`, unique across posts, lowest shown first; use 10, 20, 30… to leave room. Not allowed without `featured: true`. |
+
+- **New posts:** always set `ai_researched`. A post an agent researched or drafted
+  substantially (e.g. one carrying a `Co-Authored-By: Claude` commit) is `true`; the default
+  note then applies, so no `ai_research_note` is needed unless it would be untrue. A post
+  substantially AI-*drafted* from Huijo's own investigation is `false`; describe that in the
+  post body instead of the note.
+- **Featured is Huijo's call.** Never add or change `featured`/`featured_rank` unless he asks.
+  A Featured post needs explicit `ai_researched`, a front-matter `excerpt` that honestly
+  describes it, and a unique rank. Before featuring, check the central argument, key numbers,
+  firsthand claims ("I built", "I measured"), and evidence. Unfeature by deleting both keys.
+- **Legacy posts:** posts without `ai_researched` show as "Unclassified". Only files listed in
+  `scripts/legacy_unclassified_posts.txt` may omit it. Never add a post there; once a legacy post
+  is classified, delete its line. Do not classify posts by guesswork (title, date, or style
+  alone).
+- `ai_researched: false` is never shown as "human-written"; it simply gets no badge.
+- Surfaces: the Welcome window on `/` (top three by rank), the Featured shelf and folder on
+  `/writings/` (`/writings/#featured`), the post reader, and related-post cards. Badge words live
+  in `_includes/post-badges.html` (and its JS twins in `_layouts/writings.html` and
+  `assets/js/win98-desktop.js`).
+- **Checks:** `just check-posts` validates front matter (CI runs it before the build);
+  `just check-writings` asserts on the built pages with fixture posts; `just check-landing` covers
+  the desktop; `just check-browser` drives the Explorer and Welcome window in Chromium.

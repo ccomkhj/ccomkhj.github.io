@@ -8,6 +8,7 @@ tags:
 classes: wide  
 title: "Lesson After End and Before New Start"  
 
+ai_researched: false
 ---
 
 I stepped away from my startup, hexafarms, which I founded and developed most of the foundational technology for from the beginning.

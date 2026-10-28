@@ -5,6 +5,7 @@ title:  "How to Talk to Anyone"
 date: 2023-02-15
 tags:
     - Business
+ai_researched: false
 ---
 
 Book summary of starting a talk.

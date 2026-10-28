@@ -6,6 +6,7 @@ tags:
    - Business
 classes: wide
 title:  "Is Hacking Bad System Fine? "
+ai_researched: false
 ---
 
 Hacking is not the right thing.

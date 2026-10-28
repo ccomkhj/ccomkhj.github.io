@@ -7,6 +7,7 @@ tags:
   - Reading
 classes: wide
 title:  니체
+ai_researched: false
 ---
 
 내체가 내게 두고간 문구들을 아래와 같이 남긴다.

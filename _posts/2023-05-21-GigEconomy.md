@@ -7,6 +7,7 @@ tags:
   - Business
   - Society
 title:  "Second Thought: Gig Economy"
+ai_researched: false
 ---
 
 Let's think of a scene working in a famous vacation spot working on a freelancing job and having a party in the evening.

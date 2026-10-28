@@ -6,6 +6,7 @@ tags:
    - Business
 classes: wide
 title:  Art of Hiring II
+ai_researched: false
 ---
 
 I used to be a job seeker.

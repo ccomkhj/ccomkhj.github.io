@@ -9,6 +9,10 @@ on:
 jobs:
   jekyll:
     runs-on: ubuntu-latest
+    env:
+      JEKYLL_ENV: production
+      # jekyll-github-metadata reads the repo from git only in development; production needs it named
+      PAGES_REPO_NWO: ${{ github.repository }}
     steps:
       - uses: actions/checkout@v4
 
@@ -17,7 +21,9 @@ jobs:
           ruby-version: "3.2"
           bundler-cache: true
 
+      - name: Check post front matter
+        run: ruby scripts/check_post_metadata.rb
+
       - name: Build site
         run: bundle exec jekyll build --strict_front_matter --trace
-        env:
-          JEKYLL_ENV: production
+

@@ -5,6 +5,7 @@ title:  "Lessons from myself"
 date: 2022-04-30
 tags:
   - Mindset
+ai_researched: false
 ---
 
 

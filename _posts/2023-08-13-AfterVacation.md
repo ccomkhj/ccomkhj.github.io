@@ -6,6 +6,7 @@ tags:
   - Mindset
 classes: wide
 title:  How to control your mindset after vacation
+ai_researched: false
 ---
 
 Vacation is always sweet.

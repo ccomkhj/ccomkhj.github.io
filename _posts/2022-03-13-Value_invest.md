@@ -5,6 +5,7 @@ title:  "Value_invest"
 date: 2022-03-13
 tags:
     - Business
+ai_researched: false
 ---
 
 주린이 이면서도, Computer scientist로써 읽는 투자 기초서는 정말 insightful 했다. 이번에 접한 책은 “가치투자자 아빠에게 워런 버핏과 찰리 멍거의 지혜를 배우다”이다. \

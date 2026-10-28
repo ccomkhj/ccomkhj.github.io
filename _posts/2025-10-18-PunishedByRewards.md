@@ -8,6 +8,7 @@ tags:
 classes: wide  
 title: "Punished by Rewards: What truly motivates your team? It's not rewards."
 excerpt: "Notes from Alfie Kohn's *Punished by Rewards*: why bonuses, KPIs, and 'if-then' incentives kill intrinsic motivation, and what to lean on instead when you can't keep raising the carrot."
+ai_researched: false
 ---
 
 Through running businesses and working in both large corporations and startups,  

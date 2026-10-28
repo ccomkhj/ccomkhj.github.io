@@ -5,6 +5,7 @@ title:  "Start with Why"
 date: 2022-07-06
 tags:
     - Business
+ai_researched: false
 ---
 
 ### Focus on what

@@ -1,0 +1,2 @@
+# Fixture allowlist for scripts/check_writings.py (see scripts/legacy_unclassified_posts.txt)
+1999-03-07-fixture-legacy-unclassified.md

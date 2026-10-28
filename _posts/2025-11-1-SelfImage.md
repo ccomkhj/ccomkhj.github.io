@@ -8,6 +8,7 @@ tags:
 classes: wide  
 title: "Self Image: The way you conceive yourself is what you will be."
 excerpt: "Why the same person looked extroverted to college friends and introverted to friends from age 25 — and what *Psycho-Cybernetics* says about self-image as the real driver behind that gap."
+ai_researched: false
 ---
 
 I received dramatically different view on my characteristic depends on when my friends met me.
