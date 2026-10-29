@@ -82,7 +82,7 @@ Instead of treating gravity as a force, he described it as the **curvature of sp
 
 If a twin **stays on Earth** while the other travels at **near-light speed** in a spaceship, they age differently.  
 
-$$ t' = \frac{t}{\sqrt{1 - \frac{v^2}{c^2}}} $$  
+$$ t' = t\sqrt{1 - \frac{v^2}{c^2}} $$  
 
 where:  
 - $$ t' $$ is the traveling twin’s time.  
