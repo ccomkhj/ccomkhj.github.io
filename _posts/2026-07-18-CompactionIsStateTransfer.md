@@ -16,9 +16,9 @@ During a technical discussion, someone asked me:
 
 I answered quickly. Keep the objective, decisions, changed files, test state, unresolved problems, and next action. Do not spend summary tokens copying a file that the agent can read again.
 
-Afterwards, I wondered how close that answer was to what an actual coding agent does. I had seen a reconstructed Claude Code repository, so I went through its compaction code.
+Afterwards, I wondered how close that answer was to what an actual coding agent does. I had seen a reconstructed Claude Code repository, so I went through its compaction code with an AI assistant.
 
-The repository was widely called a source leak. More precisely, people reconstructed it from a sourcemap published in an npm package. I do not treat it as an official API or as documentation of the current release. Some paths depend on feature flags, and parts have already changed. For example, the snapshot disabled thinking in one fallback summarization path. The current [Claude Code context documentation](https://code.claude.com/docs/en/context-window) says that v2.1.198 inherits the session's extended thinking setting during compaction.
+The repository was widely called a source leak. More precisely, people reconstructed it from a sourcemap published in an npm package. I do not treat it as an official API or as documentation of the current release. Some paths depend on feature flags, and parts have already changed. For example, the snapshot disabled thinking in one fallback summarization path. The current [Claude Code context documentation](https://code.claude.com/docs/en/context-window) says that, as of v2.1.198, the summarization request inherits the session's extended thinking setting.
 
 Still, the snapshot answered my question. Claude Code does not rely on one perfect summary. It removes context that is cheap to recover, summarizes the remaining conversation, and then reloads selected state.
 
@@ -66,7 +66,7 @@ This tells the summarizer which details matter most. Current documentation also 
 
 Before full summarization, Claude Code can perform micro-compaction. It looks for large, old results from file reads, shell commands, search tools, web tools, and file edits. Those results can be replaced with a short cleared-content marker.
 
-Parts of this behavior are feature-gated in the snapshot, so installations may differ. The general order is also documented officially: Claude Code clears older tool output first and summarizes the conversation when it needs more room.
+Parts of this behavior are feature-gated in the snapshot, so installations may differ. The current documentation confirms that Claude Code [clears old tool results from context](https://code.claude.com/docs/en/costs#prompt-cache-statistics) as a step separate from compaction, but it does not describe the order.
 
 That order makes sense. A file can be read again. A test can be rerun. A decision made after reading the file and discussing the failed test may exist only in the conversation.
 
@@ -162,4 +162,5 @@ The summary still matters. I ask it to preserve why the work reached its current
 - Anthropic, [*How Claude Code works*](https://code.claude.com/docs/en/how-claude-code-works).
 - Anthropic, [*Explore the context window*](https://code.claude.com/docs/en/context-window).
 - Anthropic, [*Manage sessions*](https://code.claude.com/docs/en/sessions).
+- Anthropic, [*Manage costs effectively*](https://code.claude.com/docs/en/costs).
 - Reconstructed source mirror, [`src/services/compact`](https://gitlawb.com/node/repos/z6MkgKkb/instructkr-claude-code?path=src%2Fservices%2Fcompact&tab=code). I used it as a historical snapshot, not as an official interface.
