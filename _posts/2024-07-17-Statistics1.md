@@ -78,7 +78,7 @@ Given a sample of size $$n$$ and a sample statistic of interest, the algorithm f
 1. Draw a random sample of size $$n$$ with replacement from the data (a resample).
 2. Record the statistic of interest for the resample.
 3. Repeat steps 1–2 multiple (R) times.
-4. For an $$x\%$$ confidence interval, trim $$\left[\left(1 - \frac{x}{100}\right) / 2\right]\%$$ of the $$R$$ resample results from both ends of the distribution.
+4. For an $$x\%$$ confidence interval, trim $$\left[(100 - x) / 2\right]\%$$ of the $$R$$ resample results from both ends of the distribution.
 5. The trim points are the endpoints of an $$x\%$$ bootstrap confidence interval.
 
 > **Note:** While the desired question when obtaining a sample result is often “What is the probability that the true value lies within a certain interval?”, a confidence interval does not directly answer this. Instead, it answers a related probability question framed in terms of the sampling procedure and population.

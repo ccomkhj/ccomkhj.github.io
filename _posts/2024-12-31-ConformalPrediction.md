@@ -100,7 +100,7 @@ $$
 As we observe data points sequentially, we observe the scores sequentially as well. Thus, a different conformal quantile must be selected for each incoming data point. Mathematically, to predict the temperature at time $t \leq T$, we employ the weighted conformal technique with a fixed window size $$K$$, where $$w_{t'} = 1\{t' \geq t-K\}$$ for all $$t' < t$$. This yields the quantiles:
 
 $$
-\hat{q}_t = \inf \left\{ q : \frac{1}{\min(K, t' - 1) + 1} \sum_{t'=1}^{t-1} s_{t'} 1\{t' \geq t-K\} \geq 1 - \alpha \right\}.
+\hat{q}_t = \inf \left\{ q : \frac{1}{\min(K, t - 1) + 1} \sum_{t'=1}^{t-1} 1\{s_{t'} \leq q\} 1\{t' \geq t-K\} \geq 1 - \alpha \right\}.
 $$
 
 With these adjusted quantiles, prediction sets at each time step are formed as:
@@ -144,7 +144,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_
 X_calib, X_test, y_calib, y_test = train_test_split(X_test, y_test, test_size=0.5, random_state=42)
 
 # Quantile regression setup for quantiles using GradientBoostingRegressor
-quantiles = [0.1, 0.5, 0.9]
+quantiles = [0.05, 0.5, 0.95]
 models = {}
 
 # Fit gradient boosting quantile regression models
@@ -157,12 +157,13 @@ for q in quantiles:
 predictions = {q: models[q].predict(X_test.reshape(-1, 1)) for q in quantiles}
 
 # Calculate conformal quantile adjustment for 90% coverage
-residuals = np.abs(y_calib - models[0.5].predict(X_calib.reshape(-1, 1)))
-q_hat = np.quantile(residuals, 0.9)
+scores = np.maximum(models[0.05].predict(X_calib.reshape(-1, 1)) - y_calib, y_calib - models[0.95].predict(X_calib.reshape(-1, 1)))
+n = len(scores)
+q_hat = np.quantile(scores, np.ceil((n + 1) * 0.9) / n, method='higher')
 
 # Create conformal prediction intervals
-y_lower = predictions[0.1] - q_hat
-y_upper = predictions[0.9] + q_hat
+y_lower = predictions[0.05] - q_hat
+y_upper = predictions[0.95] + q_hat
 
 # Sort X_test and corresponding predictions for plotting
 sorted_indices = np.argsort(X_test)

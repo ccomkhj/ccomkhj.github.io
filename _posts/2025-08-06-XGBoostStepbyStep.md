@@ -235,7 +235,7 @@ The **exact greedy algorithm** finds the best split by:
 This ensures all possible binary splits are evaluated.
 
 ### 🌲 Handling Ordinal Features
-XGBoost treats integer-encoded ordinal features (e.g., education level 1–8) as continuous. It generates splits at midpoints like 1.5, 2.5, etc., enforcing **monotonic partitions**. This is efficient but assumes monotonicity—non-monotonic relationships may be missed.
+XGBoost treats integer-encoded ordinal features (e.g., education level 1–8) as continuous. It generates splits at midpoints like 1.5, 2.5, etc., so each split separates a contiguous range of levels. This uses the order of the levels but does not assume monotonicity—repeated splits on the same feature can capture non-monotonic relationships.
 
 ### ⏱️ Computational Complexity
 Per node: $$  O(d \cdot n \log n) $$ , due to sorting $$  d $$  features. This is expensive for large datasets, motivating approximate methods (e.g., quantile sketching).
@@ -246,7 +246,7 @@ $$
 H_L < \text{min\_child\_weight} \quad \text{or} \quad H_R < \text{min\_child\_weight}.
 $$
 
-This ensures sufficient data and curvature in each child. In classification, $$  h_i = p_i(1 - p_i) \to 0 $$  near decision boundaries, so this prevents overconfident splits on small or certain groups.
+This ensures sufficient data and curvature in each child. In classification, $$  h_i = p_i(1 - p_i) \to 0 $$  for confident predictions ($p_i \to 0$ or $1$), so this prevents overconfident splits on small or certain groups.
 
 ---
 
@@ -403,7 +403,7 @@ print(model.predict(X))  # Outputs tree-based corrections
 2. **Dual regularization** ($$ \gamma $$  and $$  \lambda $$ ) controls structure and output magnitude.
 3. **Gain-based splitting** ensures only meaningful splits are made.
 4. **Leaf grouping** allows closed-form optimization of $$  w_j $$ .
-5. **Hessian-aware pruning** improves stability in uncertain regions.
+5. **Hessian-aware pruning** prevents splits on small or confidently predicted groups.
 
 ---
 
