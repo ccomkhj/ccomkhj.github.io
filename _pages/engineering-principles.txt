@@ -1,0 +1,7 @@
+---
+permalink: /engineering-principles.txt
+layout: null
+sitemap: false
+search: false
+---
+{% include engineering-principles.md %}

@@ -1,0 +1,84 @@
+---
+layout: default
+---
+{%- comment -%}
+  A principles list as one wide Win98 window: a terminal header, a sticky file-tree
+  index on the left, and one card per principle. Reads markdown from
+  _includes/{{ page.source }}: an h1 title, an intro, then one h2 per principle
+  ("N. Name"), its rule as the first paragraph and an "In practice:" bullet.
+  Raw twin for agents: page.raw_url. Styles: _sass/_principles.scss.
+{%- endcomment -%}
+{%- capture md %}{% include {{ page.source }} %}{% endcapture -%}
+{%- assign html = md | markdownify -%}
+{%- assign parts = html | split: '<h2 id="' -%}
+{%- assign intro = parts.first | split: '</h1>' | last -%}
+{%- assign raw = page.raw_url | absolute_url -%}
+{%- assign file = page.raw_url | split: '/' | last | replace: '.txt', '.md' -%}
+{%- assign count = parts.size | minus: 1 -%}
+
+<main class="principles">
+  <section class="window principles__win" aria-labelledby="principles-title">
+    <div class="title-bar">
+      <div class="title-bar-text">📜 {{ file }} - Notepad</div>
+    </div>
+    <div class="window-body principles__body">
+      <header class="principles__head">
+        <p class="principles__prompt" aria-hidden="true"><span class="u">huijo@kim</span>:<span class="d">~</span>$ cat {{ file }}<span class="cursor">█</span></p>
+        <h1 id="principles-title"><span aria-hidden="true"># </span>{{ page.title }}</h1>
+        <div class="principles__intro">{{ intro }}</div>
+        <div class="principles__agent">
+          <span class="principles__comment">// for agents: fetch the plain-text twin</span>
+          <div class="principles__curl">
+            <code><span class="k">curl</span> -s {{ raw }}</code>
+            <button type="button" data-copy="{{ raw }}">Copy URL</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="principles__grid">
+        <nav class="principles__tree" aria-label="Principles">
+          <p>{{ file | replace: '.md', '/' }}</p>
+          <ul>
+            {%- for part in parts offset: 1 %}
+            {%- assign id = part | split: '"' | first -%}
+            {%- assign name = part | split: '</h2>' | first | split: '>' | last -%}
+            {%- assign num = name | split: '. ' | first -%}
+            {%- assign title = name | remove_first: num | remove_first: '. ' %}
+            <li><span aria-hidden="true">{% if forloop.last %}└──{% else %}├──{% endif %} </span><a href="#{{ id }}"><span class="n">{% if num.size == 1 %}0{% endif %}{{ num }}</span> {{ title | split: ' (' | first }}</a></li>
+            {%- endfor %}
+          </ul>
+          <p class="principles__count">{{ count }} files, 0 exceptions</p>
+        </nav>
+
+        <ol class="principles__list">
+          {%- for part in parts offset: 1 %}
+          {%- assign id = part | split: '"' | first -%}
+          {%- assign head = part | split: '</h2>' | first -%}
+          {%- assign name = head | split: '>' | last -%}
+          {%- assign num = name | split: '. ' | first -%}
+          {%- assign title = name | remove_first: num | remove_first: '. ' -%}
+          {%- assign body = part | remove_first: head | remove_first: '</h2>' | replace: 'In practice:', '<b class="principles__label">// in practice</b>' %}
+          <li class="principles__card" id="{{ id }}">
+            <h2>
+              <span class="principles__num" aria-hidden="true">{% if num.size == 1 %}0{% endif %}{{ num }}</span>
+              <a href="#{{ id }}">{{ title }}</a>
+            </h2>
+            {{ body }}
+          </li>
+          {%- endfor %}
+        </ol>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  document.querySelectorAll('.principles [data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.dataset.copy).then(function () {
+        b.textContent = 'Copied';
+        setTimeout(function () { b.textContent = 'Copy URL'; }, 1500);
+      });
+    });
+  });
+</script>
