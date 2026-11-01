@@ -3,15 +3,19 @@ layout: default
 ---
 {%- comment -%}
   A principles list as one wide Win98 window: a terminal header, a sticky file-tree
-  index on the left, and one card per principle. Reads markdown from
-  _includes/{{ page.source }}: an h1 title, an intro, then one h2 per principle
-  ("N. Name"), its rule as the first paragraph and an "In practice:" bullet.
-  Raw twin for agents: page.raw_url. Styles: _sass/_principles.scss.
+  index on the left, and one card per principle. Reads the core rules (what agents
+  load) from _includes/{{ page.source }}: an h1 title, an intro, then one h2 per
+  principle ("N. Name") with its rules. Optional human-only notes from
+  _includes/{{ page.notes }}: an intro appended to the core intro, then "## N"
+  sections shown above principle N's rules.
+  Raw twin for agents (core only): page.raw_url. Styles: _sass/_principles.scss.
 {%- endcomment -%}
 {%- capture md %}{% include {{ page.source }} %}{% endcapture -%}
 {%- assign html = md | markdownify -%}
 {%- assign parts = html | split: '<h2 id="' -%}
 {%- assign intro = parts.first | split: '</h1>' | last -%}
+{%- capture notes_md %}{% if page.notes %}{% include {{ page.notes }} %}{% endif %}{% endcapture -%}
+{%- assign notes = notes_md | markdownify | split: '<h2 id="' -%}
 {%- assign raw = page.raw_url | absolute_url -%}
 {%- assign file = page.raw_url | split: '/' | last | replace: '.txt', '.md' -%}
 {%- assign count = parts.size | minus: 1 -%}
@@ -25,7 +29,7 @@ layout: default
       <header class="principles__head">
         <p class="principles__prompt" aria-hidden="true"><span class="u">huijo@kim</span>:<span class="d">~</span>$ cat {{ file }}<span class="cursor">█</span></p>
         <h1 id="principles-title"><span aria-hidden="true"># </span>{{ page.title }}</h1>
-        <div class="principles__intro">{{ intro }}</div>
+        <div class="principles__intro">{{ intro }}{{ notes.first }}</div>
         <div class="principles__agent">
           <span class="principles__comment">// for agents: fetch the plain-text twin</span>
           <div class="principles__curl">
@@ -57,12 +61,22 @@ layout: default
           {%- assign name = head | split: '>' | last -%}
           {%- assign num = name | split: '. ' | first -%}
           {%- assign title = name | remove_first: num | remove_first: '. ' -%}
-          {%- assign body = part | remove_first: head | remove_first: '</h2>' | replace: 'In practice:', '<b class="principles__label">// in practice</b>' %}
+          {%- assign body = part | remove_first: head | remove_first: '</h2>' -%}
+          {%- assign note = '' -%}
+          {%- for n in notes offset: 1 -%}
+            {%- assign nhead = n | split: '</h2>' | first -%}
+            {%- assign nnum = nhead | split: '>' | last | strip -%}
+            {%- if nnum == num %}{% assign note = n | remove_first: nhead | remove_first: '</h2>' %}{% endif -%}
+          {%- endfor %}
           <li class="principles__card" id="{{ id }}">
             <h2>
               <span class="principles__num" aria-hidden="true">{% if num.size == 1 %}0{% endif %}{{ num }}</span>
               <a href="#{{ id }}">{{ title }}</a>
             </h2>
+            {%- if note != '' %}
+            {{ note }}
+            <b class="principles__label">// in practice</b>
+            {%- endif %}
             {{ body }}
           </li>
           {%- endfor %}
