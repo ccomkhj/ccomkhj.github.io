@@ -1,8 +1,8 @@
 ---
 title: "Engineering Principles"
-permalink: /engineering-principles/
+permalink: /about/engineering-principles/
 layout: principles
 source: engineering-principles.md
-raw_url: /engineering-principles.txt
+raw_url: /about/engineering-principles.txt
 excerpt: "How I build software — shared with people and with my coding agents."
 ---

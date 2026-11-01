@@ -89,4 +89,4 @@ _Eager to expand this list—and myself—through life's adventures._
   - customers tell you what they want, but it's not always what solves their pain
   - be obsessed with finding what really solves their pain
   - seek to understand, not to be understood
-- how I build software: [engineering principles](/engineering-principles/)
+- how I build software: [engineering principles](/about/engineering-principles/)

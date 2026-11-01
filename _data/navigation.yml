@@ -20,6 +20,7 @@ main:
   - title: "About"
     url: /about/
     glyph: "👤"
+    section: [/about/engineering-principles/]
   - title: "Bookmarks"
     url: /bookmarks/
     glyph: "🌐"
