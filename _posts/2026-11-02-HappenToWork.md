@@ -16,6 +16,8 @@ In *The Pragmatic Programmer*, the authors describe **Programming by Coincidence
 
 I think AI-assisted coding makes this problem even more relevant.
 
+![An AI rapidly stacks misaligned "??" code blocks; tests pass, then an edge case knocks the tower over. A second tower built deliberately from SPEC, failure tests, small tickets, asking why, and readable code withstands the same edge case.]({{ '/assets/images/programming-by-coincidence.gif' | relative_url }})
+
 With AI, we can generate hundreds of lines of code in seconds. We run it, see the expected output, and move on. But **do we actually understand why it works?**
 
 The danger is that AI allows us to accumulate code we don't understand much faster than before. When something eventually breaks, we're left debugging a system whose assumptions and behavior we never fully understood.
